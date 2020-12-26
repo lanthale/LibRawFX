@@ -1,4 +1,4 @@
-package com.mycompany.librawfx;
+package org.librawfx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

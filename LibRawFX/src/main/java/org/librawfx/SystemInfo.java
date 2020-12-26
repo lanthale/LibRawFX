@@ -1,4 +1,4 @@
-package com.mycompany.librawfx;
+package org.librawfx;
 
 public class SystemInfo {
 

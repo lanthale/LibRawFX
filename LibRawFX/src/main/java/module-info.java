@@ -1,4 +1,4 @@
-module com.mycompany.librawfx {
+module org.librawfx {
     requires javafx.controls;
-    exports com.mycompany.librawfx;
+    exports org.librawfx;
 }
