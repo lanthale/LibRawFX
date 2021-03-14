@@ -1,0 +1,1 @@
+/Library/Java/jdk-17.jdk/Contents/Home/bin/jextract -d . --source -t org.libraw -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include --filter libraw ./libraw.h
