@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <actions>
+<actions>
         <action>
             <actionName>run</actionName>
             <packagings>
                 <packaging>jar</packaging>
             </packagings>
             <goals>
-                <goal>clean</goal>
                 <goal>javafx:run</goal>
             </goals>
+            <properties>
+                <exec.args>-classpath %classpath ${packageClassName}</exec.args>
+                <exec.executable>java</exec.executable>
+            </properties>
         </action>
         <action>
             <actionName>debug</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
             <goals>
-                <goal>clean</goal>
-                <goal>javafx:run@ide-debug</goal>
+                <goal>javafx:run@debug</goal>
             </goals>
             <properties>
+                <exec.args>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath ${packageClassName}</exec.args>
+                <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
         </action>
         <action>
             <actionName>profile</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
             <goals>
-                <goal>clean</goal>
-                <goal>javafx:run@ide-profile</goal>
+                <goal>javafx:run</goal>
             </goals>
-        </action>
-        <action>
-            <actionName>CUSTOM-jlink</actionName>
-            <displayName>jlink</displayName>
-            <goals>
-                <goal>clean</goal>
-                <!-- compile not needed with javafx-maven-plugin v0.0.5 -->
-                <goal>compile</goal>
-                <goal>javafx:jlink</goal>
-            </goals>
+            <properties>
+                <exec.args>-classpath %classpath ${packageClassName}</exec.args>
+                <exec.executable>java</exec.executable>
+            </properties>
         </action>
     </actions>

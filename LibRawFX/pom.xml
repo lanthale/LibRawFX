@@ -7,8 +7,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.target>16</maven.compiler.target>        
     </properties>
+    
     <repositories>
         <repository>
             <id>oss.sonatype.org</id>
@@ -40,7 +41,22 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>16-ea+7</version>
+            <version>16</version>
+        </dependency>               
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>16</version>
+        </dependency>               
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>16</version>
+        </dependency>               
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>16</version>
         </dependency>               
     </dependencies>
     <build>
@@ -48,9 +64,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <release>16</release>                    
+                    <release>16</release>
+                    <fork>true</fork>
+                    <compilerArgs>                        
+                        <arg>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</arg>                                
+                        <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
+                    </compilerArgs>                                        
                 </configuration>
             </plugin>
             <plugin>
@@ -67,7 +88,9 @@
                         <id>default-cli</id>
                         <configuration>
                             <options>
-                                <option>--add-modules jdk.incubator.foreign -Dforeign.restricted=permit</option>
+                                <option>--add-modules jdk.incubator.foreign -Dforeign.restricted=permit</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
                     </execution>
@@ -78,6 +101,8 @@
                         <configuration>
                             <options>
                                 <option>--add-modules jdk.incubator.foreign -Dforeign.restricted=permit -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
                     </execution>
@@ -87,6 +112,8 @@
                         <configuration>
                             <options>
                                 <option>--add-modules jdk.incubator.foreign -Dforeign.restricted=permit -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
                     </execution>
@@ -100,7 +127,9 @@
                                 <option>${profiler.jvmargs.arg3}</option>
                                 <option>${profiler.jvmargs.arg4}</option>
                                 <option>${profiler.jvmargs.arg5}</option>
-                                <option>-add-modules jdk.incubator.foreign -Dforeign.restricted=permit</option>
+                                <option>--add-modules jdk.incubator.foreign -Dforeign.restricted=permit</option>
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
                     </execution>

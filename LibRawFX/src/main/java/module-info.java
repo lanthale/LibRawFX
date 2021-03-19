@@ -1,6 +1,10 @@
 module org.librawfx {
     requires javafx.controls;
-    requires jdk.incubator.foreign;
+    requires java.desktop;
+    requires javafx.graphics;
+    requires javafx.base;
+    requires jdk.incubator.foreign; 
+    requires java.logging;
     exports org.librawfx;
     exports org.libraw;    
 }
