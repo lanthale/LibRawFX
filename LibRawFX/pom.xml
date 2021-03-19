@@ -73,7 +73,7 @@
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
                     </compilerArgs>                                        
                 </configuration>
-            </plugin>
+            </plugin>            
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>

@@ -5,6 +5,8 @@
  */
 package org.librawfx;
 
+import org.librawfx.dimension.DimensionProvider;
+import org.librawfx.dimension.Dimension;
 import com.sun.javafx.iio.ImageFrame;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;

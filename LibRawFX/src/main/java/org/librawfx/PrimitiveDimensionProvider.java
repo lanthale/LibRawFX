@@ -5,6 +5,9 @@
  */
 package org.librawfx;
 
+import org.librawfx.dimension.DimensionProvider;
+import org.librawfx.dimension.Dimension;
+
 /**
  *
  * @author selfemp
