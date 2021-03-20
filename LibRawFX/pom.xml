@@ -60,6 +60,18 @@
         </dependency>               
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/ressources</directory>
+                <excludes>
+                    <exclude>**/*.cr2</exclude>
+                    <exclude>**/*.h</exclude>
+                    <exclude>**/*.lib</exclude>
+                    <exclude>**/*.X3F</exclude>
+                    <exclude>**/*.ppm</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -87,7 +99,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <options>
+                            <options>                                
                                 <option>--add-modules jdk.incubator.foreign -Dforeign.restricted=permit</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>

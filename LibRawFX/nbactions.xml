@@ -6,7 +6,7 @@
                 <packaging>jar</packaging>
             </packagings>
             <goals>
-                <goal>javafx:run</goal>
+                <goal>javafx:run@default-cli</goal>
             </goals>
             <properties>
                 <exec.args>-classpath %classpath ${packageClassName}</exec.args>
@@ -19,7 +19,7 @@
                 <packaging>jar</packaging>
             </packagings>
             <goals>
-                <goal>javafx:run@debug</goal>
+                <goal>javafx:run@ide-debug</goal>
             </goals>
             <properties>
                 <exec.args>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath ${packageClassName}</exec.args>
@@ -33,7 +33,7 @@
                 <packaging>jar</packaging>
             </packagings>
             <goals>
-                <goal>javafx:run</goal>
+                <goal>javafx:run@ide-profile</goal>
             </goals>
             <properties>
                 <exec.args>-classpath %classpath ${packageClassName}</exec.args>

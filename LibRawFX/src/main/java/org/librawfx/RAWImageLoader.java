@@ -11,22 +11,11 @@ import com.sun.javafx.iio.ImageFrame;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;
 import com.sun.javafx.iio.common.ImageLoaderImpl;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.stage.Screen;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.event.IIOReadProgressListener;
-import javax.imageio.stream.FileCacheImageInputStream;
 
 /**
  * Class to load the image requested by the file
@@ -35,24 +24,31 @@ import javax.imageio.stream.FileCacheImageInputStream;
  */
 public class RAWImageLoader extends ImageLoaderImpl {
 
-    private static final int BYTES_PER_PIXEL = 4; // RGBA
+    private static final int BYTES_PER_PIXEL = 3; // RGB
 
     private final InputStream input;
     private float maxPixelScale = 0;
     private final DimensionProvider dimensionProvider;
+    private Lock accessLock = new Lock();
+    private boolean isDisposed = false;
+    private LibrawImage libraw;
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
-        super(RAWDescriptor.getInstance());
+        super(RAWDescriptor.getInstance());        
 
         if (input == null) {
             throw new IllegalArgumentException("input == null!");
-        }                
+        }
         this.input = input;
         this.dimensionProvider = dimensionProvider;
     }
 
     @Override
     public void dispose() {
+        if (!accessLock.isLocked() && !isDisposed) {
+            isDisposed = true;            
+            libraw.dispose();
+        }
     }
 
     @Override
@@ -61,7 +57,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
     }
 
     @Override
-    protected void updateImageProgress(float f) {        
+    protected void updateImageProgress(float f) {
         super.updateImageProgress(f);
     }
 
@@ -75,7 +71,8 @@ public class RAWImageLoader extends ImageLoaderImpl {
         if (0 != imageIndex) {
             return null;
         }
-
+        accessLock.lock();
+        libraw = new LibrawImage(input);
         Dimension fallbackDimension = (width <= 0 || height <= 0) ? dimensionProvider.getDimension() : null;
 
         float imageWidth = width > 0 ? width : (float) fallbackDimension.getWidth();
@@ -86,14 +83,17 @@ public class RAWImageLoader extends ImageLoaderImpl {
                 width, height, null, null, null);
 
         updateImageMetadata(md);
-        
+
         try {
-            return createImageFrame(imageWidth, imageHeight, getPixelScale());
+            return createImageFrame(imageWidth, imageHeight, getPixelScale(), libraw);
         } catch (IOException ex) {
             throw new IOException(ex);
+        } finally {
+            accessLock.unlock();
+            dispose();
         }
     }
-    
+
     public float getPixelScale() {
         if (maxPixelScale == 0) {
             maxPixelScale = calculateMaxRenderScale();
@@ -110,174 +110,32 @@ public class RAWImageLoader extends ImageLoaderImpl {
         return maxRenderScale;
     }
 
-    private ImageFrame createImageFrame(float width, float height, float pixelScale)
-            throws IOException {        
-        BufferedImage bufferedImage = getTranscodedImage(width * pixelScale, height * pixelScale);
-        ByteBuffer imageData = getImageData(bufferedImage);
-
-        return new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGBA, imageData, bufferedImage.getWidth(),
-                bufferedImage.getHeight(), getStride(bufferedImage), null, pixelScale, null);
-    }
-
-    private BufferedImage getTranscodedImage(float width, float height)
+    private ImageFrame createImageFrame(float width, float height, float pixelScale, LibrawImage libraw)
             throws IOException {
-        BufferedImage read;
-        try {            
-            FileCacheImageInputStream fileCache = new FileCacheImageInputStream​(input, new File(File.createTempFile("a", ".tmp").getPath()));
-            if (width <= 300) {
-                BufferedImage rBufImg = readFile(fileCache);
-                read = resize(rBufImg, (int) width, (int) height);
-            } else {
-                BufferedImage rBufImg = readFile(fileCache);
-                read = resize(rBufImg, (int) width * 4, (int) height * 4);
-            }
-        } catch (IOException e) {
-            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINE, "Error reading TIFF file format!");
-            throw new IOException(e);
-        }
-        return read;
-    }
-
-    private BufferedImage readFile(FileCacheImageInputStream fileCache) throws IOException {
-        BufferedImage image = null;
-        int w;
-        int h;
-
-        // Get the reader
-        Iterator<ImageReader> readers = ImageIO.getImageReaders(fileCache);
-
-        if (!readers.hasNext()) {
-            throw new IllegalArgumentException("No reader found!");
-        }
-
-        ImageReader reader = readers.next();
-
-        try {
-            reader.setInput(fileCache);
-            Iterator<ImageTypeSpecifier> types = reader.getImageTypes(0);
-            ImageTypeSpecifier type = types.next();
-
-            int sub = 4;
-            int srcWidth = reader.getWidth(0);
-            int srcHeight = reader.getHeight(0);
-            if (srcWidth > 8000) {
-                sub = 4;
-            } else {
-                sub = 1;
-            }
-            w = srcWidth / sub;
-            h = srcHeight / sub;
-
-            //image = MappedImageFactory.createCompatibleMappedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            ImageReadParam param = reader.getDefaultReadParam();
-
-            //param.setDestination(image);
-            param.setSourceSubsampling(sub, sub, 0, 0);
-
-            reader.addIIOReadProgressListener(new IIOReadProgressListener() {
-                @Override
-                public void imageComplete(ImageReader source) {
-                    //updateImageProgress(1.0f);
-                }
-
-                @Override
-                public void imageProgress(ImageReader source, float percentageDone) {                    
-                    updateImageProgress(percentageDone/100);
-                }
-
-                @Override
-                public void imageStarted(ImageReader source, int imageIndex) {
-                    //updateImageProgress(0f);
-                }
-
-                @Override
-                public void readAborted(ImageReader source) {                    
-                }
-
-                @Override
-                public void sequenceComplete(ImageReader source) {                    
-                }
-
-                @Override
-                public void sequenceStarted(ImageReader source, int minIndex) {                
-                }
-
-                @Override
-                public void thumbnailComplete(ImageReader source) {                    
-                }
-
-                @Override
-                public void thumbnailProgress(ImageReader source, float percentageDone) {                    
-                }
-
-                @Override
-                public void thumbnailStarted(ImageReader source, int imageIndex, int thumbnailIndex) {                    
-                }
-            });
-
-            image = reader.read(0, param);
-        } finally {
-            // Dispose reader in finally block to avoid memory leaks
-            reader.dispose();
-        }
-        return image;
-    }
-
-    private int getStride(BufferedImage bufferedImage) {
-        return bufferedImage.getWidth() * BYTES_PER_PIXEL;
-    }
-
-    private ByteBuffer getImageData(BufferedImage bufferedImage) {
-        int[] rgb = bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null, 0,
-                bufferedImage.getWidth());
-
-        byte[] imageData = new byte[getStride(bufferedImage) * bufferedImage.getHeight()];
-
-        copyColorToBytes(rgb, imageData);
-        return ByteBuffer.wrap(imageData);
-    }
-
-    private void copyColorToBytes(int[] rgb, byte[] imageData) {
-        if (rgb.length * BYTES_PER_PIXEL != imageData.length) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
-
-        ByteBuffer byteBuffer = ByteBuffer.allocate(Integer.BYTES);
-
-        for (int i = 0; i < rgb.length; i++) {
-            byte[] bytes = byteBuffer.putInt(rgb[i]).array();
-
-            int dataOffset = BYTES_PER_PIXEL * i;
-            imageData[dataOffset] = bytes[1];
-            imageData[dataOffset + 1] = bytes[2];
-            imageData[dataOffset + 2] = bytes[3];
-            imageData[dataOffset + 3] = bytes[0];
-
-            byteBuffer.clear();
-        }
-    }
-
-    private BufferedImage resize(BufferedImage image, int scaledWidth, int scaledHeight) {
-        double imageHeight = image.getHeight();
-        double imageWidth = image.getWidth();
-
-        if (imageHeight / scaledHeight > imageWidth / scaledWidth) {
-            scaledWidth = (int) (scaledHeight * imageWidth / imageHeight);
+        ByteBuffer imageData = null;
+        if (width > 300) {
+            imageData = getImageData(false, libraw);
         } else {
-            scaledHeight = (int) (scaledWidth * imageHeight / imageWidth);
+            imageData = getImageData(true, libraw);
         }
 
-        BufferedImage resized = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = resized.createGraphics();
-        g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
-        g.dispose();
+        return new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, libraw.getImageWidth(),
+                libraw.getImageHeight(), libraw.getStride(), null, pixelScale, null);
+    }
 
-        /*Image tmp = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_FAST);
-        BufferedImage resized = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();*/
-        return resized;
+    private ByteBuffer getImageData(boolean halfsize, LibrawImage libraw) throws IOException {
+        libraw.setHalfSize(halfsize);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] datab = new byte[1024];
+        while ((nRead = input.read(datab, 0, datab.length)) != -1) {
+            buffer.write(datab, 0, nRead);
+        }
+        buffer.flush();
+        byte[] targetArray = buffer.toByteArray();
+        byte[] raw = libraw.readPixelDataFromStream(targetArray);
+
+        return ByteBuffer.wrap(raw);
     }
 
     private static class Lock {
