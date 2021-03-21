@@ -32,22 +32,26 @@ NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/
 
 - Add the following lines to your java config:
 
-`--add-modules jdk.incubator.foreign -Dforeign.restricted=permit\  
+```
+--add-modules jdk.incubator.foreign -Dforeign.restricted=permit\  
  --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx\  
---add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx`   
+--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
+```
 
 - Module name: org.librawfx
 
 
 You can have a look into the class TestAPP.java to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
 
-  `Image img=new Image(initialFile.toURI().toURL().toString(), false);  
+```
+  Image img=new Image(initialFile.toURI().toURL().toString(), false);  
   ImageView view = new ImageView();  
   view.setFitHeight(200);  
   view.setFitWidth(200);  
   view.setPreserveRatio(true);  
   stack.getChildren().add(view);  
-  view.setImage(img);`  
+  view.setImage(img);
+```  
 
 You can also use it without adding as an image format support. What I mean you can also forget the ".install" line and just load a file URL with the lib (see the TestApp.java to see how it works).
 
