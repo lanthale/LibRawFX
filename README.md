@@ -18,12 +18,13 @@ Point to the maven coordinates:
 
 NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT:
 
-`    <dependency>  
+```
+<dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
     <version>1.0</version>  
-    </dependency>  
-`  
+</dependency>  
+```  
 
 - In the Class where the start method is add as one of the first lines:
 
