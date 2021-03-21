@@ -1,11 +1,13 @@
 # LibRawFX
-Integration of LibRaw (www.libraw.org) library for JavaFX for all major operating systems (Linux, Windows, OSX). 
+Integration of LibRaw (htts://www.libraw.org) library for JavaFX for all major operating systems (Linux, Windows, OSX). 
 All raw formats can be loaded with the Image class and manipulated by Pixelwriter/Pixelreader. Limitation is that the image class only supports 8-bit color deph but converts all 16bit image format to 8bit automatically.
 
 **JDK 16 is required because of the foreign linker API usage**
 
 ## Status
-Generally the lib should work but I am not sure if all dependency's (native ones) are already in the jar file. Let me know if it is not working and I will add the libs accordingly.
+Generally the lib should work but I am not sure if all dependency's (native ones) are already in the jar file. Let me know if it is not working and I will add the libs accordingly. 
+
+I have integrated LibRaw version 0.20.2 (https://www.libraw.org/download#changelog)
 
 Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
 - Nikon NEF
