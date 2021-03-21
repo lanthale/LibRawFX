@@ -33,8 +33,8 @@ NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/
 - Add the following lines to your java config:
 
 ```
---add-modules jdk.incubator.foreign -Dforeign.restricted=permit\  
- --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx\  
+--add-modules jdk.incubator.foreign -Dforeign.restricted=permit  
+ --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
 
