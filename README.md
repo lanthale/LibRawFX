@@ -13,7 +13,7 @@ The lib is using allot of memory (always double the memory of the image). This i
 
 # Usage
 Point to the maven coordinates:
-
+NOT YET UPLOADED (For now you must compile it yourself)
 `<dependency>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
