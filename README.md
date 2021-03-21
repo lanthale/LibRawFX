@@ -16,6 +16,7 @@ The lib is using allot of memory (always double the memory of the image). This i
 # Usage
 Point to the maven coordinates:
 NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT
+
 `<dependency>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
@@ -25,9 +26,11 @@ NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/
 - In the Class where the start method is add as one of the first lines:
      "RAWImageLoaderFactory.install();"
 - Add the following lines to your java config:
-     > "--add-modules jdk.incubator.foreign -Dforeign.restricted=permit"
-     > "--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx"
-     > "--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx"
+
+> "--add-modules jdk.incubator.foreign -Dforeign.restricted=permit"
+> "--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx"
+> "--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx"
+
 - Module name: org.librawfx
 
 
