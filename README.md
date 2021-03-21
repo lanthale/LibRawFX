@@ -15,7 +15,8 @@ The lib is using allot of memory (always double the memory of the image). This i
 
 # Usage
 Point to the maven coordinates:
-NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT
+
+NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT:
 
 `<dependency>
     <groupId>org.librawfx</groupId>
