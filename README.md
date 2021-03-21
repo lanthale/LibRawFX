@@ -1,5 +1,14 @@
 # LibRawFX
-Integration of LibRaw library for Javafx. All raw formats can be loaded with the Image class and manipulated by Pixelwriter/Pixelreader. Limitation is that the image class only supports 8-bit color deph.
+Integration of LibRaw library for Javafx. All raw formats can be loaded with the Image class and manipulated by Pixelwriter/Pixelreader. Limitation is that the image class only supports 8-bit color deph but converts all 16bit image format to 8bit automatically.
+
+# Limitation
+Actually only the following raw formats are enabled:
+- Nikon NEF
+- Canon CRW/CR2
+- SIMGA Merrill/Quattro X3F
+- Fuji X-Trans RAF
+
+The lib is using allot of memory (always double the memory of the image). This is under investigation to improve it further. 
 
 # Usage
 Point to the maven coordinates:
@@ -19,13 +28,14 @@ Point to the maven coordinates:
 
 
 You can have a look into the class TestAPP.java to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
-Image img=new Image(initialFile.toURI().toURL().toString(), false);
-ImageView view = new ImageView();
-view.setFitHeight(200);
-view.setFitWidth(200);
-view.setPreserveRatio(true);
-stack.getChildren().add(view);
-view.setImage(img);
+  Image img=new Image(initialFile.toURI().toURL().toString(), false);
+  ImageView view = new ImageView();
+  view.setFitHeight(200);
+  view.setFitWidth(200);
+  view.setPreserveRatio(true);
+  stack.getChildren().add(view);
+  view.setImage(img);
+You can also use it without adding as an image format support. What I mean you can also forget the ".install" line and just load a file URL with the lib (see the TestApp.java to see how it works).
 
 # Compile yourself:
 - OpenJDKA/Adoptopenjdk 16 or newer
