@@ -3,6 +3,7 @@ Integration of LibRaw (www.libraw.org) library for JavaFX for all major operatin
 All raw formats can be loaded with the Image class and manipulated by Pixelwriter/Pixelreader. Limitation is that the image class only supports 8-bit color deph but converts all 16bit image format to 8bit automatically.
 
 # Limitation
+JDK 16 is required because of the foreign linker API usage
 Actually only the following raw formats are enabled (see class RAWDescriptor.java):
 - Nikon NEF
 - Canon CRW/CR2
