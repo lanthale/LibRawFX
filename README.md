@@ -21,7 +21,7 @@ requested by Javafx is actually ignored. Ignored means if requested size is belo
 - The white balance is set to camera white balance and not exposed to be set
 - The output is set to 16bit RGB color model
 
-# Usage
+## Usage
 Point to the maven coordinates:
 
 NOT UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT:
@@ -45,7 +45,7 @@ NOT UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/down
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
 
-- Module name: org.librawfx
+- **Module name: org.librawfx**
 
 
 You can have a look into the class TestAPP.java to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
@@ -62,7 +62,7 @@ You can have a look into the class TestAPP.java to see how to use it, but genera
 
 You can also use the lib without adding the file handler. What I mean is that you can also forget the "...install" line and just load a file URL with the lib (see the `TestApp.java` to see how it works).
 
-# Steps to create your own build:
+## Steps to create your own build:
 - OpenJDKA/Adoptopenjdk 16 or newer
 - JavaFX 11 or newer (15 is recommended)
 - SET JAVA_HOME variable
