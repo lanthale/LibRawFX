@@ -2,21 +2,29 @@
 Integration of LibRaw (www.libraw.org) library for JavaFX for all major operating systems (Linux, Windows, OSX). 
 All raw formats can be loaded with the Image class and manipulated by Pixelwriter/Pixelreader. Limitation is that the image class only supports 8-bit color deph but converts all 16bit image format to 8bit automatically.
 
-# Limitation
-JDK 16 is required because of the foreign linker API usage
+**JDK 16 is required because of the foreign linker API usage**
 
-Actually only the following raw formats are enabled (see class RAWDescriptor.java):
+# Status
+Generally the lib should work but I am not sure if all dependency's (native ones) are already in the jar file. Let me know if it is not working and I will add the libs accordingly.
+
+Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
 - Nikon NEF
 - Canon CRW/CR2
 - SIMGA Merrill/Quattro X3F
 - Fuji X-Trans RAF
 
-The lib is using allot of memory (always double the memory of the image). This is under investigation to improve it further. 
+The lib is using allot of memory (always double the memory of the image) because I can only load the complete raw file or decrease it in size about 50%. That means the size
+requested by Javafx is actually ignored. Ignored means if requested size is below 300px than the file is loaded with 50% in size otherwise the full image is loaded
+
+## Open topics
+- It is not possible to change the demosaic process
+- The white balance is set to automatic whitebalance and not exposed
+- The output is set to 16bit RGB color model
 
 # Usage
 Point to the maven coordinates:
 
-NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT:
+NOT UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT:
 
 ```
 <dependency>  
@@ -26,12 +34,11 @@ NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/
 </dependency>  
 ```  
 
-- In the Class where the start method is add as one of the first lines:
+- In the Class where the start method is add as one of the first lines the following code to install the file handler:
 
      `RAWImageLoaderFactory.install();`  
 
-- Add the following lines to your java config:
-
+- and add the following lines to your java config:
 ```
 --add-modules jdk.incubator.foreign -Dforeign.restricted=permit  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
@@ -53,9 +60,9 @@ You can have a look into the class TestAPP.java to see how to use it, but genera
   view.setImage(img);
 ```  
 
-You can also use it without adding as an image format support. What I mean you can also forget the ".install" line and just load a file URL with the lib (see the TestApp.java to see how it works).
+You can also use the lib without adding the file handler. What I mean is that you can also forget the "...install" line and just load a file URL with the lib (see the `TestApp.java` to see how it works).
 
-# Compile yourself:
+# Steps to create your own build:
 - OpenJDKA/Adoptopenjdk 16 or newer
 - JavaFX 11 or newer (15 is recommended)
 - SET JAVA_HOME variable
