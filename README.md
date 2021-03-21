@@ -25,7 +25,9 @@ NOT YET UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/
 </dependency>`
 
 - In the Class where the start method is add as one of the first lines:
-     "RAWImageLoaderFactory.install();"
+
+     `RAWImageLoaderFactory.install();`
+
 - Add the following lines to your java config:
 
 > "--add-modules jdk.incubator.foreign -Dforeign.restricted=permit"
