@@ -17,8 +17,8 @@ The lib is using allot of memory (always double the memory of the image) because
 requested by Javafx is actually ignored. Ignored means if requested size is below 300px than the file is loaded with 50% in size otherwise the full image is loaded
 
 ## Open topics
-- It is not possible to change the demosaic process
-- The white balance is set to automatic whitebalance and not exposed
+- It is not possible to influence the demosaic process or access the raw data
+- The white balance is set to camera white balance and not exposed to be set
 - The output is set to 16bit RGB color model
 
 # Usage
