@@ -7,12 +7,8 @@ package org.librawfx;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jdk.incubator.foreign.CLinker;
 import static jdk.incubator.foreign.CLinker.C_CHAR;
 import static jdk.incubator.foreign.CLinker.C_INT;
@@ -20,7 +16,6 @@ import jdk.incubator.foreign.LibraryLookup;
 import jdk.incubator.foreign.MemoryAddress;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.NativeScope;
-import jdk.incubator.foreign.ValueLayout;
 import org.libraw.RuntimeHelper;
 import org.libraw.libraw_h;
 
@@ -52,7 +47,7 @@ public class LibrawImage {
         this.imageInputStream = input;
     }
 
-    public synchronized byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray) throws IOException {        
+    public synchronized byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray) throws IOException {
         if (loadLibraryFromJar == null) {
             String OS = System.getProperty("os.name").toUpperCase();
             if (OS.contains("WIN")) {
@@ -69,7 +64,7 @@ public class LibrawImage {
         if (imageInputStream == null) {
             throw new IllegalArgumentException("input == null!");
         }
-        try (var scope = NativeScope.unboundedScope()) {
+        try ( var scope = NativeScope.unboundedScope()) {
             iprc = libraw_h.libraw_init(0);
             MemorySegment datasegment = libraw_h.libraw_data_t.ofAddressRestricted(iprc);
             MemorySegment params$slice = libraw_h.libraw_data_t.params$slice(datasegment);
@@ -119,8 +114,19 @@ public class LibrawImage {
         }
     }
 
-    public synchronized int[] readPixelData() {
-        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(new String[]{"/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/Libraw-temp/libraw-osx/lib/.libs/libraw.20.dylib"});
+    public synchronized int[] readPixelData() throws IOException {
+        if (loadLibraryFromJar == null) {
+            String OS = System.getProperty("os.name").toUpperCase();
+            if (OS.contains("WIN")) {
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll");
+            } else if (OS.contains("MAC")) {
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw.20.dylib");
+            } else if (OS.contains("NUX")) {
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw.so");
+            }
+            loadLibraryFromJar.deleteOnExit();
+        }
+        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(new String[]{loadLibraryFromJar.getAbsolutePath()});
 
         if (imageFileURL == null) {
             throw new IllegalArgumentException("imageFileURL == null!");
@@ -145,7 +151,7 @@ public class LibrawImage {
 
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         try (
-                MemorySegment errorCode = MemorySegment.allocateNative(C_INT.byteSize())) {
+                 MemorySegment errorCode = MemorySegment.allocateNative(C_INT.byteSize())) {
             mem_image_adr = libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode.address());
             MemorySegment imageMemSegment = libraw_h.libraw_processed_image_t.ofAddressRestricted(mem_image_adr);
             MemorySegment data$slice = libraw_h.libraw_processed_image_t.data$slice(imageMemSegment);

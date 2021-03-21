@@ -13,12 +13,12 @@ import com.sun.javafx.iio.common.ImageDescriptor;
  */
 public class RAWDescriptor extends ImageDescriptor {
 
-    private static final String formatName = "CR2";
+    private static final String formatName = "RAW";
 
-    private static final String[] extensions = {"cr2", "crw"};
+    private static final String[] extensions = {"cr2", "crw", "cr3", "nef", "raf", "x3f"};
 
     private static final Signature[] signatures = {
-        new Signature(hexStringToByteArray("49491A0000004845")),new Signature(hexStringToByteArray("49492A00100000004352"))};
+        new Signature(hexStringToByteArray("49491A0000004845")),new Signature(hexStringToByteArray("49492A00100000004352")), new Signature(hexStringToByteArray("46554A4946494C4D4343")), new Signature(hexStringToByteArray("49492A00080000001C00")), new Signature(hexStringToByteArray("464F5662000004000100")), new Signature(hexStringToByteArray("464F5662000003003030"))};
 
     private static ImageDescriptor theInstance = null;
 
