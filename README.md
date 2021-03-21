@@ -4,7 +4,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 
 **JDK 16 is required because of the foreign linker API usage**
 
-# Status
+## Status
 Generally the lib should work but I am not sure if all dependency's (native ones) are already in the jar file. Let me know if it is not working and I will add the libs accordingly.
 
 Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
