@@ -4,6 +4,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 
 # Limitation
 JDK 16 is required because of the foreign linker API usage
+
 Actually only the following raw formats are enabled (see class RAWDescriptor.java):
 - Nikon NEF
 - Canon CRW/CR2
