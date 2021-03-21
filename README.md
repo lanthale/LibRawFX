@@ -30,13 +30,13 @@ Point to the maven coordinates:
 
 
 You can have a look into the class TestAPP.java to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
-  Image img=new Image(initialFile.toURI().toURL().toString(), false);
+  `Image img=new Image(initialFile.toURI().toURL().toString(), false);
   ImageView view = new ImageView();
   view.setFitHeight(200);
   view.setFitWidth(200);
   view.setPreserveRatio(true);
   stack.getChildren().add(view);
-  view.setImage(img);
+  view.setImage(img);`
 You can also use it without adding as an image format support. What I mean you can also forget the ".install" line and just load a file URL with the lib (see the TestApp.java to see how it works).
 
 # Compile yourself:
