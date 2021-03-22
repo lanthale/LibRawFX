@@ -10,6 +10,7 @@ Generally the lib should work but I am not sure if all dependency's (native ones
 I have integrated LibRaw version 0.20.2 (https://www.libraw.org/download#changelog)
 
 Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
+- Adobe DNG
 - Nikon NEF
 - Canon CRW/CR2
 - SIMGA Merrill/Quattro X3F
@@ -26,8 +27,6 @@ requested by Javafx is actually ignored. Ignored means if requested size is belo
 
 ## Usage
 Point to the maven coordinates:
-
-NOT UPLOADED YET, PLEASE USE (https://github.com/lanthale/LibRawFX/releases/download/v1.0/LibRawFX-1.0.jar) INSTAT:
 
 ```
 <dependency>  
