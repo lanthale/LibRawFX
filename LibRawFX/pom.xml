@@ -35,33 +35,7 @@
         <maven.compiler.target>16</maven.compiler.target>        
     </properties>
     
-    <repositories>
-        <repository>
-            <id>oss.sonatype.org</id>
-            <name>Sonatype Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>  
-        <repository>
-            <id>bintray-jerady-maven</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/jerady/maven</url>            
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository> 
-        <repository>
-            <id>com.springsource.repository.bundles.external</id>
-            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/external</url>
-        </repository>
-           
-    </repositories>
+    
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -110,6 +84,32 @@
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
                     </compilerArgs>                                        
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>            
             <plugin>
                 <groupId>org.openjfx</groupId>
