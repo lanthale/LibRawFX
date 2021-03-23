@@ -21,10 +21,13 @@ public class TestApp extends Application {
 
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException {
-        RAWImageLoaderFactory.install();        
+        RAWImageLoaderFactory.install(); 
+        
+        Parameters parameters = getParameters();
+        String file=parameters.getRaw().get(0);        
         
         FlowPane stack = new FlowPane();
-        loadImagesByStream(stack);
+        loadImagesByStream(stack, file);
         //loadImagesByFile(stack);
 
         var scene = new Scene(stack, 640, 480);
@@ -32,8 +35,8 @@ public class TestApp extends Application {
         stage.show();
     }
     
-    private void loadImagesByStream(FlowPane stack) throws MalformedURLException {
-        File initialFile = new File("/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2");
+    private void loadImagesByStream(FlowPane stack, String file) throws MalformedURLException {
+        File initialFile = new File(file);
         //stack.getChildren().add(ind);
         //ind.progressProperty().bind(img.progressProperty());
         for (int i = 0; i < 5; i++) {            
@@ -48,11 +51,11 @@ public class TestApp extends Application {
         //stack.getChildren().remove(ind);
     }
 
-    private void loadImagesByFile(FlowPane stack) throws IOException {
+    private void loadImagesByFile(FlowPane stack, String file) throws IOException {
         //stack.getChildren().add(ind);
         //ind.progressProperty().bind(img.progressProperty());
         for (int i = 0; i < 5; i++) {
-            File initialFile = new File("/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2");
+            File initialFile = new File(file);
             LibrawImage libraw=new LibrawImage(initialFile.getAbsolutePath());
             int[] raw = libraw.readPixelData();            
             WritableImage img = new WritableImage(libraw.getImageWidth(), libraw.getImageHeight());
@@ -69,7 +72,9 @@ public class TestApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        //args=new String[1];
+        //args[0]="/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";        
+        launch(args);
     }
 
     public static int fromByteArray(byte[] bytes) {
