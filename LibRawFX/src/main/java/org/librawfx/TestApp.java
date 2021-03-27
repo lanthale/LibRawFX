@@ -73,8 +73,8 @@ public class TestApp extends Application {
 
     public static void main(String[] args) {
         args=new String[1];
-        args[0]="/home/lanthale/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";        
-        //args[0]="/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";        
+        //args[0]="/home/lanthale/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";        
+        args[0]="/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";        
         launch(args);
     }
 

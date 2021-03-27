@@ -4,9 +4,7 @@ package org.libraw;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
-import java.util.Objects;
 import jdk.incubator.foreign.*;
-import jdk.incubator.foreign.MemoryLayout.PathElement;
 import static jdk.incubator.foreign.CLinker.*;
 class libraw_h_constants_0 {
 

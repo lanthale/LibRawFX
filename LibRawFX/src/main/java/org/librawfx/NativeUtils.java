@@ -24,11 +24,13 @@
 package org.librawfx;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.ProviderNotFoundException;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import jdk.incubator.foreign.LibraryLookup;
 import org.libraw.RuntimeHelper;
 
@@ -102,16 +104,15 @@ public class NativeUtils {
             temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
             temporaryDir.deleteOnExit();
         }
-        
 
-        String[] nativeLibs=new String[path.length];
+        String[] nativeLibs = new String[path.length];
         for (int i = 0; i < path.length; i++) {
             String part = path[i];
-            String filenm=new File(part).getName();
+            String filenm = new File(part).getName();
             File temp = new File(temporaryDir, filenm);
             try ( InputStream is = NativeUtils.class.getResourceAsStream(part)) {
                 Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                nativeLibs[i]=temp.toString();
+                nativeLibs[i] = temp.toString();
             } catch (IOException e) {
                 temp.delete();
                 throw e;
@@ -123,6 +124,8 @@ public class NativeUtils {
 
         return nativeLibs;
     }
+
+    
 
     private static boolean isPosixCompliant() {
         try {
