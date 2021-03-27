@@ -68,7 +68,7 @@ You can also use the lib without adding the file handler. What I mean is that yo
 - OpenJDKA/Adoptopenjdk 16 or newer
 - JavaFX 11 or newer (15 is recommended)
 - SET JAVA_HOME variable
-- Execute `mvn clean compile package -f PhotoSlide/pom.xml`
+- Execute `mvn clean compile package -f LibRawFX/pom.xml`
 - To run the example execute `mvn javafx:run@cli-default`
 - IDE Integration: execute as a maven goal `javafx:run@ide-debug` or `javafx:run@ide-profile`
 
