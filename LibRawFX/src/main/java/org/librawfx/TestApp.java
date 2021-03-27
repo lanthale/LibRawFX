@@ -79,8 +79,6 @@ public class TestApp extends Application {
         launch(args);
     }
 
-    public static int fromByteArray(byte[] bytes) {
-        return bytes[0] << 16 | (bytes[1] & 0xFF) << 8 | (bytes[2] & 0xFF);
-    }
+    
 
 }
