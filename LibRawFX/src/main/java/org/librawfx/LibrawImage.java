@@ -53,12 +53,12 @@ public class LibrawImage {
             if (OS.contains("WIN")) {
                 loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
             } else if (OS.contains("MAC")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib","/lib/osx/libjpeg.9.dylib","/lib/osx/libz.1.dylib");
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib","/lib/osx/libjpeg.9.dylib","/lib/osx/libz.1.dylib");                
             } else if (OS.contains("NUX")) {
                 loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
             }
-            System.out.println("system path: "+loadLibraryFromJar);
-            System.out.println("OS "+OS);
+            System.out.println("system path: "+loadLibraryFromJar[0]);
+            System.out.println("OS "+OS);            
             for (int i = 0; i < loadLibraryFromJar.length; i++) {
                 String part=loadLibraryFromJar[i];
                 //new File(part).deleteOnExit();
@@ -66,6 +66,7 @@ public class LibrawImage {
             }            
         }
         LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(loadLibraryFromJar);
+        System.out.println("LD path: "+System.getProperty("java.library.path"));
 
         if (imageInputStream == null) {
             throw new IllegalArgumentException("input == null!");
