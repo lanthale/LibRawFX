@@ -55,9 +55,11 @@ public class LibrawImage {
             } else if (OS.contains("MAC")) {
                 loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw.20.dylib");
             } else if (OS.contains("NUX")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw.so");
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw.so.20");
             }
-            loadLibraryFromJar.deleteOnExit();
+            System.out.println("system path: "+loadLibraryFromJar.getPath());
+            System.out.println("OS "+OS);
+            //loadLibraryFromJar.deleteOnExit();
         }
         LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(new String[]{loadLibraryFromJar.getAbsolutePath()});
 
@@ -220,8 +222,8 @@ public class LibrawImage {
     }
 
     void dispose() {
-        libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
-        libraw_h.libraw_close(iprc);
+        //libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
+        //libraw_h.libraw_close(iprc);
     }
 
 }

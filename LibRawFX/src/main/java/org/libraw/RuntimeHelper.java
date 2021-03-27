@@ -41,6 +41,7 @@ public final class RuntimeHelper {
             return Arrays.stream(libNames)
                  .map(libName -> {
                       if (libName.indexOf(File.separatorChar) != -1) {
+                          
                           return LibraryLookup.ofPath(Path.of(libName));
                       } else {
                           return LibraryLookup.ofLibrary(libName);
