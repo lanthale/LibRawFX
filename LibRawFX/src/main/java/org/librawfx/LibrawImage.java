@@ -35,7 +35,7 @@ public class LibrawImage {
     private boolean halfsize;
     private MemoryAddress iprc;
     private MemoryAddress mem_image_adr;
-    private File loadLibraryFromJar;
+    private String[] loadLibraryFromJar;
 
     public LibrawImage(String imageFile) {
         this.imageFileURL = imageFile;
@@ -51,17 +51,21 @@ public class LibrawImage {
         if (loadLibraryFromJar == null) {
             String OS = System.getProperty("os.name").toUpperCase();
             if (OS.contains("WIN")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll");
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
             } else if (OS.contains("MAC")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw.20.dylib");
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib","/lib/osx/libjpeg.9.dylib","/lib/osx/libz.1.dylib");
             } else if (OS.contains("NUX")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw.so.20");
+                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
             }
-            System.out.println("system path: "+loadLibraryFromJar.getPath());
+            System.out.println("system path: "+loadLibraryFromJar);
             System.out.println("OS "+OS);
-            //loadLibraryFromJar.deleteOnExit();
+            for (int i = 0; i < loadLibraryFromJar.length; i++) {
+                String part=loadLibraryFromJar[i];
+                //new File(part).deleteOnExit();
+                
+            }            
         }
-        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(new String[]{loadLibraryFromJar.getAbsolutePath()});
+        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(loadLibraryFromJar);
 
         if (imageInputStream == null) {
             throw new IllegalArgumentException("input == null!");
@@ -126,9 +130,9 @@ public class LibrawImage {
             } else if (OS.contains("NUX")) {
                 loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw.so");
             }
-            loadLibraryFromJar.deleteOnExit();
+            //loadLibraryFromJar.deleteOnExit();
         }
-        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(new String[]{loadLibraryFromJar.getAbsolutePath()});
+        //LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(new String[]{loadLibraryFromJar.getAbsolutePath()});
 
         if (imageFileURL == null) {
             throw new IllegalArgumentException("imageFileURL == null!");

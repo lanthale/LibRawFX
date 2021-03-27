@@ -39,7 +39,7 @@ public class TestApp extends Application {
         File initialFile = new File(file);
         //stack.getChildren().add(ind);
         //ind.progressProperty().bind(img.progressProperty());
-        for (int i = 0; i < 5; i++) {            
+        for (int i = 0; i < 1; i++) {            
             Image img=new Image(initialFile.toURI().toURL().toString(), false);
             ImageView view = new ImageView();
             view.setFitHeight(200);
@@ -54,7 +54,7 @@ public class TestApp extends Application {
     private void loadImagesByFile(FlowPane stack, String file) throws IOException {
         //stack.getChildren().add(ind);
         //ind.progressProperty().bind(img.progressProperty());
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             File initialFile = new File(file);
             LibrawImage libraw=new LibrawImage(initialFile.getAbsolutePath());
             int[] raw = libraw.readPixelData();            
