@@ -13,6 +13,8 @@ import com.sun.javafx.iio.ImageLoaderFactory;
 import com.sun.javafx.iio.ImageStorage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class to install the TIFF renderer to the javafx image systems
@@ -25,7 +27,12 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
     private static DimensionProvider dimensionProvider;
 
     public static final void install() {
-        install(new DefaultDimensionProvider());
+        try {
+            LibrawImage.loadLibs();
+        } catch (IOException ex) {
+            Logger.getLogger(RAWImageLoaderFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        install(new DefaultDimensionProvider());        
     }
 
     public static final void install(DimensionProvider dimensionProvider) {

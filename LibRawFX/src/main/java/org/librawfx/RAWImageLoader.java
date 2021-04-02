@@ -8,13 +8,16 @@ package org.librawfx;
 import org.librawfx.dimension.DimensionProvider;
 import org.librawfx.dimension.Dimension;
 import com.sun.javafx.iio.ImageFrame;
+import com.sun.javafx.iio.ImageLoadListener;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;
 import com.sun.javafx.iio.common.ImageLoaderImpl;
+import com.sun.javafx.iio.common.ImageTools;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.HashSet;
 import javafx.stage.Screen;
 
 /**
@@ -24,29 +27,32 @@ import javafx.stage.Screen;
  */
 public class RAWImageLoader extends ImageLoaderImpl {
 
-    private static final int BYTES_PER_PIXEL = 3; // RGB
-
     private final InputStream input;
     private float maxPixelScale = 0;
     private final DimensionProvider dimensionProvider;
-    private Lock accessLock = new Lock();
+    private final Lock accessLock = new Lock();
     private boolean isDisposed = false;
-    private LibrawImage libraw;
+    private static LibrawImage libraw;
+    /** Set by setInputAttributes native code callback */
+    private int inWidth;
+    /** Set by setInputAttributes native code callback */
+    private int inHeight;
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
-        super(RAWDescriptor.getInstance());        
+        super(RAWDescriptor.getInstance());
 
         if (input == null) {
             throw new IllegalArgumentException("input == null!");
         }
         this.input = input;
         this.dimensionProvider = dimensionProvider;
+        libraw = new LibrawImage(this);
     }
 
     @Override
     public void dispose() {
         if (!accessLock.isLocked() && !isDisposed) {
-            isDisposed = true;            
+            isDisposed = true;
             libraw.dispose();
         }
     }
@@ -70,9 +76,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
     public ImageFrame load(int imageIndex, int width, int height, boolean preserveAspectRatio, boolean smooth) throws IOException {
         if (0 != imageIndex) {
             return null;
-        }
-        accessLock.lock();
-        libraw = new LibrawImage(input);
+        }        
+        accessLock.lock();                
+
         Dimension fallbackDimension = (width <= 0 || height <= 0) ? dimensionProvider.getDimension() : null;
 
         float imageWidth = width > 0 ? width : (float) fallbackDimension.getWidth();
@@ -83,15 +89,27 @@ public class RAWImageLoader extends ImageLoaderImpl {
                 width, height, null, null, null);
 
         updateImageMetadata(md);
-
+        ByteBuffer imageData = null;
         try {
-            return createImageFrame(imageWidth, imageHeight, getPixelScale(), libraw);
+            updateImageProgress(0);
+            imageData = getImageData(libraw);
         } catch (IOException ex) {
             throw new IOException(ex);
         } finally {
             accessLock.unlock();
             dispose();
         }
+        if (imageData == null) {
+            throw new IOException("Error decompressing RAW Image stream!");
+        }
+
+        /*System.out.println("scale to request size");
+        if (libraw.getImageWidth() != width || libraw.getImageHeight() != height) {
+            imageData = ImageTools.scaleImage(imageData,
+                    libraw.getImageWidth(), libraw.getImageHeight(), libraw.getNumBands(), width, height, smooth);
+        }
+        System.out.println("scale to request size-finished");*/
+        return createImageFrame(imageData, imageWidth, imageHeight, getPixelScale(), libraw);
     }
 
     public float getPixelScale() {
@@ -110,32 +128,29 @@ public class RAWImageLoader extends ImageLoaderImpl {
         return maxRenderScale;
     }
 
-    private ImageFrame createImageFrame(float width, float height, float pixelScale, LibrawImage libraw)
+    private ImageFrame createImageFrame(ByteBuffer imageData, float width, float height, float pixelScale, LibrawImage libraw)
             throws IOException {
-        ByteBuffer imageData = null;
-        if (width > 300) {
-            imageData = getImageData(false, libraw);
-        } else {
-            imageData = getImageData(true, libraw);
-        }
-
         return new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, libraw.getImageWidth(),
                 libraw.getImageHeight(), libraw.getStride(), null, pixelScale, null);
     }
 
-    private ByteBuffer getImageData(boolean halfsize, LibrawImage libraw) throws IOException {
-        libraw.setHalfSize(halfsize);
+    private ByteBuffer getImageData(LibrawImage libraw) throws IOException {        
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
-        byte[] datab = new byte[1024];
+        byte[] datab = new byte[1024];          
         while ((nRead = input.read(datab, 0, datab.length)) != -1) {
             buffer.write(datab, 0, nRead);
-        }
-        buffer.flush();
+        }        
+        buffer.flush();                
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
-
+        updateImageProgress(100f);
         return ByteBuffer.wrap(raw);
+    }
+    
+    public void updateImageProgress(int outLinesDecoded, int outHeight) {
+        float res=100.0F * outLinesDecoded / outHeight;        
+        updateImageProgress(100.0F * outLinesDecoded / outHeight);
     }
 
     private static class Lock {

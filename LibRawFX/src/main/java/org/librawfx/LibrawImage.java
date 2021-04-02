@@ -8,9 +8,6 @@ package org.librawfx;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jdk.incubator.foreign.CLinker;
 import static jdk.incubator.foreign.CLinker.C_CHAR;
 import static jdk.incubator.foreign.CLinker.C_INT;
@@ -27,58 +24,56 @@ import org.libraw.libraw_h;
  */
 public class LibrawImage {
 
+    private static LibraryLookup[] libraries;
+
     private final String imageFileURL;
-    private InputStream imageInputStream;
     private short imageWidth;
     private short imageHeight;
     private short imageBits;
     private short imageColors;
     private int stride;
-    private boolean halfsize;
     private MemoryAddress iprc;
     private MemoryAddress mem_image_adr;
-    private String[] loadLibraryFromJar;
+    private static String[] loadLibraryFromJar;
+    private RAWImageLoader loader;
 
     public LibrawImage(String imageFile) {
         this.imageFileURL = imageFile;
-        halfsize = false;
     }
 
-    LibrawImage(InputStream input) {
+    LibrawImage(RAWImageLoader loader) {
         imageFileURL = null;
-        this.imageInputStream = input;
+        this.loader = loader;
+    }
+
+    public static void loadLibs() throws IOException {
+        String OS = System.getProperty("os.name").toUpperCase();
+        if (OS.contains("WIN")) {
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
+        } else if (OS.contains("MAC")) {
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib");
+        } else if (OS.contains("NUX")) {
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
+        }
+        for (int i = 0; i < loadLibraryFromJar.length; i++) {
+            String part = loadLibraryFromJar[i];
+            new File(part).deleteOnExit();
+        }
+        libraries = RuntimeHelper.libraries(loadLibraryFromJar);
     }
 
     public synchronized byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
         if (loadLibraryFromJar == null) {
-            String OS = System.getProperty("os.name").toUpperCase();
-            if (OS.contains("WIN")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
-            } else if (OS.contains("MAC")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib");
-            } else if (OS.contains("NUX")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
-            }
-            System.out.println("system path: " + loadLibraryFromJar[0]);
-            System.out.println("OS " + OS);
-            for (int i = 0; i < loadLibraryFromJar.length; i++) {
-                String part = loadLibraryFromJar[i];
-                new File(part).deleteOnExit();
-            }
+            throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
-        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(loadLibraryFromJar);
-        System.out.println("LD path: " + System.getProperty("java.library.path"));
 
-        if (imageInputStream == null) {
-            throw new IllegalArgumentException("input == null!");
-        }
-        try ( var scope = NativeScope.unboundedScope()) {
+        try (var scope = NativeScope.unboundedScope()) {            
             iprc = libraw_h.libraw_init(0);
             MemorySegment datasegment = libraw_h.libraw_data_t.ofAddressRestricted(iprc);
             MemorySegment params$slice = libraw_h.libraw_data_t.params$slice(datasegment);
-            if (halfsize == true) {
-                libraw_h.libraw_output_params_t.half_size$set(params$slice, 1);
-            }
             libraw_h.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
             libraw_h.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
             libraw_h.libraw_output_params_t.output_tiff$set(params$slice, 0);
@@ -104,10 +99,10 @@ public class LibrawImage {
             imageHeight = libraw_h.libraw_processed_image_t.height$get(imageMemSegment);
             imageBits = libraw_h.libraw_processed_image_t.bits$get(imageMemSegment);
             imageColors = libraw_h.libraw_processed_image_t.colors$get(imageMemSegment);
-
             stride = imageWidth * imageColors * (imageBits / 8);
             byte[] line = new byte[stride];
             for (var i = 0; i < imageHeight; i++) {
+                loader.updateImageProgress(i, imageHeight);
                 MemoryAddress addOffset = data$slice.address().addOffset(stride * i);
                 MemorySegment asSegmentRestricted = addOffset.asSegmentRestricted(stride);
                 line = asSegmentRestricted.toByteArray();
@@ -126,46 +121,30 @@ public class LibrawImage {
         if (imageFileURL == null) {
             throw new IllegalArgumentException("imageFileURL == null!");
         }
-
         if (loadLibraryFromJar == null) {
-            String OS = System.getProperty("os.name").toUpperCase();
-            if (OS.contains("WIN")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
-            } else if (OS.contains("MAC")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib");
-            } else if (OS.contains("NUX")) {
-                loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
-            }
-            System.out.println("system path: " + loadLibraryFromJar[0]);
-            System.out.println("OS " + OS);
-            for (int i = 0; i < loadLibraryFromJar.length; i++) {
-                String part = loadLibraryFromJar[i];
-                new File(part).deleteOnExit();
-            }
+            throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
-        LibraryLookup[] LIBRARIES = RuntimeHelper.libraries(loadLibraryFromJar);
-        System.out.println("LD path: " + System.getProperty("java.library.path"));
+        try (var scope = NativeScope.unboundedScope()) {
+            iprc = libraw_h.libraw_init(0);
+            MemorySegment datasegment = libraw_h.libraw_data_t.ofAddressRestricted(iprc);
+            MemorySegment params$slice = libraw_h.libraw_data_t.params$slice(datasegment);
+            libraw_h.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
+            libraw_h.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
+            libraw_h.libraw_output_params_t.output_tiff$set(params$slice, 0);
+            //libraw_output_params_t.output_bps$set(params$slice, 8);
+            //libraw_output_params_t.output_color$set(params$slice, 0);
 
-        iprc = libraw_h.libraw_init(0);
-        MemorySegment datasegment = libraw_h.libraw_data_t.ofAddressRestricted(iprc);
-        MemorySegment params$slice = libraw_h.libraw_data_t.params$slice(datasegment);
-        if (halfsize == true) {
-            libraw_h.libraw_output_params_t.half_size$set(params$slice, 1);
-        }
-        libraw_h.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
-        libraw_h.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
-        libraw_h.libraw_output_params_t.output_tiff$set(params$slice, 0);
-        //libraw_output_params_t.output_bps$set(params$slice, 8);
-        //libraw_output_params_t.output_color$set(params$slice, 0);
+            int libraw_open_file = libraw_h.libraw_open_file(iprc, CLinker.toCString(imageFileURL).address());
+            if (libraw_open_file > 0) {
+                throw new IOException("Cannot open file stream '" + imageFileURL + "'!");
+            }
 
-        int libraw_open_file = libraw_h.libraw_open_file(iprc, CLinker.toCString(imageFileURL).address());
+            libraw_h.libraw_unpack(iprc);
+            libraw_h.libraw_dcraw_process(iprc);
 
-        libraw_h.libraw_unpack(iprc);
-        libraw_h.libraw_dcraw_process(iprc);
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
 
-        ByteArrayOutputStream bo = new ByteArrayOutputStream();
-        try (
-                 MemorySegment errorCode = MemorySegment.allocateNative(C_INT.byteSize())) {
+            MemorySegment errorCode = scope.allocate(C_INT.byteSize());
             mem_image_adr = libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode.address());
             MemorySegment imageMemSegment = libraw_h.libraw_processed_image_t.ofAddressRestricted(mem_image_adr);
             MemorySegment data$slice = libraw_h.libraw_processed_image_t.data$slice(imageMemSegment);
@@ -174,7 +153,7 @@ public class LibrawImage {
             imageBits = libraw_h.libraw_processed_image_t.bits$get(imageMemSegment);
             imageColors = libraw_h.libraw_processed_image_t.colors$get(imageMemSegment);
             //var num = imageWidth % 4;
-            var stride = imageWidth * imageColors * (imageBits / 8);
+            stride = imageWidth * imageColors * (imageBits / 8);
             byte[] line = new byte[stride];
             for (var i = 0; i < imageHeight; i++) {
                 MemoryAddress addOffset = data$slice.address().addOffset(stride * i);
@@ -186,12 +165,14 @@ public class LibrawImage {
                     return null;
                 }
             }
+            byte[] rawBytes = bo.toByteArray();
+            int[] raw = convertToINT(rawBytes);
             libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
+            libraw_h.libraw_close(iprc);
+            mem_image_adr = null;
+            iprc = null;
+            return raw;
         }
-        byte[] rawBytes = bo.toByteArray();
-        int[] raw = convertToINT(rawBytes);
-        libraw_h.libraw_close(iprc);
-        return raw;
     }
 
     private int[] convertToINT(byte[] rawBytes) {
@@ -228,14 +209,16 @@ public class LibrawImage {
     public int getStride() {
         return stride;
     }
-
-    void setHalfSize(boolean halfsize) {
-        this.halfsize = halfsize;
+    
+    public int getNumBands(){
+        return imageColors * (imageBits);
     }
 
-    void dispose() {
-        //libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
-        //libraw_h.libraw_close(iprc);
+    public void dispose() {
+        libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
+        libraw_h.libraw_close(iprc);
+        mem_image_adr = null;
+        iprc = null;
     }
 
 }
