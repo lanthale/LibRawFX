@@ -8,22 +8,21 @@ package org.librawfx;
 import org.librawfx.dimension.DimensionProvider;
 import org.librawfx.dimension.Dimension;
 import com.sun.javafx.iio.ImageFrame;
-import com.sun.javafx.iio.ImageLoadListener;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;
 import com.sun.javafx.iio.common.ImageLoaderImpl;
-import com.sun.javafx.iio.common.ImageTools;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.stage.Screen;
 
 /**
- * Class to load the image requested by the file
+ * Class to load the raw image requested by the input stream
  *
- * @author selfemp
+ * @author Clemens Lanthaler
  */
 public class RAWImageLoader extends ImageLoaderImpl {
 
@@ -32,15 +31,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
     private final DimensionProvider dimensionProvider;
     private final Lock accessLock = new Lock();
     private boolean isDisposed = false;
-    private static LibrawImage libraw;
-    /** Set by setInputAttributes native code callback */
-    private int inWidth;
-    /** Set by setInputAttributes native code callback */
-    private int inHeight;
+    private LibrawImage libraw;    
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
-        super(RAWDescriptor.getInstance());
-
+        super(RAWDescriptor.getInstance());        
         if (input == null) {
             throw new IllegalArgumentException("input == null!");
         }
@@ -50,10 +44,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
     }
 
     @Override
-    public void dispose() {
+    public synchronized void dispose() {
         if (!accessLock.isLocked() && !isDisposed) {
             isDisposed = true;
-            libraw.dispose();
         }
     }
 
@@ -76,40 +69,60 @@ public class RAWImageLoader extends ImageLoaderImpl {
     public ImageFrame load(int imageIndex, int width, int height, boolean preserveAspectRatio, boolean smooth) throws IOException {
         if (0 != imageIndex) {
             return null;
-        }        
-        accessLock.lock();                
+        }
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locking native call " + accessLock.isLocked());        
+        accessLock.lock();
 
         Dimension fallbackDimension = (width <= 0 || height <= 0) ? dimensionProvider.getDimension() : null;
 
         float imageWidth = width > 0 ? width : (float) fallbackDimension.getWidth();
-        float imageHeight = height > 0 ? height : (float) fallbackDimension.getHeight();
-
-        ImageMetadata md = new ImageMetadata(null, true,
-                null, null, null, null, null,
-                width, height, null, null, null);
-
-        updateImageMetadata(md);
+        float imageHeight = height > 0 ? height : (float) fallbackDimension.getHeight();                
+        
+        
         ByteBuffer imageData = null;
+        short rawImageWidth = -1;
+        short rawImageHeight = -1;
+        int rawImageStride = 0;
         try {
             updateImageProgress(0);
             imageData = getImageData(libraw);
-        } catch (IOException ex) {
-            throw new IOException(ex);
-        } finally {
+            rawImageWidth = libraw.getImageWidth();
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "rawImageWidth " + rawImageWidth);
+            rawImageHeight = libraw.getImageHeight();
+            rawImageStride = libraw.getStride();
+        } catch (IOException e) {
+            throw e;
+        } catch (Throwable et) {
+            throw new IOException(et);
+        } finally {            
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Unlock native access...");
             accessLock.unlock();
             dispose();
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Unlock native access...finished");            
         }
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locked 2: " + accessLock.isLocked());        
+
         if (imageData == null) {
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Error decompressing RAW Image stream!");        
             throw new IOException("Error decompressing RAW Image stream!");
         }
+        
+        ImageMetadata md = new ImageMetadata(null, true,
+                null, null, null, null, null,
+                (int)rawImageWidth, (int)rawImageHeight, null, null, null);
 
-        /*System.out.println("scale to request size");
-        if (libraw.getImageWidth() != width || libraw.getImageHeight() != height) {
-            imageData = ImageTools.scaleImage(imageData,
-                    libraw.getImageWidth(), libraw.getImageHeight(), libraw.getNumBands(), width, height, smooth);
-        }
-        System.out.println("scale to request size-finished");*/
-        return createImageFrame(imageData, imageWidth, imageHeight, getPixelScale(), libraw);
+        updateImageMetadata(md);
+
+        /*if (libraw.getImageWidth() != width || libraw.getImageHeight() != height) {
+        System.out.println("scale to request size "+imageData.hasArray());
+        imageData = ImageTools.scaleImage(imageData,libraw.getImageWidth(), libraw.getImageHeight(), libraw.getNumBands(), width, height, smooth);
+        System.out.println("scale to request size-finished");
+        } */        
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");
+        ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, rawImageWidth,
+                rawImageHeight, rawImageStride, null, getPixelScale(), null);
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");        
+        return createImageFrame;
     }
 
     public float getPixelScale() {
@@ -126,30 +139,35 @@ public class RAWImageLoader extends ImageLoaderImpl {
             maxRenderScale = Math.max(maxRenderScale, accessor.getRenderScale(screen));
         }
         return maxRenderScale;
-    }
+    }    
 
-    private ImageFrame createImageFrame(ByteBuffer imageData, float width, float height, float pixelScale, LibrawImage libraw)
-            throws IOException {
-        return new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, libraw.getImageWidth(),
-                libraw.getImageHeight(), libraw.getStride(), null, pixelScale, null);
-    }
-
-    private ByteBuffer getImageData(LibrawImage libraw) throws IOException {        
+    /**
+     * method to handle the interaction with the native lib
+     * @param libraw the instance of the LibrawImage used to update the loading process
+     * @return ByteBuffer of the read image
+     * @throws IOException if the input stream cannot be read
+     */
+    private synchronized ByteBuffer getImageData(LibrawImage libraw) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
-        byte[] datab = new byte[1024];          
+        byte[] datab = new byte[1024];
         while ((nRead = input.read(datab, 0, datab.length)) != -1) {
             buffer.write(datab, 0, nRead);
-        }        
-        buffer.flush();                
+        }
+        buffer.flush();
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
         updateImageProgress(100f);
         return ByteBuffer.wrap(raw);
     }
-    
+
+    /**
+     * Method called by the class LibrawImage to update the progress
+     * @param outLinesDecoded Lines decoded
+     * @param outHeight overall height of the native image
+     */
     public void updateImageProgress(int outLinesDecoded, int outHeight) {
-        float res=100.0F * outLinesDecoded / outHeight;        
+        float res = 100.0F * outLinesDecoded / outHeight;
         updateImageProgress(100.0F * outLinesDecoded / outHeight);
     }
 

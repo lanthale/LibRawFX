@@ -26,16 +26,16 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
 
     private static DimensionProvider dimensionProvider;
 
-    public static final void install() {
+    public static final void install() {        
+        install(new DefaultDimensionProvider());        
+    }
+
+    public static final void install(DimensionProvider dimensionProvider) {
         try {
             LibrawImage.loadLibs();
         } catch (IOException ex) {
             Logger.getLogger(RAWImageLoaderFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
-        install(new DefaultDimensionProvider());        
-    }
-
-    public static final void install(DimensionProvider dimensionProvider) {
         RAWImageLoaderFactory.dimensionProvider = dimensionProvider;
 
         ImageStorage.addImageLoaderFactory(instance);        
