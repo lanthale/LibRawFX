@@ -49,6 +49,7 @@ public class LibrawImage {
 
     /**
      * Unpacks all native libs and places them in a temp directory and include them in the directory
+     * @param tempDir directory where the native libs are placed
      * @throws IOException if it is not possible to load/unpack the native libs into a temp directory
      */
     public static void loadLibs(String tempDir) throws IOException {

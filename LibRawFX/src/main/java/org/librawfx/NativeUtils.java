@@ -24,15 +24,13 @@
 package org.librawfx;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.ProviderNotFoundException;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import jdk.incubator.foreign.LibraryLookup;
-import org.libraw.RuntimeHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A simple library class which helps with loading dynamic libraries stored in
@@ -88,7 +86,7 @@ public class NativeUtils {
      * JAR.
      */
     public static String[] loadLibraryFromJar(String tempDir, String... path) throws IOException {
-
+        Logger.getLogger(NativeUtils.class.getName()).log(Level.FINEST, null, "Extracting native lib to " + tempDir + "...");
         if (null == path || !path[0].startsWith("/")) {
             throw new IllegalArgumentException("The path has to be absolute (start with '/').");
         }
@@ -106,13 +104,13 @@ public class NativeUtils {
             // Prepare temporary file
             if (temporaryDir == null) {
                 temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
-                temporaryDir.deleteOnExit();
+                //temporaryDir.deleteOnExit();
             }
         } else {
             temporaryDir = new File(tempDir);
             if (temporaryDir.exists() == false) {
                 temporaryDir.mkdirs();
-                temporaryDir.deleteOnExit();
+                //temporaryDir.deleteOnExit();
             }
         }
 
@@ -132,7 +130,7 @@ public class NativeUtils {
                 throw new FileNotFoundException("File " + path + " was not found inside JAR.");
             }
         }
-
+        Logger.getLogger(NativeUtils.class.getName()).log(Level.FINEST, null, "Extracting native lib to " + tempDir + "...finished");
         return nativeLibs;
     }
 
