@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -146,12 +147,10 @@ public class TestApp extends Application {
     }
 
     public static void main(String[] args) {
-        args = new String[3];
-        //args[0]="/home/lanthale/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";        
-        args[2] = "/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/sample1.cr2";
-        args[1] = "/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/RAW_fujifilm_x_t2-Sample.raf";
-        args[0] = "/System/Volumes/Data/mnt/NAS-ITA/Development/NetBeansProjects/LibRawFX/LibRawFX/src/main/ressources/RAW-ADOBE_DNG_Sample.dng";
-        //args[0]="C:\\Users\\admin\\Desktop\\RAW-CANON-Sample.cr2";
+        args = new String[3];                
+        args[2] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"sample1.cr2";
+        args[1] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"RAW_fujifilm_x_t2-Sample.raf";
+        args[0] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"RAW-ADOBE_DNG_Sample.dng";        
         launch(args);
     }
 
