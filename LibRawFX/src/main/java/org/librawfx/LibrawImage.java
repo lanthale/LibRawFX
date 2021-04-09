@@ -51,18 +51,18 @@ public class LibrawImage {
      * Unpacks all native libs and places them in a temp directory and include them in the directory
      * @throws IOException if it is not possible to load/unpack the native libs into a temp directory
      */
-    public static void loadLibs() throws IOException {
+    public static void loadLibs(String tempDir) throws IOException {
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...");
         String OS = System.getProperty("os.name").toUpperCase();
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "OS was: " + OS);
         if (OS.contains("WIN")) {
-            loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir,"/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
         } else if (OS.contains("MAC")) {
-            loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/osx/libraw_r.20.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib");
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir,"/lib/osx/libraw_r.20.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib");
         } else if (OS.contains("NUX")) {
-            loadLibraryFromJar = NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir,"/lib/linux-x86_64/libraw_r.so.20", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libgcc_s.so.1", "/lib/linux-x86_64/libc.so.6", "/lib/linux-x86_64/libstdc++.so.6");
         }
-        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + loadLibraryFromJar);
+        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + loadLibraryFromJar+" , tempdir: "+tempDir);
         for (int i = 0; i < loadLibraryFromJar.length; i++) {
             String part = loadLibraryFromJar[i];
             new File(part).deleteOnExit();

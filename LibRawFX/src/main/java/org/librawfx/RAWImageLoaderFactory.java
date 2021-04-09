@@ -23,16 +23,19 @@ import java.util.logging.Logger;
 public class RAWImageLoaderFactory implements ImageLoaderFactory {
 
     private static final RAWImageLoaderFactory instance = new RAWImageLoaderFactory();
+    
+    private static String tempDir;
 
     private static DimensionProvider dimensionProvider;
 
-    public static final void install() {        
+    public static final void install(String tempdir) {  
+        RAWImageLoaderFactory.tempDir=tempdir;
         install(new DefaultDimensionProvider());        
     }
 
     public static final void install(DimensionProvider dimensionProvider) {
         try {
-            LibrawImage.loadLibs();
+            LibrawImage.loadLibs(tempDir);
         } catch (IOException ex) {
             Logger.getLogger(RAWImageLoaderFactory.class.getName()).log(Level.SEVERE, null, ex);
         }

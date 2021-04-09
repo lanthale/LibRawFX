@@ -11,6 +11,9 @@ import com.sun.javafx.iio.ImageFrame;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;
 import com.sun.javafx.iio.common.ImageLoaderImpl;
+import com.sun.javafx.iio.common.ImageTools;
+import com.sun.javafx.iio.common.PushbroomScaler;
+import com.sun.javafx.iio.common.ScalerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,10 +34,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
     private final DimensionProvider dimensionProvider;
     private final Lock accessLock = new Lock();
     private boolean isDisposed = false;
-    private LibrawImage libraw;    
+    private LibrawImage libraw;
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
-        super(RAWDescriptor.getInstance());        
+        super(RAWDescriptor.getInstance());
         if (input == null) {
             throw new IllegalArgumentException("input == null!");
         }
@@ -70,15 +73,14 @@ public class RAWImageLoader extends ImageLoaderImpl {
         if (0 != imageIndex) {
             return null;
         }
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locking native call " + accessLock.isLocked());        
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locking native call " + accessLock.isLocked());
         accessLock.lock();
 
         Dimension fallbackDimension = (width <= 0 || height <= 0) ? dimensionProvider.getDimension() : null;
 
         float imageWidth = width > 0 ? width : (float) fallbackDimension.getWidth();
-        float imageHeight = height > 0 ? height : (float) fallbackDimension.getHeight();                
-        
-        
+        float imageHeight = height > 0 ? height : (float) fallbackDimension.getHeight();
+
         ByteBuffer imageData = null;
         short rawImageWidth = -1;
         short rawImageHeight = -1;
@@ -94,35 +96,73 @@ public class RAWImageLoader extends ImageLoaderImpl {
             throw e;
         } catch (Throwable et) {
             throw new IOException(et);
-        } finally {            
+        } finally {
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Unlock native access...");
             accessLock.unlock();
             dispose();
-            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Unlock native access...finished");            
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Unlock native access...finished");
         }
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locked 2: " + accessLock.isLocked());        
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locked 2: " + accessLock.isLocked());
 
         if (imageData == null) {
-            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Error decompressing RAW Image stream!");        
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Error decompressing RAW Image stream!");
             throw new IOException("Error decompressing RAW Image stream!");
         }
-        
+
         ImageMetadata md = new ImageMetadata(null, true,
                 null, null, null, null, null,
-                (int)rawImageWidth, (int)rawImageHeight, null, null, null);
+                (int) rawImageWidth, (int) rawImageHeight, null, null, null);
 
         updateImageMetadata(md);
 
-        /*if (libraw.getImageWidth() != width || libraw.getImageHeight() != height) {
-        System.out.println("scale to request size "+imageData.hasArray());
-        imageData = ImageTools.scaleImage(imageData,libraw.getImageWidth(), libraw.getImageHeight(), libraw.getNumBands(), width, height, smooth);
-        System.out.println("scale to request size-finished");
-        } */        
+        /*if (rawImageWidth != width || rawImageHeight != height) {
+            System.out.println("scale to request size " + imageData.hasArray());
+            imageData = scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);
+            System.out.println("scale to request size-finished");
+        }
         Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");
+        ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, width,
+                height, rawImageStride, null, getPixelScale(), null);
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");*/
         ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, rawImageWidth,
                 rawImageHeight, rawImageStride, null, getPixelScale(), null);
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");        
         return createImageFrame;
+    }
+
+    public ByteBuffer scaleImage(ByteBuffer src,
+            int sourceWidth, int sourceHeight, int numBands,
+            int destWidth, int destHeight, boolean isSmooth) {
+        System.out.println("Create scaler instance");
+        PushbroomScaler scaler = ScalerFactory.createScaler(
+                sourceWidth, sourceHeight, numBands,
+                destWidth, destHeight, isSmooth);
+        System.out.println("Create scaler instance-finished");
+        int stride = sourceWidth * numBands;
+        System.out.println("Stride was " + stride);        
+        System.out.println("Stride native was " + libraw.getStride());
+        stride = libraw.getStride();
+        System.out.println("Stride native image bits " + libraw.getImageBits());
+        System.out.println("Stride native image colors " + libraw.getImageColors());
+        System.out.println("Start scaling...");
+        if (src.hasArray()) {
+            System.out.println("hasArray==true");
+            byte image[] = src.array();
+            for (int y = 0; y != sourceHeight; ++y) {
+                scaler.putSourceScanline(image, y * stride);
+            }
+            System.out.println("hasArray==true-finished");
+        } else {
+            System.out.println("hasArray==false");
+            byte scanline[] = new byte[stride];
+            for (int y = 0; y != sourceHeight; ++y) {
+                src.get(scanline);
+                scaler.putSourceScanline(scanline, 0);
+            }
+            System.out.println("hasArray==false-finished");
+        }
+        System.out.println("Start scaling...finished");
+
+        return scaler.getDestination();
     }
 
     public float getPixelScale() {
@@ -139,11 +179,13 @@ public class RAWImageLoader extends ImageLoaderImpl {
             maxRenderScale = Math.max(maxRenderScale, accessor.getRenderScale(screen));
         }
         return maxRenderScale;
-    }    
+    }
 
     /**
      * method to handle the interaction with the native lib
-     * @param libraw the instance of the LibrawImage used to update the loading process
+     *
+     * @param libraw the instance of the LibrawImage used to update the loading
+     * process
      * @return ByteBuffer of the read image
      * @throws IOException if the input stream cannot be read
      */
@@ -163,6 +205,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
 
     /**
      * Method called by the class LibrawImage to update the progress
+     *
      * @param outLinesDecoded Lines decoded
      * @param outHeight overall height of the native image
      */
