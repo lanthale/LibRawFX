@@ -26,7 +26,7 @@ public class TestApp extends Application {
 
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException {
-        RAWImageLoaderFactory.install("/Users/selfemp/lib");
+        RAWImageLoaderFactory.install();
 
         Parameters parameters = getParameters();
         String file = parameters.getRaw().get(0);

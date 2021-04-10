@@ -28,8 +28,20 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
 
     private static DimensionProvider dimensionProvider;
 
+    /**
+     * Main method to install the image handler to support any loading of images with the Image class
+     * @param tempdir the directory to specify where the native libs are extracted. Import on OSX because there is a bug on Apple side preventing using the temporary directory
+     */
     public static final void install(String tempdir) {  
         RAWImageLoaderFactory.tempDir=tempdir;
+        install(new DefaultDimensionProvider());        
+    }
+    
+    /**
+     * Main method to install the image handler to support any loading of images with the Image class
+     */
+    public static final void install() {  
+        RAWImageLoaderFactory.tempDir=null;
         install(new DefaultDimensionProvider());        
     }
 
