@@ -87,6 +87,7 @@ public class LibrawImage {
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
         libraries = RuntimeHelper.libraries(loadLibraryFromJar);
+        RuntimeHelper.setLibraryLookups(libraries);
 
         try (var scope = NativeScope.unboundedScope()) {
             MemoryAddress iprc = libraw_h.libraw_init(0);
@@ -164,6 +165,9 @@ public class LibrawImage {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
+        libraries = RuntimeHelper.libraries(loadLibraryFromJar);
+        RuntimeHelper.setLibraryLookups(libraries);
+        
         try (var scope = NativeScope.unboundedScope()) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native memory");
             MemoryAddress iprc = libraw_h.libraw_init(0);
