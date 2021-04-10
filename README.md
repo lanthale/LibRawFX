@@ -25,6 +25,7 @@ requested by Javafx is actually ignored. Ignored means if requested size is belo
 
 ## Open topics
 - Windows support
+- Resize the image after demosaic process to safe processing memory
 - It is not possible to influence the demosaic process or access the raw data
 - The white balance is set to camera white balance and not exposed to be set
 - The output is set to 16bit RGB color model
