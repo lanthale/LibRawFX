@@ -148,7 +148,7 @@ public class TestApp extends Application {
     public static void main(String[] args) {
         args = new String[3];                
         args[2] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"sample1.cr2";
-        args[1] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"RAW_fujifilm_x_t2-Sample.raf";
+        args[1] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"RAW_SIGMA_DP2_MERRILL.X3F";
         args[0] = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"ressources"+File.separator+"RAW-ADOBE_DNG_Sample.dng";        
         launch(args);
     }
