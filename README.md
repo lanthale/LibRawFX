@@ -5,7 +5,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 **JDK 16 is required** because of the foreign linker API usage
 
 ## Status
-Generally the lib should work but I am not sure if all dependency's (native ones) are already in the jar file. Let me know if it is not working and I will add the libs accordingly.
+Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
 
 Supported OS:
 - Linux
@@ -28,6 +28,7 @@ requested by Javafx is actually ignored. Ignored means if requested size is belo
 
 ## Open topics
 - Resize the image after demosaic process to safe processing memory
+- Progress support is not precise (the last 5% of the progress bar is duing the demosaic process)
 
 ## Usage
 Point to the maven coordinates:
