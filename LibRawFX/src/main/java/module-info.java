@@ -6,4 +6,6 @@ module org.librawfx {
     requires jdk.incubator.foreign; 
     requires java.logging;
     exports org.librawfx;    
+    exports org.libraw.linuxosx;
+    exports org.libraw.win;
 }
