@@ -15,10 +15,19 @@ public class RAWDescriptor extends ImageDescriptor {
 
     private static final String formatName = "RAW";
 
-    private static final String[] extensions = {"cr2", "crw", "cr3", "nef", "raf", "x3f", "dng"};
+    private static final String[] extensions = {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"};
 
     private static final Signature[] signatures = {
-        new Signature(hexStringToByteArray("49491A0000004845")), new Signature(hexStringToByteArray("49492A00100000004352")), new Signature(hexStringToByteArray("46554A4946494C4D4343")), new Signature(hexStringToByteArray("49492A00080000001C00")), new Signature(hexStringToByteArray("464F5662000004000100")), new Signature(hexStringToByteArray("464F5662000003003030")), new Signature(hexStringToByteArray("49492A00080000003600"))};
+        new Signature(hexStringToByteArray("49491A0000004845")),//cr2
+        new Signature(hexStringToByteArray("49492A00100000004352")),//crw3
+        new Signature(hexStringToByteArray("46554A4946494C4D4343")),//nef
+        new Signature(hexStringToByteArray("49492A00080000001C00")),//nrw
+        new Signature(hexStringToByteArray("464F5662000004000100")),//raf
+        new Signature(hexStringToByteArray("464F5662000003003030")),//x3f
+        new Signature(hexStringToByteArray("49492A00080000003600")),//dng
+        new Signature(hexStringToByteArray("49492A00080000001300")),//sony arw
+        new Signature(hexStringToByteArray("49495500080000002200")) //Leica raw
+    };
 
     private static ImageDescriptor theInstance = null;
 
