@@ -76,15 +76,11 @@ public class RAWImageLoader extends ImageLoaderImpl {
         Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locking native call " + accessLock.isLocked());
         accessLock.lock();
 
-        Dimension fallbackDimension = (width <= 0 || height <= 0) ? dimensionProvider.getDimension() : null;
-
-        float imageWidth = width > 0 ? width : (float) fallbackDimension.getWidth();
-        float imageHeight = height > 0 ? height : (float) fallbackDimension.getHeight();
-
         ByteBuffer imageData = null;
         short rawImageWidth = -1;
         short rawImageHeight = -1;
         int rawImageStride = 0;
+        double ratio = 0;
         try {
             updateImageProgress(0);
             imageData = getImageData(libraw);
@@ -92,6 +88,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "rawImageWidth " + rawImageWidth);
             rawImageHeight = libraw.getImageHeight();
             rawImageStride = libraw.getStride();
+            int[] widthHeight = ImageTools.computeDimensions(rawImageWidth, rawImageHeight, width, height, preserveAspectRatio);
+            width = widthHeight[0];
+            height = widthHeight[1];            
         } catch (IOException e) {
             throw e;
         } catch (Throwable et) {
@@ -111,58 +110,19 @@ public class RAWImageLoader extends ImageLoaderImpl {
 
         ImageMetadata md = new ImageMetadata(null, true,
                 null, null, null, null, null,
-                (int) rawImageWidth, (int) rawImageHeight, null, null, null);
+                width, height, null, null, null);
 
         updateImageMetadata(md);
 
-        /*if (rawImageWidth != width || rawImageHeight != height) {
-            System.out.println("scale to request size " + imageData.hasArray());
-            imageData = scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);
-            System.out.println("scale to request size-finished");
+        if (rawImageWidth != width || rawImageHeight != height) {            
+            imageData = ImageTools.scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);
         }
+        rawImageStride = width * libraw.getNumBands();
         Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");
         ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, width,
-                height, rawImageStride, null, getPixelScale(), null);
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");*/
-        ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, rawImageWidth,
-                rawImageHeight, rawImageStride, null, getPixelScale(), null);
+                height, rawImageStride, null, getPixelScale(), md);
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");       
         return createImageFrame;
-    }
-
-    public ByteBuffer scaleImage(ByteBuffer src,
-            int sourceWidth, int sourceHeight, int numBands,
-            int destWidth, int destHeight, boolean isSmooth) {
-        System.out.println("Create scaler instance");
-        PushbroomScaler scaler = ScalerFactory.createScaler(
-                sourceWidth, sourceHeight, numBands,
-                destWidth, destHeight, isSmooth);
-        System.out.println("Create scaler instance-finished");
-        int stride = sourceWidth * numBands;
-        System.out.println("Stride was " + stride);        
-        System.out.println("Stride native was " + libraw.getStride());
-        stride = libraw.getStride();
-        System.out.println("Stride native image bits " + libraw.getImageBits());
-        System.out.println("Stride native image colors " + libraw.getImageColors());
-        System.out.println("Start scaling...");
-        if (src.hasArray()) {
-            System.out.println("hasArray==true");
-            byte image[] = src.array();
-            for (int y = 0; y != sourceHeight; ++y) {
-                scaler.putSourceScanline(image, y * stride);
-            }
-            System.out.println("hasArray==true-finished");
-        } else {
-            System.out.println("hasArray==false");
-            byte scanline[] = new byte[stride];
-            for (int y = 0; y != sourceHeight; ++y) {
-                src.get(scanline);
-                scaler.putSourceScanline(scanline, 0);
-            }
-            System.out.println("hasArray==false-finished");
-        }
-        System.out.println("Start scaling...finished");
-
-        return scaler.getDestination();
     }
 
     public float getPixelScale() {
