@@ -70,7 +70,7 @@ public class LibrawImage {
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + loadLibraryFromJar + " , tempdir: " + tempDir);
         for (int i = 0; i < loadLibraryFromJar.length; i++) {
             String part = loadLibraryFromJar[i];
-            System.out.println("libsarray "+part);
+            //System.out.println("libsarray "+part);
             new File(part).deleteOnExit();
         }
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...finished");
