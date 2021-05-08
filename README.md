@@ -8,7 +8,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
 
 Supported OS:
-- Linux
+- Linux (min. glibc 2.27 which means Ubuntu 18 or later)
 - OSX up to 10.15 (actually no M1 build)
 - Windows 10
 
@@ -35,7 +35,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.2</version>  
+    <version>1.2.1</version>  
 </dependency>  
 ```  
 
