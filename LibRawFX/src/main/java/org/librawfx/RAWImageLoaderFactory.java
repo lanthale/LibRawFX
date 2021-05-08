@@ -68,6 +68,6 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
     @Override
     public ImageLoader createImageLoader(InputStream input) throws IOException {
         return new RAWImageLoader(input, dimensionProvider);
-    }
+    }        
 
 }

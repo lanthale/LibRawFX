@@ -49,6 +49,11 @@ public class TestApp extends Application {
         //ind.progressProperty().bind(img.progressProperty());
         Button btn = new Button("Refresh");
         stack.getChildren().add(btn);
+        try {
+            new LibrawImage(file).getMetaData();
+        } catch (IOException ex) {
+            Logger.getLogger(TestApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
         loadImages(stack, initialFile, initialFile2, initialFile3);
 
         btn.setOnAction((t) -> {
