@@ -25,6 +25,7 @@ public class RAWDescriptor extends ImageDescriptor {
         new Signature(hexStringToByteArray("464F5662000004000100")),//raf
         new Signature(hexStringToByteArray("464F5662000003003030")),//x3f
         new Signature(hexStringToByteArray("49492A00080000003600")),//dng
+        new Signature(hexStringToByteArray("49492A003E5C02004D4D")),//dng2
         new Signature(hexStringToByteArray("49492A00080000001300")),//sony arw
         new Signature(hexStringToByteArray("49495500080000002200")) //Leica raw
     };
