@@ -6,14 +6,11 @@
 package org.librawfx;
 
 import org.librawfx.dimension.DimensionProvider;
-import org.librawfx.dimension.Dimension;
 import com.sun.javafx.iio.ImageFrame;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;
 import com.sun.javafx.iio.common.ImageLoaderImpl;
 import com.sun.javafx.iio.common.ImageTools;
-import com.sun.javafx.iio.common.PushbroomScaler;
-import com.sun.javafx.iio.common.ScalerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,10 +56,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
     }
 
     @Override
-    protected void updateImageProgress(float f) {
+    protected void updateImageProgress(float f) {        
         super.updateImageProgress(f);
     }
-
+    
     @Override
     protected void emitWarning(String string) {
         super.emitWarning(string); //To change body of generated methods, choose Tools | Templates.
@@ -72,7 +69,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
     public ImageFrame load(int imageIndex, int width, int height, boolean preserveAspectRatio, boolean smooth) throws IOException {
         if (0 != imageIndex) {
             return null;
-        }
+        }        
         Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locking native call " + accessLock.isLocked());
         accessLock.lock();
 
@@ -81,19 +78,21 @@ public class RAWImageLoader extends ImageLoaderImpl {
         short rawImageHeight = -1;
         int rawImageStride = 0;
         double ratio = 0;
-        try {
+        try {            
             updateImageProgress(0);
-            imageData = getImageData(libraw);
+            imageData = getImageData(libraw);            
             rawImageWidth = libraw.getImageWidth();
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "rawImageWidth " + rawImageWidth);
             rawImageHeight = libraw.getImageHeight();
-            rawImageStride = libraw.getStride();
-            int[] widthHeight = ImageTools.computeDimensions(rawImageWidth, rawImageHeight, width, height, preserveAspectRatio);
+            rawImageStride = libraw.getStride();            
+            int[] widthHeight = ImageTools.computeDimensions(rawImageWidth, rawImageHeight, width, height, preserveAspectRatio);            
             width = widthHeight[0];
             height = widthHeight[1];            
         } catch (IOException e) {
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.SEVERE, null, e);
             throw e;
         } catch (Throwable et) {
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.SEVERE, null, et);
             throw new IOException(et);
         } finally {
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Unlock native access...");
@@ -104,7 +103,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
         Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "locked 2: " + accessLock.isLocked());
 
         if (imageData == null) {
-            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Error decompressing RAW Image stream!");
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.SEVERE, null, "Error decompressing RAW Image stream!");
             throw new IOException("Error decompressing RAW Image stream!");
         }
 
@@ -118,10 +117,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
             imageData = ImageTools.scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);
         }
         rawImageStride = width * libraw.getNumBands();
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");        
         ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, width,
                 height, rawImageStride, null, getPixelScale(), md);
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");       
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");               
         return createImageFrame;
     }
 

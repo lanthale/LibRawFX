@@ -88,11 +88,11 @@ public class LibrawImage {
      */
     public byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray) throws IOException {
         if (sourceFileAsByteArray == null) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "sourceFileAsByteArray == null!");
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "sourceFileAsByteArray == null!");
             throw new IllegalArgumentException("sourceFileAsByteArray == null!");
         }
         if (loadLibraryFromJar == null) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
         if (operatingSystem.contains("WIN")) {
@@ -101,7 +101,7 @@ public class LibrawImage {
         } else {
             libraries = org.libraw.linuxosx.RuntimeHelper.libraries(loadLibraryFromJar);
             org.libraw.linuxosx.RuntimeHelper.setLibraryLookups(libraries);
-        }
+        }        
 
         try (var scope = NativeScope.unboundedScope()) {
             if (operatingSystem.contains("WIN")) {
@@ -116,13 +116,13 @@ public class LibrawImage {
                 //libraw_output_params_t.output_color$set(params$slice, 0);        
 
                 MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
-                MemorySegment allocateNative = scope.allocateArray(C_CHAR, sourceFileAsByteArray);
+                MemorySegment allocateNative = scope.allocateArray(C_CHAR, sourceFileAsByteArray);                
                 int k = org.libraw.win.libraw_h.libraw_open_buffer(iprc, allocateNative, inputStreamBytes.byteSize());
                 if (k > 0) {
-                    Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Cannot open stream, return value was: " + k);
+                    Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Cannot open stream, return value was: " + k);
                     throw new IOException("Cannot open file stream!");
                 }
-
+                
                 org.libraw.win.libraw_h.libraw_unpack(iprc);
                 org.libraw.win.libraw_h.libraw_dcraw_process(iprc);
                 ByteArrayOutputStream bo = new ByteArrayOutputStream();
@@ -147,8 +147,7 @@ public class LibrawImage {
                     try {
                         bo.write(line);
                     } catch (IOException ex) {
-                        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, "Cannot retrieve image from native memory", ex);
-                        System.out.println("Exception " + ex.getMessage());
+                        Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Cannot retrieve image from native memory", ex);                        
                         return null;
                     }
                 }
@@ -178,7 +177,7 @@ public class LibrawImage {
                 MemorySegment allocateNative = scope.allocateArray(C_CHAR, sourceFileAsByteArray);
                 int k = org.libraw.linuxosx.libraw_h.libraw_open_buffer(iprc, allocateNative, inputStreamBytes.byteSize());
                 if (k > 0) {
-                    Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Cannot open stream, return value was: " + k);
+                    Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Cannot open stream, return value was: " + k);
                     throw new IOException("Cannot open file stream!");
                 }
 
@@ -206,7 +205,7 @@ public class LibrawImage {
                     try {
                         bo.write(line);
                     } catch (IOException ex) {
-                        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, "Cannot retrieve image from native memory", ex);
+                        Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Cannot retrieve image from native memory and write into byte array!", ex);
                         System.out.println("Exception " + ex.getMessage());
                         return null;
                     }
