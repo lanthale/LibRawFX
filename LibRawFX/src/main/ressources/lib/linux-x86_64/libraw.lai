@@ -17,7 +17,7 @@ old_library='libraw.a'
 inherited_linker_flags=' -fopenmp'
 
 # Libraries that this one depends upon.
-dependency_libs=' -ljpeg -ljasper -lz'
+dependency_libs=' -ljpeg -ljasper -lz -llcms2'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
