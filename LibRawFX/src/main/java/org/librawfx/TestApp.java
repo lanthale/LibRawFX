@@ -4,14 +4,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelFormat;
@@ -27,7 +35,7 @@ import javafx.stage.Stage;
 public class TestApp extends Application {
 
     @Override
-    public void start(Stage stage) throws FileNotFoundException, IOException {
+    public void start(Stage stage) throws FileNotFoundException, IOException {        
         RAWImageLoaderFactory.install();
 
         Parameters parameters = getParameters();
@@ -52,11 +60,6 @@ public class TestApp extends Application {
         //ind.progressProperty().bind(img.progressProperty());
         Button btn = new Button("Refresh");
         stack.getChildren().add(btn);
-        try {
-            new LibrawImage(file).getMetaData();
-        } catch (IOException ex) {
-            Logger.getLogger(TestApp.class.getName()).log(Level.SEVERE, null, ex);
-        }
         loadImages(stack, initialFile, initialFile2, initialFile3);
 
         btn.setOnAction((t) -> {
@@ -82,24 +85,37 @@ public class TestApp extends Application {
         ProgressIndicator ind = new ProgressIndicator();
         ProgressIndicator ind2 = new ProgressIndicator();
         ProgressIndicator ind3 = new ProgressIndicator();
-        stack.getChildren().add(ind);        
-        stack.getChildren().add(ind2);        
-        stack.getChildren().add(ind3);        
+        stack.getChildren().add(ind);
+        stack.getChildren().add(ind2);
+        stack.getChildren().add(ind3);
         Image img = new Image(initialFile.toURI().toURL().toString(), size, size, true, false, backgroundLoading);
         img.progressProperty().addListener((ov, t, t1) -> {
-            if (t1.doubleValue() == 1.0) {                
+            if (t1.doubleValue() == 1.0) {
                 stack.getChildren().remove(ind);
                 stack.getChildren().add(view);
+                try {
+                    HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath()).getMetaData();
+                    ScrollPane sc = new ScrollPane();
+                    VBox vb = new VBox();
+                    metaData.entrySet().forEach((entry) -> {
+                        Label l = new Label(entry.getKey() + " " + entry.getValue());
+                        vb.getChildren().add(l);
+                    });
+                    sc.setContent(vb);
+                    stack.getChildren().add(sc);
+                } catch (IOException ex) {
+                    Logger.getLogger(TestApp.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 if (img.getException() != null) {
                     System.out.println("Exception for: " + img.getUrl());
                     img.getException().printStackTrace();
                 }
             }
-        });     
+        });
         ind.progressProperty().bind(img.progressProperty());
         Image img2 = new Image(initialFile2.toURI().toURL().toString(), size, size, true, false, backgroundLoading);
         img2.progressProperty().addListener((ov, t, t1) -> {
-            if (t1.doubleValue() == 1.0) {                
+            if (t1.doubleValue() == 1.0) {
                 stack.getChildren().remove(ind2);
                 stack.getChildren().add(view2);
                 if (img2.getException() != null) {
@@ -107,11 +123,11 @@ public class TestApp extends Application {
                     img2.getException().printStackTrace();
                 }
             }
-        }); 
+        });
         ind2.progressProperty().bind(img2.progressProperty());
         Image img3 = new Image(initialFile3.toURI().toURL().toString(), size, size, true, false, backgroundLoading);
         img3.progressProperty().addListener((ov, t, t1) -> {
-            if (t1.doubleValue() == 1.0) {                
+            if (t1.doubleValue() == 1.0) {
                 stack.getChildren().remove(ind3);
                 stack.getChildren().add(view3);
                 if (img3.getException() != null) {
@@ -119,7 +135,7 @@ public class TestApp extends Application {
                     img3.getException().printStackTrace();
                 }
             }
-        }); 
+        });
         ind3.progressProperty().bind(img3.progressProperty());
         view.setImage(img);
         view.setFitHeight(size);
@@ -160,6 +176,11 @@ public class TestApp extends Application {
         args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample1.cr2";
         args[1] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_SIGMA_DP2_MERRILL.X3F";
         args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW-ADOBE_DNG_Sample.dng";
+        Logger logger = Logger.getLogger("");
+        Handler handler = new ConsoleHandler();
+        logger.addHandler(handler);
+        logger.setLevel(Level.ALL);
+        handler.setFormatter(new SimpleFormatter());
         launch(args);
     }
 

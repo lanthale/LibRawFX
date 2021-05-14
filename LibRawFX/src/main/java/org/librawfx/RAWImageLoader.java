@@ -56,10 +56,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
     }
 
     @Override
-    protected void updateImageProgress(float f) {        
+    protected void updateImageProgress(float f) {
         super.updateImageProgress(f);
     }
-    
+
     @Override
     protected void emitWarning(String string) {
         super.emitWarning(string); //To change body of generated methods, choose Tools | Templates.
@@ -76,18 +76,22 @@ public class RAWImageLoader extends ImageLoaderImpl {
         ByteBuffer imageData = null;
         short rawImageWidth = -1;
         short rawImageHeight = -1;
-        int rawImageStride = 0;
-        double ratio = 0;
-        try {            
+        int rawImageStride = 0;        
+        try {
             updateImageProgress(0);
-            imageData = getImageData(libraw);            
+            long start = System.currentTimeMillis();
+            imageData = getImageData(libraw);
+            double diff = (System.currentTimeMillis() - start) / 1000;
+            Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINE, null, "Raw loading took: " + diff + "s");
+            updateImageProgress(lastPercentDone+1);
             rawImageWidth = libraw.getImageWidth();
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "rawImageWidth " + rawImageWidth);
             rawImageHeight = libraw.getImageHeight();
-            rawImageStride = libraw.getStride();            
-            int[] widthHeight = ImageTools.computeDimensions(rawImageWidth, rawImageHeight, width, height, preserveAspectRatio);            
+            rawImageStride = libraw.getStride();
+            int[] widthHeight = ImageTools.computeDimensions(rawImageWidth, rawImageHeight, width, height, preserveAspectRatio);
             width = widthHeight[0];
-            height = widthHeight[1];            
+            height = widthHeight[1];
+            updateImageProgress(lastPercentDone+1);
         } catch (IOException e) {
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.SEVERE, null, e);
             throw e;
@@ -109,18 +113,20 @@ public class RAWImageLoader extends ImageLoaderImpl {
 
         ImageMetadata md = new ImageMetadata(null, true,
                 null, null, null, null, null,
-                width, height, null, null, null);
-
+                width, height, null, null, null);                 
         updateImageMetadata(md);
+        updateImageProgress(lastPercentDone+1);
 
-        if (rawImageWidth != width || rawImageHeight != height) {            
+        if (rawImageWidth != width || rawImageHeight != height) {
             imageData = ImageTools.scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);
         }
+        updateImageProgress(lastPercentDone+1);
         rawImageStride = width * libraw.getNumBands();
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");        
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");
         ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, width,
                 height, rawImageStride, null, getPixelScale(), md);
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");               
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");
+        updateImageProgress(100f);
         return createImageFrame;
     }
 
@@ -152,13 +158,15 @@ public class RAWImageLoader extends ImageLoaderImpl {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
         byte[] datab = new byte[1024];
+        long reading = System.currentTimeMillis();
         while ((nRead = input.read(datab, 0, datab.length)) != -1) {
             buffer.write(datab, 0, nRead);
         }
         buffer.flush();
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
-        updateImageProgress(100f);
+        double diff = (System.currentTimeMillis() - reading) / 1000;
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");        
         return ByteBuffer.wrap(raw);
     }
 
@@ -170,7 +178,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
      */
     public void updateImageProgress(int outLinesDecoded, int outHeight) {
         float res = 100.0F * outLinesDecoded / outHeight;
-        updateImageProgress(100.0F * outLinesDecoded / outHeight);
+        updateImageProgress(res);
     }
 
     private static class Lock {
