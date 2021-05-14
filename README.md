@@ -51,14 +51,14 @@ Point to the maven coordinates:
 ```
 
 - **Metadata**
-Just create an instance of class Libraw with the file to get the metadata and print the return values
+Just create an instance of class LibrawImage with the file to get the metadata and print the return values
 ```
 HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath()).getMetaData();
 VBox vb = new VBox();
 metaData.entrySet().forEach((entry) -> {
-                        Label l = new Label(entry.getKey() + " " + entry.getValue());
-                        vb.getChildren().add(l);
-                    });
+   Label l = new Label(entry.getKey() + " " + entry.getValue());
+   vb.getChildren().add(l);
+});
 ```
 
 - **Module name: org.librawfx**
