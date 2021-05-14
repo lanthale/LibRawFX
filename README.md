@@ -26,7 +26,7 @@ Actually only the following raw formats are enabled (see class `RAWDescriptor.ja
 The lib now resized the image in memory before sending it to memory (the same as the Javafx is doing for PNG/JPG).
 
 ## Open topics
-- Support for metadata from raw files
+- More details in metadata
 
 ## Usage
 Point to the maven coordinates:
@@ -35,7 +35,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.3</version>  
+    <version>1.4</version>  
 </dependency>  
 ```  
 
@@ -48,6 +48,17 @@ Point to the maven coordinates:
 --add-modules jdk.incubator.foreign -Dforeign.restricted=permit  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
+```
+
+- **Metadata**
+Just create an instance of class Libraw with the file to get the metadata and print the return values
+```
+HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath()).getMetaData();
+VBox vb = new VBox();
+metaData.entrySet().forEach((entry) -> {
+                        Label l = new Label(entry.getKey() + " " + entry.getValue());
+                        vb.getChildren().add(l);
+                    });
 ```
 
 - **Module name: org.librawfx**
