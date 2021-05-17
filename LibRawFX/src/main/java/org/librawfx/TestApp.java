@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelFormat;
@@ -96,10 +97,11 @@ public class TestApp extends Application {
                 try {
                     HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath()).getMetaData();
                     ScrollPane sc = new ScrollPane();
-                    VBox vb = new VBox();
+                    TextArea vb = new TextArea();
                     metaData.entrySet().forEach((entry) -> {
-                        Label l = new Label(entry.getKey() + " " + entry.getValue());
-                        vb.getChildren().add(l);
+                        //Label l = new Label(entry.getKey() + " " + entry.getValue());
+                        vb.appendText(entry.getKey() + " " + entry.getValue()+"\n");
+                        //vb.getChildren().add(l);
                     });
                     sc.setContent(vb);
                     stack.getChildren().add(sc);
@@ -173,9 +175,9 @@ public class TestApp extends Application {
 
     public static void main(String[] args) {
         args = new String[3];
-        args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample1.cr2";
+        args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW-ADOBE_DNG_Sample.dng";
         args[1] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_SIGMA_DP2_MERRILL.X3F";
-        args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW-ADOBE_DNG_Sample.dng";
+        args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";
         Logger logger = Logger.getLogger("");
         Handler handler = new ConsoleHandler();
         logger.addHandler(handler);
