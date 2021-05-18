@@ -488,8 +488,11 @@ public class LibrawImage {
                 MemorySegment gpsInfoSegement=org.libraw.win.libraw_h.libraw_imgother_t.parsed_gps$slice(imageOtherRestricted);
                 float altitude$get = org.libraw.win.libraw_h.libraw_gps_info_t.altitude$get(gpsInfoSegement);
                 retMap.put("GPS Altitude", "" + altitude$get);
-                byte gpsparsed$get = org.libraw.win.libraw_h.libraw_gps_info_t.gpsparsed$get(gpsInfoSegement);                
-                retMap.put("gpsparsed$get", "" + gpsparsed$get);
+                byte latref$get = org.libraw.win.libraw_h.libraw_gps_info_t.latref$get(gpsInfoSegement);                
+                byte longref=org.libraw.win.libraw_h.libraw_gps_info_t.longref$get(gpsInfoSegement);                
+                retMap.put("GPS Position", String.valueOf(latref$get)+";"+String.valueOf(longref));
+                MemorySegment gpstime=org.libraw.win.libraw_h.libraw_gps_info_t.gpstimestamp$slice(gpsInfoSegement);
+                retMap.put("GPS Time", new String(gpstime.toByteArray(), StandardCharsets.UTF_8));
                 
                 float aperture = org.libraw.win.libraw_h.libraw_imgother_t.aperture$get(imageOtherRestricted);
                 float focal_len = org.libraw.win.libraw_h.libraw_imgother_t.focal_len$get(imageOtherRestricted);
@@ -604,8 +607,11 @@ public class LibrawImage {
                 MemorySegment gpsInfoSegement=org.libraw.linuxosx.libraw_h.libraw_imgother_t.parsed_gps$slice(imageOtherRestricted);
                 float altitude$get = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.altitude$get(gpsInfoSegement);
                 retMap.put("GPS Altitude", "" + altitude$get);
-                byte gpsparsed$get = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.gpsparsed$get(gpsInfoSegement);                
-                retMap.put("gpsparsed$get", "" + gpsparsed$get);
+                byte latref$get = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.latref$get(gpsInfoSegement);                
+                byte longref=org.libraw.linuxosx.libraw_h.libraw_gps_info_t.longref$get(gpsInfoSegement);                
+                retMap.put("GPS Position", String.valueOf(latref$get)+";"+String.valueOf(longref));
+                MemorySegment gpstime=org.libraw.linuxosx.libraw_h.libraw_gps_info_t.gpstimestamp$slice(gpsInfoSegement);
+                retMap.put("GPS Time", new String(gpstime.toByteArray(), StandardCharsets.UTF_8));
                 
                 float aperture = org.libraw.linuxosx.libraw_h.libraw_imgother_t.aperture$get(imageOtherRestricted);
                 float focal_len = org.libraw.linuxosx.libraw_h.libraw_imgother_t.focal_len$get(imageOtherRestricted);
