@@ -26,7 +26,7 @@ Actually only the following raw formats are enabled (see class `RAWDescriptor.ja
 The lib now resized the image in memory before sending it to memory (the same as the Javafx is doing for PNG/JPG).
 
 ## Open topics
-- More details in metadata
+- Writing of metadata back to raw files
 
 ## Usage
 Point to the maven coordinates:
@@ -35,7 +35,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.4</version>  
+    <version>1.5</version>  
 </dependency>  
 ```  
 
