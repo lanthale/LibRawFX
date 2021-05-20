@@ -231,7 +231,7 @@ public class LibrawImage {
                     try {
                         bo.write(line);
                     } catch (IOException ex) {
-                        Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Cannot retrieve image from native memory and write into byte array!", ex);                        
+                        Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Cannot retrieve image from native memory and write into byte array!", ex);
                         return null;
                     }
                 }
@@ -430,10 +430,11 @@ public class LibrawImage {
     }
 
     /**
-     * Retrievs for the given file in the constructor the metadata
-     * Important: The timestamps are in EpocheInSeconds and not milliseconds
+     * Retrievs for the given file in the constructor the metadata Important:
+     * The timestamps are in EpocheInSeconds and not milliseconds
+     *
      * @return Hashmap of all meta data
-     * @throws IOException 
+     * @throws IOException
      */
     public HashMap<String, String> getMetaData() throws IOException {
         if (imageFileURL == null) {
@@ -465,51 +466,49 @@ public class LibrawImage {
                     throw new IOException("Cannot open file stream '" + imageFileURL + "'! " + libraw_open_file);
                 }
 
-                org.libraw.win.libraw_h.libraw_unpack(iprc);
+                org.libraw.win.libraw_h.libraw_unpack(iprc);               
 
-                org.libraw.win.libraw_h.libraw_dcraw_process(iprc);
-
-                MemoryAddress iParams = org.libraw.win.libraw_h.libraw_get_iparams(iprc);                
+                MemoryAddress iParams = org.libraw.win.libraw_h.libraw_get_iparams(iprc);
                 MemorySegment iParamsRestricted = org.libraw.win.libraw_h.libraw_iparams_t.ofAddressRestricted(iParams);
-                MemorySegment make$slice = org.libraw.win.libraw_h.libraw_iparams_t.make$slice(iParamsRestricted);                
+                MemorySegment make$slice = org.libraw.win.libraw_h.libraw_iparams_t.make$slice(iParamsRestricted);
                 retMap.put("CameraMaker", CLinker.toJavaString(make$slice));
                 MemorySegment model$slice = org.libraw.win.libraw_h.libraw_iparams_t.model$slice(iParamsRestricted);
                 retMap.put("CameraModel", CLinker.toJavaString(model$slice));
                 MemoryAddress xmpdata$get = org.libraw.win.libraw_h.libraw_iparams_t.xmpdata$get(iParamsRestricted);
                 int xmplen$get = org.libraw.win.libraw_h.libraw_iparams_t.xmplen$get(iParamsRestricted);
                 if (xmplen$get != 0) {
-                    MemorySegment asSegmentRestricted = xmpdata$get.asSegmentRestricted(xmplen$get);                    
+                    MemorySegment asSegmentRestricted = xmpdata$get.asSegmentRestricted(xmplen$get);
                     retMap.put("XMP", CLinker.toJavaString(asSegmentRestricted));
                 }
 
                 MemoryAddress image_other_data = org.libraw.win.libraw_h.libraw_get_imgother(iprc);
-                MemorySegment imageOtherRestricted = org.libraw.win.libraw_h.libraw_imgother_t.ofAddressRestricted(image_other_data);                
-                
-                MemorySegment gpsInfoSegement=org.libraw.win.libraw_h.libraw_imgother_t.parsed_gps$slice(imageOtherRestricted);
+                MemorySegment imageOtherRestricted = org.libraw.win.libraw_h.libraw_imgother_t.ofAddressRestricted(image_other_data);
+
+                MemorySegment gpsInfoSegement = org.libraw.win.libraw_h.libraw_imgother_t.parsed_gps$slice(imageOtherRestricted);
                 float altitude$get = org.libraw.win.libraw_h.libraw_gps_info_t.altitude$get(gpsInfoSegement);
                 retMap.put("GPS Altitude", "" + altitude$get);
-                byte latref$get = org.libraw.win.libraw_h.libraw_gps_info_t.latref$get(gpsInfoSegement);                
-                byte longref=org.libraw.win.libraw_h.libraw_gps_info_t.longref$get(gpsInfoSegement);                
-                retMap.put("GPS Position", String.valueOf(latref$get)+";"+String.valueOf(longref));
-                MemorySegment gpstime=org.libraw.win.libraw_h.libraw_gps_info_t.gpstimestamp$slice(gpsInfoSegement);
+                byte latref$get = org.libraw.win.libraw_h.libraw_gps_info_t.latref$get(gpsInfoSegement);
+                byte longref = org.libraw.win.libraw_h.libraw_gps_info_t.longref$get(gpsInfoSegement);
+                retMap.put("GPS Position", String.valueOf(latref$get) + ";" + String.valueOf(longref));
+                MemorySegment gpstime = org.libraw.win.libraw_h.libraw_gps_info_t.gpstimestamp$slice(gpsInfoSegement);
                 retMap.put("GPS Time", CLinker.toJavaString(gpstime));
-                
+
                 float aperture = org.libraw.win.libraw_h.libraw_imgother_t.aperture$get(imageOtherRestricted);
                 float focal_len = org.libraw.win.libraw_h.libraw_imgother_t.focal_len$get(imageOtherRestricted);
-                float isoSpeed = org.libraw.win.libraw_h.libraw_imgother_t.iso_speed$get(imageOtherRestricted);                                
+                float isoSpeed = org.libraw.win.libraw_h.libraw_imgother_t.iso_speed$get(imageOtherRestricted);
                 float shutter = org.libraw.win.libraw_h.libraw_imgother_t.shutter$get(imageOtherRestricted);
-                long timestamp = org.libraw.win.libraw_h.libraw_imgother_t.timestamp$get(imageOtherRestricted);                
+                long timestamp = org.libraw.win.libraw_h.libraw_imgother_t.timestamp$get(imageOtherRestricted);
                 retMap.put("CurFocal", "" + focal_len);
                 retMap.put("ISO speed", "" + isoSpeed);
                 retMap.put("shutter", "" + shutter);
-                retMap.put("Timestamp (EpocheSec)", "" + timestamp);                
-                
+                retMap.put("Timestamp (EpocheSec)", "" + timestamp);
+
                 MemorySegment lens$slice = org.libraw.win.libraw_h.libraw_data_t.lens$slice(datasegment);
                 float EXIF_MaxAp$get = org.libraw.win.libraw_h.libraw_lensinfo_t.EXIF_MaxAp$get(lens$slice);
                 retMap.put("MaxAperture @CurFocal", "f/" + EXIF_MaxAp$get);
                 short FocalLengthIn35mmFormat$get = org.libraw.win.libraw_h.libraw_lensinfo_t.FocalLengthIn35mmFormat$get(lens$slice);
-                retMap.put("FocalLengthIn35mmFormat", "" + FocalLengthIn35mmFormat$get+" mm");
-                MemorySegment InternalLensSerial$slice = org.libraw.win.libraw_h.libraw_lensinfo_t.InternalLensSerial$slice(lens$slice);                
+                retMap.put("FocalLengthIn35mmFormat", "" + FocalLengthIn35mmFormat$get + " mm");
+                MemorySegment InternalLensSerial$slice = org.libraw.win.libraw_h.libraw_lensinfo_t.InternalLensSerial$slice(lens$slice);
                 retMap.put("InternalLensSerial$slice", CLinker.toJavaString(InternalLensSerial$slice));
                 MemorySegment Lens$slice = org.libraw.win.libraw_h.libraw_lensinfo_t.Lens$slice(lens$slice);
                 retMap.put("Lens", CLinker.toJavaString(Lens$slice));
@@ -522,15 +521,15 @@ public class LibrawImage {
                 float MaxAp4MinFocal$get = org.libraw.win.libraw_h.libraw_lensinfo_t.MaxAp4MinFocal$get(lens$slice);
                 retMap.put("MaxAp @MinFocal", "f/" + MaxAp4MinFocal$get);
                 float MaxFocal$get = org.libraw.win.libraw_h.libraw_lensinfo_t.MaxFocal$get(lens$slice);
-                retMap.put("MaxFocal", "" + MaxFocal$get+" mm");
+                retMap.put("MaxFocal", "" + MaxFocal$get + " mm");
                 float MinFocal$get = org.libraw.win.libraw_h.libraw_lensinfo_t.MinFocal$get(lens$slice);
-                retMap.put("MinFocal", "" + MinFocal$get+" mm");
+                retMap.put("MinFocal", "" + MinFocal$get + " mm");
                 MemorySegment makernotes$slice = org.libraw.win.libraw_h.libraw_lensinfo_t.makernotes$slice(lens$slice);
                 float CurFocal$get = org.libraw.win.libraw_h.libraw_makernotes_lens_t.CurFocal$get(makernotes$slice);
                 retMap.put("CurFocal", "" + CurFocal$get);
                 float CurAp$get = org.libraw.win.libraw_h.libraw_makernotes_lens_t.CurAp$get(makernotes$slice);
                 retMap.put("CurAperture", "" + CurAp$get);
-                
+
                 MemorySegment shootingInfo$slice = org.libraw.win.libraw_h.libraw_data_t.shootinginfo$slice(datasegment);
                 short afPoint = org.libraw.win.libraw_h.libraw_shootinginfo_t.AFPoint$get(shootingInfo$slice);
                 retMap.put("AFPoint", "" + afPoint);
@@ -547,29 +546,20 @@ public class LibrawImage {
                 short medteringMode = org.libraw.win.libraw_h.libraw_shootinginfo_t.MeteringMode$get(shootingInfo$slice);
                 retMap.put("MedteringMode", "" + medteringMode);
 
-                MemorySegment errorCode = scope.allocate(C_INT.byteSize());
-                MemoryAddress mem_image_adr = org.libraw.win.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode.address());
-                MemorySegment imageMemSegment = org.libraw.win.libraw_h.libraw_processed_image_t.ofAddressRestricted(mem_image_adr);
-                MemorySegment data$slice = org.libraw.win.libraw_h.libraw_processed_image_t.data$slice(imageMemSegment);
-                imageWidth = org.libraw.win.libraw_h.libraw_processed_image_t.width$get(imageMemSegment);
-                imageHeight = org.libraw.win.libraw_h.libraw_processed_image_t.height$get(imageMemSegment);
-                imageBits = org.libraw.win.libraw_h.libraw_processed_image_t.bits$get(imageMemSegment);
-                imageColors = org.libraw.win.libraw_h.libraw_processed_image_t.colors$get(imageMemSegment);
-                Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Reading image from native memory...finished");
-                Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...");
-                org.libraw.win.libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
-                mem_image_adr = null;
+                imageHeight = (short) org.libraw.win.libraw_h.libraw_get_iheight(iprc);
+                imageWidth = (short) org.libraw.win.libraw_h.libraw_get_iwidth(iprc);
+                imageColors = (short) org.libraw.win.libraw_h.libraw_get_color_maximum(iprc);
+                
                 org.libraw.win.libraw_h.libraw_close(iprc);
                 iprc = null;
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...finished.");
                 retMap.put("ImageWidth", "" + imageWidth);
-                retMap.put("ImageHeight", "" + imageHeight);
-                retMap.put("ImageBits", "" + imageBits);
+                retMap.put("ImageHeight", "" + imageHeight);                
                 retMap.put("ImageColors", "" + imageColors);
                 retMap.put("Aperture", "f/" + aperture);
-                retMap.put("Focal length", "" + focal_len+" mm");
+                retMap.put("Focal length", "" + focal_len + " mm");
                 retMap.put("ISO speed", "" + isoSpeed);
-                retMap.put("Shutter", "" + (1/shutter)); 
+                retMap.put("Shutter", "" + (1 / shutter));
 
                 return retMap;
             } else {
@@ -586,9 +576,7 @@ public class LibrawImage {
 
                 org.libraw.linuxosx.libraw_h.libraw_unpack(iprc);
 
-                org.libraw.linuxosx.libraw_h.libraw_dcraw_process(iprc);
-
-                MemoryAddress iParams = org.libraw.linuxosx.libraw_h.libraw_get_iparams(iprc);                
+                MemoryAddress iParams = org.libraw.linuxosx.libraw_h.libraw_get_iparams(iprc);
                 MemorySegment iParamsRestricted = org.libraw.linuxosx.libraw_h.libraw_iparams_t.ofAddressRestricted(iParams);
                 MemorySegment make$slice = org.libraw.linuxosx.libraw_h.libraw_iparams_t.make$slice(iParamsRestricted);
                 retMap.put("CameraMaker", CLinker.toJavaString(make$slice));
@@ -597,38 +585,38 @@ public class LibrawImage {
                 MemoryAddress xmpdata$get = org.libraw.linuxosx.libraw_h.libraw_iparams_t.xmpdata$get(iParamsRestricted);
                 int xmplen$get = org.libraw.linuxosx.libraw_h.libraw_iparams_t.xmplen$get(iParamsRestricted);
                 if (xmplen$get != 0) {
-                    MemorySegment asSegmentRestricted = xmpdata$get.asSegmentRestricted(xmplen$get);                    
+                    MemorySegment asSegmentRestricted = xmpdata$get.asSegmentRestricted(xmplen$get);
                     retMap.put("XMP", CLinker.toJavaString(asSegmentRestricted));
                 }
 
                 MemoryAddress image_other_data = org.libraw.linuxosx.libraw_h.libraw_get_imgother(iprc);
-                MemorySegment imageOtherRestricted = org.libraw.linuxosx.libraw_h.libraw_imgother_t.ofAddressRestricted(image_other_data);                
-                
-                MemorySegment gpsInfoSegement=org.libraw.linuxosx.libraw_h.libraw_imgother_t.parsed_gps$slice(imageOtherRestricted);
+                MemorySegment imageOtherRestricted = org.libraw.linuxosx.libraw_h.libraw_imgother_t.ofAddressRestricted(image_other_data);
+
+                MemorySegment gpsInfoSegement = org.libraw.linuxosx.libraw_h.libraw_imgother_t.parsed_gps$slice(imageOtherRestricted);
                 float altitude$get = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.altitude$get(gpsInfoSegement);
                 retMap.put("GPS Altitude", "" + altitude$get);
-                byte latref$get = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.latref$get(gpsInfoSegement);                
-                byte longref=org.libraw.linuxosx.libraw_h.libraw_gps_info_t.longref$get(gpsInfoSegement);                
-                retMap.put("GPS Position", String.valueOf(latref$get)+";"+String.valueOf(longref));
-                MemorySegment gpstime=org.libraw.linuxosx.libraw_h.libraw_gps_info_t.gpstimestamp$slice(gpsInfoSegement);
+                byte latref$get = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.latref$get(gpsInfoSegement);
+                byte longref = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.longref$get(gpsInfoSegement);
+                retMap.put("GPS Position", String.valueOf(latref$get) + ";" + String.valueOf(longref));
+                MemorySegment gpstime = org.libraw.linuxosx.libraw_h.libraw_gps_info_t.gpstimestamp$slice(gpsInfoSegement);
                 retMap.put("GPS Time", CLinker.toJavaString(gpstime));
-                
+
                 float aperture = org.libraw.linuxosx.libraw_h.libraw_imgother_t.aperture$get(imageOtherRestricted);
                 float focal_len = org.libraw.linuxosx.libraw_h.libraw_imgother_t.focal_len$get(imageOtherRestricted);
-                float isoSpeed = org.libraw.linuxosx.libraw_h.libraw_imgother_t.iso_speed$get(imageOtherRestricted);                                
+                float isoSpeed = org.libraw.linuxosx.libraw_h.libraw_imgother_t.iso_speed$get(imageOtherRestricted);
                 float shutter = org.libraw.linuxosx.libraw_h.libraw_imgother_t.shutter$get(imageOtherRestricted);
-                long timestamp = org.libraw.linuxosx.libraw_h.libraw_imgother_t.timestamp$get(imageOtherRestricted);                
+                long timestamp = org.libraw.linuxosx.libraw_h.libraw_imgother_t.timestamp$get(imageOtherRestricted);
                 retMap.put("CurFocal", "" + focal_len);
                 retMap.put("ISO speed", "" + isoSpeed);
                 retMap.put("shutter", "" + shutter);
-                retMap.put("Timestamp (EpocheSec)", "" + timestamp);                
-                
+                retMap.put("Timestamp (EpocheSec)", "" + timestamp);
+
                 MemorySegment lens$slice = org.libraw.linuxosx.libraw_h.libraw_data_t.lens$slice(datasegment);
                 float EXIF_MaxAp$get = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.EXIF_MaxAp$get(lens$slice);
                 retMap.put("MaxAperture @CurFocal", "f/" + EXIF_MaxAp$get);
                 short FocalLengthIn35mmFormat$get = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.FocalLengthIn35mmFormat$get(lens$slice);
-                retMap.put("FocalLengthIn35mmFormat", "" + FocalLengthIn35mmFormat$get+" mm");
-                MemorySegment InternalLensSerial$slice = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.InternalLensSerial$slice(lens$slice);                
+                retMap.put("FocalLengthIn35mmFormat", "" + FocalLengthIn35mmFormat$get + " mm");
+                MemorySegment InternalLensSerial$slice = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.InternalLensSerial$slice(lens$slice);
                 retMap.put("InternalLensSerial$slice", CLinker.toJavaString(InternalLensSerial$slice));
                 MemorySegment Lens$slice = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.Lens$slice(lens$slice);
                 retMap.put("Lens", CLinker.toJavaString(Lens$slice));
@@ -641,15 +629,15 @@ public class LibrawImage {
                 float MaxAp4MinFocal$get = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.MaxAp4MinFocal$get(lens$slice);
                 retMap.put("MaxAp @MinFocal", "f/" + MaxAp4MinFocal$get);
                 float MaxFocal$get = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.MaxFocal$get(lens$slice);
-                retMap.put("MaxFocal", "" + MaxFocal$get+" mm");
+                retMap.put("MaxFocal", "" + MaxFocal$get + " mm");
                 float MinFocal$get = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.MinFocal$get(lens$slice);
-                retMap.put("MinFocal", "" + MinFocal$get+" mm");
+                retMap.put("MinFocal", "" + MinFocal$get + " mm");
                 MemorySegment makernotes$slice = org.libraw.linuxosx.libraw_h.libraw_lensinfo_t.makernotes$slice(lens$slice);
                 float CurFocal$get = org.libraw.linuxosx.libraw_h.libraw_makernotes_lens_t.CurFocal$get(makernotes$slice);
                 retMap.put("CurFocal", "" + CurFocal$get);
                 float CurAp$get = org.libraw.linuxosx.libraw_h.libraw_makernotes_lens_t.CurAp$get(makernotes$slice);
                 retMap.put("CurAperture", "" + CurAp$get);
-                
+
                 MemorySegment shootingInfo$slice = org.libraw.linuxosx.libraw_h.libraw_data_t.shootinginfo$slice(datasegment);
                 short afPoint = org.libraw.linuxosx.libraw_h.libraw_shootinginfo_t.AFPoint$get(shootingInfo$slice);
                 retMap.put("AFPoint", "" + afPoint);
@@ -666,29 +654,20 @@ public class LibrawImage {
                 short medteringMode = org.libraw.linuxosx.libraw_h.libraw_shootinginfo_t.MeteringMode$get(shootingInfo$slice);
                 retMap.put("MedteringMode", "" + medteringMode);
 
-                MemorySegment errorCode = scope.allocate(C_INT.byteSize());
-                MemoryAddress mem_image_adr = org.libraw.linuxosx.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode.address());
-                MemorySegment imageMemSegment = org.libraw.linuxosx.libraw_h.libraw_processed_image_t.ofAddressRestricted(mem_image_adr);
-                MemorySegment data$slice = org.libraw.linuxosx.libraw_h.libraw_processed_image_t.data$slice(imageMemSegment);
-                imageWidth = org.libraw.linuxosx.libraw_h.libraw_processed_image_t.width$get(imageMemSegment);
-                imageHeight = org.libraw.linuxosx.libraw_h.libraw_processed_image_t.height$get(imageMemSegment);
-                imageBits = org.libraw.linuxosx.libraw_h.libraw_processed_image_t.bits$get(imageMemSegment);
-                imageColors = org.libraw.linuxosx.libraw_h.libraw_processed_image_t.colors$get(imageMemSegment);
-                Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Reading image from native memory...finished");
-                Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...");
-                org.libraw.linuxosx.libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
-                mem_image_adr = null;
+                imageHeight = (short) org.libraw.linuxosx.libraw_h.libraw_get_iheight(iprc);
+                imageWidth = (short) org.libraw.linuxosx.libraw_h.libraw_get_iwidth(iprc);
+                imageColors = (short) org.libraw.linuxosx.libraw_h.libraw_get_color_maximum(iprc);
+                
                 org.libraw.linuxosx.libraw_h.libraw_close(iprc);
                 iprc = null;
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...finished.");
                 retMap.put("ImageWidth", "" + imageWidth);
-                retMap.put("ImageHeight", "" + imageHeight);
-                retMap.put("ImageBits", "" + imageBits);
+                retMap.put("ImageHeight", "" + imageHeight);                
                 retMap.put("ImageColors", "" + imageColors);
                 retMap.put("Aperture", "f/" + aperture);
-                retMap.put("Focal length", "" + focal_len+" mm");
+                retMap.put("Focal length", "" + focal_len + " mm");
                 retMap.put("ISO speed", "" + isoSpeed);
-                retMap.put("Shutter", "" + (1/shutter));                
+                retMap.put("Shutter", "" + (1 / shutter));
 
                 return retMap;
             }
@@ -769,8 +748,6 @@ public class LibrawImage {
     public LocalDateTime getShootingDateTime() {
         return shootingDateTime;
     }
-    
-    
 
     /**
      * String representation of the image
