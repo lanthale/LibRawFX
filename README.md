@@ -35,7 +35,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.5</version>  
+    <version>1.6</version>  
 </dependency>  
 ```  
 
