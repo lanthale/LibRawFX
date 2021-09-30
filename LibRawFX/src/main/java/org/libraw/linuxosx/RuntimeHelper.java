@@ -4,16 +4,18 @@ package org.libraw.linuxosx;
 import jdk.incubator.foreign.Addressable;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.FunctionDescriptor;
-import jdk.incubator.foreign.LibraryLookup;
+import jdk.incubator.foreign.SymbolLookup;
 import jdk.incubator.foreign.MemoryAddress;
 import jdk.incubator.foreign.MemoryLayout;
 import jdk.incubator.foreign.MemorySegment;
-
+import jdk.incubator.foreign.ResourceScope;
+import jdk.incubator.foreign.SegmentAllocator;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -21,94 +23,70 @@ import java.util.stream.Stream;
 import static jdk.incubator.foreign.CLinker.*;
 
 public final class RuntimeHelper {
-
-    private RuntimeHelper() {
-    }
+    private RuntimeHelper() {}
     private final static CLinker LINKER = CLinker.getInstance();
     private final static ClassLoader LOADER = RuntimeHelper.class.getClassLoader();
     private final static MethodHandles.Lookup MH_LOOKUP = MethodHandles.lookup();
-    private static LibraryLookup[] libraryLookups;
 
-    static <T> T requireNonNull(T obj, String msg) {
+    public static SymbolLookup lookup() {
+        SymbolLookup loaderLookup = SymbolLookup.loaderLookup();
+        SymbolLookup systemLookup = CLinker.systemLookup();
+        return name -> loaderLookup.lookup(name).or(() -> systemLookup.lookup(name));
+    }
+
+    static <T> T requireNonNull(T obj, String symbolName) {
         if (obj == null) {
-            throw new UnsatisfiedLinkError(msg);
+            throw new UnsatisfiedLinkError("unresolved symbol: " + symbolName);
         }
         return obj;
     }
 
-    public static final void setLibraryLookups(LibraryLookup[] libs) {
-        libraryLookups = libs;
+    private final static SegmentAllocator THROWING_ALLOCATOR = (x, y) -> { throw new AssertionError("should not reach here"); };
+
+    static final MemorySegment lookupGlobalVariable(SymbolLookup LOOKUP, String name, MemoryLayout layout) {
+        return LOOKUP.lookup(name).map(s -> s.address().asSegment(layout.byteSize(), ResourceScope.newImplicitScope())).orElse(null);
     }
 
-    public static final LibraryLookup[] libraries(String... libNames) {
-        if (libNames.length == 0) {
-            if (libraryLookups == null) {
-                return new LibraryLookup[]{LibraryLookup.ofDefault()};
-            } else {
-                return libraryLookups;
-            }
-        } else {
-            return Arrays.stream(libNames)
-                    .map(libName -> {
-                        if (libName.indexOf(File.separatorChar) != -1) {
-
-                            return LibraryLookup.ofPath(Path.of(libName));
-                        } else {
-                            return LibraryLookup.ofLibrary(libName);
-                        }
-                    })
-                    .toArray(LibraryLookup[]::new);
-        }
-    }
-
-    public static final MemorySegment lookupGlobalVariable(LibraryLookup[] LIBRARIES, String name, MemoryLayout layout) {
-        return lookup(LIBRARIES, name).map(s
-                -> nonCloseableNonTransferableSegment(s.address().asSegmentRestricted(layout.byteSize())
-                        .share())).orElse(null);
-    }
-
-    public static final MethodHandle downcallHandle(LibraryLookup[] LIBRARIES, String name, String desc, FunctionDescriptor fdesc, boolean variadic) {
-        return lookup(LIBRARIES, name).map(
+    static final MethodHandle downcallHandle(SymbolLookup LOOKUP, String name, String desc, FunctionDescriptor fdesc, boolean variadic) {
+        return LOOKUP.lookup(name).map(
                 addr -> {
                     MethodType mt = MethodType.fromMethodDescriptorString(desc, LOADER);
-                    return variadic
-                            ? VarargsInvoker.make(addr, mt, fdesc)
-                            : LINKER.downcallHandle(addr, mt, fdesc);
+                    return variadic ?
+                        VarargsInvoker.make(addr, mt, fdesc) :
+                        LINKER.downcallHandle(addr, mt, fdesc);
                 }).orElse(null);
     }
 
-    public static final <Z> MemorySegment upcallStub(Class<Z> fi, Z z, FunctionDescriptor fdesc, String mtypeDesc) {
+    static final MethodHandle downcallHandle(String desc, FunctionDescriptor fdesc, boolean variadic) {
+        if (variadic) {
+            throw new AssertionError("Cannot get here!");
+        }
+        MethodType mt = MethodType.fromMethodDescriptorString(desc, LOADER);
+        return LINKER.downcallHandle(mt, fdesc);
+    }
+
+    static final <Z> MemoryAddress upcallStub(Class<Z> fi, Z z, FunctionDescriptor fdesc, String mtypeDesc) {
+        return upcallStub(fi, z, fdesc, mtypeDesc, ResourceScope.newImplicitScope());
+    }
+
+    static final <Z> MemoryAddress upcallStub(Class<Z> fi, Z z, FunctionDescriptor fdesc, String mtypeDesc, ResourceScope scope) {
         try {
             MethodHandle handle = MH_LOOKUP.findVirtual(fi, "apply",
                     MethodType.fromMethodDescriptorString(mtypeDesc, LOADER));
             handle = handle.bindTo(z);
-            return LINKER.upcallStub(handle, fdesc);
+            return LINKER.upcallStub(handle, fdesc, scope);
         } catch (Throwable ex) {
             throw new AssertionError(ex);
         }
     }
 
-    public static final MemorySegment nonCloseableNonTransferableSegment(MemorySegment seg) {
-        return seg.withAccessModes(seg.accessModes() & ~MemorySegment.CLOSE & ~MemorySegment.HANDOFF);
-    }
-
-    public static MemorySegment asArrayRestricted(MemoryAddress addr, MemoryLayout layout, int numElements) {
-        return nonCloseableSegment(addr.asSegmentRestricted(numElements * layout.byteSize()));
+    static MemorySegment asArray(MemoryAddress addr, MemoryLayout layout, int numElements, ResourceScope scope) {
+         return addr.asSegment(numElements * layout.byteSize(), scope);
     }
 
     // Internals only below this point
-    private static final MemorySegment nonCloseableSegment(MemorySegment seg) {
-        return seg.withAccessModes(seg.accessModes() & ~MemorySegment.CLOSE);
-    }
-
-    private static final Optional<LibraryLookup.Symbol> lookup(LibraryLookup[] LIBRARIES, String sym) {
-        return Stream.of(LIBRARIES)
-                .flatMap(l -> l.lookup(sym).stream())
-                .findFirst();
-    }
 
     private static class VarargsInvoker {
-
         private static final MethodHandle INVOKE_MH;
         private final Addressable symbol;
         private final MethodType varargs;
@@ -122,7 +100,7 @@ public final class RuntimeHelper {
 
         static {
             try {
-                INVOKE_MH = MethodHandles.lookup().findVirtual(VarargsInvoker.class, "invoke", MethodType.methodType(Object.class, Object[].class));
+                INVOKE_MH = MethodHandles.lookup().findVirtual(VarargsInvoker.class, "invoke", MethodType.methodType(Object.class, SegmentAllocator.class, Object[].class));
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);
             }
@@ -130,14 +108,19 @@ public final class RuntimeHelper {
 
         static MethodHandle make(Addressable symbol, MethodType type, FunctionDescriptor function) {
             VarargsInvoker invoker = new VarargsInvoker(symbol, type, function);
-            return INVOKE_MH.bindTo(invoker).asCollector(Object[].class, type.parameterCount())
-                    .asType(type);
+            MethodHandle handle = INVOKE_MH.bindTo(invoker).asCollector(Object[].class, type.parameterCount());
+            if (type.returnType().equals(MemorySegment.class)) {
+                type = type.insertParameterTypes(0, SegmentAllocator.class);
+            } else {
+                handle = MethodHandles.insertArguments(handle, 0, THROWING_ALLOCATOR);
+            }
+            return handle.asType(type);
         }
 
-        private Object invoke(Object[] args) throws Throwable {
+        private Object invoke(SegmentAllocator allocator, Object[] args) throws Throwable {
             // one trailing Object[]
             int nNamedArgs = function.argumentLayouts().size();
-            assert (args.length == nNamedArgs + 1);
+            assert(args.length == nNamedArgs + 1);
             // The last argument is the array of vararg collector
             Object[] unnamedArgs = (Object[]) args[args.length - 1];
 
@@ -152,7 +135,7 @@ public final class RuntimeHelper {
             }
 
             assert pos == nNamedArgs;
-            for (Object o : unnamedArgs) {
+            for (Object o: unnamedArgs) {
                 argTypes[pos] = normalize(o.getClass());
                 argLayouts[pos] = variadicLayout(argTypes[pos]);
                 pos++;
@@ -160,10 +143,10 @@ public final class RuntimeHelper {
             assert pos == argsCount;
 
             MethodType mt = MethodType.methodType(varargs.returnType(), argTypes);
-            FunctionDescriptor f = (function.returnLayout().isEmpty())
-                    ? FunctionDescriptor.ofVoid(argLayouts)
-                    : FunctionDescriptor.of(function.returnLayout().get(), argLayouts);
-            MethodHandle mh = LINKER.downcallHandle(symbol, mt, f);
+            FunctionDescriptor f = (function.returnLayout().isEmpty()) ?
+                    FunctionDescriptor.ofVoid(argLayouts) :
+                    FunctionDescriptor.of(function.returnLayout().get(), argLayouts);
+            MethodHandle mh = LINKER.downcallHandle(symbol, allocator, mt, f);
             // flatten argument list so that it can be passed to an asSpreader MH
             Object[] allArgs = new Object[nNamedArgs + unnamedArgs.length];
             System.arraycopy(args, 0, allArgs, 0, nNamedArgs);
