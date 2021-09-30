@@ -45,7 +45,7 @@ Point to the maven coordinates:
 
 - and add the following lines to your java config:
 ```
---add-modules jdk.incubator.foreign -Denable-native-access org.librawfx  
+--add-modules jdk.incubator.foreign --enable-native-access=org.librawfx  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
