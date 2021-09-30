@@ -1,1 +1,2 @@
-/Library/Java/jdk-17.jdk/Contents/Home/bin/jextract -d . --source -t org.libraw -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include --filter libraw ./libraw.h
+# libraw.conf is in ressources directory
+/Users/selfemp/Desktop/java/jdk-17.jdk/Contents/Home/bin/jextract -d . --source -t org.libraw.linuxosx -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include @libraw.conf ./libraw.h
