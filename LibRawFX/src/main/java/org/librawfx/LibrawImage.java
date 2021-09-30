@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -73,9 +74,8 @@ public class LibrawImage {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/linux-x86_64/libstdc++.so.6", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/liblcms2.so.2", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjpeg.so.62", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libraw_r.so.20");
         }
 
-        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + loadLibraryFromJar + " , tempdir: " + tempDir);
-        for (int i = 0; i < loadLibraryFromJar.length; i++) {
-            String part = loadLibraryFromJar[i];
+        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + Arrays.toString(loadLibraryFromJar) + " , tempdir: " + tempDir);
+        for (String part : loadLibraryFromJar) {
             //System.out.println("libsarray "+part);
             new File(part).deleteOnExit();
         }
@@ -278,7 +278,7 @@ public class LibrawImage {
             libraries = org.libraw.linuxosx.RuntimeHelper.lookup();
         }*/
 
-        try ( var scope = ResourceScope.newConfinedScope()) {
+        try ( var scope = ResourceScope.newSharedScope()) {
             if (operatingSystem.contains("WIN")) {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native memory");
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
@@ -458,7 +458,7 @@ public class LibrawImage {
             libraries = org.libraw.linuxosx.RuntimeHelper.lookup();
         }*/
         HashMap<String, String> retMap = new HashMap<>();
-        try ( var scope = ResourceScope.newConfinedScope()) {
+        try ( var scope = ResourceScope.newSharedScope()) {
             if (operatingSystem.contains("WIN")) {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native memory");
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
