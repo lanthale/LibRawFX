@@ -12,7 +12,7 @@ Now the lib is in production ready status. That means it is tested on all operat
 Supported OS:
 - Linux (min. glibc 2.27 which means Ubuntu 18 or later)
 - OSX up to 10.15 (actually no M1 build)
-- Windows 10
+- Windows 10/11
 
 I have integrated LibRaw version 0.20.2 (https://www.libraw.org/download#changelog)
 
