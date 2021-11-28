@@ -25,7 +25,7 @@ Actually only the following raw formats are enabled (see class `RAWDescriptor.ja
 - Sony
 - Leica
 
-The lib now resized the image in memory before sending it to memory (the same as the Javafx is doing for PNG/JPG).
+The lib now resized the image in memory before sending it back to data to the image class (the same as the Javafx is doing for PNG/JPG).
 
 ## Open topics
 - Writing of metadata back to raw files
