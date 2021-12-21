@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
-    <version>1.7</version>
+    <version>1.7.1</version>
     
     <name>LibRawFX</name>
     <description>This installs the native lib libraw as a JavaFX Image format provider similar to imageIO before on Swing</description>
@@ -48,7 +48,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target> 
-        <javafx.version>17.0.0.1</javafx.version>       
+        <javafx.version>17.0.1</javafx.version>       
     </properties>
     
     
@@ -117,7 +117,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>                
+                <version>3.3.1</version>                
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -136,16 +136,14 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.6</version>
-                <configuration>
-                    <mainClass>org.librawfx.TestApp</mainClass>                    
-                </configuration>
+                <version>0.0.8</version>
                 <executions>
                     <execution>
                         <!-- Default configuration for running -->
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options>                                   
                                 <option>--enable-native-access org.librawfx</option>
                                 <option>--add-modules jdk.incubator.foreign</option>                                
@@ -159,6 +157,7 @@
                         <!-- Usage: mvn clean javafx:run@debug -->
                         <id>debug</id>
                         <configuration>
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options> 
                                 <option>--enable-native-access org.librawfx</option>                               
                                 <option>--add-modules jdk.incubator.foreign -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
@@ -171,6 +170,7 @@
                         <!-- Configuration for automatic IDE debugging -->
                         <id>ide-debug</id>
                         <configuration>
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options> 
                                 <option>--enable-native-access org.librawfx</option>                               
                                 <option>--add-modules jdk.incubator.foreign -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
@@ -183,6 +183,7 @@
                         <!-- Configuration for automatic IDE profiling -->
                         <id>ide-profile</id>
                         <configuration>
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options>
                                 <option>${profiler.jvmargs.arg1}</option>
                                 <option>${profiler.jvmargs.arg2}</option>
