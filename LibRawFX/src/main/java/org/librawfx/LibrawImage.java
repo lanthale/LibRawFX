@@ -291,6 +291,8 @@ public class LibrawImage {
                 org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
+                org.libraw.win.libraw_output_params_t.half_size$set(params$slice, 0);
+                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);
                 //libraw_output_params_t.output_bps$set(params$slice, 8);
                 //libraw_output_params_t.output_color$set(params$slice, 0);
 
@@ -357,6 +359,8 @@ public class LibrawImage {
                 org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
+                org.libraw.linuxosx.libraw_output_params_t.half_size$set(params$slice, 0);
+                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);
                 //libraw_output_params_t.output_bps$set(params$slice, 8);
                 //libraw_output_params_t.output_color$set(params$slice, 0);
 
