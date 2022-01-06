@@ -44,14 +44,17 @@ public class LibrawImage {
     private RAWImageLoader loader;
     private String cameraModel;
     private LocalDateTime shootingDateTime;
+    private RawDecoderSettings rawSettings;
 
     public LibrawImage(String imageFile) {
         this.imageFileURL = imageFile;
+        this.rawSettings=new RawDecoderSettings();
     }
 
     LibrawImage(RAWImageLoader loader) {
         imageFileURL = null;
         this.loader = loader;
+        this.rawSettings=new RawDecoderSettings();
     }
 
     /**
@@ -104,24 +107,19 @@ public class LibrawImage {
             System.load(strTemp);            
             SymbolLookup.loaderLookup();            
         }
-        /*if (operatingSystem.contains("WIN")) {
-            libraries = org.libraw.win.RuntimeHelper.lookup();
-        } else {
-            libraries = org.libraw.linuxosx.RuntimeHelper.lookup();
-        }*/
-
         try ( var scope = ResourceScope.newSharedScope()) {
             if (operatingSystem.contains("WIN")) {
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.toRawLongValue());
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
+                
                 org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.half_size$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);
-                //libraw_output_params_t.output_bps$set(params$slice, 8);
+                //org.libraw.win.libraw_output_params_t.output_bps$set(params$slice, 16);
                 //libraw_output_params_t.output_color$set(params$slice, 0);        
 
                 MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
@@ -155,6 +153,7 @@ public class LibrawImage {
                 imageHeight = org.libraw.win.libraw_processed_image_t.height$get(imageMemSegment);
                 imageBits = org.libraw.win.libraw_processed_image_t.bits$get(imageMemSegment);
                 imageColors = org.libraw.win.libraw_processed_image_t.colors$get(imageMemSegment);
+                
                 stride = imageWidth * imageColors * (imageBits / 8);
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Start reading image from native memory...");
                 byte[] line = new byte[stride];
