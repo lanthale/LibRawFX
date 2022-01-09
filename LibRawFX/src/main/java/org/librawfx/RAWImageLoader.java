@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.stage.Screen;
 
 /**
@@ -79,15 +80,15 @@ public class RAWImageLoader extends ImageLoaderImpl {
         int rawImageStride = 0;        
         try {
             updateImageProgress(0);
-            long start = System.currentTimeMillis();
-            imageData = getImageData(libraw);
+            long start = System.currentTimeMillis();            
+            imageData = getImageData(libraw);            
             double diff = (System.currentTimeMillis() - start) / 1000;
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINE, null, "Raw loading took: " + diff + "s");
-            updateImageProgress(lastPercentDone+1);
-            rawImageWidth = libraw.getImageWidth();
+            updateImageProgress(lastPercentDone+1);                        
+            rawImageWidth = libraw.getImageWidth();            
             Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "rawImageWidth " + rawImageWidth);
             rawImageHeight = libraw.getImageHeight();
-            rawImageStride = libraw.getStride();
+            rawImageStride = libraw.getStride();            
             int[] widthHeight = ImageTools.computeDimensions(rawImageWidth, rawImageHeight, width, height, preserveAspectRatio);
             width = widthHeight[0];
             height = widthHeight[1];
@@ -117,15 +118,15 @@ public class RAWImageLoader extends ImageLoaderImpl {
         updateImageMetadata(md);
         updateImageProgress(lastPercentDone+1);
 
-        if (rawImageWidth != width || rawImageHeight != height) {
-            imageData = ImageTools.scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);
+        if (rawImageWidth != width || rawImageHeight != height) {            
+            imageData = ImageTools.scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);            
         }
         updateImageProgress(lastPercentDone+1);
         rawImageStride = width * libraw.getNumBands();
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...");                
         ImageFrame createImageFrame = new FixedPixelDensityImageFrame(ImageStorage.ImageType.RGB, imageData, width,
                 height, rawImageStride, null, getPixelScale(), md);
-        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");
+        Logger.getLogger(RAWImageLoader.class.getName()).log(Level.FINEST, null, "Creating image frame...finished");        
         updateImageProgress(100f);
         return createImageFrame;
     }

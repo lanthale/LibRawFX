@@ -16,6 +16,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -62,11 +63,13 @@ public class TestApp extends Application {
         //ind.progressProperty().bind(img.progressProperty());
         Button btn = new Button("Refresh");
         stack.getChildren().add(btn);
+        stack.getChildren().add(new ProgressBar());
         loadImages(stack, initialFile, initialFile2, initialFile3);
 
         btn.setOnAction((t) -> {
-            stack.getChildren().clear();
+            stack.getChildren().clear();            
             stack.getChildren().add(btn);
+            stack.getChildren().add(new ProgressBar());
             Platform.runLater(() -> {
                 try {
                     loadImages(stack, initialFile, initialFile2, initialFile3);
@@ -86,7 +89,7 @@ public class TestApp extends Application {
         ImageView view3 = new ImageView();
         ProgressIndicator ind = new ProgressIndicator();
         ProgressIndicator ind2 = new ProgressIndicator();
-        ProgressIndicator ind3 = new ProgressIndicator();
+        ProgressIndicator ind3 = new ProgressIndicator();        
         stack.getChildren().add(ind);
         stack.getChildren().add(ind2);
         stack.getChildren().add(ind3);
