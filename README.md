@@ -14,7 +14,7 @@ Supported OS:
 - OSX up to 10.15 (actually no M1 build)
 - Windows 10/11
 
-I have integrated LibRaw version 0.20.2 (https://www.libraw.org/download#changelog)
+I have integrated LibRaw SNAPSHOT version 202110 (https://www.libraw.org/news/libraw-202110-snapshot)
 
 Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
 - Adobe DNG
