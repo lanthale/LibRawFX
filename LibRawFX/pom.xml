@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
-    <version>1.7.3-SNAPSHOT</version>
+    <version>1.7.3</version>
     
     <name>LibRawFX</name>
     <description>This installs the native lib libraw as a JavaFX Image format provider similar to imageIO before on Swing</description>

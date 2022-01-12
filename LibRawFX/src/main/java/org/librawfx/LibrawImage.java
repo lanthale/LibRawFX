@@ -72,7 +72,7 @@ public class LibrawImage {
         if (operatingSystem.contains("WIN")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
         } else if (operatingSystem.contains("MAC")) {
-            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx/liblcms2.2.dylib", "/lib/osx/libjasper.4.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib", "/lib/osx/libraw.20.dylib");
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx/liblcms2.2.dylib", "/lib/osx/libjasper.4.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib", "/lib/osx/libraw.22.dylib");
         } else if (operatingSystem.contains("NUX")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/linux-x86_64/libstdc++.so.6", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/liblcms2.so.2", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjpeg.so.62", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libraw.so.20");
         }
@@ -116,9 +116,9 @@ public class LibrawImage {
                 
                 org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
+                /*org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);
+                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);*/
                 //org.libraw.win.libraw_output_params_t.output_bps$set(params$slice, 16);
                 //libraw_output_params_t.output_color$set(params$slice, 0);        
 
@@ -187,9 +187,9 @@ public class LibrawImage {
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
                 org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
+                /*org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);
+                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);*/
                 //libraw_output_params_t.output_bps$set(params$slice, 8);
                 //libraw_output_params_t.output_color$set(params$slice, 0);        
 
