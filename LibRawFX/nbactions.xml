@@ -40,4 +40,19 @@
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-deploy to maven central</actionName>
+            <displayName>deploy to maven central</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>deploy</goal>
+                
+            </goals>
+            <properties>
+                <Env.MAVEN_OPTS>--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED</Env.MAVEN_OPTS>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>package</activatedProfile>
+            </activatedProfiles>
+        </action>
     </actions>
