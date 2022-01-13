@@ -23,13 +23,13 @@ public class libraw_image_sizes_t {
         C_DOUBLE.withName("pixel_aspect"),
         C_INT.withName("flip"),
         MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, C_INT)).withName("mask"),
-        MemoryLayout.structLayout(
+        C_SHORT.withName("raw_aspect"),
+        MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
             C_SHORT.withName("cleft"),
             C_SHORT.withName("ctop"),
             C_SHORT.withName("cwidth"),
-            C_SHORT.withName("cheight"),
-            C_SHORT.withName("aspect")
-        ).withName("raw_inset_crop"),
+            C_SHORT.withName("cheight")
+        )).withName("raw_inset_crops"),
         MemoryLayout.paddingLayout(16)
     );
     public static MemoryLayout $LAYOUT() {
@@ -214,8 +214,24 @@ public class libraw_image_sizes_t {
     public static MemorySegment mask$slice(MemorySegment seg) {
         return seg.asSlice(36, 128);
     }
-    public static MemorySegment raw_inset_crop$slice(MemorySegment seg) {
-        return seg.asSlice(164, 10);
+    static final VarHandle raw_aspect$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("raw_aspect"));
+    public static VarHandle raw_aspect$VH() {
+        return libraw_image_sizes_t.raw_aspect$VH;
+    }
+    public static short raw_aspect$get(MemorySegment seg) {
+        return (short)libraw_image_sizes_t.raw_aspect$VH.get(seg);
+    }
+    public static void raw_aspect$set( MemorySegment seg, short x) {
+        libraw_image_sizes_t.raw_aspect$VH.set(seg, x);
+    }
+    public static short raw_aspect$get(MemorySegment seg, long index) {
+        return (short)libraw_image_sizes_t.raw_aspect$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void raw_aspect$set(MemorySegment seg, long index, short x) {
+        libraw_image_sizes_t.raw_aspect$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment raw_inset_crops$slice(MemorySegment seg) {
+        return seg.asSlice(166, 16);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

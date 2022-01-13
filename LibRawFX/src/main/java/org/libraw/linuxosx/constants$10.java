@@ -9,6 +9,14 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$10 {
 
+    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(C_INT,
+        C_POINTER
+    );
+    static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_get_raw_width",
+        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        constants$10.libraw_get_raw_width$FUNC, false
+    );
     static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(C_INT,
         C_POINTER
     );
@@ -52,14 +60,6 @@ class constants$10 {
         libraw_h.LIBRARIES, "libraw_get_rgb_cam",
         "(Ljdk/incubator/foreign/MemoryAddress;II)F",
         constants$10.libraw_get_rgb_cam$FUNC, false
-    );
-    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
-    );
-    static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_color_maximum",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
-        constants$10.libraw_get_color_maximum$FUNC, false
     );
 }
 

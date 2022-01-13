@@ -9,7 +9,7 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$12 {
 
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = CLinker.toCString("0.20.2-Release", ResourceScope.newImplicitScope());
+    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = CLinker.toCString("0.21.0-Snapshot202110", ResourceScope.newImplicitScope());
 }
 
 

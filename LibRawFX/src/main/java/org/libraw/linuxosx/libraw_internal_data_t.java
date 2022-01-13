@@ -50,8 +50,12 @@ public class libraw_internal_data_t {
             C_LONG_LONG.withName("strip_offset"),
             C_LONG_LONG.withName("data_offset"),
             C_LONG_LONG.withName("meta_offset"),
+            C_LONG_LONG.withName("exif_offset"),
+            C_LONG_LONG.withName("ifd0_offset"),
             C_INT.withName("data_size"),
             C_INT.withName("meta_length"),
+            C_INT.withName("cr3_exif_length"),
+            C_INT.withName("cr3_ifd0_length"),
             C_INT.withName("thumb_misc"),
             C_INT.withName("fuji_layout"),
             C_INT.withName("tiff_samples"),
@@ -71,8 +75,10 @@ public class libraw_internal_data_t {
             C_INT.withName("fuji_block_width"),
             C_INT.withName("fuji_bits"),
             C_INT.withName("fuji_raw_type"),
+            C_INT.withName("fuji_lossless"),
             C_INT.withName("pana_encoding"),
             C_INT.withName("pana_bpp"),
+            MemoryLayout.paddingLayout(32),
             MemoryLayout.sequenceLayout(16, MemoryLayout.structLayout(
                 C_INT.withName("version"),
                 C_INT.withName("f_width"),
@@ -97,13 +103,14 @@ public class libraw_internal_data_t {
             C_SHORT.withName("CR3_Version"),
             C_INT.withName("CM_found"),
             C_INT.withName("is_NikonTransfer"),
+            C_INT.withName("is_Olympus"),
+            C_INT.withName("OlympusDNG_SubDirOffsetValid"),
             C_INT.withName("is_Sony"),
             C_INT.withName("is_pana_raw"),
-            C_INT.withName("is_4K_RAFdata"),
             C_INT.withName("is_PentaxRicohMakernotes"),
             MemoryLayout.sequenceLayout(20, C_INT).withName("dng_frames"),
             C_SHORT.withName("raw_stride"),
-            MemoryLayout.paddingLayout(48)
+            MemoryLayout.paddingLayout(16)
         ).withName("unpacker_data")
     );
     public static MemoryLayout $LAYOUT() {
@@ -122,7 +129,7 @@ public class libraw_internal_data_t {
         return seg.asSlice(96, 40);
     }
     public static MemorySegment unpacker_data$slice(MemorySegment seg) {
-        return seg.asSlice(136, 1416);
+        return seg.asSlice(136, 1448);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

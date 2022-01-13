@@ -15,7 +15,6 @@ public class libraw_output_params_t {
         MemoryLayout.sequenceLayout(4, C_DOUBLE).withName("aber"),
         MemoryLayout.sequenceLayout(6, C_DOUBLE).withName("gamm"),
         MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_mul"),
-        C_INT.withName("shot_select"),
         C_FLOAT.withName("bright"),
         C_FLOAT.withName("threshold"),
         C_INT.withName("half_size"),
@@ -25,12 +24,14 @@ public class libraw_output_params_t {
         C_INT.withName("use_camera_wb"),
         C_INT.withName("use_camera_matrix"),
         C_INT.withName("output_color"),
+        MemoryLayout.paddingLayout(32),
         C_POINTER.withName("output_profile"),
         C_POINTER.withName("camera_profile"),
         C_POINTER.withName("bad_pixels"),
         C_POINTER.withName("dark_frame"),
         C_INT.withName("output_bps"),
         C_INT.withName("output_tiff"),
+        C_INT.withName("output_flags"),
         C_INT.withName("user_flip"),
         C_INT.withName("user_qual"),
         C_INT.withName("user_black"),
@@ -48,17 +49,9 @@ public class libraw_output_params_t {
         C_INT.withName("exp_correc"),
         C_FLOAT.withName("exp_shift"),
         C_FLOAT.withName("exp_preser"),
-        C_INT.withName("use_rawspeed"),
-        C_INT.withName("use_dngsdk"),
         C_INT.withName("no_auto_scale"),
         C_INT.withName("no_interpolation"),
-        C_INT.withName("raw_processing_options"),
-        C_INT.withName("max_raw_memory_mb"),
-        C_INT.withName("sony_arw2_posterization_thr"),
-        C_FLOAT.withName("coolscan_nef_gamma"),
-        MemoryLayout.sequenceLayout(5, C_CHAR).withName("p4shot_order"),
-        MemoryLayout.paddingLayout(24),
-        C_POINTER.withName("custom_camera_strings")
+        MemoryLayout.paddingLayout(32)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_output_params_t.$struct$LAYOUT;
@@ -77,22 +70,6 @@ public class libraw_output_params_t {
     }
     public static MemorySegment user_mul$slice(MemorySegment seg) {
         return seg.asSlice(112, 16);
-    }
-    static final VarHandle shot_select$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("shot_select"));
-    public static VarHandle shot_select$VH() {
-        return libraw_output_params_t.shot_select$VH;
-    }
-    public static int shot_select$get(MemorySegment seg) {
-        return (int)libraw_output_params_t.shot_select$VH.get(seg);
-    }
-    public static void shot_select$set( MemorySegment seg, int x) {
-        libraw_output_params_t.shot_select$VH.set(seg, x);
-    }
-    public static int shot_select$get(MemorySegment seg, long index) {
-        return (int)libraw_output_params_t.shot_select$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void shot_select$set(MemorySegment seg, long index, int x) {
-        libraw_output_params_t.shot_select$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle bright$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("bright"));
     public static VarHandle bright$VH() {
@@ -334,6 +311,22 @@ public class libraw_output_params_t {
     public static void output_tiff$set(MemorySegment seg, long index, int x) {
         libraw_output_params_t.output_tiff$VH.set(seg.asSlice(index*sizeof()), x);
     }
+    static final VarHandle output_flags$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("output_flags"));
+    public static VarHandle output_flags$VH() {
+        return libraw_output_params_t.output_flags$VH;
+    }
+    public static int output_flags$get(MemorySegment seg) {
+        return (int)libraw_output_params_t.output_flags$VH.get(seg);
+    }
+    public static void output_flags$set( MemorySegment seg, int x) {
+        libraw_output_params_t.output_flags$VH.set(seg, x);
+    }
+    public static int output_flags$get(MemorySegment seg, long index) {
+        return (int)libraw_output_params_t.output_flags$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void output_flags$set(MemorySegment seg, long index, int x) {
+        libraw_output_params_t.output_flags$VH.set(seg.asSlice(index*sizeof()), x);
+    }
     static final VarHandle user_flip$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("user_flip"));
     public static VarHandle user_flip$VH() {
         return libraw_output_params_t.user_flip$VH;
@@ -383,7 +376,7 @@ public class libraw_output_params_t {
         libraw_output_params_t.user_black$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment user_cblack$slice(MemorySegment seg) {
-        return seg.asSlice(220, 16);
+        return seg.asSlice(224, 16);
     }
     static final VarHandle user_sat$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("user_sat"));
     public static VarHandle user_sat$VH() {
@@ -593,38 +586,6 @@ public class libraw_output_params_t {
     public static void exp_preser$set(MemorySegment seg, long index, float x) {
         libraw_output_params_t.exp_preser$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle use_rawspeed$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("use_rawspeed"));
-    public static VarHandle use_rawspeed$VH() {
-        return libraw_output_params_t.use_rawspeed$VH;
-    }
-    public static int use_rawspeed$get(MemorySegment seg) {
-        return (int)libraw_output_params_t.use_rawspeed$VH.get(seg);
-    }
-    public static void use_rawspeed$set( MemorySegment seg, int x) {
-        libraw_output_params_t.use_rawspeed$VH.set(seg, x);
-    }
-    public static int use_rawspeed$get(MemorySegment seg, long index) {
-        return (int)libraw_output_params_t.use_rawspeed$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void use_rawspeed$set(MemorySegment seg, long index, int x) {
-        libraw_output_params_t.use_rawspeed$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle use_dngsdk$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("use_dngsdk"));
-    public static VarHandle use_dngsdk$VH() {
-        return libraw_output_params_t.use_dngsdk$VH;
-    }
-    public static int use_dngsdk$get(MemorySegment seg) {
-        return (int)libraw_output_params_t.use_dngsdk$VH.get(seg);
-    }
-    public static void use_dngsdk$set( MemorySegment seg, int x) {
-        libraw_output_params_t.use_dngsdk$VH.set(seg, x);
-    }
-    public static int use_dngsdk$get(MemorySegment seg, long index) {
-        return (int)libraw_output_params_t.use_dngsdk$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void use_dngsdk$set(MemorySegment seg, long index, int x) {
-        libraw_output_params_t.use_dngsdk$VH.set(seg.asSlice(index*sizeof()), x);
-    }
     static final VarHandle no_auto_scale$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("no_auto_scale"));
     public static VarHandle no_auto_scale$VH() {
         return libraw_output_params_t.no_auto_scale$VH;
@@ -656,89 +617,6 @@ public class libraw_output_params_t {
     }
     public static void no_interpolation$set(MemorySegment seg, long index, int x) {
         libraw_output_params_t.no_interpolation$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle raw_processing_options$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("raw_processing_options"));
-    public static VarHandle raw_processing_options$VH() {
-        return libraw_output_params_t.raw_processing_options$VH;
-    }
-    public static int raw_processing_options$get(MemorySegment seg) {
-        return (int)libraw_output_params_t.raw_processing_options$VH.get(seg);
-    }
-    public static void raw_processing_options$set( MemorySegment seg, int x) {
-        libraw_output_params_t.raw_processing_options$VH.set(seg, x);
-    }
-    public static int raw_processing_options$get(MemorySegment seg, long index) {
-        return (int)libraw_output_params_t.raw_processing_options$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void raw_processing_options$set(MemorySegment seg, long index, int x) {
-        libraw_output_params_t.raw_processing_options$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle max_raw_memory_mb$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("max_raw_memory_mb"));
-    public static VarHandle max_raw_memory_mb$VH() {
-        return libraw_output_params_t.max_raw_memory_mb$VH;
-    }
-    public static int max_raw_memory_mb$get(MemorySegment seg) {
-        return (int)libraw_output_params_t.max_raw_memory_mb$VH.get(seg);
-    }
-    public static void max_raw_memory_mb$set( MemorySegment seg, int x) {
-        libraw_output_params_t.max_raw_memory_mb$VH.set(seg, x);
-    }
-    public static int max_raw_memory_mb$get(MemorySegment seg, long index) {
-        return (int)libraw_output_params_t.max_raw_memory_mb$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void max_raw_memory_mb$set(MemorySegment seg, long index, int x) {
-        libraw_output_params_t.max_raw_memory_mb$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle sony_arw2_posterization_thr$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("sony_arw2_posterization_thr"));
-    public static VarHandle sony_arw2_posterization_thr$VH() {
-        return libraw_output_params_t.sony_arw2_posterization_thr$VH;
-    }
-    public static int sony_arw2_posterization_thr$get(MemorySegment seg) {
-        return (int)libraw_output_params_t.sony_arw2_posterization_thr$VH.get(seg);
-    }
-    public static void sony_arw2_posterization_thr$set( MemorySegment seg, int x) {
-        libraw_output_params_t.sony_arw2_posterization_thr$VH.set(seg, x);
-    }
-    public static int sony_arw2_posterization_thr$get(MemorySegment seg, long index) {
-        return (int)libraw_output_params_t.sony_arw2_posterization_thr$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void sony_arw2_posterization_thr$set(MemorySegment seg, long index, int x) {
-        libraw_output_params_t.sony_arw2_posterization_thr$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle coolscan_nef_gamma$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("coolscan_nef_gamma"));
-    public static VarHandle coolscan_nef_gamma$VH() {
-        return libraw_output_params_t.coolscan_nef_gamma$VH;
-    }
-    public static float coolscan_nef_gamma$get(MemorySegment seg) {
-        return (float)libraw_output_params_t.coolscan_nef_gamma$VH.get(seg);
-    }
-    public static void coolscan_nef_gamma$set( MemorySegment seg, float x) {
-        libraw_output_params_t.coolscan_nef_gamma$VH.set(seg, x);
-    }
-    public static float coolscan_nef_gamma$get(MemorySegment seg, long index) {
-        return (float)libraw_output_params_t.coolscan_nef_gamma$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void coolscan_nef_gamma$set(MemorySegment seg, long index, float x) {
-        libraw_output_params_t.coolscan_nef_gamma$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment p4shot_order$slice(MemorySegment seg) {
-        return seg.asSlice(320, 5);
-    }
-    static final VarHandle custom_camera_strings$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("custom_camera_strings")));
-    public static VarHandle custom_camera_strings$VH() {
-        return libraw_output_params_t.custom_camera_strings$VH;
-    }
-    public static MemoryAddress custom_camera_strings$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.custom_camera_strings$VH.get(seg);
-    }
-    public static void custom_camera_strings$set( MemorySegment seg, MemoryAddress x) {
-        libraw_output_params_t.custom_camera_strings$VH.set(seg, x);
-    }
-    public static MemoryAddress custom_camera_strings$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.custom_camera_strings$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void custom_camera_strings$set(MemorySegment seg, long index, MemoryAddress x) {
-        libraw_output_params_t.custom_camera_strings$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

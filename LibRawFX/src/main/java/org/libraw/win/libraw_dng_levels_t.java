@@ -16,7 +16,8 @@ public class libraw_dng_levels_t {
         MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
         C_FLOAT.withName("dng_fblack"),
         MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-        MemoryLayout.sequenceLayout(4, C_INT).withName("default_crop"),
+        MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
+        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
         C_INT.withName("preview_colorspace"),
         MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
         MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
@@ -84,7 +85,10 @@ public class libraw_dng_levels_t {
         return seg.asSlice(32844, 16);
     }
     public static MemorySegment default_crop$slice(MemorySegment seg) {
-        return seg.asSlice(32860, 16);
+        return seg.asSlice(32860, 8);
+    }
+    public static MemorySegment user_crop$slice(MemorySegment seg) {
+        return seg.asSlice(32868, 16);
     }
     static final VarHandle preview_colorspace$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("preview_colorspace"));
     public static VarHandle preview_colorspace$VH() {
@@ -103,10 +107,10 @@ public class libraw_dng_levels_t {
         libraw_dng_levels_t.preview_colorspace$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment analogbalance$slice(MemorySegment seg) {
-        return seg.asSlice(32880, 16);
+        return seg.asSlice(32888, 16);
     }
     public static MemorySegment asshotneutral$slice(MemorySegment seg) {
-        return seg.asSlice(32896, 16);
+        return seg.asSlice(32904, 16);
     }
     static final VarHandle baseline_exposure$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("baseline_exposure"));
     public static VarHandle baseline_exposure$VH() {

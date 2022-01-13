@@ -23,23 +23,36 @@ public class libraw_fuji_info_t {
         C_SHORT.withName("FocusMode"),
         C_SHORT.withName("AFMode"),
         MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusPixel"),
+        C_SHORT.withName("PrioritySettings"),
+        MemoryLayout.paddingLayout(16),
+        C_INT.withName("FocusSettings"),
+        C_INT.withName("AF_C_Settings"),
+        C_SHORT.withName("FocusWarning"),
         MemoryLayout.sequenceLayout(3, C_SHORT).withName("ImageStabilization"),
         C_SHORT.withName("FlashMode"),
         C_SHORT.withName("WB_Preset"),
         C_SHORT.withName("ShutterType"),
         C_SHORT.withName("ExrMode"),
         C_SHORT.withName("Macro"),
+        MemoryLayout.paddingLayout(16),
         C_INT.withName("Rating"),
         C_SHORT.withName("CropMode"),
-        C_SHORT.withName("FrameRate"),
-        C_SHORT.withName("FrameWidth"),
-        C_SHORT.withName("FrameHeight"),
         MemoryLayout.sequenceLayout(13, C_CHAR).withName("SerialSignature"),
+        MemoryLayout.sequenceLayout(5, C_CHAR).withName("SensorID"),
         MemoryLayout.sequenceLayout(5, C_CHAR).withName("RAFVersion"),
+        MemoryLayout.paddingLayout(24),
+        C_INT.withName("RAFDataGeneration"),
         C_SHORT.withName("RAFDataVersion"),
+        MemoryLayout.paddingLayout(16),
         C_INT.withName("isTSNERDTS"),
         C_SHORT.withName("DriveMode"),
-        MemoryLayout.paddingLayout(16)
+        MemoryLayout.sequenceLayout(9, C_SHORT).withName("BlackLevel"),
+        MemoryLayout.sequenceLayout(32, C_INT).withName("RAFData_ImageSizeTable"),
+        C_INT.withName("AutoBracketing"),
+        C_INT.withName("SequenceNumber"),
+        C_INT.withName("SeriesLength"),
+        MemoryLayout.sequenceLayout(2, C_FLOAT).withName("PixelShiftOffset"),
+        C_INT.withName("ImageCount")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_fuji_info_t.$struct$LAYOUT;
@@ -239,8 +252,72 @@ public class libraw_fuji_info_t {
     public static MemorySegment FocusPixel$slice(MemorySegment seg) {
         return seg.asSlice(28, 4);
     }
+    static final VarHandle PrioritySettings$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("PrioritySettings"));
+    public static VarHandle PrioritySettings$VH() {
+        return libraw_fuji_info_t.PrioritySettings$VH;
+    }
+    public static short PrioritySettings$get(MemorySegment seg) {
+        return (short)libraw_fuji_info_t.PrioritySettings$VH.get(seg);
+    }
+    public static void PrioritySettings$set( MemorySegment seg, short x) {
+        libraw_fuji_info_t.PrioritySettings$VH.set(seg, x);
+    }
+    public static short PrioritySettings$get(MemorySegment seg, long index) {
+        return (short)libraw_fuji_info_t.PrioritySettings$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void PrioritySettings$set(MemorySegment seg, long index, short x) {
+        libraw_fuji_info_t.PrioritySettings$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle FocusSettings$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("FocusSettings"));
+    public static VarHandle FocusSettings$VH() {
+        return libraw_fuji_info_t.FocusSettings$VH;
+    }
+    public static int FocusSettings$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.FocusSettings$VH.get(seg);
+    }
+    public static void FocusSettings$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.FocusSettings$VH.set(seg, x);
+    }
+    public static int FocusSettings$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.FocusSettings$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void FocusSettings$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.FocusSettings$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle AF_C_Settings$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AF_C_Settings"));
+    public static VarHandle AF_C_Settings$VH() {
+        return libraw_fuji_info_t.AF_C_Settings$VH;
+    }
+    public static int AF_C_Settings$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.AF_C_Settings$VH.get(seg);
+    }
+    public static void AF_C_Settings$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.AF_C_Settings$VH.set(seg, x);
+    }
+    public static int AF_C_Settings$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.AF_C_Settings$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void AF_C_Settings$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.AF_C_Settings$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle FocusWarning$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusWarning"));
+    public static VarHandle FocusWarning$VH() {
+        return libraw_fuji_info_t.FocusWarning$VH;
+    }
+    public static short FocusWarning$get(MemorySegment seg) {
+        return (short)libraw_fuji_info_t.FocusWarning$VH.get(seg);
+    }
+    public static void FocusWarning$set( MemorySegment seg, short x) {
+        libraw_fuji_info_t.FocusWarning$VH.set(seg, x);
+    }
+    public static short FocusWarning$get(MemorySegment seg, long index) {
+        return (short)libraw_fuji_info_t.FocusWarning$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void FocusWarning$set(MemorySegment seg, long index, short x) {
+        libraw_fuji_info_t.FocusWarning$VH.set(seg.asSlice(index*sizeof()), x);
+    }
     public static MemorySegment ImageStabilization$slice(MemorySegment seg) {
-        return seg.asSlice(32, 6);
+        return seg.asSlice(46, 6);
     }
     static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FlashMode"));
     public static VarHandle FlashMode$VH() {
@@ -354,59 +431,30 @@ public class libraw_fuji_info_t {
     public static void CropMode$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.CropMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FrameRate$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FrameRate"));
-    public static VarHandle FrameRate$VH() {
-        return libraw_fuji_info_t.FrameRate$VH;
-    }
-    public static short FrameRate$get(MemorySegment seg) {
-        return (short)libraw_fuji_info_t.FrameRate$VH.get(seg);
-    }
-    public static void FrameRate$set( MemorySegment seg, short x) {
-        libraw_fuji_info_t.FrameRate$VH.set(seg, x);
-    }
-    public static short FrameRate$get(MemorySegment seg, long index) {
-        return (short)libraw_fuji_info_t.FrameRate$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FrameRate$set(MemorySegment seg, long index, short x) {
-        libraw_fuji_info_t.FrameRate$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle FrameWidth$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FrameWidth"));
-    public static VarHandle FrameWidth$VH() {
-        return libraw_fuji_info_t.FrameWidth$VH;
-    }
-    public static short FrameWidth$get(MemorySegment seg) {
-        return (short)libraw_fuji_info_t.FrameWidth$VH.get(seg);
-    }
-    public static void FrameWidth$set( MemorySegment seg, short x) {
-        libraw_fuji_info_t.FrameWidth$VH.set(seg, x);
-    }
-    public static short FrameWidth$get(MemorySegment seg, long index) {
-        return (short)libraw_fuji_info_t.FrameWidth$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FrameWidth$set(MemorySegment seg, long index, short x) {
-        libraw_fuji_info_t.FrameWidth$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle FrameHeight$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FrameHeight"));
-    public static VarHandle FrameHeight$VH() {
-        return libraw_fuji_info_t.FrameHeight$VH;
-    }
-    public static short FrameHeight$get(MemorySegment seg) {
-        return (short)libraw_fuji_info_t.FrameHeight$VH.get(seg);
-    }
-    public static void FrameHeight$set( MemorySegment seg, short x) {
-        libraw_fuji_info_t.FrameHeight$VH.set(seg, x);
-    }
-    public static short FrameHeight$get(MemorySegment seg, long index) {
-        return (short)libraw_fuji_info_t.FrameHeight$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FrameHeight$set(MemorySegment seg, long index, short x) {
-        libraw_fuji_info_t.FrameHeight$VH.set(seg.asSlice(index*sizeof()), x);
-    }
     public static MemorySegment SerialSignature$slice(MemorySegment seg) {
-        return seg.asSlice(60, 13);
+        return seg.asSlice(70, 13);
+    }
+    public static MemorySegment SensorID$slice(MemorySegment seg) {
+        return seg.asSlice(83, 5);
     }
     public static MemorySegment RAFVersion$slice(MemorySegment seg) {
-        return seg.asSlice(73, 5);
+        return seg.asSlice(88, 5);
+    }
+    static final VarHandle RAFDataGeneration$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("RAFDataGeneration"));
+    public static VarHandle RAFDataGeneration$VH() {
+        return libraw_fuji_info_t.RAFDataGeneration$VH;
+    }
+    public static int RAFDataGeneration$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.RAFDataGeneration$VH.get(seg);
+    }
+    public static void RAFDataGeneration$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.RAFDataGeneration$VH.set(seg, x);
+    }
+    public static int RAFDataGeneration$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.RAFDataGeneration$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void RAFDataGeneration$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.RAFDataGeneration$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle RAFDataVersion$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("RAFDataVersion"));
     public static VarHandle RAFDataVersion$VH() {
@@ -455,6 +503,79 @@ public class libraw_fuji_info_t {
     }
     public static void DriveMode$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DriveMode$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment BlackLevel$slice(MemorySegment seg) {
+        return seg.asSlice(110, 18);
+    }
+    public static MemorySegment RAFData_ImageSizeTable$slice(MemorySegment seg) {
+        return seg.asSlice(128, 128);
+    }
+    static final VarHandle AutoBracketing$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AutoBracketing"));
+    public static VarHandle AutoBracketing$VH() {
+        return libraw_fuji_info_t.AutoBracketing$VH;
+    }
+    public static int AutoBracketing$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.AutoBracketing$VH.get(seg);
+    }
+    public static void AutoBracketing$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.AutoBracketing$VH.set(seg, x);
+    }
+    public static int AutoBracketing$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.AutoBracketing$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void AutoBracketing$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.AutoBracketing$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle SequenceNumber$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SequenceNumber"));
+    public static VarHandle SequenceNumber$VH() {
+        return libraw_fuji_info_t.SequenceNumber$VH;
+    }
+    public static int SequenceNumber$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.SequenceNumber$VH.get(seg);
+    }
+    public static void SequenceNumber$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.SequenceNumber$VH.set(seg, x);
+    }
+    public static int SequenceNumber$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.SequenceNumber$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void SequenceNumber$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.SequenceNumber$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle SeriesLength$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SeriesLength"));
+    public static VarHandle SeriesLength$VH() {
+        return libraw_fuji_info_t.SeriesLength$VH;
+    }
+    public static int SeriesLength$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.SeriesLength$VH.get(seg);
+    }
+    public static void SeriesLength$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.SeriesLength$VH.set(seg, x);
+    }
+    public static int SeriesLength$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.SeriesLength$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void SeriesLength$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.SeriesLength$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment PixelShiftOffset$slice(MemorySegment seg) {
+        return seg.asSlice(268, 8);
+    }
+    static final VarHandle ImageCount$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("ImageCount"));
+    public static VarHandle ImageCount$VH() {
+        return libraw_fuji_info_t.ImageCount$VH;
+    }
+    public static int ImageCount$get(MemorySegment seg) {
+        return (int)libraw_fuji_info_t.ImageCount$VH.get(seg);
+    }
+    public static void ImageCount$set( MemorySegment seg, int x) {
+        libraw_fuji_info_t.ImageCount$VH.set(seg, x);
+    }
+    public static int ImageCount$get(MemorySegment seg, long index) {
+        return (int)libraw_fuji_info_t.ImageCount$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void ImageCount$set(MemorySegment seg, long index, int x) {
+        libraw_fuji_info_t.ImageCount$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

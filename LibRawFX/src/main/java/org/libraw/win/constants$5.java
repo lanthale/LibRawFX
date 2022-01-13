@@ -9,14 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$5 {
 
-    static final FunctionDescriptor libraw_raw2image$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
-    );
-    static final MethodHandle libraw_raw2image$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_raw2image",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
-        constants$5.libraw_raw2image$FUNC, false
-    );
     static final FunctionDescriptor libraw_free_image$FUNC = FunctionDescriptor.ofVoid(
         C_POINTER
     );
@@ -48,6 +40,16 @@ class constants$5 {
         libraw_h.LIBRARIES, "libraw_cameraCount",
         "([Ljava/lang/Object;)I",
         constants$5.libraw_cameraCount$FUNC, true
+    );
+    static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
+        C_POINTER,
+        C_POINTER,
+        C_POINTER
+    );
+    static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_set_memerror_handler",
+        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)V",
+        constants$5.libraw_set_memerror_handler$FUNC, false
     );
 }
 

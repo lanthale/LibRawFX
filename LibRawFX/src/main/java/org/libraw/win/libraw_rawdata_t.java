@@ -53,13 +53,13 @@ public class libraw_rawdata_t {
             C_DOUBLE.withName("pixel_aspect"),
             C_INT.withName("flip"),
             MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, C_INT)).withName("mask"),
-            MemoryLayout.structLayout(
+            C_SHORT.withName("raw_aspect"),
+            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
                 C_SHORT.withName("cleft"),
                 C_SHORT.withName("ctop"),
                 C_SHORT.withName("cwidth"),
-                C_SHORT.withName("cheight"),
-                C_SHORT.withName("aspect")
-            ).withName("raw_inset_crop"),
+                C_SHORT.withName("cheight")
+            )).withName("raw_inset_crops"),
             MemoryLayout.paddingLayout(16)
         ).withName("sizes"),
         MemoryLayout.structLayout(
@@ -123,7 +123,8 @@ public class libraw_rawdata_t {
                 MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
                 C_FLOAT.withName("dng_fblack"),
                 MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-                MemoryLayout.sequenceLayout(4, C_INT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
                 C_INT.withName("preview_colorspace"),
                 MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
                 MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
@@ -291,13 +292,13 @@ public class libraw_rawdata_t {
         return seg.asSlice(72, 440);
     }
     public static MemorySegment sizes$slice(MemorySegment seg) {
-        return seg.asSlice(512, 176);
+        return seg.asSlice(512, 184);
     }
     public static MemorySegment ioparams$slice(MemorySegment seg) {
-        return seg.asSlice(688, 16);
+        return seg.asSlice(696, 16);
     }
     public static MemorySegment color$slice(MemorySegment seg) {
-        return seg.asSlice(704, 187024);
+        return seg.asSlice(712, 187032);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

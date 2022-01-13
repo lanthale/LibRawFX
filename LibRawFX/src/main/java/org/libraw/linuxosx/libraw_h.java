@@ -25,6 +25,9 @@ public class libraw_h  {
     public static int LIBRAW_CRXTRACKS_MAXCOUNT() {
         return (int)16L;
     }
+    public static int LIBRAW_AFDATA_MAXCOUNT() {
+        return (int)4L;
+    }
     public static int LIBRAW_AHD_TILE() {
         return (int)512L;
     }
@@ -38,13 +41,13 @@ public class libraw_h  {
         return (int)0L;
     }
     public static int LIBRAW_MINOR_VERSION() {
-        return (int)20L;
+        return (int)21L;
     }
     public static int LIBRAW_PATCH_VERSION() {
-        return (int)2L;
+        return (int)0L;
     }
     public static int LIBRAW_SHLIB_CURRENT() {
-        return (int)20L;
+        return (int)22L;
     }
     public static int LIBRAW_SHLIB_REVISION() {
         return (int)0L;
@@ -57,12 +60,6 @@ public class libraw_h  {
     }
     public static int LIBRAW_HISTOGRAM_SIZE() {
         return (int)8192L;
-    }
-    public static int LIBRAW_OPEN_BIGFILE() {
-        return (int)1L;
-    }
-    public static int LIBRAW_OPEN_FILE() {
-        return (int)2L;
     }
     public static int LIBRAW_OPENBAYER_RGGB() {
         return (int)148L;
@@ -120,6 +117,9 @@ public class libraw_h  {
     }
     public static int LIBRAW_DNGFM_LINEARRESPONSELIMIT() {
         return (int)16384L;
+    }
+    public static int LIBRAW_DNGFM_USERCROP() {
+        return (int)32768L;
     }
     public static int LIBRAW_ASWB_APPLIED() {
         return (int)1L;
@@ -371,10 +371,16 @@ public class libraw_h  {
         return (int)32L;
     }
     public static int LIBRAW_DNG_ALL() {
-        return (int)59L;
+        return (int)63L;
     }
     public static int LIBRAW_DNG_DEFAULT() {
         return (int)39L;
+    }
+    public static int LIBRAW_OUTPUT_FLAGS_NONE() {
+        return (int)0L;
+    }
+    public static int LIBRAW_OUTPUT_FLAGS_PPMMETA() {
+        return (int)1L;
     }
     public static int LIBRAW_CAPS_RAWSPEED() {
         return (int)1L;
@@ -393,6 +399,12 @@ public class libraw_h  {
     }
     public static int LIBRAW_CAPS_RPI6BY9() {
         return (int)32L;
+    }
+    public static int LIBRAW_CAPS_ZLIB() {
+        return (int)64L;
+    }
+    public static int LIBRAW_CAPS_JPEG() {
+        return (int)128L;
     }
     public static int LIBRAW_COLORSPACE_NotFound() {
         return (int)0L;
@@ -652,8 +664,26 @@ public class libraw_h  {
     public static int LIBRAW_CAMERAMAKER_Zeiss() {
         return (int)71L;
     }
-    public static int LIBRAW_CAMERAMAKER_TheLastOne() {
+    public static int LIBRAW_CAMERAMAKER_OnePlus() {
         return (int)72L;
+    }
+    public static int LIBRAW_CAMERAMAKER_ISG() {
+        return (int)73L;
+    }
+    public static int LIBRAW_CAMERAMAKER_VIVO() {
+        return (int)74L;
+    }
+    public static int LIBRAW_CAMERAMAKER_HMD_Global() {
+        return (int)75L;
+    }
+    public static int LIBRAW_CAMERAMAKER_HUAWEI() {
+        return (int)76L;
+    }
+    public static int LIBRAW_CAMERAMAKER_RaspberryPi() {
+        return (int)77L;
+    }
+    public static int LIBRAW_CAMERAMAKER_TheLastOne() {
+        return (int)78L;
     }
     public static int LIBRAW_MOUNT_Unknown() {
         return (int)0L;
@@ -742,47 +772,56 @@ public class libraw_h  {
     public static int LIBRAW_MOUNT_Nikon_Z() {
         return (int)28L;
     }
-    public static int LIBRAW_MOUNT_Pentax_645() {
+    public static int LIBRAW_MOUNT_PhaseOne_iXM_MV() {
         return (int)29L;
     }
-    public static int LIBRAW_MOUNT_Pentax_K() {
+    public static int LIBRAW_MOUNT_PhaseOne_iXM_RS() {
         return (int)30L;
     }
-    public static int LIBRAW_MOUNT_Pentax_Q() {
+    public static int LIBRAW_MOUNT_PhaseOne_iXM() {
         return (int)31L;
     }
-    public static int LIBRAW_MOUNT_RicohModule() {
+    public static int LIBRAW_MOUNT_Pentax_645() {
         return (int)32L;
     }
-    public static int LIBRAW_MOUNT_Rollei_bayonet() {
+    public static int LIBRAW_MOUNT_Pentax_K() {
         return (int)33L;
     }
-    public static int LIBRAW_MOUNT_Samsung_NX_M() {
+    public static int LIBRAW_MOUNT_Pentax_Q() {
         return (int)34L;
     }
-    public static int LIBRAW_MOUNT_Samsung_NX() {
+    public static int LIBRAW_MOUNT_RicohModule() {
         return (int)35L;
     }
-    public static int LIBRAW_MOUNT_Sigma_X3F() {
+    public static int LIBRAW_MOUNT_Rollei_bayonet() {
         return (int)36L;
     }
-    public static int LIBRAW_MOUNT_Sony_E() {
+    public static int LIBRAW_MOUNT_Samsung_NX_M() {
         return (int)37L;
     }
-    public static int LIBRAW_MOUNT_LF() {
+    public static int LIBRAW_MOUNT_Samsung_NX() {
         return (int)38L;
     }
-    public static int LIBRAW_MOUNT_DigitalBack() {
+    public static int LIBRAW_MOUNT_Sigma_X3F() {
         return (int)39L;
     }
-    public static int LIBRAW_MOUNT_FixedLens() {
+    public static int LIBRAW_MOUNT_Sony_E() {
         return (int)40L;
     }
-    public static int LIBRAW_MOUNT_IL_UM() {
+    public static int LIBRAW_MOUNT_LF() {
         return (int)41L;
     }
-    public static int LIBRAW_MOUNT_TheLastOne() {
+    public static int LIBRAW_MOUNT_DigitalBack() {
         return (int)42L;
+    }
+    public static int LIBRAW_MOUNT_FixedLens() {
+        return (int)43L;
+    }
+    public static int LIBRAW_MOUNT_IL_UM() {
+        return (int)44L;
+    }
+    public static int LIBRAW_MOUNT_TheLastOne() {
+        return (int)45L;
     }
     public static int LIBRAW_FORMAT_Unknown() {
         return (int)0L;
@@ -856,23 +895,38 @@ public class libraw_h  {
     public static int LIBRAW_IMAGE_ASPECT_UNKNOWN() {
         return (int)0L;
     }
-    public static int LIBRAW_IMAGE_ASPECT_3to2() {
+    public static int LIBRAW_IMAGE_ASPECT_OTHER() {
         return (int)1L;
     }
+    public static int LIBRAW_IMAGE_ASPECT_MINIMAL_REAL_ASPECT_VALUE() {
+        return (int)99L;
+    }
+    public static int LIBRAW_IMAGE_ASPECT_MAXIMAL_REAL_ASPECT_VALUE() {
+        return (int)10000L;
+    }
+    public static int LIBRAW_IMAGE_ASPECT_3to2() {
+        return (int)1500L;
+    }
     public static int LIBRAW_IMAGE_ASPECT_1to1() {
-        return (int)2L;
+        return (int)1000L;
     }
     public static int LIBRAW_IMAGE_ASPECT_4to3() {
-        return (int)3L;
+        return (int)1333L;
     }
     public static int LIBRAW_IMAGE_ASPECT_16to9() {
-        return (int)4L;
+        return (int)1777L;
     }
     public static int LIBRAW_IMAGE_ASPECT_5to4() {
-        return (int)5L;
+        return (int)1250L;
     }
-    public static int LIBRAW_IMAGE_ASPECT_OTHER() {
-        return (int)6L;
+    public static int LIBRAW_IMAGE_ASPECT_7to6() {
+        return (int)1166L;
+    }
+    public static int LIBRAW_IMAGE_ASPECT_6to5() {
+        return (int)1200L;
+    }
+    public static int LIBRAW_IMAGE_ASPECT_7to5() {
+        return (int)1400L;
     }
     public static int LIBRAW_FT_UNDEFINED() {
         return (int)0L;
@@ -940,6 +994,18 @@ public class libraw_h  {
     public static int LIBRAW_Canon_RecordMode_TheLastOne() {
         return (int)16L;
     }
+    public static int LIBRAW_MINOLTA_UNPACKED() {
+        return (int)82L;
+    }
+    public static int LIBRAW_MINOLTA_PACKED() {
+        return (int)89L;
+    }
+    public static int LIBRAW_MINOLTA_RGGB() {
+        return (int)1L;
+    }
+    public static int LIBRAW_MINOLTA_G2BRG1() {
+        return (int)4L;
+    }
     public static int LIBRAW_SONY_DSC() {
         return (int)1L;
     }
@@ -957,6 +1023,81 @@ public class libraw_h  {
     }
     public static int LIBRAW_SONY_ILCA() {
         return (int)6L;
+    }
+    public static int LIBRAW_SONY_CameraType_UNKNOWN() {
+        return (int)65535L;
+    }
+    public static int LIBRAW_SONY_Tag2010None() {
+        return (int)0L;
+    }
+    public static int LIBRAW_SONY_Tag2010a() {
+        return (int)1L;
+    }
+    public static int LIBRAW_SONY_Tag2010b() {
+        return (int)2L;
+    }
+    public static int LIBRAW_SONY_Tag2010c() {
+        return (int)3L;
+    }
+    public static int LIBRAW_SONY_Tag2010d() {
+        return (int)4L;
+    }
+    public static int LIBRAW_SONY_Tag2010e() {
+        return (int)5L;
+    }
+    public static int LIBRAW_SONY_Tag2010f() {
+        return (int)6L;
+    }
+    public static int LIBRAW_SONY_Tag2010g() {
+        return (int)7L;
+    }
+    public static int LIBRAW_SONY_Tag2010h() {
+        return (int)8L;
+    }
+    public static int LIBRAW_SONY_Tag2010i() {
+        return (int)9L;
+    }
+    public static int LIBRAW_SONY_Tag9050None() {
+        return (int)0L;
+    }
+    public static int LIBRAW_SONY_Tag9050a() {
+        return (int)1L;
+    }
+    public static int LIBRAW_SONY_Tag9050b() {
+        return (int)2L;
+    }
+    public static int LIBRAW_SONY_Tag9050c() {
+        return (int)3L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_MF() {
+        return (int)0L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_AF_S() {
+        return (int)2L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_AF_C() {
+        return (int)3L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_AF_A() {
+        return (int)4L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_DMF() {
+        return (int)6L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_AF_D() {
+        return (int)7L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_AF() {
+        return (int)101L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_PERMANENT_AF() {
+        return (int)104L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_SEMI_MF() {
+        return (int)105L;
+    }
+    public static int LIBRAW_SONY_FOCUSMODE_UNKNOWN() {
+        return (int)-1L;
     }
     public static int LIBRAW_Kodak_UnknownSensor() {
         return (int)0L;
@@ -1021,92 +1162,92 @@ public class libraw_h  {
     public static int LIBRAW_HF_AdobeDNG_fromPhocusDNG() {
         return (int)6L;
     }
-    public static int LIBRAW_PROCESSING_SONYARW2_NONE() {
+    public static int LIBRAW_RAWSPECIAL_SONYARW2_NONE() {
         return (int)0L;
     }
-    public static int LIBRAW_PROCESSING_SONYARW2_BASEONLY() {
+    public static int LIBRAW_RAWSPECIAL_SONYARW2_BASEONLY() {
         return (int)1L;
     }
-    public static int LIBRAW_PROCESSING_SONYARW2_DELTAONLY() {
+    public static int LIBRAW_RAWSPECIAL_SONYARW2_DELTAONLY() {
         return (int)2L;
     }
-    public static int LIBRAW_PROCESSING_SONYARW2_DELTAZEROBASE() {
+    public static int LIBRAW_RAWSPECIAL_SONYARW2_DELTAZEROBASE() {
         return (int)4L;
     }
-    public static int LIBRAW_PROCESSING_SONYARW2_DELTATOVALUE() {
+    public static int LIBRAW_RAWSPECIAL_SONYARW2_DELTATOVALUE() {
         return (int)8L;
     }
-    public static int LIBRAW_PROCESSING_SONYARW2_ALLFLAGS() {
+    public static int LIBRAW_RAWSPECIAL_SONYARW2_ALLFLAGS() {
         return (int)15L;
     }
-    public static int LIBRAW_PROCESSING_DP2Q_INTERPOLATERG() {
+    public static int LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATERG() {
         return (int)16L;
     }
-    public static int LIBRAW_PROCESSING_DP2Q_INTERPOLATEAF() {
+    public static int LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATEAF() {
         return (int)32L;
     }
-    public static int LIBRAW_PROCESSING_PENTAX_PS_ALLFRAMES() {
+    public static int LIBRAW_RAWSPECIAL_SRAW_NO_RGB() {
         return (int)64L;
     }
-    public static int LIBRAW_PROCESSING_CONVERTFLOAT_TO_INT() {
+    public static int LIBRAW_RAWSPECIAL_SRAW_NO_INTERPOLATE() {
         return (int)128L;
     }
-    public static int LIBRAW_PROCESSING_SRAW_NO_RGB() {
+    public static int LIBRAW_RAWOPTIONS_PENTAX_PS_ALLFRAMES() {
+        return (int)1L;
+    }
+    public static int LIBRAW_RAWOPTIONS_CONVERTFLOAT_TO_INT() {
+        return (int)2L;
+    }
+    public static int LIBRAW_RAWOPTIONS_ARQ_SKIP_CHANNEL_SWAP() {
+        return (int)4L;
+    }
+    public static int LIBRAW_RAWOPTIONS_NO_ROTATE_FOR_KODAK_THUMBNAILS() {
+        return (int)8L;
+    }
+    public static int LIBRAW_RAWOPTIONS_USE_PPM16_THUMBS() {
+        return (int)32L;
+    }
+    public static int LIBRAW_RAWOPTIONS_DONT_CHECK_DNG_ILLUMINANT() {
+        return (int)64L;
+    }
+    public static int LIBRAW_RAWOPTIONS_DNGSDK_ZEROCOPY() {
+        return (int)128L;
+    }
+    public static int LIBRAW_RAWOPTIONS_ZEROFILTERS_FOR_MONOCHROMETIFFS() {
         return (int)256L;
     }
-    public static int LIBRAW_PROCESSING_SRAW_NO_INTERPOLATE() {
+    public static int LIBRAW_RAWOPTIONS_DNG_ADD_ENHANCED() {
         return (int)512L;
     }
-    public static int LIBRAW_PROCESSING_ARQ_SKIP_CHANNEL_SWAP() {
+    public static int LIBRAW_RAWOPTIONS_DNG_ADD_PREVIEWS() {
         return (int)1024L;
     }
-    public static int LIBRAW_PROCESSING_NO_ROTATE_FOR_KODAK_THUMBNAILS() {
+    public static int LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE() {
         return (int)2048L;
     }
-    public static int LIBRAW_PROCESSING_USE_DNG_DEFAULT_CROP() {
+    public static int LIBRAW_RAWOPTIONS_DNG_STAGE2() {
         return (int)4096L;
     }
-    public static int LIBRAW_PROCESSING_USE_PPM16_THUMBS() {
+    public static int LIBRAW_RAWOPTIONS_DNG_STAGE3() {
         return (int)8192L;
     }
-    public static int LIBRAW_PROCESSING_SKIP_MAKERNOTES() {
+    public static int LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE() {
         return (int)16384L;
     }
-    public static int LIBRAW_PROCESSING_DONT_CHECK_DNG_ILLUMINANT() {
+    public static int LIBRAW_RAWOPTIONS_DNG_DISABLEWBADJUST() {
         return (int)32768L;
     }
-    public static int LIBRAW_PROCESSING_DNGSDK_ZEROCOPY() {
+    public static int LIBRAW_RAWOPTIONS_PROVIDE_NONSTANDARD_WB() {
         return (int)65536L;
     }
-    public static int LIBRAW_PROCESSING_ZEROFILTERS_FOR_MONOCHROMETIFFS() {
+    public static int LIBRAW_RAWOPTIONS_CAMERAWB_FALLBACK_TO_DAYLIGHT() {
         return (int)131072L;
     }
-    public static int LIBRAW_PROCESSING_DNG_ADD_ENHANCED() {
+    public static int LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_KNOWN_VENDORS() {
         return (int)262144L;
     }
-    public static int LIBRAW_PROCESSING_DNG_ADD_PREVIEWS() {
+    public static int LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_ALL_VENDORS() {
         return (int)524288L;
-    }
-    public static int LIBRAW_PROCESSING_DNG_PREFER_LARGEST_IMAGE() {
-        return (int)1048576L;
-    }
-    public static int LIBRAW_PROCESSING_DNG_STAGE2() {
-        return (int)2097152L;
-    }
-    public static int LIBRAW_PROCESSING_DNG_STAGE3() {
-        return (int)4194304L;
-    }
-    public static int LIBRAW_PROCESSING_DNG_ALLOWSIZECHANGE() {
-        return (int)8388608L;
-    }
-    public static int LIBRAW_PROCESSING_DNG_DISABLEWBADJUST() {
-        return (int)16777216L;
-    }
-    public static int LIBRAW_PROCESSING_PROVIDE_NONSTANDARD_WB() {
-        return (int)33554432L;
-    }
-    public static int LIBRAW_PROCESSING_CAMERAWB_FALLBACK_TO_DAYLIGHT() {
-        return (int)67108864L;
     }
     public static int LIBRAW_DECODER_HASCURVE() {
         return (int)16L;
@@ -1147,6 +1288,12 @@ public class libraw_h  {
     public static int LIBRAW_OPTIONS_NONE() {
         return (int)0L;
     }
+    public static int LIBRAW_OPTIONS_NO_MEMERR_CALLBACK() {
+        return (int)1L;
+    }
+    public static int LIBRAW_OPTIONS_NO_DATAERR_CALLBACK() {
+        return (int)2L;
+    }
     public static int LIBRAW_OPIONS_NO_MEMERR_CALLBACK() {
         return (int)1L;
     }
@@ -1182,9 +1329,6 @@ public class libraw_h  {
     }
     public static int LIBRAW_WARN_BAD_DARKFRAME_DIM() {
         return (int)1024L;
-    }
-    public static int LIBRAW_WARN_NO_JASPER() {
-        return (int)2048L;
     }
     public static int LIBRAW_WARN_RAWSPEED_PROBLEM() {
         return (int)4096L;
@@ -1411,6 +1555,9 @@ public class libraw_h  {
     public static int LIBRAW_THUMBNAIL_ROLLEI() {
         return (int)5L;
     }
+    public static int LIBRAW_THUMBNAIL_H265() {
+        return (int)6L;
+    }
     public static int LIBRAW_IMAGE_JPEG() {
         return (int)1L;
     }
@@ -1484,17 +1631,6 @@ public class libraw_h  {
             throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_open_file_ex$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_open_file_ex$MH,"libraw_open_file_ex");
-    }
-    public static int libraw_open_file_ex ( Addressable x0,  Addressable x1,  long max_buff_sz) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_file_ex$MH, "libraw_open_file_ex");
-        try {
-            return (int)mh$.invokeExact(x0.address(), x1.address(), max_buff_sz);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
-        }
-    }
     public static MethodHandle libraw_open_buffer$MH() {
         return RuntimeHelper.requireNonNull(constants$3.libraw_open_buffer$MH,"libraw_open_buffer");
     }
@@ -1502,6 +1638,17 @@ public class libraw_h  {
         var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_buffer$MH, "libraw_open_buffer");
         try {
             return (int)mh$.invokeExact(x0.address(), buffer.address(), size);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
+    }
+    public static MethodHandle libraw_open_bayer$MH() {
+        return RuntimeHelper.requireNonNull(constants$3.libraw_open_bayer$MH,"libraw_open_bayer");
+    }
+    public static int libraw_open_bayer ( Addressable lr,  Addressable data,  int datalen,  short _raw_width,  short _raw_height,  short _left_margin,  short _top_margin,  short _right_margin,  short _bottom_margin,  byte procflags,  byte bayer_battern,  int unused_bits,  int otherflags,  int black_level) {
+        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_bayer$MH, "libraw_open_bayer");
+        try {
+            return (int)mh$.invokeExact(lr.address(), data.address(), datalen, _raw_width, _raw_height, _left_margin, _top_margin, _right_margin, _bottom_margin, procflags, bayer_battern, unused_bits, otherflags, black_level);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1825,6 +1972,17 @@ public class libraw_h  {
             throw new AssertionError("should not reach here", ex$);
         }
     }
+    public static MethodHandle libraw_set_adjust_maximum_thr$MH() {
+        return RuntimeHelper.requireNonNull(constants$8.libraw_set_adjust_maximum_thr$MH,"libraw_set_adjust_maximum_thr");
+    }
+    public static void libraw_set_adjust_maximum_thr ( Addressable lr,  float value) {
+        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_adjust_maximum_thr$MH, "libraw_set_adjust_maximum_thr");
+        try {
+            mh$.invokeExact(lr.address(), value);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
+    }
     public static MethodHandle libraw_set_user_mul$MH() {
         return RuntimeHelper.requireNonNull(constants$8.libraw_set_user_mul$MH,"libraw_set_user_mul");
     }
@@ -1848,10 +2006,10 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_gamma$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_set_gamma$MH,"libraw_set_gamma");
+        return RuntimeHelper.requireNonNull(constants$9.libraw_set_gamma$MH,"libraw_set_gamma");
     }
     public static void libraw_set_gamma ( Addressable lr,  int index,  float value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_gamma$MH, "libraw_set_gamma");
+        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_gamma$MH, "libraw_set_gamma");
         try {
             mh$.invokeExact(lr.address(), index, value);
         } catch (Throwable ex$) {
@@ -1914,10 +2072,10 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_raw_width$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_get_raw_width$MH,"libraw_get_raw_width");
+        return RuntimeHelper.requireNonNull(constants$10.libraw_get_raw_width$MH,"libraw_get_raw_width");
     }
     public static int libraw_get_raw_width ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_get_raw_width$MH, "libraw_get_raw_width");
+        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_raw_width$MH, "libraw_get_raw_width");
         try {
             return (int)mh$.invokeExact(lr.address());
         } catch (Throwable ex$) {
@@ -1980,10 +2138,10 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_color_maximum$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_get_color_maximum$MH,"libraw_get_color_maximum");
+        return RuntimeHelper.requireNonNull(constants$11.libraw_get_color_maximum$MH,"libraw_get_color_maximum");
     }
     public static int libraw_get_color_maximum ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_color_maximum$MH, "libraw_get_color_maximum");
+        var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_color_maximum$MH, "libraw_get_color_maximum");
         try {
             return (int)mh$.invokeExact(lr.address());
         } catch (Throwable ex$) {
@@ -2034,9 +2192,6 @@ public class libraw_h  {
             throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static long LIBRAW_USE_STREAMS_DATASTREAM_MAXSIZE() {
-        return 262144000L;
-    }
     public static double LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD() {
         return 0.75d;
     }
@@ -2045,6 +2200,12 @@ public class libraw_h  {
     }
     public static long LIBRAW_MAX_ALLOC_MB_DEFAULT() {
         return 2048L;
+    }
+    public static long LIBRAW_MAX_NONDNG_RAW_FILE_SIZE() {
+        return 2147483647L;
+    }
+    public static long LIBRAW_MAX_DNG_RAW_FILE_SIZE() {
+        return 2147483647L;
     }
     public static long LIBRAW_MAX_THUMBNAIL_MB() {
         return 512L;
@@ -2113,7 +2274,7 @@ public class libraw_h  {
         return constants$11.LIBRAW_VERSION_STR$SEGMENT;
     }
     public static int LIBRAW_VERSION() {
-        return (int)5122L;
+        return (int)5376L;
     }
 }
 

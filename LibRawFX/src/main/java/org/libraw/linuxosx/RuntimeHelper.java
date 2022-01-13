@@ -22,13 +22,13 @@ import java.util.stream.Stream;
 
 import static jdk.incubator.foreign.CLinker.*;
 
-public final class RuntimeHelper {
+final class RuntimeHelper {
     private RuntimeHelper() {}
     private final static CLinker LINKER = CLinker.getInstance();
     private final static ClassLoader LOADER = RuntimeHelper.class.getClassLoader();
     private final static MethodHandles.Lookup MH_LOOKUP = MethodHandles.lookup();
 
-    public static SymbolLookup lookup() {
+    static SymbolLookup lookup() {
         SymbolLookup loaderLookup = SymbolLookup.loaderLookup();
         SymbolLookup systemLookup = CLinker.systemLookup();
         return name -> loaderLookup.lookup(name).or(() -> systemLookup.lookup(name));

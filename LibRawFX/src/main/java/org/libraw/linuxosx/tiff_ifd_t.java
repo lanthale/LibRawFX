@@ -56,7 +56,8 @@ public class tiff_ifd_t {
             MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
             C_FLOAT.withName("dng_fblack"),
             MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-            MemoryLayout.sequenceLayout(4, C_INT).withName("default_crop"),
+            MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
+            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
             C_INT.withName("preview_colorspace"),
             MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
             MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
@@ -536,7 +537,7 @@ public class tiff_ifd_t {
         return seg.asSlice(140, 336);
     }
     public static MemorySegment dng_levels$slice(MemorySegment seg) {
-        return seg.asSlice(476, 32920);
+        return seg.asSlice(476, 32928);
     }
     static final VarHandle newsubfiletype$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("newsubfiletype"));
     public static VarHandle newsubfiletype$VH() {

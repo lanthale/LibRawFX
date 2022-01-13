@@ -13,8 +13,7 @@ public class libraw_raw_inset_crop_t {
         C_SHORT.withName("cleft"),
         C_SHORT.withName("ctop"),
         C_SHORT.withName("cwidth"),
-        C_SHORT.withName("cheight"),
-        C_SHORT.withName("aspect")
+        C_SHORT.withName("cheight")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_raw_inset_crop_t.$struct$LAYOUT;
@@ -82,22 +81,6 @@ public class libraw_raw_inset_crop_t {
     }
     public static void cheight$set(MemorySegment seg, long index, short x) {
         libraw_raw_inset_crop_t.cheight$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle aspect$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("aspect"));
-    public static VarHandle aspect$VH() {
-        return libraw_raw_inset_crop_t.aspect$VH;
-    }
-    public static short aspect$get(MemorySegment seg) {
-        return (short)libraw_raw_inset_crop_t.aspect$VH.get(seg);
-    }
-    public static void aspect$set( MemorySegment seg, short x) {
-        libraw_raw_inset_crop_t.aspect$VH.set(seg, x);
-    }
-    public static short aspect$get(MemorySegment seg, long index) {
-        return (short)libraw_raw_inset_crop_t.aspect$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void aspect$set(MemorySegment seg, long index, short x) {
-        libraw_raw_inset_crop_t.aspect$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

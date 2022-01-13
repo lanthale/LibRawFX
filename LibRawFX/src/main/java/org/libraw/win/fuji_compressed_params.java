@@ -10,37 +10,43 @@ import static jdk.incubator.foreign.CLinker.*;
 public class fuji_compressed_params {
 
     static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_POINTER.withName("q_table"),
-        MemoryLayout.sequenceLayout(5, C_INT).withName("q_point"),
+        MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
+            C_POINTER.withName("q_table"),
+            C_INT.withName("raw_bits"),
+            C_INT.withName("total_values"),
+            C_INT.withName("max_grad"),
+            C_INT.withName("q_grad_mult"),
+            C_INT.withName("q_base"),
+            MemoryLayout.paddingLayout(32)
+        ).withName("fuji_q_table")).withName("qt"),
+        C_POINTER.withName("buf"),
         C_INT.withName("max_bits"),
         C_INT.withName("min_value"),
-        C_INT.withName("raw_bits"),
-        C_INT.withName("total_values"),
-        C_INT.withName("maxDiff"),
+        C_INT.withName("max_value"),
         C_SHORT.withName("line_width"),
-        MemoryLayout.paddingLayout(48)
+        MemoryLayout.paddingLayout(16)
     ).withName("fuji_compressed_params");
     public static MemoryLayout $LAYOUT() {
         return fuji_compressed_params.$struct$LAYOUT;
     }
-    static final VarHandle q_table$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("q_table")));
-    public static VarHandle q_table$VH() {
-        return fuji_compressed_params.q_table$VH;
+    public static MemorySegment qt$slice(MemorySegment seg) {
+        return seg.asSlice(0, 128);
     }
-    public static MemoryAddress q_table$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)fuji_compressed_params.q_table$VH.get(seg);
+    static final VarHandle buf$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("buf")));
+    public static VarHandle buf$VH() {
+        return fuji_compressed_params.buf$VH;
     }
-    public static void q_table$set( MemorySegment seg, MemoryAddress x) {
-        fuji_compressed_params.q_table$VH.set(seg, x);
+    public static MemoryAddress buf$get(MemorySegment seg) {
+        return (jdk.incubator.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg);
     }
-    public static MemoryAddress q_table$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)fuji_compressed_params.q_table$VH.get(seg.asSlice(index*sizeof()));
+    public static void buf$set( MemorySegment seg, MemoryAddress x) {
+        fuji_compressed_params.buf$VH.set(seg, x);
     }
-    public static void q_table$set(MemorySegment seg, long index, MemoryAddress x) {
-        fuji_compressed_params.q_table$VH.set(seg.asSlice(index*sizeof()), x);
+    public static MemoryAddress buf$get(MemorySegment seg, long index) {
+        return (jdk.incubator.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static MemorySegment q_point$slice(MemorySegment seg) {
-        return seg.asSlice(8, 20);
+    public static void buf$set(MemorySegment seg, long index, MemoryAddress x) {
+        fuji_compressed_params.buf$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle max_bits$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("max_bits"));
     public static VarHandle max_bits$VH() {
@@ -74,53 +80,21 @@ public class fuji_compressed_params {
     public static void min_value$set(MemorySegment seg, long index, int x) {
         fuji_compressed_params.min_value$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_bits$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("raw_bits"));
-    public static VarHandle raw_bits$VH() {
-        return fuji_compressed_params.raw_bits$VH;
+    static final VarHandle max_value$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("max_value"));
+    public static VarHandle max_value$VH() {
+        return fuji_compressed_params.max_value$VH;
     }
-    public static int raw_bits$get(MemorySegment seg) {
-        return (int)fuji_compressed_params.raw_bits$VH.get(seg);
+    public static int max_value$get(MemorySegment seg) {
+        return (int)fuji_compressed_params.max_value$VH.get(seg);
     }
-    public static void raw_bits$set( MemorySegment seg, int x) {
-        fuji_compressed_params.raw_bits$VH.set(seg, x);
+    public static void max_value$set( MemorySegment seg, int x) {
+        fuji_compressed_params.max_value$VH.set(seg, x);
     }
-    public static int raw_bits$get(MemorySegment seg, long index) {
-        return (int)fuji_compressed_params.raw_bits$VH.get(seg.asSlice(index*sizeof()));
+    public static int max_value$get(MemorySegment seg, long index) {
+        return (int)fuji_compressed_params.max_value$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void raw_bits$set(MemorySegment seg, long index, int x) {
-        fuji_compressed_params.raw_bits$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle total_values$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("total_values"));
-    public static VarHandle total_values$VH() {
-        return fuji_compressed_params.total_values$VH;
-    }
-    public static int total_values$get(MemorySegment seg) {
-        return (int)fuji_compressed_params.total_values$VH.get(seg);
-    }
-    public static void total_values$set( MemorySegment seg, int x) {
-        fuji_compressed_params.total_values$VH.set(seg, x);
-    }
-    public static int total_values$get(MemorySegment seg, long index) {
-        return (int)fuji_compressed_params.total_values$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void total_values$set(MemorySegment seg, long index, int x) {
-        fuji_compressed_params.total_values$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle maxDiff$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("maxDiff"));
-    public static VarHandle maxDiff$VH() {
-        return fuji_compressed_params.maxDiff$VH;
-    }
-    public static int maxDiff$get(MemorySegment seg) {
-        return (int)fuji_compressed_params.maxDiff$VH.get(seg);
-    }
-    public static void maxDiff$set( MemorySegment seg, int x) {
-        fuji_compressed_params.maxDiff$VH.set(seg, x);
-    }
-    public static int maxDiff$get(MemorySegment seg, long index) {
-        return (int)fuji_compressed_params.maxDiff$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void maxDiff$set(MemorySegment seg, long index, int x) {
-        fuji_compressed_params.maxDiff$VH.set(seg.asSlice(index*sizeof()), x);
+    public static void max_value$set(MemorySegment seg, long index, int x) {
+        fuji_compressed_params.max_value$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle line_width$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("line_width"));
     public static VarHandle line_width$VH() {

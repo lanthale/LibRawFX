@@ -9,16 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$7 {
 
-    static final FunctionDescriptor libraw_COLOR$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER,
-        C_INT,
-        C_INT
-    );
-    static final MethodHandle libraw_COLOR$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_COLOR",
-        "(Ljdk/incubator/foreign/MemoryAddress;II)I",
-        constants$7.libraw_COLOR$FUNC, false
-    );
     static final FunctionDescriptor libraw_capabilities$FUNC = FunctionDescriptor.of(C_INT);
     static final MethodHandle libraw_capabilities$MH = RuntimeHelper.downcallHandle(
         libraw_h.LIBRARIES, "libraw_capabilities",
@@ -58,6 +48,15 @@ class constants$7 {
         libraw_h.LIBRARIES, "libraw_dcraw_process",
         "(Ljdk/incubator/foreign/MemoryAddress;)I",
         constants$7.libraw_dcraw_process$FUNC, false
+    );
+    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(C_POINTER,
+        C_POINTER,
+        C_POINTER
+    );
+    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_dcraw_make_mem_image",
+        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)Ljdk/incubator/foreign/MemoryAddress;",
+        constants$7.libraw_dcraw_make_mem_image$FUNC, false
     );
 }
 

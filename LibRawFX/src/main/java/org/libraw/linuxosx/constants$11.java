@@ -9,6 +9,14 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$11 {
 
+    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(C_INT,
+        C_POINTER
+    );
+    static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_get_color_maximum",
+        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        constants$11.libraw_get_color_maximum$FUNC, false
+    );
     static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
         C_POINTER,
         C_INT
@@ -42,7 +50,7 @@ class constants$11 {
         "(Ljdk/incubator/foreign/MemoryAddress;)Ljdk/incubator/foreign/MemoryAddress;",
         constants$11.libraw_get_imgother$FUNC, false
     );
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = CLinker.toCString("0.20.2-Release", ResourceScope.newImplicitScope());
+    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = CLinker.toCString("0.21.0-Snapshot202110", ResourceScope.newImplicitScope());
 }
 
 

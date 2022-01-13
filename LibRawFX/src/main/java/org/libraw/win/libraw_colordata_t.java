@@ -63,7 +63,8 @@ public class libraw_colordata_t {
             MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
             C_FLOAT.withName("dng_fblack"),
             MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-            MemoryLayout.sequenceLayout(4, C_INT).withName("default_crop"),
+            MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
+            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
             C_INT.withName("preview_colorspace"),
             MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
             MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
@@ -284,13 +285,13 @@ public class libraw_colordata_t {
         return seg.asSlice(148308, 336);
     }
     public static MemorySegment dng_levels$slice(MemorySegment seg) {
-        return seg.asSlice(148644, 32920);
+        return seg.asSlice(148644, 32928);
     }
     public static MemorySegment WB_Coeffs$slice(MemorySegment seg) {
-        return seg.asSlice(181564, 4096);
+        return seg.asSlice(181572, 4096);
     }
     public static MemorySegment WBCT_Coeffs$slice(MemorySegment seg) {
-        return seg.asSlice(185660, 1280);
+        return seg.asSlice(185668, 1280);
     }
     static final VarHandle as_shot_wb_applied$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("as_shot_wb_applied"));
     public static VarHandle as_shot_wb_applied$VH() {
@@ -309,7 +310,7 @@ public class libraw_colordata_t {
         libraw_colordata_t.as_shot_wb_applied$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment P1_color$slice(MemorySegment seg) {
-        return seg.asSlice(186944, 72);
+        return seg.asSlice(186952, 72);
     }
     static final VarHandle raw_bps$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("raw_bps"));
     public static VarHandle raw_bps$VH() {

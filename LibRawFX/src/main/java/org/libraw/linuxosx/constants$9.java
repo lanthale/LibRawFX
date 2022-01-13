@@ -9,6 +9,16 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$9 {
 
+    static final FunctionDescriptor libraw_set_gamma$FUNC = FunctionDescriptor.ofVoid(
+        C_POINTER,
+        C_INT,
+        C_FLOAT
+    );
+    static final MethodHandle libraw_set_gamma$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_set_gamma",
+        "(Ljdk/incubator/foreign/MemoryAddress;IF)V",
+        constants$9.libraw_set_gamma$FUNC, false
+    );
     static final FunctionDescriptor libraw_set_no_auto_bright$FUNC = FunctionDescriptor.ofVoid(
         C_POINTER,
         C_INT
@@ -52,14 +62,6 @@ class constants$9 {
         libraw_h.LIBRARIES, "libraw_get_raw_height",
         "(Ljdk/incubator/foreign/MemoryAddress;)I",
         constants$9.libraw_get_raw_height$FUNC, false
-    );
-    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
-    );
-    static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_raw_width",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
-        constants$9.libraw_get_raw_width$FUNC, false
     );
 }
 

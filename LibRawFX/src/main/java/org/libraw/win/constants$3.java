@@ -26,16 +26,6 @@ class constants$3 {
         "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)I",
         constants$3.libraw_open_file$FUNC, false
     );
-    static final FunctionDescriptor libraw_open_file_ex$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER,
-        C_POINTER,
-        C_LONG_LONG
-    );
-    static final MethodHandle libraw_open_file_ex$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_open_file_ex",
-        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;J)I",
-        constants$3.libraw_open_file_ex$FUNC, false
-    );
     static final FunctionDescriptor libraw_open_wfile$FUNC = FunctionDescriptor.of(C_INT,
         C_POINTER,
         C_POINTER
@@ -44,16 +34,6 @@ class constants$3 {
         libraw_h.LIBRARIES, "libraw_open_wfile",
         "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)I",
         constants$3.libraw_open_wfile$FUNC, false
-    );
-    static final FunctionDescriptor libraw_open_wfile_ex$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER,
-        C_POINTER,
-        C_LONG_LONG
-    );
-    static final MethodHandle libraw_open_wfile_ex$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_open_wfile_ex",
-        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;J)I",
-        constants$3.libraw_open_wfile_ex$FUNC, false
     );
     static final FunctionDescriptor libraw_open_buffer$FUNC = FunctionDescriptor.of(C_INT,
         C_POINTER,
@@ -64,6 +44,35 @@ class constants$3 {
         libraw_h.LIBRARIES, "libraw_open_buffer",
         "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;J)I",
         constants$3.libraw_open_buffer$FUNC, false
+    );
+    static final FunctionDescriptor libraw_open_bayer$FUNC = FunctionDescriptor.of(C_INT,
+        C_POINTER,
+        C_POINTER,
+        C_INT,
+        C_SHORT,
+        C_SHORT,
+        C_SHORT,
+        C_SHORT,
+        C_SHORT,
+        C_SHORT,
+        C_CHAR,
+        C_CHAR,
+        C_INT,
+        C_INT,
+        C_INT
+    );
+    static final MethodHandle libraw_open_bayer$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_open_bayer",
+        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;ISSSSSSBBIII)I",
+        constants$3.libraw_open_bayer$FUNC, false
+    );
+    static final FunctionDescriptor libraw_unpack$FUNC = FunctionDescriptor.of(C_INT,
+        C_POINTER
+    );
+    static final MethodHandle libraw_unpack$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_unpack",
+        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        constants$3.libraw_unpack$FUNC, false
     );
 }
 

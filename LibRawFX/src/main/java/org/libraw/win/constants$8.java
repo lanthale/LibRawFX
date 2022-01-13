@@ -9,15 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 class constants$8 {
 
-    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(C_POINTER,
-        C_POINTER,
-        C_POINTER
-    );
-    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_dcraw_make_mem_image",
-        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)Ljdk/incubator/foreign/MemoryAddress;",
-        constants$8.libraw_dcraw_make_mem_image$FUNC, false
-    );
     static final FunctionDescriptor libraw_dcraw_make_mem_thumb$FUNC = FunctionDescriptor.of(C_POINTER,
         C_POINTER,
         C_POINTER
@@ -52,6 +43,15 @@ class constants$8 {
         libraw_h.LIBRARIES, "libraw_set_output_color",
         "(Ljdk/incubator/foreign/MemoryAddress;I)V",
         constants$8.libraw_set_output_color$FUNC, false
+    );
+    static final FunctionDescriptor libraw_set_adjust_maximum_thr$FUNC = FunctionDescriptor.ofVoid(
+        C_POINTER,
+        C_FLOAT
+    );
+    static final MethodHandle libraw_set_adjust_maximum_thr$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_set_adjust_maximum_thr",
+        "(Ljdk/incubator/foreign/MemoryAddress;F)V",
+        constants$8.libraw_set_adjust_maximum_thr$FUNC, false
     );
     static final FunctionDescriptor libraw_set_user_mul$FUNC = FunctionDescriptor.ofVoid(
         C_POINTER,

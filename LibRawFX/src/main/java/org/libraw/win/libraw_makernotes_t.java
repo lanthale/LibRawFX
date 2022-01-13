@@ -25,27 +25,7 @@ public class libraw_makernotes_t {
             C_SHORT.withName("FlashExposureLock"),
             C_SHORT.withName("ExposureMode"),
             C_SHORT.withName("AESetting"),
-            C_CHAR.withName("HighlightTonePriority"),
-            MemoryLayout.paddingLayout(8),
             C_SHORT.withName("ImageStabilization"),
-            C_SHORT.withName("FocusMode"),
-            C_SHORT.withName("AFPoint"),
-            C_SHORT.withName("FocusContinuous"),
-            C_SHORT.withName("AFPointsInFocus30D"),
-            MemoryLayout.sequenceLayout(8, C_CHAR).withName("AFPointsInFocus1D"),
-            C_SHORT.withName("AFPointsInFocus5D"),
-            C_SHORT.withName("AFAreaMode"),
-            C_SHORT.withName("NumAFPoints"),
-            C_SHORT.withName("ValidAFPoints"),
-            C_SHORT.withName("AFImageWidth"),
-            C_SHORT.withName("AFImageHeight"),
-            MemoryLayout.sequenceLayout(61, C_SHORT).withName("AFAreaWidths"),
-            MemoryLayout.sequenceLayout(61, C_SHORT).withName("AFAreaHeights"),
-            MemoryLayout.sequenceLayout(61, C_SHORT).withName("AFAreaXPositions"),
-            MemoryLayout.sequenceLayout(61, C_SHORT).withName("AFAreaYPositions"),
-            MemoryLayout.sequenceLayout(4, C_SHORT).withName("AFPointsInFocus"),
-            MemoryLayout.sequenceLayout(4, C_SHORT).withName("AFPointsSelected"),
-            C_SHORT.withName("PrimaryAFPoint"),
             C_SHORT.withName("FlashMode"),
             C_SHORT.withName("FlashActivity"),
             C_SHORT.withName("FlashBits"),
@@ -55,14 +35,6 @@ public class libraw_makernotes_t {
             C_SHORT.withName("ContinuousDrive"),
             C_SHORT.withName("SensorWidth"),
             C_SHORT.withName("SensorHeight"),
-            C_SHORT.withName("SensorLeftBorder"),
-            C_SHORT.withName("SensorTopBorder"),
-            C_SHORT.withName("SensorRightBorder"),
-            C_SHORT.withName("SensorBottomBorder"),
-            C_SHORT.withName("BlackMaskLeftBorder"),
-            C_SHORT.withName("BlackMaskTopBorder"),
-            C_SHORT.withName("BlackMaskRightBorder"),
-            C_SHORT.withName("BlackMaskBottomBorder"),
             C_INT.withName("AFMicroAdjMode"),
             C_FLOAT.withName("AFMicroAdjValue"),
             C_SHORT.withName("MakernotesFlip"),
@@ -70,9 +42,41 @@ public class libraw_makernotes_t {
             C_SHORT.withName("SRAWQuality"),
             MemoryLayout.paddingLayout(16),
             C_INT.withName("wbi"),
-            C_FLOAT.withName("firmware"),
             C_SHORT.withName("RF_lensID"),
-            MemoryLayout.paddingLayout(16)
+            MemoryLayout.paddingLayout(16),
+            C_INT.withName("AutoLightingOptimizer"),
+            C_INT.withName("HighlightTonePriority"),
+            MemoryLayout.structLayout(
+                C_SHORT.withName("t"),
+                C_SHORT.withName("l"),
+                C_SHORT.withName("b"),
+                C_SHORT.withName("r")
+            ).withName("DefaultCropAbsolute"),
+            MemoryLayout.structLayout(
+                C_SHORT.withName("t"),
+                C_SHORT.withName("l"),
+                C_SHORT.withName("b"),
+                C_SHORT.withName("r")
+            ).withName("RecommendedImageArea"),
+            MemoryLayout.structLayout(
+                C_SHORT.withName("t"),
+                C_SHORT.withName("l"),
+                C_SHORT.withName("b"),
+                C_SHORT.withName("r")
+            ).withName("LeftOpticalBlack"),
+            MemoryLayout.structLayout(
+                C_SHORT.withName("t"),
+                C_SHORT.withName("l"),
+                C_SHORT.withName("b"),
+                C_SHORT.withName("r")
+            ).withName("UpperOpticalBlack"),
+            MemoryLayout.structLayout(
+                C_SHORT.withName("t"),
+                C_SHORT.withName("l"),
+                C_SHORT.withName("b"),
+                C_SHORT.withName("r")
+            ).withName("ActiveArea"),
+            MemoryLayout.sequenceLayout(2, C_SHORT).withName("ISOgain")
         ).withName("canon"),
         MemoryLayout.structLayout(
             C_DOUBLE.withName("ExposureBracketValue"),
@@ -81,23 +85,6 @@ public class libraw_makernotes_t {
             MemoryLayout.sequenceLayout(7, C_CHAR).withName("ImageStabilization"),
             C_CHAR.withName("VibrationReduction"),
             C_CHAR.withName("VRMode"),
-            MemoryLayout.sequenceLayout(7, C_CHAR).withName("FocusMode"),
-            C_CHAR.withName("AFPoint"),
-            MemoryLayout.paddingLayout(8),
-            C_SHORT.withName("AFPointsInFocus"),
-            C_CHAR.withName("ContrastDetectAF"),
-            C_CHAR.withName("AFAreaMode"),
-            C_CHAR.withName("PhaseDetectAF"),
-            C_CHAR.withName("PrimaryAFPoint"),
-            MemoryLayout.sequenceLayout(29, C_CHAR).withName("AFPointsUsed"),
-            MemoryLayout.paddingLayout(8),
-            C_SHORT.withName("AFImageWidth"),
-            C_SHORT.withName("AFImageHeight"),
-            C_SHORT.withName("AFAreaXPposition"),
-            C_SHORT.withName("AFAreaYPosition"),
-            C_SHORT.withName("AFAreaWidth"),
-            C_SHORT.withName("AFAreaHeight"),
-            C_CHAR.withName("ContrastDetectAFInFocus"),
             MemoryLayout.sequenceLayout(13, C_CHAR).withName("FlashSetting"),
             MemoryLayout.sequenceLayout(20, C_CHAR).withName("FlashType"),
             MemoryLayout.sequenceLayout(4, C_CHAR).withName("FlashExposureCompensation"),
@@ -119,6 +106,7 @@ public class libraw_makernotes_t {
             C_CHAR.withName("FlashColorFilter"),
             MemoryLayout.paddingLayout(8),
             C_SHORT.withName("NEFCompression"),
+            MemoryLayout.paddingLayout(16),
             C_INT.withName("ExposureMode"),
             C_INT.withName("ExposureProgram"),
             C_INT.withName("nMEshots"),
@@ -143,7 +131,15 @@ public class libraw_makernotes_t {
                 C_SHORT.withName("cheight")
             ).withName("SensorHighSpeedCrop"),
             C_SHORT.withName("SensorWidth"),
-            C_SHORT.withName("SensorHeight")
+            C_SHORT.withName("SensorHeight"),
+            C_SHORT.withName("Active_D_Lighting"),
+            MemoryLayout.paddingLayout(16),
+            C_INT.withName("ShotInfoVersion"),
+            C_SHORT.withName("MakernotesFlip"),
+            MemoryLayout.paddingLayout(48),
+            C_DOUBLE.withName("RollAngle"),
+            C_DOUBLE.withName("PitchAngle"),
+            C_DOUBLE.withName("YawAngle")
         ).withName("nikon"),
         MemoryLayout.structLayout(
             C_INT.withName("BaseISO"),
@@ -178,38 +174,67 @@ public class libraw_makernotes_t {
             C_SHORT.withName("FocusMode"),
             C_SHORT.withName("AFMode"),
             MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusPixel"),
+            C_SHORT.withName("PrioritySettings"),
+            MemoryLayout.paddingLayout(16),
+            C_INT.withName("FocusSettings"),
+            C_INT.withName("AF_C_Settings"),
+            C_SHORT.withName("FocusWarning"),
             MemoryLayout.sequenceLayout(3, C_SHORT).withName("ImageStabilization"),
             C_SHORT.withName("FlashMode"),
             C_SHORT.withName("WB_Preset"),
             C_SHORT.withName("ShutterType"),
             C_SHORT.withName("ExrMode"),
             C_SHORT.withName("Macro"),
+            MemoryLayout.paddingLayout(16),
             C_INT.withName("Rating"),
             C_SHORT.withName("CropMode"),
-            C_SHORT.withName("FrameRate"),
-            C_SHORT.withName("FrameWidth"),
-            C_SHORT.withName("FrameHeight"),
             MemoryLayout.sequenceLayout(13, C_CHAR).withName("SerialSignature"),
+            MemoryLayout.sequenceLayout(5, C_CHAR).withName("SensorID"),
             MemoryLayout.sequenceLayout(5, C_CHAR).withName("RAFVersion"),
+            MemoryLayout.paddingLayout(24),
+            C_INT.withName("RAFDataGeneration"),
             C_SHORT.withName("RAFDataVersion"),
+            MemoryLayout.paddingLayout(16),
             C_INT.withName("isTSNERDTS"),
             C_SHORT.withName("DriveMode"),
-            MemoryLayout.paddingLayout(16)
+            MemoryLayout.sequenceLayout(9, C_SHORT).withName("BlackLevel"),
+            MemoryLayout.sequenceLayout(32, C_INT).withName("RAFData_ImageSizeTable"),
+            C_INT.withName("AutoBracketing"),
+            C_INT.withName("SequenceNumber"),
+            C_INT.withName("SeriesLength"),
+            MemoryLayout.sequenceLayout(2, C_FLOAT).withName("PixelShiftOffset"),
+            C_INT.withName("ImageCount")
         ).withName("fuji"),
         MemoryLayout.structLayout(
+            MemoryLayout.sequenceLayout(6, C_CHAR).withName("CameraType2"),
+            C_SHORT.withName("ValidBits"),
             MemoryLayout.sequenceLayout(2, C_INT).withName("SensorCalibration"),
+            MemoryLayout.sequenceLayout(5, C_SHORT).withName("DriveMode"),
+            C_SHORT.withName("ColorSpace"),
             MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusMode"),
             C_SHORT.withName("AutoFocus"),
             C_SHORT.withName("AFPoint"),
             MemoryLayout.sequenceLayout(64, C_INT).withName("AFAreas"),
+            MemoryLayout.paddingLayout(32),
             MemoryLayout.sequenceLayout(5, C_DOUBLE).withName("AFPointSelected"),
             C_SHORT.withName("AFResult"),
-            MemoryLayout.sequenceLayout(5, C_SHORT).withName("DriveMode"),
-            C_SHORT.withName("ColorSpace"),
             C_CHAR.withName("AFFineTune"),
             MemoryLayout.paddingLayout(8),
             MemoryLayout.sequenceLayout(3, C_SHORT).withName("AFFineTuneAdj"),
-            MemoryLayout.sequenceLayout(6, C_CHAR).withName("CameraType2"),
+            MemoryLayout.paddingLayout(16),
+            MemoryLayout.sequenceLayout(3, C_INT).withName("SpecialMode"),
+            C_SHORT.withName("ZoomStepCount"),
+            C_SHORT.withName("FocusStepCount"),
+            C_SHORT.withName("FocusStepInfinity"),
+            C_SHORT.withName("FocusStepNear"),
+            C_DOUBLE.withName("FocusDistance"),
+            MemoryLayout.sequenceLayout(4, C_SHORT).withName("AspectFrame"),
+            MemoryLayout.sequenceLayout(2, C_INT).withName("StackedImage"),
+            C_CHAR.withName("isLiveND"),
+            MemoryLayout.paddingLayout(24),
+            C_INT.withName("LiveNDfactor"),
+            C_SHORT.withName("Panorama_mode"),
+            C_SHORT.withName("Panorama_frameNum"),
             MemoryLayout.paddingLayout(32)
         ).withName("olympus"),
         MemoryLayout.structLayout(
@@ -222,27 +247,31 @@ public class libraw_makernotes_t {
             C_INT.withName("Sony0x9400_SequenceFileNumber"),
             C_CHAR.withName("Sony0x9400_SequenceLength2"),
             C_CHAR.withName("AFAreaModeSetting"),
+            C_SHORT.withName("AFAreaMode"),
             MemoryLayout.sequenceLayout(2, C_SHORT).withName("FlexibleSpotPosition"),
             C_CHAR.withName("AFPointSelected"),
+            C_CHAR.withName("AFPointSelected_0x201e"),
+            C_SHORT.withName("nAFPointsUsed"),
             MemoryLayout.sequenceLayout(10, C_CHAR).withName("AFPointsUsed"),
             C_CHAR.withName("AFTracking"),
             C_CHAR.withName("AFType"),
-            MemoryLayout.paddingLayout(8),
             MemoryLayout.sequenceLayout(4, C_SHORT).withName("FocusLocation"),
+            C_SHORT.withName("FocusPosition"),
             C_CHAR.withName("AFMicroAdjValue"),
             C_CHAR.withName("AFMicroAdjOn"),
             C_CHAR.withName("AFMicroAdjRegisteredLenses"),
             MemoryLayout.paddingLayout(8),
             C_SHORT.withName("VariableLowPassFilter"),
-            MemoryLayout.paddingLayout(16),
             C_INT.withName("LongExposureNoiseReduction"),
             C_SHORT.withName("HighISONoiseReduction"),
             MemoryLayout.sequenceLayout(2, C_SHORT).withName("HDR"),
             C_SHORT.withName("group2010"),
+            C_SHORT.withName("group9050"),
             C_SHORT.withName("real_iso_offset"),
             C_SHORT.withName("MeteringMode_offset"),
             C_SHORT.withName("ExposureProgram_offset"),
             C_SHORT.withName("ReleaseMode2_offset"),
+            MemoryLayout.paddingLayout(16),
             C_INT.withName("MinoltaCamID"),
             C_FLOAT.withName("firmware"),
             C_SHORT.withName("ImageCount3_offset"),
@@ -260,13 +289,16 @@ public class libraw_makernotes_t {
             C_CHAR.withName("numInPixelShiftGroup"),
             C_SHORT.withName("prd_ImageHeight"),
             C_SHORT.withName("prd_ImageWidth"),
-            C_SHORT.withName("prd_RawBitDepth"),
+            C_SHORT.withName("prd_Total_bps"),
+            C_SHORT.withName("prd_Active_bps"),
             C_SHORT.withName("prd_StorageMethod"),
             C_SHORT.withName("prd_BayerPattern"),
             C_SHORT.withName("SonyRawFileType"),
             C_SHORT.withName("RAWFileType"),
+            MemoryLayout.paddingLayout(16),
             C_INT.withName("Quality"),
             C_SHORT.withName("FileFormat"),
+            MemoryLayout.sequenceLayout(16, C_CHAR).withName("MetaVersion"),
             MemoryLayout.paddingLayout(16)
         ).withName("sony"),
         MemoryLayout.structLayout(
@@ -295,17 +327,24 @@ public class libraw_makernotes_t {
             MemoryLayout.sequenceLayout(8, C_FLOAT).withName("BlackLevel"),
             C_INT.withName("Multishot"),
             C_FLOAT.withName("gamma"),
-            MemoryLayout.sequenceLayout(3, C_INT).withName("HighISOMultiplier")
+            MemoryLayout.sequenceLayout(3, C_INT).withName("HighISOMultiplier"),
+            C_SHORT.withName("FocusStepNear"),
+            C_SHORT.withName("FocusStepCount"),
+            C_INT.withName("ZoomPosition"),
+            C_INT.withName("LensManufacturer")
         ).withName("panasonic"),
         MemoryLayout.structLayout(
-            C_SHORT.withName("FocusMode"),
-            C_SHORT.withName("AFPointSelected"),
+            MemoryLayout.sequenceLayout(4, C_CHAR).withName("DriveMode"),
+            MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusMode"),
+            MemoryLayout.sequenceLayout(2, C_SHORT).withName("AFPointSelected"),
+            C_SHORT.withName("AFPointSelected_Area"),
+            MemoryLayout.paddingLayout(16),
+            C_INT.withName("AFPointsInFocus_version"),
             C_INT.withName("AFPointsInFocus"),
             C_SHORT.withName("FocusPosition"),
-            MemoryLayout.sequenceLayout(4, C_CHAR).withName("DriveMode"),
             C_SHORT.withName("AFAdjustment"),
+            C_CHAR.withName("AFPointMode"),
             C_CHAR.withName("MultiExposure"),
-            MemoryLayout.paddingLayout(8),
             C_SHORT.withName("Quality")
         ).withName("pentax"),
         MemoryLayout.structLayout(
@@ -314,6 +353,28 @@ public class libraw_makernotes_t {
             MemoryLayout.sequenceLayout(256, C_CHAR).withName("FirmwareString"),
             MemoryLayout.sequenceLayout(64, C_CHAR).withName("SystemModel")
         ).withName("phaseone"),
+        MemoryLayout.paddingLayout(32),
+        MemoryLayout.structLayout(
+            C_SHORT.withName("AFStatus"),
+            MemoryLayout.paddingLayout(16),
+            MemoryLayout.sequenceLayout(2, C_INT).withName("AFAreaXPosition"),
+            MemoryLayout.sequenceLayout(2, C_INT).withName("AFAreaYPosition"),
+            C_SHORT.withName("AFAreaMode"),
+            MemoryLayout.paddingLayout(16),
+            C_INT.withName("SensorWidth"),
+            C_INT.withName("SensorHeight"),
+            C_INT.withName("CroppedImageWidth"),
+            C_INT.withName("CroppedImageHeight"),
+            C_SHORT.withName("WideAdapter"),
+            C_SHORT.withName("CropMode"),
+            C_SHORT.withName("NDFilter"),
+            C_SHORT.withName("AutoBracketing"),
+            C_SHORT.withName("MacroMode"),
+            C_SHORT.withName("FlashMode"),
+            MemoryLayout.paddingLayout(32),
+            C_DOUBLE.withName("FlashExposureComp"),
+            C_DOUBLE.withName("ManualFlashOutput")
+        ).withName("ricoh"),
         MemoryLayout.structLayout(
             MemoryLayout.sequenceLayout(4, C_INT).withName("ImageSizeFull"),
             MemoryLayout.sequenceLayout(4, C_INT).withName("ImageSizeCrop"),
@@ -344,48 +405,61 @@ public class libraw_makernotes_t {
             C_FLOAT.withName("exifExposureIndex"),
             C_SHORT.withName("ColorSpace"),
             MemoryLayout.sequenceLayout(128, C_CHAR).withName("firmware"),
-            MemoryLayout.paddingLayout(16)
-        ).withName("common"),
-        MemoryLayout.paddingLayout(32)
+            MemoryLayout.paddingLayout(16),
+            C_FLOAT.withName("ExposureCalibrationShift"),
+            MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
+                C_INT.withName("AFInfoData_tag"),
+                C_SHORT.withName("AFInfoData_order"),
+                MemoryLayout.paddingLayout(16),
+                C_INT.withName("AFInfoData_version"),
+                C_INT.withName("AFInfoData_length"),
+                C_POINTER.withName("AFInfoData")
+            )).withName("afdata"),
+            C_INT.withName("afcount"),
+            MemoryLayout.paddingLayout(32)
+        ).withName("common")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_makernotes_t.$struct$LAYOUT;
     }
     public static MemorySegment canon$slice(MemorySegment seg) {
-        return seg.asSlice(0, 664);
+        return seg.asSlice(0, 160);
     }
     public static MemorySegment nikon$slice(MemorySegment seg) {
-        return seg.asSlice(664, 240);
+        return seg.asSlice(160, 224);
     }
     public static MemorySegment hasselblad$slice(MemorySegment seg) {
-        return seg.asSlice(904, 384);
+        return seg.asSlice(384, 384);
     }
     public static MemorySegment fuji$slice(MemorySegment seg) {
-        return seg.asSlice(1288, 88);
+        return seg.asSlice(768, 280);
     }
     public static MemorySegment olympus$slice(MemorySegment seg) {
-        return seg.asSlice(1376, 344);
+        return seg.asSlice(1048, 408);
     }
     public static MemorySegment sony$slice(MemorySegment seg) {
-        return seg.asSlice(1720, 152);
+        return seg.asSlice(1456, 180);
     }
     public static MemorySegment kodak$slice(MemorySegment seg) {
-        return seg.asSlice(1872, 244);
+        return seg.asSlice(1636, 244);
     }
     public static MemorySegment panasonic$slice(MemorySegment seg) {
-        return seg.asSlice(2116, 56);
+        return seg.asSlice(1880, 68);
     }
     public static MemorySegment pentax$slice(MemorySegment seg) {
-        return seg.asSlice(2172, 20);
+        return seg.asSlice(1948, 32);
     }
     public static MemorySegment phaseone$slice(MemorySegment seg) {
-        return seg.asSlice(2192, 448);
+        return seg.asSlice(1980, 448);
+    }
+    public static MemorySegment ricoh$slice(MemorySegment seg) {
+        return seg.asSlice(2432, 72);
     }
     public static MemorySegment samsung$slice(MemorySegment seg) {
-        return seg.asSlice(2640, 136);
+        return seg.asSlice(2504, 136);
     }
     public static MemorySegment common$slice(MemorySegment seg) {
-        return seg.asSlice(2776, 196);
+        return seg.asSlice(2640, 304);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

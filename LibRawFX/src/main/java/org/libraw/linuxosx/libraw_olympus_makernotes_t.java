@@ -10,29 +10,83 @@ import static jdk.incubator.foreign.CLinker.*;
 public class libraw_olympus_makernotes_t {
 
     static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(6, C_CHAR).withName("CameraType2"),
+        C_SHORT.withName("ValidBits"),
         MemoryLayout.sequenceLayout(2, C_INT).withName("SensorCalibration"),
+        MemoryLayout.sequenceLayout(5, C_SHORT).withName("DriveMode"),
+        C_SHORT.withName("ColorSpace"),
         MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusMode"),
         C_SHORT.withName("AutoFocus"),
         C_SHORT.withName("AFPoint"),
         MemoryLayout.sequenceLayout(64, C_INT).withName("AFAreas"),
+        MemoryLayout.paddingLayout(32),
         MemoryLayout.sequenceLayout(5, C_DOUBLE).withName("AFPointSelected"),
         C_SHORT.withName("AFResult"),
-        MemoryLayout.sequenceLayout(5, C_SHORT).withName("DriveMode"),
-        C_SHORT.withName("ColorSpace"),
         C_CHAR.withName("AFFineTune"),
         MemoryLayout.paddingLayout(8),
         MemoryLayout.sequenceLayout(3, C_SHORT).withName("AFFineTuneAdj"),
-        MemoryLayout.sequenceLayout(6, C_CHAR).withName("CameraType2"),
+        MemoryLayout.paddingLayout(16),
+        MemoryLayout.sequenceLayout(3, C_INT).withName("SpecialMode"),
+        C_SHORT.withName("ZoomStepCount"),
+        C_SHORT.withName("FocusStepCount"),
+        C_SHORT.withName("FocusStepInfinity"),
+        C_SHORT.withName("FocusStepNear"),
+        C_DOUBLE.withName("FocusDistance"),
+        MemoryLayout.sequenceLayout(4, C_SHORT).withName("AspectFrame"),
+        MemoryLayout.sequenceLayout(2, C_INT).withName("StackedImage"),
+        C_CHAR.withName("isLiveND"),
+        MemoryLayout.paddingLayout(24),
+        C_INT.withName("LiveNDfactor"),
+        C_SHORT.withName("Panorama_mode"),
+        C_SHORT.withName("Panorama_frameNum"),
         MemoryLayout.paddingLayout(32)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_olympus_makernotes_t.$struct$LAYOUT;
     }
+    public static MemorySegment CameraType2$slice(MemorySegment seg) {
+        return seg.asSlice(0, 6);
+    }
+    static final VarHandle ValidBits$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ValidBits"));
+    public static VarHandle ValidBits$VH() {
+        return libraw_olympus_makernotes_t.ValidBits$VH;
+    }
+    public static short ValidBits$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.ValidBits$VH.get(seg);
+    }
+    public static void ValidBits$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.ValidBits$VH.set(seg, x);
+    }
+    public static short ValidBits$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.ValidBits$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void ValidBits$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.ValidBits$VH.set(seg.asSlice(index*sizeof()), x);
+    }
     public static MemorySegment SensorCalibration$slice(MemorySegment seg) {
-        return seg.asSlice(0, 8);
+        return seg.asSlice(8, 8);
+    }
+    public static MemorySegment DriveMode$slice(MemorySegment seg) {
+        return seg.asSlice(16, 10);
+    }
+    static final VarHandle ColorSpace$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ColorSpace"));
+    public static VarHandle ColorSpace$VH() {
+        return libraw_olympus_makernotes_t.ColorSpace$VH;
+    }
+    public static short ColorSpace$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.ColorSpace$VH.get(seg);
+    }
+    public static void ColorSpace$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.ColorSpace$VH.set(seg, x);
+    }
+    public static short ColorSpace$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.ColorSpace$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void ColorSpace$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.ColorSpace$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment FocusMode$slice(MemorySegment seg) {
-        return seg.asSlice(8, 4);
+        return seg.asSlice(28, 4);
     }
     static final VarHandle AutoFocus$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AutoFocus"));
     public static VarHandle AutoFocus$VH() {
@@ -67,10 +121,10 @@ public class libraw_olympus_makernotes_t {
         libraw_olympus_makernotes_t.AFPoint$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment AFAreas$slice(MemorySegment seg) {
-        return seg.asSlice(16, 256);
+        return seg.asSlice(36, 256);
     }
     public static MemorySegment AFPointSelected$slice(MemorySegment seg) {
-        return seg.asSlice(272, 40);
+        return seg.asSlice(296, 40);
     }
     static final VarHandle AFResult$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFResult"));
     public static VarHandle AFResult$VH() {
@@ -87,25 +141,6 @@ public class libraw_olympus_makernotes_t {
     }
     public static void AFResult$set(MemorySegment seg, long index, short x) {
         libraw_olympus_makernotes_t.AFResult$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment DriveMode$slice(MemorySegment seg) {
-        return seg.asSlice(314, 10);
-    }
-    static final VarHandle ColorSpace$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ColorSpace"));
-    public static VarHandle ColorSpace$VH() {
-        return libraw_olympus_makernotes_t.ColorSpace$VH;
-    }
-    public static short ColorSpace$get(MemorySegment seg) {
-        return (short)libraw_olympus_makernotes_t.ColorSpace$VH.get(seg);
-    }
-    public static void ColorSpace$set( MemorySegment seg, short x) {
-        libraw_olympus_makernotes_t.ColorSpace$VH.set(seg, x);
-    }
-    public static short ColorSpace$get(MemorySegment seg, long index) {
-        return (short)libraw_olympus_makernotes_t.ColorSpace$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void ColorSpace$set(MemorySegment seg, long index, short x) {
-        libraw_olympus_makernotes_t.ColorSpace$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle AFFineTune$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("AFFineTune"));
     public static VarHandle AFFineTune$VH() {
@@ -124,10 +159,160 @@ public class libraw_olympus_makernotes_t {
         libraw_olympus_makernotes_t.AFFineTune$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment AFFineTuneAdj$slice(MemorySegment seg) {
-        return seg.asSlice(328, 6);
+        return seg.asSlice(340, 6);
     }
-    public static MemorySegment CameraType2$slice(MemorySegment seg) {
-        return seg.asSlice(334, 6);
+    public static MemorySegment SpecialMode$slice(MemorySegment seg) {
+        return seg.asSlice(348, 12);
+    }
+    static final VarHandle ZoomStepCount$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ZoomStepCount"));
+    public static VarHandle ZoomStepCount$VH() {
+        return libraw_olympus_makernotes_t.ZoomStepCount$VH;
+    }
+    public static short ZoomStepCount$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.ZoomStepCount$VH.get(seg);
+    }
+    public static void ZoomStepCount$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.ZoomStepCount$VH.set(seg, x);
+    }
+    public static short ZoomStepCount$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.ZoomStepCount$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void ZoomStepCount$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.ZoomStepCount$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle FocusStepCount$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusStepCount"));
+    public static VarHandle FocusStepCount$VH() {
+        return libraw_olympus_makernotes_t.FocusStepCount$VH;
+    }
+    public static short FocusStepCount$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.FocusStepCount$VH.get(seg);
+    }
+    public static void FocusStepCount$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.FocusStepCount$VH.set(seg, x);
+    }
+    public static short FocusStepCount$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.FocusStepCount$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void FocusStepCount$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.FocusStepCount$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle FocusStepInfinity$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusStepInfinity"));
+    public static VarHandle FocusStepInfinity$VH() {
+        return libraw_olympus_makernotes_t.FocusStepInfinity$VH;
+    }
+    public static short FocusStepInfinity$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.FocusStepInfinity$VH.get(seg);
+    }
+    public static void FocusStepInfinity$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.FocusStepInfinity$VH.set(seg, x);
+    }
+    public static short FocusStepInfinity$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.FocusStepInfinity$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void FocusStepInfinity$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.FocusStepInfinity$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle FocusStepNear$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusStepNear"));
+    public static VarHandle FocusStepNear$VH() {
+        return libraw_olympus_makernotes_t.FocusStepNear$VH;
+    }
+    public static short FocusStepNear$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.FocusStepNear$VH.get(seg);
+    }
+    public static void FocusStepNear$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.FocusStepNear$VH.set(seg, x);
+    }
+    public static short FocusStepNear$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.FocusStepNear$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void FocusStepNear$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.FocusStepNear$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle FocusDistance$VH = $struct$LAYOUT.varHandle(double.class, MemoryLayout.PathElement.groupElement("FocusDistance"));
+    public static VarHandle FocusDistance$VH() {
+        return libraw_olympus_makernotes_t.FocusDistance$VH;
+    }
+    public static double FocusDistance$get(MemorySegment seg) {
+        return (double)libraw_olympus_makernotes_t.FocusDistance$VH.get(seg);
+    }
+    public static void FocusDistance$set( MemorySegment seg, double x) {
+        libraw_olympus_makernotes_t.FocusDistance$VH.set(seg, x);
+    }
+    public static double FocusDistance$get(MemorySegment seg, long index) {
+        return (double)libraw_olympus_makernotes_t.FocusDistance$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void FocusDistance$set(MemorySegment seg, long index, double x) {
+        libraw_olympus_makernotes_t.FocusDistance$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment AspectFrame$slice(MemorySegment seg) {
+        return seg.asSlice(376, 8);
+    }
+    public static MemorySegment StackedImage$slice(MemorySegment seg) {
+        return seg.asSlice(384, 8);
+    }
+    static final VarHandle isLiveND$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("isLiveND"));
+    public static VarHandle isLiveND$VH() {
+        return libraw_olympus_makernotes_t.isLiveND$VH;
+    }
+    public static byte isLiveND$get(MemorySegment seg) {
+        return (byte)libraw_olympus_makernotes_t.isLiveND$VH.get(seg);
+    }
+    public static void isLiveND$set( MemorySegment seg, byte x) {
+        libraw_olympus_makernotes_t.isLiveND$VH.set(seg, x);
+    }
+    public static byte isLiveND$get(MemorySegment seg, long index) {
+        return (byte)libraw_olympus_makernotes_t.isLiveND$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void isLiveND$set(MemorySegment seg, long index, byte x) {
+        libraw_olympus_makernotes_t.isLiveND$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle LiveNDfactor$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("LiveNDfactor"));
+    public static VarHandle LiveNDfactor$VH() {
+        return libraw_olympus_makernotes_t.LiveNDfactor$VH;
+    }
+    public static int LiveNDfactor$get(MemorySegment seg) {
+        return (int)libraw_olympus_makernotes_t.LiveNDfactor$VH.get(seg);
+    }
+    public static void LiveNDfactor$set( MemorySegment seg, int x) {
+        libraw_olympus_makernotes_t.LiveNDfactor$VH.set(seg, x);
+    }
+    public static int LiveNDfactor$get(MemorySegment seg, long index) {
+        return (int)libraw_olympus_makernotes_t.LiveNDfactor$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void LiveNDfactor$set(MemorySegment seg, long index, int x) {
+        libraw_olympus_makernotes_t.LiveNDfactor$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle Panorama_mode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("Panorama_mode"));
+    public static VarHandle Panorama_mode$VH() {
+        return libraw_olympus_makernotes_t.Panorama_mode$VH;
+    }
+    public static short Panorama_mode$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.Panorama_mode$VH.get(seg);
+    }
+    public static void Panorama_mode$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.Panorama_mode$VH.set(seg, x);
+    }
+    public static short Panorama_mode$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.Panorama_mode$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void Panorama_mode$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.Panorama_mode$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle Panorama_frameNum$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("Panorama_frameNum"));
+    public static VarHandle Panorama_frameNum$VH() {
+        return libraw_olympus_makernotes_t.Panorama_frameNum$VH;
+    }
+    public static short Panorama_frameNum$get(MemorySegment seg) {
+        return (short)libraw_olympus_makernotes_t.Panorama_frameNum$VH.get(seg);
+    }
+    public static void Panorama_frameNum$set( MemorySegment seg, short x) {
+        libraw_olympus_makernotes_t.Panorama_frameNum$VH.set(seg, x);
+    }
+    public static short Panorama_frameNum$get(MemorySegment seg, long index) {
+        return (short)libraw_olympus_makernotes_t.Panorama_frameNum$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void Panorama_frameNum$set(MemorySegment seg, long index, short x) {
+        libraw_olympus_makernotes_t.Panorama_frameNum$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

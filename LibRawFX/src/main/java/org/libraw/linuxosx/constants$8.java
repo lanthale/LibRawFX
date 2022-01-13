@@ -35,6 +35,15 @@ class constants$8 {
         "(Ljdk/incubator/foreign/MemoryAddress;I)V",
         constants$8.libraw_set_output_color$FUNC, false
     );
+    static final FunctionDescriptor libraw_set_adjust_maximum_thr$FUNC = FunctionDescriptor.ofVoid(
+        C_POINTER,
+        C_FLOAT
+    );
+    static final MethodHandle libraw_set_adjust_maximum_thr$MH = RuntimeHelper.downcallHandle(
+        libraw_h.LIBRARIES, "libraw_set_adjust_maximum_thr",
+        "(Ljdk/incubator/foreign/MemoryAddress;F)V",
+        constants$8.libraw_set_adjust_maximum_thr$FUNC, false
+    );
     static final FunctionDescriptor libraw_set_user_mul$FUNC = FunctionDescriptor.ofVoid(
         C_POINTER,
         C_INT,
@@ -53,16 +62,6 @@ class constants$8 {
         libraw_h.LIBRARIES, "libraw_set_output_bps",
         "(Ljdk/incubator/foreign/MemoryAddress;I)V",
         constants$8.libraw_set_output_bps$FUNC, false
-    );
-    static final FunctionDescriptor libraw_set_gamma$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_INT,
-        C_FLOAT
-    );
-    static final MethodHandle libraw_set_gamma$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_gamma",
-        "(Ljdk/incubator/foreign/MemoryAddress;IF)V",
-        constants$8.libraw_set_gamma$FUNC, false
     );
 }
 
