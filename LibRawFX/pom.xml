@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
-    <version>1.7.4</version>
+    <version>1.7.5</version>
     
     <name>LibRawFX</name>
     <description>This installs the native lib libraw as a JavaFX Image format provider similar to imageIO before on Swing</description>
@@ -48,7 +48,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target> 
-        <javafx.version>17.0.1</javafx.version>       
+        <javafx.version>17.0.2</javafx.version>       
     </properties>
     
     
@@ -80,6 +80,7 @@
                 <directory>src/main/ressources</directory>
                 <excludes>
                     <exclude>**/*.cr2</exclude>
+                    <exclude>**/*.nef</exclude>
                     <exclude>**/*.h</exclude>
                     <exclude>**/*.lib</exclude>
                     <exclude>**/*.X3F</exclude>
@@ -270,6 +271,7 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- add jrelease to create GIT releases automatically -->
                 </plugins>
             </build>
         </profile>

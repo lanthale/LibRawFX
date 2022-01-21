@@ -117,7 +117,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
                 width, height, null, null, null);                 
         updateImageMetadata(md);
         updateImageProgress(lastPercentDone+1);
-
+        
         if (rawImageWidth != width || rawImageHeight != height) {            
             imageData = ImageTools.scaleImage(imageData, rawImageWidth, rawImageHeight, libraw.getNumBands(), width, height, smooth);            
         }

@@ -21,6 +21,7 @@ public class RAWDescriptor extends ImageDescriptor {
         new Signature(hexStringToByteArray("49491A0000004845")),//cr2
         new Signature(hexStringToByteArray("49492A00100000004352")),//crw3
         new Signature(hexStringToByteArray("46554A4946494C4D4343")),//nef
+        new Signature(hexStringToByteArray("49492A00081b0300a9aa")),//nef again         
         new Signature(hexStringToByteArray("49492A00080000001C00")),//nrw
         new Signature(hexStringToByteArray("464F5662000004000100")),//raf
         new Signature(hexStringToByteArray("464F5662000003003030")),//x3f
