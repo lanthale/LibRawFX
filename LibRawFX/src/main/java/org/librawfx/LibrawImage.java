@@ -45,6 +45,7 @@ public class LibrawImage {
     private String cameraModel;
     private LocalDateTime shootingDateTime;
     private RawDecoderSettings rawSettings;
+    private static SymbolLookup loaderLookup;
 
     public LibrawImage(String imageFile) {
         this.imageFileURL = imageFile;
@@ -82,6 +83,10 @@ public class LibrawImage {
             //System.out.println("libsarray "+part);
             new File(part).deleteOnExit();
         }
+        for (String strTemp : loadLibraryFromJar) {
+            System.load(strTemp);            
+            loaderLookup = SymbolLookup.loaderLookup();            
+        }
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...finished");
     }
 
@@ -102,11 +107,7 @@ public class LibrawImage {
         if (loadLibraryFromJar == null) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
-        }
-        for (String strTemp : loadLibraryFromJar) {
-            System.load(strTemp);            
-            SymbolLookup.loaderLookup();            
-        }
+        }        
         try ( var scope = ResourceScope.newSharedScope()) {
             if (operatingSystem.contains("WIN")) {
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
@@ -267,16 +268,6 @@ public class LibrawImage {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
-
-        for (String strTemp : loadLibraryFromJar) {
-            System.load(strTemp);            
-            SymbolLookup.loaderLookup();            
-        }
-        /*if (operatingSystem.contains("WIN")) {
-            libraries = org.libraw.win.RuntimeHelper.lookup();
-        } else {
-            libraries = org.libraw.linuxosx.RuntimeHelper.lookup();
-        }*/
 
         try ( var scope = ResourceScope.newSharedScope()) {
             if (operatingSystem.contains("WIN")) {
@@ -447,16 +438,7 @@ public class LibrawImage {
         if (loadLibraryFromJar == null) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
-        }        
-        for (String strTemp : loadLibraryFromJar) {
-            System.load(strTemp);            
-            SymbolLookup.loaderLookup();            
-        }
-        /*if (operatingSystem.contains("WIN")) {
-            libraries = org.libraw.win.RuntimeHelper.lookup();
-        } else {
-            libraries = org.libraw.linuxosx.RuntimeHelper.lookup();
-        }*/
+        }                
         HashMap<String, String> retMap = new HashMap<>();
         try ( var scope = ResourceScope.newSharedScope()) {
             if (operatingSystem.contains("WIN")) {
