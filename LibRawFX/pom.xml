@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
-    <version>1.7.6</version>
+    <version>1.7.7</version>
     
     <name>LibRawFX</name>
     <description>This installs the native lib libraw as a JavaFX Image format provider similar to imageIO before on Swing</description>
@@ -81,10 +81,12 @@
                 <excludes>
                     <exclude>**/*.cr2</exclude>
                     <exclude>**/*.nef</exclude>
-                    <exclude>**/*.h</exclude>
-                    <exclude>**/*.lib</exclude>
                     <exclude>**/*.X3F</exclude>
                     <exclude>**/*.ppm</exclude>
+                    <exclude>**/*.dng</exclude>
+                    <exclude>**/*.raf</exclude>
+                    <exclude>**/*.sh</exclude>
+                    <exclude>**/*.conf</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -217,7 +219,7 @@
                                 <id>attach-sources</id>
                                 <goals>
                                     <goal>jar</goal>
-                                </goals>
+                                </goals>                                
                             </execution>
                         </executions>
                     </plugin>

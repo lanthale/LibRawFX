@@ -8,4 +8,6 @@ module org.librawfx {
     exports org.librawfx;    
     exports org.libraw.linuxosx;
     exports org.libraw.win;
+    opens org.libraw.linuxosx;
+    opens org.libraw.win;
 }
