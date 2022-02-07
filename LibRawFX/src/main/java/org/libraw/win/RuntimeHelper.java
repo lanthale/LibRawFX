@@ -30,8 +30,8 @@ final class RuntimeHelper {
 
     static SymbolLookup lookup() {
         SymbolLookup loaderLookup = SymbolLookup.loaderLookup();
-        SymbolLookup systemLookup = CLinker.systemLookup();
-        return name -> loaderLookup.lookup(name).or(() -> systemLookup.lookup(name));
+        //SymbolLookup systemLookup = CLinker.systemLookup();
+        return name -> loaderLookup.lookup(name);//.or(() -> systemLookup.lookup(name));
     }
 
     static <T> T requireNonNull(T obj, String symbolName) {
