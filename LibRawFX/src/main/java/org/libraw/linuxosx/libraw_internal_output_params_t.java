@@ -6,20 +6,20 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_internal_output_params_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("mix_green"),
-        C_INT.withName("raw_color"),
-        C_INT.withName("zero_is_bad"),
-        C_SHORT.withName("shrink"),
-        C_SHORT.withName("fuji_width")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("mix_green"),
+        Constants$root.C_INT$LAYOUT.withName("raw_color"),
+        Constants$root.C_INT$LAYOUT.withName("zero_is_bad"),
+        Constants$root.C_SHORT$LAYOUT.withName("shrink"),
+        Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_internal_output_params_t.$struct$LAYOUT;
     }
-    static final VarHandle mix_green$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("mix_green"));
+    static final VarHandle mix_green$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("mix_green"));
     public static VarHandle mix_green$VH() {
         return libraw_internal_output_params_t.mix_green$VH;
     }
@@ -35,7 +35,7 @@ public class libraw_internal_output_params_t {
     public static void mix_green$set(MemorySegment seg, long index, int x) {
         libraw_internal_output_params_t.mix_green$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_color$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("raw_color"));
+    static final VarHandle raw_color$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_color"));
     public static VarHandle raw_color$VH() {
         return libraw_internal_output_params_t.raw_color$VH;
     }
@@ -51,7 +51,7 @@ public class libraw_internal_output_params_t {
     public static void raw_color$set(MemorySegment seg, long index, int x) {
         libraw_internal_output_params_t.raw_color$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle zero_is_bad$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("zero_is_bad"));
+    static final VarHandle zero_is_bad$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("zero_is_bad"));
     public static VarHandle zero_is_bad$VH() {
         return libraw_internal_output_params_t.zero_is_bad$VH;
     }
@@ -67,7 +67,7 @@ public class libraw_internal_output_params_t {
     public static void zero_is_bad$set(MemorySegment seg, long index, int x) {
         libraw_internal_output_params_t.zero_is_bad$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shrink$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("shrink"));
+    static final VarHandle shrink$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shrink"));
     public static VarHandle shrink$VH() {
         return libraw_internal_output_params_t.shrink$VH;
     }
@@ -83,7 +83,7 @@ public class libraw_internal_output_params_t {
     public static void shrink$set(MemorySegment seg, long index, short x) {
         libraw_internal_output_params_t.shrink$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_width$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("fuji_width"));
+    static final VarHandle fuji_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_width"));
     public static VarHandle fuji_width$VH() {
         return libraw_internal_output_params_t.fuji_width$VH;
     }
@@ -101,12 +101,12 @@ public class libraw_internal_output_params_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

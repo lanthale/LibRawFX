@@ -6,19 +6,19 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_gps_info_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(3, C_FLOAT).withName("latitude"),
-        MemoryLayout.sequenceLayout(3, C_FLOAT).withName("longitude"),
-        MemoryLayout.sequenceLayout(3, C_FLOAT).withName("gpstimestamp"),
-        C_FLOAT.withName("altitude"),
-        C_CHAR.withName("altref"),
-        C_CHAR.withName("latref"),
-        C_CHAR.withName("longref"),
-        C_CHAR.withName("gpsstatus"),
-        C_CHAR.withName("gpsparsed"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("latitude"),
+        MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("longitude"),
+        MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("gpstimestamp"),
+        Constants$root.C_FLOAT$LAYOUT.withName("altitude"),
+        Constants$root.C_CHAR$LAYOUT.withName("altref"),
+        Constants$root.C_CHAR$LAYOUT.withName("latref"),
+        Constants$root.C_CHAR$LAYOUT.withName("longref"),
+        Constants$root.C_CHAR$LAYOUT.withName("gpsstatus"),
+        Constants$root.C_CHAR$LAYOUT.withName("gpsparsed"),
         MemoryLayout.paddingLayout(24)
     );
     public static MemoryLayout $LAYOUT() {
@@ -33,7 +33,7 @@ public class libraw_gps_info_t {
     public static MemorySegment gpstimestamp$slice(MemorySegment seg) {
         return seg.asSlice(24, 12);
     }
-    static final VarHandle altitude$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("altitude"));
+    static final VarHandle altitude$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("altitude"));
     public static VarHandle altitude$VH() {
         return libraw_gps_info_t.altitude$VH;
     }
@@ -49,7 +49,7 @@ public class libraw_gps_info_t {
     public static void altitude$set(MemorySegment seg, long index, float x) {
         libraw_gps_info_t.altitude$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle altref$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("altref"));
+    static final VarHandle altref$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("altref"));
     public static VarHandle altref$VH() {
         return libraw_gps_info_t.altref$VH;
     }
@@ -65,7 +65,7 @@ public class libraw_gps_info_t {
     public static void altref$set(MemorySegment seg, long index, byte x) {
         libraw_gps_info_t.altref$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle latref$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("latref"));
+    static final VarHandle latref$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("latref"));
     public static VarHandle latref$VH() {
         return libraw_gps_info_t.latref$VH;
     }
@@ -81,7 +81,7 @@ public class libraw_gps_info_t {
     public static void latref$set(MemorySegment seg, long index, byte x) {
         libraw_gps_info_t.latref$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle longref$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("longref"));
+    static final VarHandle longref$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("longref"));
     public static VarHandle longref$VH() {
         return libraw_gps_info_t.longref$VH;
     }
@@ -97,7 +97,7 @@ public class libraw_gps_info_t {
     public static void longref$set(MemorySegment seg, long index, byte x) {
         libraw_gps_info_t.longref$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle gpsstatus$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("gpsstatus"));
+    static final VarHandle gpsstatus$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("gpsstatus"));
     public static VarHandle gpsstatus$VH() {
         return libraw_gps_info_t.gpsstatus$VH;
     }
@@ -113,7 +113,7 @@ public class libraw_gps_info_t {
     public static void gpsstatus$set(MemorySegment seg, long index, byte x) {
         libraw_gps_info_t.gpsstatus$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle gpsparsed$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("gpsparsed"));
+    static final VarHandle gpsparsed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("gpsparsed"));
     public static VarHandle gpsparsed$VH() {
         return libraw_gps_info_t.gpsparsed$VH;
     }
@@ -131,12 +131,12 @@ public class libraw_gps_info_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

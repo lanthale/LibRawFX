@@ -6,146 +6,146 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_rawdata_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_POINTER.withName("raw_alloc"),
-        C_POINTER.withName("raw_image"),
-        C_POINTER.withName("color4_image"),
-        C_POINTER.withName("color3_image"),
-        C_POINTER.withName("float_image"),
-        C_POINTER.withName("float3_image"),
-        C_POINTER.withName("float4_image"),
-        C_POINTER.withName("ph1_cblack"),
-        C_POINTER.withName("ph1_rblack"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_POINTER$LAYOUT.withName("raw_alloc"),
+        Constants$root.C_POINTER$LAYOUT.withName("raw_image"),
+        Constants$root.C_POINTER$LAYOUT.withName("color4_image"),
+        Constants$root.C_POINTER$LAYOUT.withName("color3_image"),
+        Constants$root.C_POINTER$LAYOUT.withName("float_image"),
+        Constants$root.C_POINTER$LAYOUT.withName("float3_image"),
+        Constants$root.C_POINTER$LAYOUT.withName("float4_image"),
+        Constants$root.C_POINTER$LAYOUT.withName("ph1_cblack"),
+        Constants$root.C_POINTER$LAYOUT.withName("ph1_rblack"),
         MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(4, C_CHAR).withName("guard"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("make"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("model"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("software"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("normalized_make"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("normalized_model"),
-            C_INT.withName("maker_index"),
-            C_INT.withName("raw_count"),
-            C_INT.withName("dng_version"),
-            C_INT.withName("is_foveon"),
-            C_INT.withName("colors"),
-            C_INT.withName("filters"),
-            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, C_CHAR)).withName("xtrans"),
-            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, C_CHAR)).withName("xtrans_abs"),
-            MemoryLayout.sequenceLayout(5, C_CHAR).withName("cdesc"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("guard"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("make"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("software"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_make"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_model"),
+            Constants$root.C_INT$LAYOUT.withName("maker_index"),
+            Constants$root.C_INT$LAYOUT.withName("raw_count"),
+            Constants$root.C_INT$LAYOUT.withName("dng_version"),
+            Constants$root.C_INT$LAYOUT.withName("is_foveon"),
+            Constants$root.C_INT$LAYOUT.withName("colors"),
+            Constants$root.C_INT$LAYOUT.withName("filters"),
+            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans"),
+            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans_abs"),
+            MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("cdesc"),
             MemoryLayout.paddingLayout(24),
-            C_INT.withName("xmplen"),
-            C_POINTER.withName("xmpdata")
+            Constants$root.C_INT$LAYOUT.withName("xmplen"),
+            Constants$root.C_POINTER$LAYOUT.withName("xmpdata")
         ).withName("iparams"),
         MemoryLayout.structLayout(
-            C_SHORT.withName("raw_height"),
-            C_SHORT.withName("raw_width"),
-            C_SHORT.withName("height"),
-            C_SHORT.withName("width"),
-            C_SHORT.withName("top_margin"),
-            C_SHORT.withName("left_margin"),
-            C_SHORT.withName("iheight"),
-            C_SHORT.withName("iwidth"),
-            C_INT.withName("raw_pitch"),
+            Constants$root.C_SHORT$LAYOUT.withName("raw_height"),
+            Constants$root.C_SHORT$LAYOUT.withName("raw_width"),
+            Constants$root.C_SHORT$LAYOUT.withName("height"),
+            Constants$root.C_SHORT$LAYOUT.withName("width"),
+            Constants$root.C_SHORT$LAYOUT.withName("top_margin"),
+            Constants$root.C_SHORT$LAYOUT.withName("left_margin"),
+            Constants$root.C_SHORT$LAYOUT.withName("iheight"),
+            Constants$root.C_SHORT$LAYOUT.withName("iwidth"),
+            Constants$root.C_INT$LAYOUT.withName("raw_pitch"),
             MemoryLayout.paddingLayout(32),
-            C_DOUBLE.withName("pixel_aspect"),
-            C_INT.withName("flip"),
-            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, C_INT)).withName("mask"),
-            C_SHORT.withName("raw_aspect"),
+            Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
+            Constants$root.C_INT$LAYOUT.withName("flip"),
+            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("mask"),
+            Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
             MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                C_SHORT.withName("cleft"),
-                C_SHORT.withName("ctop"),
-                C_SHORT.withName("cwidth"),
-                C_SHORT.withName("cheight")
+                Constants$root.C_SHORT$LAYOUT.withName("cleft"),
+                Constants$root.C_SHORT$LAYOUT.withName("ctop"),
+                Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
+                Constants$root.C_SHORT$LAYOUT.withName("cheight")
             )).withName("raw_inset_crops"),
             MemoryLayout.paddingLayout(16)
         ).withName("sizes"),
         MemoryLayout.structLayout(
-            C_INT.withName("mix_green"),
-            C_INT.withName("raw_color"),
-            C_INT.withName("zero_is_bad"),
-            C_SHORT.withName("shrink"),
-            C_SHORT.withName("fuji_width")
+            Constants$root.C_INT$LAYOUT.withName("mix_green"),
+            Constants$root.C_INT$LAYOUT.withName("raw_color"),
+            Constants$root.C_INT$LAYOUT.withName("zero_is_bad"),
+            Constants$root.C_SHORT$LAYOUT.withName("shrink"),
+            Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
         ).withName("ioparams"),
         MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(65536, C_SHORT).withName("curve"),
-            MemoryLayout.sequenceLayout(4104, C_INT).withName("cblack"),
-            C_INT.withName("black"),
-            C_INT.withName("data_maximum"),
-            C_INT.withName("maximum"),
+            MemoryLayout.sequenceLayout(65536, Constants$root.C_SHORT$LAYOUT).withName("curve"),
+            MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("cblack"),
+            Constants$root.C_INT$LAYOUT.withName("black"),
+            Constants$root.C_INT$LAYOUT.withName("data_maximum"),
+            Constants$root.C_INT$LAYOUT.withName("maximum"),
             MemoryLayout.paddingLayout(32),
-            MemoryLayout.sequenceLayout(4, C_LONG).withName("linear_max"),
-            C_FLOAT.withName("fmaximum"),
-            C_FLOAT.withName("fnorm"),
-            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, C_SHORT)).withName("white"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("cam_mul"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("pre_mul"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("cmatrix"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("ccm"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("rgb_cam"),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("cam_xyz"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_LONG_LONG$LAYOUT).withName("linear_max"),
+            Constants$root.C_FLOAT$LAYOUT.withName("fmaximum"),
+            Constants$root.C_FLOAT$LAYOUT.withName("fnorm"),
+            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, Constants$root.C_SHORT$LAYOUT)).withName("white"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("cam_mul"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("pre_mul"),
+            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("cmatrix"),
+            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("ccm"),
+            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("rgb_cam"),
+            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("cam_xyz"),
             MemoryLayout.structLayout(
-                C_INT.withName("format"),
-                C_INT.withName("key_off"),
-                C_INT.withName("tag_21a"),
-                C_INT.withName("t_black"),
-                C_INT.withName("split_col"),
-                C_INT.withName("black_col"),
-                C_INT.withName("split_row"),
-                C_INT.withName("black_row"),
-                C_FLOAT.withName("tag_210")
+                Constants$root.C_INT$LAYOUT.withName("format"),
+                Constants$root.C_INT$LAYOUT.withName("key_off"),
+                Constants$root.C_INT$LAYOUT.withName("tag_21a"),
+                Constants$root.C_INT$LAYOUT.withName("t_black"),
+                Constants$root.C_INT$LAYOUT.withName("split_col"),
+                Constants$root.C_INT$LAYOUT.withName("black_col"),
+                Constants$root.C_INT$LAYOUT.withName("split_row"),
+                Constants$root.C_INT$LAYOUT.withName("black_row"),
+                Constants$root.C_FLOAT$LAYOUT.withName("tag_210")
             ).withName("phase_one_data"),
-            C_FLOAT.withName("flash_used"),
-            C_FLOAT.withName("canon_ev"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("model2"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("UniqueCameraModel"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("LocalizedCameraModel"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("ImageUniqueID"),
-            MemoryLayout.sequenceLayout(17, C_CHAR).withName("RawDataUniqueID"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("OriginalRawFileName"),
+            Constants$root.C_FLOAT$LAYOUT.withName("flash_used"),
+            Constants$root.C_FLOAT$LAYOUT.withName("canon_ev"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model2"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("UniqueCameraModel"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("LocalizedCameraModel"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("ImageUniqueID"),
+            MemoryLayout.sequenceLayout(17, Constants$root.C_CHAR$LAYOUT).withName("RawDataUniqueID"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("OriginalRawFileName"),
             MemoryLayout.paddingLayout(24),
-            C_POINTER.withName("profile"),
-            C_INT.withName("profile_length"),
-            MemoryLayout.sequenceLayout(8, C_INT).withName("black_stat"),
+            Constants$root.C_POINTER$LAYOUT.withName("profile"),
+            Constants$root.C_INT$LAYOUT.withName("profile_length"),
+            MemoryLayout.sequenceLayout(8, Constants$root.C_INT$LAYOUT).withName("black_stat"),
             MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                C_INT.withName("parsedfields"),
-                C_SHORT.withName("illuminant"),
+                Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+                Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
                 MemoryLayout.paddingLayout(16),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("calibration"),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("colormatrix"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("forwardmatrix")
+                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
+                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
+                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
             )).withName("dng_color"),
             MemoryLayout.structLayout(
-                C_INT.withName("parsedfields"),
-                MemoryLayout.sequenceLayout(4104, C_INT).withName("dng_cblack"),
-                C_INT.withName("dng_black"),
-                MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
-                C_FLOAT.withName("dng_fblack"),
-                MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-                MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
-                MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
-                C_INT.withName("preview_colorspace"),
-                MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
-                MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
-                C_FLOAT.withName("baseline_exposure"),
-                C_FLOAT.withName("LinearResponseLimit")
+                Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+                MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
+                Constants$root.C_INT$LAYOUT.withName("dng_black"),
+                MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
+                Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("dng_whitelevel"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
+                Constants$root.C_INT$LAYOUT.withName("preview_colorspace"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
+                Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
+                Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
             ).withName("dng_levels"),
-            MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, C_INT)).withName("WB_Coeffs"),
-            MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, C_FLOAT)).withName("WBCT_Coeffs"),
-            C_INT.withName("as_shot_wb_applied"),
+            MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("WB_Coeffs"),
+            MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, Constants$root.C_FLOAT$LAYOUT)).withName("WBCT_Coeffs"),
+            Constants$root.C_INT$LAYOUT.withName("as_shot_wb_applied"),
             MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(9, C_FLOAT).withName("romm_cam")
+                MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
             )).withName("P1_color"),
-            C_INT.withName("raw_bps"),
-            C_INT.withName("ExifColorSpace")
+            Constants$root.C_INT$LAYOUT.withName("raw_bps"),
+            Constants$root.C_INT$LAYOUT.withName("ExifColorSpace")
         ).withName("color")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_rawdata_t.$struct$LAYOUT;
     }
-    static final VarHandle raw_alloc$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("raw_alloc")));
+    static final VarHandle raw_alloc$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_alloc"));
     public static VarHandle raw_alloc$VH() {
         return libraw_rawdata_t.raw_alloc$VH;
     }
@@ -161,7 +161,7 @@ public class libraw_rawdata_t {
     public static void raw_alloc$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.raw_alloc$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_image$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("raw_image")));
+    static final VarHandle raw_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_image"));
     public static VarHandle raw_image$VH() {
         return libraw_rawdata_t.raw_image$VH;
     }
@@ -177,7 +177,7 @@ public class libraw_rawdata_t {
     public static void raw_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.raw_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle color4_image$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("color4_image")));
+    static final VarHandle color4_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("color4_image"));
     public static VarHandle color4_image$VH() {
         return libraw_rawdata_t.color4_image$VH;
     }
@@ -193,7 +193,7 @@ public class libraw_rawdata_t {
     public static void color4_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.color4_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle color3_image$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("color3_image")));
+    static final VarHandle color3_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("color3_image"));
     public static VarHandle color3_image$VH() {
         return libraw_rawdata_t.color3_image$VH;
     }
@@ -209,7 +209,7 @@ public class libraw_rawdata_t {
     public static void color3_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.color3_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle float_image$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("float_image")));
+    static final VarHandle float_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float_image"));
     public static VarHandle float_image$VH() {
         return libraw_rawdata_t.float_image$VH;
     }
@@ -225,7 +225,7 @@ public class libraw_rawdata_t {
     public static void float_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.float_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle float3_image$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("float3_image")));
+    static final VarHandle float3_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float3_image"));
     public static VarHandle float3_image$VH() {
         return libraw_rawdata_t.float3_image$VH;
     }
@@ -241,7 +241,7 @@ public class libraw_rawdata_t {
     public static void float3_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.float3_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle float4_image$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("float4_image")));
+    static final VarHandle float4_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float4_image"));
     public static VarHandle float4_image$VH() {
         return libraw_rawdata_t.float4_image$VH;
     }
@@ -257,7 +257,7 @@ public class libraw_rawdata_t {
     public static void float4_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.float4_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ph1_cblack$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("ph1_cblack")));
+    static final VarHandle ph1_cblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ph1_cblack"));
     public static VarHandle ph1_cblack$VH() {
         return libraw_rawdata_t.ph1_cblack$VH;
     }
@@ -273,7 +273,7 @@ public class libraw_rawdata_t {
     public static void ph1_cblack$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.ph1_cblack$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ph1_rblack$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("ph1_rblack")));
+    static final VarHandle ph1_rblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ph1_rblack"));
     public static VarHandle ph1_rblack$VH() {
         return libraw_rawdata_t.ph1_rblack$VH;
     }
@@ -303,12 +303,12 @@ public class libraw_rawdata_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

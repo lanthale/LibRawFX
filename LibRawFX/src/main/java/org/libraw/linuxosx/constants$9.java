@@ -6,61 +6,55 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 class constants$9 {
 
     static final FunctionDescriptor libraw_set_gamma$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_INT,
-        C_FLOAT
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_FLOAT$LAYOUT
     );
     static final MethodHandle libraw_set_gamma$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_gamma",
-        "(Ljdk/incubator/foreign/MemoryAddress;IF)V",
+        "libraw_set_gamma",
         constants$9.libraw_set_gamma$FUNC, false
     );
     static final FunctionDescriptor libraw_set_no_auto_bright$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_INT
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_set_no_auto_bright$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_no_auto_bright",
-        "(Ljdk/incubator/foreign/MemoryAddress;I)V",
+        "libraw_set_no_auto_bright",
         constants$9.libraw_set_no_auto_bright$FUNC, false
     );
     static final FunctionDescriptor libraw_set_bright$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_FLOAT
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_FLOAT$LAYOUT
     );
     static final MethodHandle libraw_set_bright$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_bright",
-        "(Ljdk/incubator/foreign/MemoryAddress;F)V",
+        "libraw_set_bright",
         constants$9.libraw_set_bright$FUNC, false
     );
     static final FunctionDescriptor libraw_set_highlight$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_INT
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_set_highlight$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_highlight",
-        "(Ljdk/incubator/foreign/MemoryAddress;I)V",
+        "libraw_set_highlight",
         constants$9.libraw_set_highlight$FUNC, false
     );
     static final FunctionDescriptor libraw_set_fbdd_noiserd$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_INT
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_set_fbdd_noiserd$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_fbdd_noiserd",
-        "(Ljdk/incubator/foreign/MemoryAddress;I)V",
+        "libraw_set_fbdd_noiserd",
         constants$9.libraw_set_fbdd_noiserd$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_raw_height$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_raw_height$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_raw_height$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_raw_height",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        "libraw_get_raw_height",
         constants$9.libraw_get_raw_height$FUNC, false
     );
 }

@@ -6,59 +6,53 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 class constants$10 {
 
-    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_raw_width",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        "libraw_get_raw_width",
         constants$10.libraw_get_raw_width$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_iheight$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_iheight",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        "libraw_get_iheight",
         constants$10.libraw_get_iheight$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_iwidth$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_iwidth$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_iwidth$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_iwidth",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        "libraw_get_iwidth",
         constants$10.libraw_get_iwidth$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(C_FLOAT,
-        C_POINTER,
-        C_INT
+    static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_get_cam_mul$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_cam_mul",
-        "(Ljdk/incubator/foreign/MemoryAddress;I)F",
+        "libraw_get_cam_mul",
         constants$10.libraw_get_cam_mul$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_pre_mul$FUNC = FunctionDescriptor.of(C_FLOAT,
-        C_POINTER,
-        C_INT
+    static final FunctionDescriptor libraw_get_pre_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_get_pre_mul$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_pre_mul",
-        "(Ljdk/incubator/foreign/MemoryAddress;I)F",
+        "libraw_get_pre_mul",
         constants$10.libraw_get_pre_mul$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_rgb_cam$FUNC = FunctionDescriptor.of(C_FLOAT,
-        C_POINTER,
-        C_INT,
-        C_INT
+    static final FunctionDescriptor libraw_get_rgb_cam$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_get_rgb_cam$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_rgb_cam",
-        "(Ljdk/incubator/foreign/MemoryAddress;II)F",
+        "libraw_get_rgb_cam",
         constants$10.libraw_get_rgb_cam$FUNC, false
     );
 }

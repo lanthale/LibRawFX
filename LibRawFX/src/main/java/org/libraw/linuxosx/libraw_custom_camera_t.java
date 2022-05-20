@@ -6,31 +6,31 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_custom_camera_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("fsize"),
-        C_SHORT.withName("rw"),
-        C_SHORT.withName("rh"),
-        C_CHAR.withName("lm"),
-        C_CHAR.withName("tm"),
-        C_CHAR.withName("rm"),
-        C_CHAR.withName("bm"),
-        C_SHORT.withName("lf"),
-        C_CHAR.withName("cf"),
-        C_CHAR.withName("max"),
-        C_CHAR.withName("flags"),
-        MemoryLayout.sequenceLayout(10, C_CHAR).withName("t_make"),
-        MemoryLayout.sequenceLayout(20, C_CHAR).withName("t_model"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("fsize"),
+        Constants$root.C_SHORT$LAYOUT.withName("rw"),
+        Constants$root.C_SHORT$LAYOUT.withName("rh"),
+        Constants$root.C_CHAR$LAYOUT.withName("lm"),
+        Constants$root.C_CHAR$LAYOUT.withName("tm"),
+        Constants$root.C_CHAR$LAYOUT.withName("rm"),
+        Constants$root.C_CHAR$LAYOUT.withName("bm"),
+        Constants$root.C_SHORT$LAYOUT.withName("lf"),
+        Constants$root.C_CHAR$LAYOUT.withName("cf"),
+        Constants$root.C_CHAR$LAYOUT.withName("max"),
+        Constants$root.C_CHAR$LAYOUT.withName("flags"),
+        MemoryLayout.sequenceLayout(10, Constants$root.C_CHAR$LAYOUT).withName("t_make"),
+        MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("t_model"),
         MemoryLayout.paddingLayout(8),
-        C_SHORT.withName("offset"),
+        Constants$root.C_SHORT$LAYOUT.withName("offset"),
         MemoryLayout.paddingLayout(16)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_custom_camera_t.$struct$LAYOUT;
     }
-    static final VarHandle fsize$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fsize"));
+    static final VarHandle fsize$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fsize"));
     public static VarHandle fsize$VH() {
         return libraw_custom_camera_t.fsize$VH;
     }
@@ -46,7 +46,7 @@ public class libraw_custom_camera_t {
     public static void fsize$set(MemorySegment seg, long index, int x) {
         libraw_custom_camera_t.fsize$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rw$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("rw"));
+    static final VarHandle rw$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rw"));
     public static VarHandle rw$VH() {
         return libraw_custom_camera_t.rw$VH;
     }
@@ -62,7 +62,7 @@ public class libraw_custom_camera_t {
     public static void rw$set(MemorySegment seg, long index, short x) {
         libraw_custom_camera_t.rw$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rh$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("rh"));
+    static final VarHandle rh$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rh"));
     public static VarHandle rh$VH() {
         return libraw_custom_camera_t.rh$VH;
     }
@@ -78,7 +78,7 @@ public class libraw_custom_camera_t {
     public static void rh$set(MemorySegment seg, long index, short x) {
         libraw_custom_camera_t.rh$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lm$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("lm"));
+    static final VarHandle lm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lm"));
     public static VarHandle lm$VH() {
         return libraw_custom_camera_t.lm$VH;
     }
@@ -94,7 +94,7 @@ public class libraw_custom_camera_t {
     public static void lm$set(MemorySegment seg, long index, byte x) {
         libraw_custom_camera_t.lm$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tm$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("tm"));
+    static final VarHandle tm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tm"));
     public static VarHandle tm$VH() {
         return libraw_custom_camera_t.tm$VH;
     }
@@ -110,7 +110,7 @@ public class libraw_custom_camera_t {
     public static void tm$set(MemorySegment seg, long index, byte x) {
         libraw_custom_camera_t.tm$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rm$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("rm"));
+    static final VarHandle rm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rm"));
     public static VarHandle rm$VH() {
         return libraw_custom_camera_t.rm$VH;
     }
@@ -126,7 +126,7 @@ public class libraw_custom_camera_t {
     public static void rm$set(MemorySegment seg, long index, byte x) {
         libraw_custom_camera_t.rm$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bm$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("bm"));
+    static final VarHandle bm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bm"));
     public static VarHandle bm$VH() {
         return libraw_custom_camera_t.bm$VH;
     }
@@ -142,7 +142,7 @@ public class libraw_custom_camera_t {
     public static void bm$set(MemorySegment seg, long index, byte x) {
         libraw_custom_camera_t.bm$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lf$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("lf"));
+    static final VarHandle lf$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lf"));
     public static VarHandle lf$VH() {
         return libraw_custom_camera_t.lf$VH;
     }
@@ -158,7 +158,7 @@ public class libraw_custom_camera_t {
     public static void lf$set(MemorySegment seg, long index, short x) {
         libraw_custom_camera_t.lf$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cf$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("cf"));
+    static final VarHandle cf$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cf"));
     public static VarHandle cf$VH() {
         return libraw_custom_camera_t.cf$VH;
     }
@@ -174,7 +174,7 @@ public class libraw_custom_camera_t {
     public static void cf$set(MemorySegment seg, long index, byte x) {
         libraw_custom_camera_t.cf$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("max"));
+    static final VarHandle max$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max"));
     public static VarHandle max$VH() {
         return libraw_custom_camera_t.max$VH;
     }
@@ -190,7 +190,7 @@ public class libraw_custom_camera_t {
     public static void max$set(MemorySegment seg, long index, byte x) {
         libraw_custom_camera_t.max$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle flags$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("flags"));
+    static final VarHandle flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("flags"));
     public static VarHandle flags$VH() {
         return libraw_custom_camera_t.flags$VH;
     }
@@ -212,7 +212,7 @@ public class libraw_custom_camera_t {
     public static MemorySegment t_model$slice(MemorySegment seg) {
         return seg.asSlice(27, 20);
     }
-    static final VarHandle offset$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("offset"));
+    static final VarHandle offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset"));
     public static VarHandle offset$VH() {
         return libraw_custom_camera_t.offset$VH;
     }
@@ -230,12 +230,12 @@ public class libraw_custom_camera_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,28 +6,28 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_dng_levels_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("parsedfields"),
-        MemoryLayout.sequenceLayout(4104, C_INT).withName("dng_cblack"),
-        C_INT.withName("dng_black"),
-        MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
-        C_FLOAT.withName("dng_fblack"),
-        MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-        MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
-        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
-        C_INT.withName("preview_colorspace"),
-        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
-        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
-        C_FLOAT.withName("baseline_exposure"),
-        C_FLOAT.withName("LinearResponseLimit")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+        MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
+        Constants$root.C_INT$LAYOUT.withName("dng_black"),
+        MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
+        Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("dng_whitelevel"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
+        Constants$root.C_INT$LAYOUT.withName("preview_colorspace"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
+        Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
+        Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_dng_levels_t.$struct$LAYOUT;
     }
-    static final VarHandle parsedfields$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("parsedfields"));
+    static final VarHandle parsedfields$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("parsedfields"));
     public static VarHandle parsedfields$VH() {
         return libraw_dng_levels_t.parsedfields$VH;
     }
@@ -46,7 +46,7 @@ public class libraw_dng_levels_t {
     public static MemorySegment dng_cblack$slice(MemorySegment seg) {
         return seg.asSlice(4, 16416);
     }
-    static final VarHandle dng_black$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("dng_black"));
+    static final VarHandle dng_black$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("dng_black"));
     public static VarHandle dng_black$VH() {
         return libraw_dng_levels_t.dng_black$VH;
     }
@@ -65,7 +65,7 @@ public class libraw_dng_levels_t {
     public static MemorySegment dng_fcblack$slice(MemorySegment seg) {
         return seg.asSlice(16424, 16416);
     }
-    static final VarHandle dng_fblack$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("dng_fblack"));
+    static final VarHandle dng_fblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("dng_fblack"));
     public static VarHandle dng_fblack$VH() {
         return libraw_dng_levels_t.dng_fblack$VH;
     }
@@ -90,7 +90,7 @@ public class libraw_dng_levels_t {
     public static MemorySegment user_crop$slice(MemorySegment seg) {
         return seg.asSlice(32868, 16);
     }
-    static final VarHandle preview_colorspace$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("preview_colorspace"));
+    static final VarHandle preview_colorspace$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("preview_colorspace"));
     public static VarHandle preview_colorspace$VH() {
         return libraw_dng_levels_t.preview_colorspace$VH;
     }
@@ -112,7 +112,7 @@ public class libraw_dng_levels_t {
     public static MemorySegment asshotneutral$slice(MemorySegment seg) {
         return seg.asSlice(32904, 16);
     }
-    static final VarHandle baseline_exposure$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("baseline_exposure"));
+    static final VarHandle baseline_exposure$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("baseline_exposure"));
     public static VarHandle baseline_exposure$VH() {
         return libraw_dng_levels_t.baseline_exposure$VH;
     }
@@ -128,7 +128,7 @@ public class libraw_dng_levels_t {
     public static void baseline_exposure$set(MemorySegment seg, long index, float x) {
         libraw_dng_levels_t.baseline_exposure$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LinearResponseLimit$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("LinearResponseLimit"));
+    static final VarHandle LinearResponseLimit$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LinearResponseLimit"));
     public static VarHandle LinearResponseLimit$VH() {
         return libraw_dng_levels_t.LinearResponseLimit$VH;
     }
@@ -146,12 +146,12 @@ public class libraw_dng_levels_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

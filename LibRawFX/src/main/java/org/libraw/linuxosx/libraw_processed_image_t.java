@@ -6,23 +6,23 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_processed_image_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("type"),
-        C_SHORT.withName("height"),
-        C_SHORT.withName("width"),
-        C_SHORT.withName("colors"),
-        C_SHORT.withName("bits"),
-        C_INT.withName("data_size"),
-        MemoryLayout.sequenceLayout(1, C_CHAR).withName("data"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("type"),
+        Constants$root.C_SHORT$LAYOUT.withName("height"),
+        Constants$root.C_SHORT$LAYOUT.withName("width"),
+        Constants$root.C_SHORT$LAYOUT.withName("colors"),
+        Constants$root.C_SHORT$LAYOUT.withName("bits"),
+        Constants$root.C_INT$LAYOUT.withName("data_size"),
+        MemoryLayout.sequenceLayout(1, Constants$root.C_CHAR$LAYOUT).withName("data"),
         MemoryLayout.paddingLayout(24)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_processed_image_t.$struct$LAYOUT;
     }
-    static final VarHandle type$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("type"));
+    static final VarHandle type$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("type"));
     public static VarHandle type$VH() {
         return libraw_processed_image_t.type$VH;
     }
@@ -38,7 +38,7 @@ public class libraw_processed_image_t {
     public static void type$set(MemorySegment seg, long index, int x) {
         libraw_processed_image_t.type$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle height$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("height"));
+    static final VarHandle height$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("height"));
     public static VarHandle height$VH() {
         return libraw_processed_image_t.height$VH;
     }
@@ -54,7 +54,7 @@ public class libraw_processed_image_t {
     public static void height$set(MemorySegment seg, long index, short x) {
         libraw_processed_image_t.height$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle width$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("width"));
+    static final VarHandle width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("width"));
     public static VarHandle width$VH() {
         return libraw_processed_image_t.width$VH;
     }
@@ -70,7 +70,7 @@ public class libraw_processed_image_t {
     public static void width$set(MemorySegment seg, long index, short x) {
         libraw_processed_image_t.width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle colors$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("colors"));
+    static final VarHandle colors$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("colors"));
     public static VarHandle colors$VH() {
         return libraw_processed_image_t.colors$VH;
     }
@@ -86,7 +86,7 @@ public class libraw_processed_image_t {
     public static void colors$set(MemorySegment seg, long index, short x) {
         libraw_processed_image_t.colors$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bits$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("bits"));
+    static final VarHandle bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bits"));
     public static VarHandle bits$VH() {
         return libraw_processed_image_t.bits$VH;
     }
@@ -102,7 +102,7 @@ public class libraw_processed_image_t {
     public static void bits$set(MemorySegment seg, long index, short x) {
         libraw_processed_image_t.bits$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle data_size$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("data_size"));
+    static final VarHandle data_size$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("data_size"));
     public static VarHandle data_size$VH() {
         return libraw_processed_image_t.data_size$VH;
     }
@@ -123,12 +123,12 @@ public class libraw_processed_image_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

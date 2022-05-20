@@ -6,37 +6,33 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 class constants$2 {
 
     static final FunctionDescriptor post_identify_callback$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle post_identify_callback$MH = RuntimeHelper.downcallHandle(
-        "(Ljdk/incubator/foreign/MemoryAddress;)V",
         constants$2.post_identify_callback$FUNC, false
     );
     static final FunctionDescriptor process_step_callback$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle process_step_callback$MH = RuntimeHelper.downcallHandle(
-        "(Ljdk/incubator/foreign/MemoryAddress;)V",
         constants$2.process_step_callback$FUNC, false
     );
-    static final FunctionDescriptor libraw_strerror$FUNC = FunctionDescriptor.of(C_POINTER,
-        C_INT
+    static final FunctionDescriptor libraw_strerror$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_strerror$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_strerror",
-        "(I)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_strerror",
         constants$2.libraw_strerror$FUNC, false
     );
-    static final FunctionDescriptor libraw_strprogress$FUNC = FunctionDescriptor.of(C_POINTER,
-        C_INT
+    static final FunctionDescriptor libraw_strprogress$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_strprogress$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_strprogress",
-        "(I)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_strprogress",
         constants$2.libraw_strprogress$FUNC, false
     );
 }

@@ -6,25 +6,25 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_panasonic_makernotes_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("Compression"),
-        C_SHORT.withName("BlackLevelDim"),
-        MemoryLayout.sequenceLayout(8, C_FLOAT).withName("BlackLevel"),
-        C_INT.withName("Multishot"),
-        C_FLOAT.withName("gamma"),
-        MemoryLayout.sequenceLayout(3, C_INT).withName("HighISOMultiplier"),
-        C_SHORT.withName("FocusStepNear"),
-        C_SHORT.withName("FocusStepCount"),
-        C_INT.withName("ZoomPosition"),
-        C_INT.withName("LensManufacturer")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("Compression"),
+        Constants$root.C_SHORT$LAYOUT.withName("BlackLevelDim"),
+        MemoryLayout.sequenceLayout(8, Constants$root.C_FLOAT$LAYOUT).withName("BlackLevel"),
+        Constants$root.C_INT$LAYOUT.withName("Multishot"),
+        Constants$root.C_FLOAT$LAYOUT.withName("gamma"),
+        MemoryLayout.sequenceLayout(3, Constants$root.C_INT$LAYOUT).withName("HighISOMultiplier"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocusStepNear"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocusStepCount"),
+        Constants$root.C_INT$LAYOUT.withName("ZoomPosition"),
+        Constants$root.C_INT$LAYOUT.withName("LensManufacturer")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_panasonic_makernotes_t.$struct$LAYOUT;
     }
-    static final VarHandle Compression$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("Compression"));
+    static final VarHandle Compression$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Compression"));
     public static VarHandle Compression$VH() {
         return libraw_panasonic_makernotes_t.Compression$VH;
     }
@@ -40,7 +40,7 @@ public class libraw_panasonic_makernotes_t {
     public static void Compression$set(MemorySegment seg, long index, short x) {
         libraw_panasonic_makernotes_t.Compression$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle BlackLevelDim$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("BlackLevelDim"));
+    static final VarHandle BlackLevelDim$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackLevelDim"));
     public static VarHandle BlackLevelDim$VH() {
         return libraw_panasonic_makernotes_t.BlackLevelDim$VH;
     }
@@ -59,7 +59,7 @@ public class libraw_panasonic_makernotes_t {
     public static MemorySegment BlackLevel$slice(MemorySegment seg) {
         return seg.asSlice(4, 32);
     }
-    static final VarHandle Multishot$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("Multishot"));
+    static final VarHandle Multishot$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Multishot"));
     public static VarHandle Multishot$VH() {
         return libraw_panasonic_makernotes_t.Multishot$VH;
     }
@@ -75,7 +75,7 @@ public class libraw_panasonic_makernotes_t {
     public static void Multishot$set(MemorySegment seg, long index, int x) {
         libraw_panasonic_makernotes_t.Multishot$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle gamma$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("gamma"));
+    static final VarHandle gamma$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("gamma"));
     public static VarHandle gamma$VH() {
         return libraw_panasonic_makernotes_t.gamma$VH;
     }
@@ -94,7 +94,7 @@ public class libraw_panasonic_makernotes_t {
     public static MemorySegment HighISOMultiplier$slice(MemorySegment seg) {
         return seg.asSlice(44, 12);
     }
-    static final VarHandle FocusStepNear$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusStepNear"));
+    static final VarHandle FocusStepNear$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusStepNear"));
     public static VarHandle FocusStepNear$VH() {
         return libraw_panasonic_makernotes_t.FocusStepNear$VH;
     }
@@ -110,7 +110,7 @@ public class libraw_panasonic_makernotes_t {
     public static void FocusStepNear$set(MemorySegment seg, long index, short x) {
         libraw_panasonic_makernotes_t.FocusStepNear$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusStepCount$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusStepCount"));
+    static final VarHandle FocusStepCount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusStepCount"));
     public static VarHandle FocusStepCount$VH() {
         return libraw_panasonic_makernotes_t.FocusStepCount$VH;
     }
@@ -126,7 +126,7 @@ public class libraw_panasonic_makernotes_t {
     public static void FocusStepCount$set(MemorySegment seg, long index, short x) {
         libraw_panasonic_makernotes_t.FocusStepCount$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ZoomPosition$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("ZoomPosition"));
+    static final VarHandle ZoomPosition$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ZoomPosition"));
     public static VarHandle ZoomPosition$VH() {
         return libraw_panasonic_makernotes_t.ZoomPosition$VH;
     }
@@ -142,7 +142,7 @@ public class libraw_panasonic_makernotes_t {
     public static void ZoomPosition$set(MemorySegment seg, long index, int x) {
         libraw_panasonic_makernotes_t.ZoomPosition$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensManufacturer$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("LensManufacturer"));
+    static final VarHandle LensManufacturer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensManufacturer"));
     public static VarHandle LensManufacturer$VH() {
         return libraw_panasonic_makernotes_t.LensManufacturer$VH;
     }
@@ -160,12 +160,12 @@ public class libraw_panasonic_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

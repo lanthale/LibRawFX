@@ -6,20 +6,20 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_nikonlens_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_FLOAT.withName("EffectiveMaxAp"),
-        C_CHAR.withName("LensIDNumber"),
-        C_CHAR.withName("LensFStops"),
-        C_CHAR.withName("MCUVersion"),
-        C_CHAR.withName("LensType")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_FLOAT$LAYOUT.withName("EffectiveMaxAp"),
+        Constants$root.C_CHAR$LAYOUT.withName("LensIDNumber"),
+        Constants$root.C_CHAR$LAYOUT.withName("LensFStops"),
+        Constants$root.C_CHAR$LAYOUT.withName("MCUVersion"),
+        Constants$root.C_CHAR$LAYOUT.withName("LensType")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_nikonlens_t.$struct$LAYOUT;
     }
-    static final VarHandle EffectiveMaxAp$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("EffectiveMaxAp"));
+    static final VarHandle EffectiveMaxAp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("EffectiveMaxAp"));
     public static VarHandle EffectiveMaxAp$VH() {
         return libraw_nikonlens_t.EffectiveMaxAp$VH;
     }
@@ -35,7 +35,7 @@ public class libraw_nikonlens_t {
     public static void EffectiveMaxAp$set(MemorySegment seg, long index, float x) {
         libraw_nikonlens_t.EffectiveMaxAp$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensIDNumber$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("LensIDNumber"));
+    static final VarHandle LensIDNumber$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensIDNumber"));
     public static VarHandle LensIDNumber$VH() {
         return libraw_nikonlens_t.LensIDNumber$VH;
     }
@@ -51,7 +51,7 @@ public class libraw_nikonlens_t {
     public static void LensIDNumber$set(MemorySegment seg, long index, byte x) {
         libraw_nikonlens_t.LensIDNumber$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensFStops$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("LensFStops"));
+    static final VarHandle LensFStops$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensFStops"));
     public static VarHandle LensFStops$VH() {
         return libraw_nikonlens_t.LensFStops$VH;
     }
@@ -67,7 +67,7 @@ public class libraw_nikonlens_t {
     public static void LensFStops$set(MemorySegment seg, long index, byte x) {
         libraw_nikonlens_t.LensFStops$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MCUVersion$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("MCUVersion"));
+    static final VarHandle MCUVersion$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MCUVersion"));
     public static VarHandle MCUVersion$VH() {
         return libraw_nikonlens_t.MCUVersion$VH;
     }
@@ -83,7 +83,7 @@ public class libraw_nikonlens_t {
     public static void MCUVersion$set(MemorySegment seg, long index, byte x) {
         libraw_nikonlens_t.MCUVersion$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensType$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("LensType"));
+    static final VarHandle LensType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensType"));
     public static VarHandle LensType$VH() {
         return libraw_nikonlens_t.LensType$VH;
     }
@@ -101,12 +101,12 @@ public class libraw_nikonlens_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

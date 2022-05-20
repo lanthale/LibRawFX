@@ -6,38 +6,38 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_imgother_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_FLOAT.withName("iso_speed"),
-        C_FLOAT.withName("shutter"),
-        C_FLOAT.withName("aperture"),
-        C_FLOAT.withName("focal_len"),
-        C_LONG.withName("timestamp"),
-        C_INT.withName("shot_order"),
-        MemoryLayout.sequenceLayout(32, C_INT).withName("gpsdata"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_FLOAT$LAYOUT.withName("iso_speed"),
+        Constants$root.C_FLOAT$LAYOUT.withName("shutter"),
+        Constants$root.C_FLOAT$LAYOUT.withName("aperture"),
+        Constants$root.C_FLOAT$LAYOUT.withName("focal_len"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("timestamp"),
+        Constants$root.C_INT$LAYOUT.withName("shot_order"),
+        MemoryLayout.sequenceLayout(32, Constants$root.C_INT$LAYOUT).withName("gpsdata"),
         MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(3, C_FLOAT).withName("latitude"),
-            MemoryLayout.sequenceLayout(3, C_FLOAT).withName("longitude"),
-            MemoryLayout.sequenceLayout(3, C_FLOAT).withName("gpstimestamp"),
-            C_FLOAT.withName("altitude"),
-            C_CHAR.withName("altref"),
-            C_CHAR.withName("latref"),
-            C_CHAR.withName("longref"),
-            C_CHAR.withName("gpsstatus"),
-            C_CHAR.withName("gpsparsed"),
+            MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("latitude"),
+            MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("longitude"),
+            MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("gpstimestamp"),
+            Constants$root.C_FLOAT$LAYOUT.withName("altitude"),
+            Constants$root.C_CHAR$LAYOUT.withName("altref"),
+            Constants$root.C_CHAR$LAYOUT.withName("latref"),
+            Constants$root.C_CHAR$LAYOUT.withName("longref"),
+            Constants$root.C_CHAR$LAYOUT.withName("gpsstatus"),
+            Constants$root.C_CHAR$LAYOUT.withName("gpsparsed"),
             MemoryLayout.paddingLayout(24)
         ).withName("parsed_gps"),
-        MemoryLayout.sequenceLayout(512, C_CHAR).withName("desc"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("artist"),
-        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
+        MemoryLayout.sequenceLayout(512, Constants$root.C_CHAR$LAYOUT).withName("desc"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("artist"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
         MemoryLayout.paddingLayout(32)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_imgother_t.$struct$LAYOUT;
     }
-    static final VarHandle iso_speed$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("iso_speed"));
+    static final VarHandle iso_speed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("iso_speed"));
     public static VarHandle iso_speed$VH() {
         return libraw_imgother_t.iso_speed$VH;
     }
@@ -53,7 +53,7 @@ public class libraw_imgother_t {
     public static void iso_speed$set(MemorySegment seg, long index, float x) {
         libraw_imgother_t.iso_speed$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shutter$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("shutter"));
+    static final VarHandle shutter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shutter"));
     public static VarHandle shutter$VH() {
         return libraw_imgother_t.shutter$VH;
     }
@@ -69,7 +69,7 @@ public class libraw_imgother_t {
     public static void shutter$set(MemorySegment seg, long index, float x) {
         libraw_imgother_t.shutter$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle aperture$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("aperture"));
+    static final VarHandle aperture$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("aperture"));
     public static VarHandle aperture$VH() {
         return libraw_imgother_t.aperture$VH;
     }
@@ -85,7 +85,7 @@ public class libraw_imgother_t {
     public static void aperture$set(MemorySegment seg, long index, float x) {
         libraw_imgother_t.aperture$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle focal_len$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("focal_len"));
+    static final VarHandle focal_len$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("focal_len"));
     public static VarHandle focal_len$VH() {
         return libraw_imgother_t.focal_len$VH;
     }
@@ -101,7 +101,7 @@ public class libraw_imgother_t {
     public static void focal_len$set(MemorySegment seg, long index, float x) {
         libraw_imgother_t.focal_len$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle timestamp$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("timestamp"));
+    static final VarHandle timestamp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("timestamp"));
     public static VarHandle timestamp$VH() {
         return libraw_imgother_t.timestamp$VH;
     }
@@ -117,7 +117,7 @@ public class libraw_imgother_t {
     public static void timestamp$set(MemorySegment seg, long index, long x) {
         libraw_imgother_t.timestamp$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shot_order$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("shot_order"));
+    static final VarHandle shot_order$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shot_order"));
     public static VarHandle shot_order$VH() {
         return libraw_imgother_t.shot_order$VH;
     }
@@ -150,12 +150,12 @@ public class libraw_imgother_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

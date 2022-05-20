@@ -6,21 +6,21 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_thumbnail_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("tformat"),
-        C_SHORT.withName("twidth"),
-        C_SHORT.withName("theight"),
-        C_INT.withName("tlength"),
-        C_INT.withName("tcolors"),
-        C_POINTER.withName("thumb")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("tformat"),
+        Constants$root.C_SHORT$LAYOUT.withName("twidth"),
+        Constants$root.C_SHORT$LAYOUT.withName("theight"),
+        Constants$root.C_INT$LAYOUT.withName("tlength"),
+        Constants$root.C_INT$LAYOUT.withName("tcolors"),
+        Constants$root.C_POINTER$LAYOUT.withName("thumb")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_thumbnail_t.$struct$LAYOUT;
     }
-    static final VarHandle tformat$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tformat"));
+    static final VarHandle tformat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tformat"));
     public static VarHandle tformat$VH() {
         return libraw_thumbnail_t.tformat$VH;
     }
@@ -36,7 +36,7 @@ public class libraw_thumbnail_t {
     public static void tformat$set(MemorySegment seg, long index, int x) {
         libraw_thumbnail_t.tformat$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle twidth$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("twidth"));
+    static final VarHandle twidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("twidth"));
     public static VarHandle twidth$VH() {
         return libraw_thumbnail_t.twidth$VH;
     }
@@ -52,7 +52,7 @@ public class libraw_thumbnail_t {
     public static void twidth$set(MemorySegment seg, long index, short x) {
         libraw_thumbnail_t.twidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle theight$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("theight"));
+    static final VarHandle theight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("theight"));
     public static VarHandle theight$VH() {
         return libraw_thumbnail_t.theight$VH;
     }
@@ -68,7 +68,7 @@ public class libraw_thumbnail_t {
     public static void theight$set(MemorySegment seg, long index, short x) {
         libraw_thumbnail_t.theight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tlength$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tlength"));
+    static final VarHandle tlength$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tlength"));
     public static VarHandle tlength$VH() {
         return libraw_thumbnail_t.tlength$VH;
     }
@@ -84,7 +84,7 @@ public class libraw_thumbnail_t {
     public static void tlength$set(MemorySegment seg, long index, int x) {
         libraw_thumbnail_t.tlength$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tcolors$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tcolors"));
+    static final VarHandle tcolors$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tcolors"));
     public static VarHandle tcolors$VH() {
         return libraw_thumbnail_t.tcolors$VH;
     }
@@ -100,7 +100,7 @@ public class libraw_thumbnail_t {
     public static void tcolors$set(MemorySegment seg, long index, int x) {
         libraw_thumbnail_t.tcolors$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle thumb$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("thumb")));
+    static final VarHandle thumb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("thumb"));
     public static VarHandle thumb$VH() {
         return libraw_thumbnail_t.thumb$VH;
     }
@@ -118,12 +118,12 @@ public class libraw_thumbnail_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,23 +6,23 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_tiff_tag {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("tag"),
-        C_SHORT.withName("type"),
-        C_INT.withName("count"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("tag"),
+        Constants$root.C_SHORT$LAYOUT.withName("type"),
+        Constants$root.C_INT$LAYOUT.withName("count"),
         MemoryLayout.unionLayout(
-            MemoryLayout.sequenceLayout(4, C_CHAR).withName("c"),
-            MemoryLayout.sequenceLayout(2, C_SHORT).withName("s"),
-            C_INT.withName("i")
+            MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("c"),
+            MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("s"),
+            Constants$root.C_INT$LAYOUT.withName("i")
         ).withName("val")
     ).withName("libraw_tiff_tag");
     public static MemoryLayout $LAYOUT() {
         return libraw_tiff_tag.$struct$LAYOUT;
     }
-    static final VarHandle tag$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("tag"));
+    static final VarHandle tag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tag"));
     public static VarHandle tag$VH() {
         return libraw_tiff_tag.tag$VH;
     }
@@ -38,7 +38,7 @@ public class libraw_tiff_tag {
     public static void tag$set(MemorySegment seg, long index, short x) {
         libraw_tiff_tag.tag$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle type$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("type"));
+    static final VarHandle type$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("type"));
     public static VarHandle type$VH() {
         return libraw_tiff_tag.type$VH;
     }
@@ -54,7 +54,7 @@ public class libraw_tiff_tag {
     public static void type$set(MemorySegment seg, long index, short x) {
         libraw_tiff_tag.type$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle count$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("count"));
+    static final VarHandle count$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("count"));
     public static VarHandle count$VH() {
         return libraw_tiff_tag.count$VH;
     }
@@ -72,10 +72,10 @@ public class libraw_tiff_tag {
     }
     public static class val {
 
-        static final MemoryLayout val$union$LAYOUT = MemoryLayout.unionLayout(
-            MemoryLayout.sequenceLayout(4, C_CHAR).withName("c"),
-            MemoryLayout.sequenceLayout(2, C_SHORT).withName("s"),
-            C_INT.withName("i")
+        static final  GroupLayout val$union$LAYOUT = MemoryLayout.unionLayout(
+            MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("c"),
+            MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("s"),
+            Constants$root.C_INT$LAYOUT.withName("i")
         );
         public static MemoryLayout $LAYOUT() {
             return val.val$union$LAYOUT;
@@ -86,7 +86,7 @@ public class libraw_tiff_tag {
         public static MemorySegment s$slice(MemorySegment seg) {
             return seg.asSlice(0, 4);
         }
-        static final VarHandle i$VH = val$union$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("i"));
+        static final VarHandle i$VH = val$union$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("i"));
         public static VarHandle i$VH() {
             return val.i$VH;
         }
@@ -104,12 +104,12 @@ public class libraw_tiff_tag {
         }
         public static long sizeof() { return $LAYOUT().byteSize(); }
         public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-        public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
         public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
             return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
         }
+        public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
         public static MemorySegment allocateArray(int len, ResourceScope scope) {
-            return allocateArray(len, SegmentAllocator.ofScope(scope));
+            return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
         }
         public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
     }
@@ -119,12 +119,12 @@ public class libraw_tiff_tag {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

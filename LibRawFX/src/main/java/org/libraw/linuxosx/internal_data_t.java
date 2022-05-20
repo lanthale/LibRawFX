@@ -6,23 +6,23 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class internal_data_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_POINTER.withName("input"),
-        C_POINTER.withName("output"),
-        C_INT.withName("input_internal"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_POINTER$LAYOUT.withName("input"),
+        Constants$root.C_POINTER$LAYOUT.withName("output"),
+        Constants$root.C_INT$LAYOUT.withName("input_internal"),
         MemoryLayout.paddingLayout(32),
-        C_POINTER.withName("meta_data"),
-        C_LONG_LONG.withName("profile_offset"),
-        C_LONG_LONG.withName("toffset"),
-        MemoryLayout.sequenceLayout(4, C_INT).withName("pana_black")
+        Constants$root.C_POINTER$LAYOUT.withName("meta_data"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("profile_offset"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("toffset"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("pana_black")
     );
     public static MemoryLayout $LAYOUT() {
         return internal_data_t.$struct$LAYOUT;
     }
-    static final VarHandle input$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("input")));
+    static final VarHandle input$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("input"));
     public static VarHandle input$VH() {
         return internal_data_t.input$VH;
     }
@@ -38,7 +38,7 @@ public class internal_data_t {
     public static void input$set(MemorySegment seg, long index, MemoryAddress x) {
         internal_data_t.input$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle output$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("output")));
+    static final VarHandle output$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("output"));
     public static VarHandle output$VH() {
         return internal_data_t.output$VH;
     }
@@ -54,7 +54,7 @@ public class internal_data_t {
     public static void output$set(MemorySegment seg, long index, MemoryAddress x) {
         internal_data_t.output$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle input_internal$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("input_internal"));
+    static final VarHandle input_internal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("input_internal"));
     public static VarHandle input_internal$VH() {
         return internal_data_t.input_internal$VH;
     }
@@ -70,7 +70,7 @@ public class internal_data_t {
     public static void input_internal$set(MemorySegment seg, long index, int x) {
         internal_data_t.input_internal$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle meta_data$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("meta_data")));
+    static final VarHandle meta_data$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("meta_data"));
     public static VarHandle meta_data$VH() {
         return internal_data_t.meta_data$VH;
     }
@@ -86,7 +86,7 @@ public class internal_data_t {
     public static void meta_data$set(MemorySegment seg, long index, MemoryAddress x) {
         internal_data_t.meta_data$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle profile_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("profile_offset"));
+    static final VarHandle profile_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("profile_offset"));
     public static VarHandle profile_offset$VH() {
         return internal_data_t.profile_offset$VH;
     }
@@ -102,7 +102,7 @@ public class internal_data_t {
     public static void profile_offset$set(MemorySegment seg, long index, long x) {
         internal_data_t.profile_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle toffset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("toffset"));
+    static final VarHandle toffset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("toffset"));
     public static VarHandle toffset$VH() {
         return internal_data_t.toffset$VH;
     }
@@ -123,12 +123,12 @@ public class internal_data_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

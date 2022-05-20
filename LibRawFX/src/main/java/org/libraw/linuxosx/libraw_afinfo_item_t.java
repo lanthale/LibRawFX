@@ -6,21 +6,21 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_afinfo_item_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("AFInfoData_tag"),
-        C_SHORT.withName("AFInfoData_order"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("AFInfoData_tag"),
+        Constants$root.C_SHORT$LAYOUT.withName("AFInfoData_order"),
         MemoryLayout.paddingLayout(16),
-        C_INT.withName("AFInfoData_version"),
-        C_INT.withName("AFInfoData_length"),
-        C_POINTER.withName("AFInfoData")
+        Constants$root.C_INT$LAYOUT.withName("AFInfoData_version"),
+        Constants$root.C_INT$LAYOUT.withName("AFInfoData_length"),
+        Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_afinfo_item_t.$struct$LAYOUT;
     }
-    static final VarHandle AFInfoData_tag$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AFInfoData_tag"));
+    static final VarHandle AFInfoData_tag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_tag"));
     public static VarHandle AFInfoData_tag$VH() {
         return libraw_afinfo_item_t.AFInfoData_tag$VH;
     }
@@ -36,7 +36,7 @@ public class libraw_afinfo_item_t {
     public static void AFInfoData_tag$set(MemorySegment seg, long index, int x) {
         libraw_afinfo_item_t.AFInfoData_tag$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData_order$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFInfoData_order"));
+    static final VarHandle AFInfoData_order$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_order"));
     public static VarHandle AFInfoData_order$VH() {
         return libraw_afinfo_item_t.AFInfoData_order$VH;
     }
@@ -52,7 +52,7 @@ public class libraw_afinfo_item_t {
     public static void AFInfoData_order$set(MemorySegment seg, long index, short x) {
         libraw_afinfo_item_t.AFInfoData_order$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData_version$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AFInfoData_version"));
+    static final VarHandle AFInfoData_version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_version"));
     public static VarHandle AFInfoData_version$VH() {
         return libraw_afinfo_item_t.AFInfoData_version$VH;
     }
@@ -68,7 +68,7 @@ public class libraw_afinfo_item_t {
     public static void AFInfoData_version$set(MemorySegment seg, long index, int x) {
         libraw_afinfo_item_t.AFInfoData_version$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AFInfoData_length"));
+    static final VarHandle AFInfoData_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_length"));
     public static VarHandle AFInfoData_length$VH() {
         return libraw_afinfo_item_t.AFInfoData_length$VH;
     }
@@ -84,7 +84,7 @@ public class libraw_afinfo_item_t {
     public static void AFInfoData_length$set(MemorySegment seg, long index, int x) {
         libraw_afinfo_item_t.AFInfoData_length$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("AFInfoData")));
+    static final VarHandle AFInfoData$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData"));
     public static VarHandle AFInfoData$VH() {
         return libraw_afinfo_item_t.AFInfoData$VH;
     }
@@ -102,12 +102,12 @@ public class libraw_afinfo_item_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,22 +6,22 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_pentax_makernotes_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(4, C_CHAR).withName("DriveMode"),
-        MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusMode"),
-        MemoryLayout.sequenceLayout(2, C_SHORT).withName("AFPointSelected"),
-        C_SHORT.withName("AFPointSelected_Area"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("DriveMode"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusMode"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("AFPointSelected"),
+        Constants$root.C_SHORT$LAYOUT.withName("AFPointSelected_Area"),
         MemoryLayout.paddingLayout(16),
-        C_INT.withName("AFPointsInFocus_version"),
-        C_INT.withName("AFPointsInFocus"),
-        C_SHORT.withName("FocusPosition"),
-        C_SHORT.withName("AFAdjustment"),
-        C_CHAR.withName("AFPointMode"),
-        C_CHAR.withName("MultiExposure"),
-        C_SHORT.withName("Quality")
+        Constants$root.C_INT$LAYOUT.withName("AFPointsInFocus_version"),
+        Constants$root.C_INT$LAYOUT.withName("AFPointsInFocus"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocusPosition"),
+        Constants$root.C_SHORT$LAYOUT.withName("AFAdjustment"),
+        Constants$root.C_CHAR$LAYOUT.withName("AFPointMode"),
+        Constants$root.C_CHAR$LAYOUT.withName("MultiExposure"),
+        Constants$root.C_SHORT$LAYOUT.withName("Quality")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_pentax_makernotes_t.$struct$LAYOUT;
@@ -35,7 +35,7 @@ public class libraw_pentax_makernotes_t {
     public static MemorySegment AFPointSelected$slice(MemorySegment seg) {
         return seg.asSlice(8, 4);
     }
-    static final VarHandle AFPointSelected_Area$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFPointSelected_Area"));
+    static final VarHandle AFPointSelected_Area$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointSelected_Area"));
     public static VarHandle AFPointSelected_Area$VH() {
         return libraw_pentax_makernotes_t.AFPointSelected_Area$VH;
     }
@@ -51,7 +51,7 @@ public class libraw_pentax_makernotes_t {
     public static void AFPointSelected_Area$set(MemorySegment seg, long index, short x) {
         libraw_pentax_makernotes_t.AFPointSelected_Area$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFPointsInFocus_version$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AFPointsInFocus_version"));
+    static final VarHandle AFPointsInFocus_version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointsInFocus_version"));
     public static VarHandle AFPointsInFocus_version$VH() {
         return libraw_pentax_makernotes_t.AFPointsInFocus_version$VH;
     }
@@ -67,7 +67,7 @@ public class libraw_pentax_makernotes_t {
     public static void AFPointsInFocus_version$set(MemorySegment seg, long index, int x) {
         libraw_pentax_makernotes_t.AFPointsInFocus_version$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFPointsInFocus$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AFPointsInFocus"));
+    static final VarHandle AFPointsInFocus$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointsInFocus"));
     public static VarHandle AFPointsInFocus$VH() {
         return libraw_pentax_makernotes_t.AFPointsInFocus$VH;
     }
@@ -83,7 +83,7 @@ public class libraw_pentax_makernotes_t {
     public static void AFPointsInFocus$set(MemorySegment seg, long index, int x) {
         libraw_pentax_makernotes_t.AFPointsInFocus$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusPosition$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusPosition"));
+    static final VarHandle FocusPosition$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusPosition"));
     public static VarHandle FocusPosition$VH() {
         return libraw_pentax_makernotes_t.FocusPosition$VH;
     }
@@ -99,7 +99,7 @@ public class libraw_pentax_makernotes_t {
     public static void FocusPosition$set(MemorySegment seg, long index, short x) {
         libraw_pentax_makernotes_t.FocusPosition$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFAdjustment$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFAdjustment"));
+    static final VarHandle AFAdjustment$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFAdjustment"));
     public static VarHandle AFAdjustment$VH() {
         return libraw_pentax_makernotes_t.AFAdjustment$VH;
     }
@@ -115,7 +115,7 @@ public class libraw_pentax_makernotes_t {
     public static void AFAdjustment$set(MemorySegment seg, long index, short x) {
         libraw_pentax_makernotes_t.AFAdjustment$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFPointMode$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("AFPointMode"));
+    static final VarHandle AFPointMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointMode"));
     public static VarHandle AFPointMode$VH() {
         return libraw_pentax_makernotes_t.AFPointMode$VH;
     }
@@ -131,7 +131,7 @@ public class libraw_pentax_makernotes_t {
     public static void AFPointMode$set(MemorySegment seg, long index, byte x) {
         libraw_pentax_makernotes_t.AFPointMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MultiExposure$VH = $struct$LAYOUT.varHandle(byte.class, MemoryLayout.PathElement.groupElement("MultiExposure"));
+    static final VarHandle MultiExposure$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MultiExposure"));
     public static VarHandle MultiExposure$VH() {
         return libraw_pentax_makernotes_t.MultiExposure$VH;
     }
@@ -147,7 +147,7 @@ public class libraw_pentax_makernotes_t {
     public static void MultiExposure$set(MemorySegment seg, long index, byte x) {
         libraw_pentax_makernotes_t.MultiExposure$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Quality$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("Quality"));
+    static final VarHandle Quality$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Quality"));
     public static VarHandle Quality$VH() {
         return libraw_pentax_makernotes_t.Quality$VH;
     }
@@ -165,12 +165,12 @@ public class libraw_pentax_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

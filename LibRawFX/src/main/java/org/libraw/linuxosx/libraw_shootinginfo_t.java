@@ -6,24 +6,24 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_shootinginfo_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("DriveMode"),
-        C_SHORT.withName("FocusMode"),
-        C_SHORT.withName("MeteringMode"),
-        C_SHORT.withName("AFPoint"),
-        C_SHORT.withName("ExposureMode"),
-        C_SHORT.withName("ExposureProgram"),
-        C_SHORT.withName("ImageStabilization"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("BodySerial"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("InternalBodySerial")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("MeteringMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
+        Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("ExposureProgram"),
+        Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("BodySerial"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("InternalBodySerial")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_shootinginfo_t.$struct$LAYOUT;
     }
-    static final VarHandle DriveMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DriveMode"));
+    static final VarHandle DriveMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DriveMode"));
     public static VarHandle DriveMode$VH() {
         return libraw_shootinginfo_t.DriveMode$VH;
     }
@@ -39,7 +39,7 @@ public class libraw_shootinginfo_t {
     public static void DriveMode$set(MemorySegment seg, long index, short x) {
         libraw_shootinginfo_t.DriveMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusMode"));
+    static final VarHandle FocusMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusMode"));
     public static VarHandle FocusMode$VH() {
         return libraw_shootinginfo_t.FocusMode$VH;
     }
@@ -55,7 +55,7 @@ public class libraw_shootinginfo_t {
     public static void FocusMode$set(MemorySegment seg, long index, short x) {
         libraw_shootinginfo_t.FocusMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MeteringMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("MeteringMode"));
+    static final VarHandle MeteringMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MeteringMode"));
     public static VarHandle MeteringMode$VH() {
         return libraw_shootinginfo_t.MeteringMode$VH;
     }
@@ -71,7 +71,7 @@ public class libraw_shootinginfo_t {
     public static void MeteringMode$set(MemorySegment seg, long index, short x) {
         libraw_shootinginfo_t.MeteringMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFPoint$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFPoint"));
+    static final VarHandle AFPoint$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPoint"));
     public static VarHandle AFPoint$VH() {
         return libraw_shootinginfo_t.AFPoint$VH;
     }
@@ -87,7 +87,7 @@ public class libraw_shootinginfo_t {
     public static void AFPoint$set(MemorySegment seg, long index, short x) {
         libraw_shootinginfo_t.AFPoint$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ExposureMode"));
+    static final VarHandle ExposureMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureMode"));
     public static VarHandle ExposureMode$VH() {
         return libraw_shootinginfo_t.ExposureMode$VH;
     }
@@ -103,7 +103,7 @@ public class libraw_shootinginfo_t {
     public static void ExposureMode$set(MemorySegment seg, long index, short x) {
         libraw_shootinginfo_t.ExposureMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureProgram$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ExposureProgram"));
+    static final VarHandle ExposureProgram$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureProgram"));
     public static VarHandle ExposureProgram$VH() {
         return libraw_shootinginfo_t.ExposureProgram$VH;
     }
@@ -119,7 +119,7 @@ public class libraw_shootinginfo_t {
     public static void ExposureProgram$set(MemorySegment seg, long index, short x) {
         libraw_shootinginfo_t.ExposureProgram$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ImageStabilization$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ImageStabilization"));
+    static final VarHandle ImageStabilization$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageStabilization"));
     public static VarHandle ImageStabilization$VH() {
         return libraw_shootinginfo_t.ImageStabilization$VH;
     }
@@ -143,12 +143,12 @@ public class libraw_shootinginfo_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,29 +6,29 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class jhead {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("algo"),
-        C_INT.withName("bits"),
-        C_INT.withName("high"),
-        C_INT.withName("wide"),
-        C_INT.withName("clrs"),
-        C_INT.withName("sraw"),
-        C_INT.withName("psv"),
-        C_INT.withName("restart"),
-        MemoryLayout.sequenceLayout(6, C_INT).withName("vpred"),
-        MemoryLayout.sequenceLayout(64, C_SHORT).withName("quant"),
-        MemoryLayout.sequenceLayout(64, C_SHORT).withName("idct"),
-        MemoryLayout.sequenceLayout(20, C_POINTER).withName("huff"),
-        MemoryLayout.sequenceLayout(20, C_POINTER).withName("free"),
-        C_POINTER.withName("row")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("algo"),
+        Constants$root.C_INT$LAYOUT.withName("bits"),
+        Constants$root.C_INT$LAYOUT.withName("high"),
+        Constants$root.C_INT$LAYOUT.withName("wide"),
+        Constants$root.C_INT$LAYOUT.withName("clrs"),
+        Constants$root.C_INT$LAYOUT.withName("sraw"),
+        Constants$root.C_INT$LAYOUT.withName("psv"),
+        Constants$root.C_INT$LAYOUT.withName("restart"),
+        MemoryLayout.sequenceLayout(6, Constants$root.C_INT$LAYOUT).withName("vpred"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_SHORT$LAYOUT).withName("quant"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_SHORT$LAYOUT).withName("idct"),
+        MemoryLayout.sequenceLayout(20, Constants$root.C_POINTER$LAYOUT).withName("huff"),
+        MemoryLayout.sequenceLayout(20, Constants$root.C_POINTER$LAYOUT).withName("free"),
+        Constants$root.C_POINTER$LAYOUT.withName("row")
     ).withName("jhead");
     public static MemoryLayout $LAYOUT() {
         return jhead.$struct$LAYOUT;
     }
-    static final VarHandle algo$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("algo"));
+    static final VarHandle algo$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("algo"));
     public static VarHandle algo$VH() {
         return jhead.algo$VH;
     }
@@ -44,7 +44,7 @@ public class jhead {
     public static void algo$set(MemorySegment seg, long index, int x) {
         jhead.algo$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bits$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("bits"));
+    static final VarHandle bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bits"));
     public static VarHandle bits$VH() {
         return jhead.bits$VH;
     }
@@ -60,7 +60,7 @@ public class jhead {
     public static void bits$set(MemorySegment seg, long index, int x) {
         jhead.bits$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle high$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("high"));
+    static final VarHandle high$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("high"));
     public static VarHandle high$VH() {
         return jhead.high$VH;
     }
@@ -76,7 +76,7 @@ public class jhead {
     public static void high$set(MemorySegment seg, long index, int x) {
         jhead.high$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle wide$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("wide"));
+    static final VarHandle wide$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("wide"));
     public static VarHandle wide$VH() {
         return jhead.wide$VH;
     }
@@ -92,7 +92,7 @@ public class jhead {
     public static void wide$set(MemorySegment seg, long index, int x) {
         jhead.wide$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle clrs$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("clrs"));
+    static final VarHandle clrs$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("clrs"));
     public static VarHandle clrs$VH() {
         return jhead.clrs$VH;
     }
@@ -108,7 +108,7 @@ public class jhead {
     public static void clrs$set(MemorySegment seg, long index, int x) {
         jhead.clrs$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle sraw$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("sraw"));
+    static final VarHandle sraw$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sraw"));
     public static VarHandle sraw$VH() {
         return jhead.sraw$VH;
     }
@@ -124,7 +124,7 @@ public class jhead {
     public static void sraw$set(MemorySegment seg, long index, int x) {
         jhead.sraw$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle psv$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("psv"));
+    static final VarHandle psv$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("psv"));
     public static VarHandle psv$VH() {
         return jhead.psv$VH;
     }
@@ -140,7 +140,7 @@ public class jhead {
     public static void psv$set(MemorySegment seg, long index, int x) {
         jhead.psv$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle restart$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("restart"));
+    static final VarHandle restart$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("restart"));
     public static VarHandle restart$VH() {
         return jhead.restart$VH;
     }
@@ -171,7 +171,7 @@ public class jhead {
     public static MemorySegment free$slice(MemorySegment seg) {
         return seg.asSlice(472, 160);
     }
-    static final VarHandle row$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("row")));
+    static final VarHandle row$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("row"));
     public static VarHandle row$VH() {
         return jhead.row$VH;
     }
@@ -189,12 +189,12 @@ public class jhead {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

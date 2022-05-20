@@ -6,26 +6,26 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_raw_unpack_params_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("use_rawspeed"),
-        C_INT.withName("use_dngsdk"),
-        C_INT.withName("options"),
-        C_INT.withName("shot_select"),
-        C_INT.withName("specials"),
-        C_INT.withName("max_raw_memory_mb"),
-        C_INT.withName("sony_arw2_posterization_thr"),
-        C_FLOAT.withName("coolscan_nef_gamma"),
-        MemoryLayout.sequenceLayout(5, C_CHAR).withName("p4shot_order"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("use_rawspeed"),
+        Constants$root.C_INT$LAYOUT.withName("use_dngsdk"),
+        Constants$root.C_INT$LAYOUT.withName("options"),
+        Constants$root.C_INT$LAYOUT.withName("shot_select"),
+        Constants$root.C_INT$LAYOUT.withName("specials"),
+        Constants$root.C_INT$LAYOUT.withName("max_raw_memory_mb"),
+        Constants$root.C_INT$LAYOUT.withName("sony_arw2_posterization_thr"),
+        Constants$root.C_FLOAT$LAYOUT.withName("coolscan_nef_gamma"),
+        MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("p4shot_order"),
         MemoryLayout.paddingLayout(24),
-        C_POINTER.withName("custom_camera_strings")
+        Constants$root.C_POINTER$LAYOUT.withName("custom_camera_strings")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_raw_unpack_params_t.$struct$LAYOUT;
     }
-    static final VarHandle use_rawspeed$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("use_rawspeed"));
+    static final VarHandle use_rawspeed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("use_rawspeed"));
     public static VarHandle use_rawspeed$VH() {
         return libraw_raw_unpack_params_t.use_rawspeed$VH;
     }
@@ -41,7 +41,7 @@ public class libraw_raw_unpack_params_t {
     public static void use_rawspeed$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.use_rawspeed$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle use_dngsdk$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("use_dngsdk"));
+    static final VarHandle use_dngsdk$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("use_dngsdk"));
     public static VarHandle use_dngsdk$VH() {
         return libraw_raw_unpack_params_t.use_dngsdk$VH;
     }
@@ -57,7 +57,7 @@ public class libraw_raw_unpack_params_t {
     public static void use_dngsdk$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.use_dngsdk$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle options$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("options"));
+    static final VarHandle options$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("options"));
     public static VarHandle options$VH() {
         return libraw_raw_unpack_params_t.options$VH;
     }
@@ -73,7 +73,7 @@ public class libraw_raw_unpack_params_t {
     public static void options$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.options$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shot_select$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("shot_select"));
+    static final VarHandle shot_select$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shot_select"));
     public static VarHandle shot_select$VH() {
         return libraw_raw_unpack_params_t.shot_select$VH;
     }
@@ -89,7 +89,7 @@ public class libraw_raw_unpack_params_t {
     public static void shot_select$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.shot_select$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle specials$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("specials"));
+    static final VarHandle specials$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("specials"));
     public static VarHandle specials$VH() {
         return libraw_raw_unpack_params_t.specials$VH;
     }
@@ -105,7 +105,7 @@ public class libraw_raw_unpack_params_t {
     public static void specials$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.specials$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max_raw_memory_mb$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("max_raw_memory_mb"));
+    static final VarHandle max_raw_memory_mb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max_raw_memory_mb"));
     public static VarHandle max_raw_memory_mb$VH() {
         return libraw_raw_unpack_params_t.max_raw_memory_mb$VH;
     }
@@ -121,7 +121,7 @@ public class libraw_raw_unpack_params_t {
     public static void max_raw_memory_mb$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.max_raw_memory_mb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle sony_arw2_posterization_thr$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("sony_arw2_posterization_thr"));
+    static final VarHandle sony_arw2_posterization_thr$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sony_arw2_posterization_thr"));
     public static VarHandle sony_arw2_posterization_thr$VH() {
         return libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH;
     }
@@ -137,7 +137,7 @@ public class libraw_raw_unpack_params_t {
     public static void sony_arw2_posterization_thr$set(MemorySegment seg, long index, int x) {
         libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle coolscan_nef_gamma$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("coolscan_nef_gamma"));
+    static final VarHandle coolscan_nef_gamma$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("coolscan_nef_gamma"));
     public static VarHandle coolscan_nef_gamma$VH() {
         return libraw_raw_unpack_params_t.coolscan_nef_gamma$VH;
     }
@@ -156,7 +156,7 @@ public class libraw_raw_unpack_params_t {
     public static MemorySegment p4shot_order$slice(MemorySegment seg) {
         return seg.asSlice(32, 5);
     }
-    static final VarHandle custom_camera_strings$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("custom_camera_strings")));
+    static final VarHandle custom_camera_strings$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("custom_camera_strings"));
     public static VarHandle custom_camera_strings$VH() {
         return libraw_raw_unpack_params_t.custom_camera_strings$VH;
     }
@@ -174,12 +174,12 @@ public class libraw_raw_unpack_params_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,33 +6,33 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_kodak_makernotes_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("BlackLevelTop"),
-        C_SHORT.withName("BlackLevelBottom"),
-        C_SHORT.withName("offset_left"),
-        C_SHORT.withName("offset_top"),
-        C_SHORT.withName("clipBlack"),
-        C_SHORT.withName("clipWhite"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("romm_camDaylight"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("romm_camTungsten"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("romm_camFluorescent"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("romm_camFlash"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("romm_camCustom"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("romm_camAuto"),
-        C_SHORT.withName("val018percent"),
-        C_SHORT.withName("val100percent"),
-        C_SHORT.withName("val170percent"),
-        C_SHORT.withName("MakerNoteKodak8a"),
-        C_FLOAT.withName("ISOCalibrationGain"),
-        C_FLOAT.withName("AnalogISO")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("BlackLevelTop"),
+        Constants$root.C_SHORT$LAYOUT.withName("BlackLevelBottom"),
+        Constants$root.C_SHORT$LAYOUT.withName("offset_left"),
+        Constants$root.C_SHORT$LAYOUT.withName("offset_top"),
+        Constants$root.C_SHORT$LAYOUT.withName("clipBlack"),
+        Constants$root.C_SHORT$LAYOUT.withName("clipWhite"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camDaylight"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camTungsten"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camFluorescent"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camFlash"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camCustom"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camAuto"),
+        Constants$root.C_SHORT$LAYOUT.withName("val018percent"),
+        Constants$root.C_SHORT$LAYOUT.withName("val100percent"),
+        Constants$root.C_SHORT$LAYOUT.withName("val170percent"),
+        Constants$root.C_SHORT$LAYOUT.withName("MakerNoteKodak8a"),
+        Constants$root.C_FLOAT$LAYOUT.withName("ISOCalibrationGain"),
+        Constants$root.C_FLOAT$LAYOUT.withName("AnalogISO")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_kodak_makernotes_t.$struct$LAYOUT;
     }
-    static final VarHandle BlackLevelTop$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("BlackLevelTop"));
+    static final VarHandle BlackLevelTop$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackLevelTop"));
     public static VarHandle BlackLevelTop$VH() {
         return libraw_kodak_makernotes_t.BlackLevelTop$VH;
     }
@@ -48,7 +48,7 @@ public class libraw_kodak_makernotes_t {
     public static void BlackLevelTop$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.BlackLevelTop$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle BlackLevelBottom$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("BlackLevelBottom"));
+    static final VarHandle BlackLevelBottom$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackLevelBottom"));
     public static VarHandle BlackLevelBottom$VH() {
         return libraw_kodak_makernotes_t.BlackLevelBottom$VH;
     }
@@ -64,7 +64,7 @@ public class libraw_kodak_makernotes_t {
     public static void BlackLevelBottom$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.BlackLevelBottom$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle offset_left$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("offset_left"));
+    static final VarHandle offset_left$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset_left"));
     public static VarHandle offset_left$VH() {
         return libraw_kodak_makernotes_t.offset_left$VH;
     }
@@ -80,7 +80,7 @@ public class libraw_kodak_makernotes_t {
     public static void offset_left$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.offset_left$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle offset_top$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("offset_top"));
+    static final VarHandle offset_top$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset_top"));
     public static VarHandle offset_top$VH() {
         return libraw_kodak_makernotes_t.offset_top$VH;
     }
@@ -96,7 +96,7 @@ public class libraw_kodak_makernotes_t {
     public static void offset_top$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.offset_top$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle clipBlack$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("clipBlack"));
+    static final VarHandle clipBlack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("clipBlack"));
     public static VarHandle clipBlack$VH() {
         return libraw_kodak_makernotes_t.clipBlack$VH;
     }
@@ -112,7 +112,7 @@ public class libraw_kodak_makernotes_t {
     public static void clipBlack$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.clipBlack$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle clipWhite$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("clipWhite"));
+    static final VarHandle clipWhite$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("clipWhite"));
     public static VarHandle clipWhite$VH() {
         return libraw_kodak_makernotes_t.clipWhite$VH;
     }
@@ -146,7 +146,7 @@ public class libraw_kodak_makernotes_t {
     public static MemorySegment romm_camAuto$slice(MemorySegment seg) {
         return seg.asSlice(192, 36);
     }
-    static final VarHandle val018percent$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("val018percent"));
+    static final VarHandle val018percent$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("val018percent"));
     public static VarHandle val018percent$VH() {
         return libraw_kodak_makernotes_t.val018percent$VH;
     }
@@ -162,7 +162,7 @@ public class libraw_kodak_makernotes_t {
     public static void val018percent$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.val018percent$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle val100percent$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("val100percent"));
+    static final VarHandle val100percent$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("val100percent"));
     public static VarHandle val100percent$VH() {
         return libraw_kodak_makernotes_t.val100percent$VH;
     }
@@ -178,7 +178,7 @@ public class libraw_kodak_makernotes_t {
     public static void val100percent$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.val100percent$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle val170percent$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("val170percent"));
+    static final VarHandle val170percent$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("val170percent"));
     public static VarHandle val170percent$VH() {
         return libraw_kodak_makernotes_t.val170percent$VH;
     }
@@ -194,7 +194,7 @@ public class libraw_kodak_makernotes_t {
     public static void val170percent$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.val170percent$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MakerNoteKodak8a$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("MakerNoteKodak8a"));
+    static final VarHandle MakerNoteKodak8a$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MakerNoteKodak8a"));
     public static VarHandle MakerNoteKodak8a$VH() {
         return libraw_kodak_makernotes_t.MakerNoteKodak8a$VH;
     }
@@ -210,7 +210,7 @@ public class libraw_kodak_makernotes_t {
     public static void MakerNoteKodak8a$set(MemorySegment seg, long index, short x) {
         libraw_kodak_makernotes_t.MakerNoteKodak8a$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ISOCalibrationGain$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("ISOCalibrationGain"));
+    static final VarHandle ISOCalibrationGain$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ISOCalibrationGain"));
     public static VarHandle ISOCalibrationGain$VH() {
         return libraw_kodak_makernotes_t.ISOCalibrationGain$VH;
     }
@@ -226,7 +226,7 @@ public class libraw_kodak_makernotes_t {
     public static void ISOCalibrationGain$set(MemorySegment seg, long index, float x) {
         libraw_kodak_makernotes_t.ISOCalibrationGain$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AnalogISO$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("AnalogISO"));
+    static final VarHandle AnalogISO$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AnalogISO"));
     public static VarHandle AnalogISO$VH() {
         return libraw_kodak_makernotes_t.AnalogISO$VH;
     }
@@ -244,12 +244,12 @@ public class libraw_kodak_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

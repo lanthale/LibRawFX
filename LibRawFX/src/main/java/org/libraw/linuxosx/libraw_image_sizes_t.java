@@ -6,36 +6,36 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_image_sizes_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("raw_height"),
-        C_SHORT.withName("raw_width"),
-        C_SHORT.withName("height"),
-        C_SHORT.withName("width"),
-        C_SHORT.withName("top_margin"),
-        C_SHORT.withName("left_margin"),
-        C_SHORT.withName("iheight"),
-        C_SHORT.withName("iwidth"),
-        C_INT.withName("raw_pitch"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("raw_height"),
+        Constants$root.C_SHORT$LAYOUT.withName("raw_width"),
+        Constants$root.C_SHORT$LAYOUT.withName("height"),
+        Constants$root.C_SHORT$LAYOUT.withName("width"),
+        Constants$root.C_SHORT$LAYOUT.withName("top_margin"),
+        Constants$root.C_SHORT$LAYOUT.withName("left_margin"),
+        Constants$root.C_SHORT$LAYOUT.withName("iheight"),
+        Constants$root.C_SHORT$LAYOUT.withName("iwidth"),
+        Constants$root.C_INT$LAYOUT.withName("raw_pitch"),
         MemoryLayout.paddingLayout(32),
-        C_DOUBLE.withName("pixel_aspect"),
-        C_INT.withName("flip"),
-        MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, C_INT)).withName("mask"),
-        C_SHORT.withName("raw_aspect"),
+        Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
+        Constants$root.C_INT$LAYOUT.withName("flip"),
+        MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("mask"),
+        Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
         MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-            C_SHORT.withName("cleft"),
-            C_SHORT.withName("ctop"),
-            C_SHORT.withName("cwidth"),
-            C_SHORT.withName("cheight")
+            Constants$root.C_SHORT$LAYOUT.withName("cleft"),
+            Constants$root.C_SHORT$LAYOUT.withName("ctop"),
+            Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
+            Constants$root.C_SHORT$LAYOUT.withName("cheight")
         )).withName("raw_inset_crops"),
         MemoryLayout.paddingLayout(16)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_image_sizes_t.$struct$LAYOUT;
     }
-    static final VarHandle raw_height$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("raw_height"));
+    static final VarHandle raw_height$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_height"));
     public static VarHandle raw_height$VH() {
         return libraw_image_sizes_t.raw_height$VH;
     }
@@ -51,7 +51,7 @@ public class libraw_image_sizes_t {
     public static void raw_height$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.raw_height$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_width$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("raw_width"));
+    static final VarHandle raw_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_width"));
     public static VarHandle raw_width$VH() {
         return libraw_image_sizes_t.raw_width$VH;
     }
@@ -67,7 +67,7 @@ public class libraw_image_sizes_t {
     public static void raw_width$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.raw_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle height$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("height"));
+    static final VarHandle height$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("height"));
     public static VarHandle height$VH() {
         return libraw_image_sizes_t.height$VH;
     }
@@ -83,7 +83,7 @@ public class libraw_image_sizes_t {
     public static void height$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.height$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle width$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("width"));
+    static final VarHandle width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("width"));
     public static VarHandle width$VH() {
         return libraw_image_sizes_t.width$VH;
     }
@@ -99,7 +99,7 @@ public class libraw_image_sizes_t {
     public static void width$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle top_margin$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("top_margin"));
+    static final VarHandle top_margin$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("top_margin"));
     public static VarHandle top_margin$VH() {
         return libraw_image_sizes_t.top_margin$VH;
     }
@@ -115,7 +115,7 @@ public class libraw_image_sizes_t {
     public static void top_margin$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.top_margin$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle left_margin$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("left_margin"));
+    static final VarHandle left_margin$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("left_margin"));
     public static VarHandle left_margin$VH() {
         return libraw_image_sizes_t.left_margin$VH;
     }
@@ -131,7 +131,7 @@ public class libraw_image_sizes_t {
     public static void left_margin$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.left_margin$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle iheight$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("iheight"));
+    static final VarHandle iheight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("iheight"));
     public static VarHandle iheight$VH() {
         return libraw_image_sizes_t.iheight$VH;
     }
@@ -147,7 +147,7 @@ public class libraw_image_sizes_t {
     public static void iheight$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.iheight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle iwidth$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("iwidth"));
+    static final VarHandle iwidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("iwidth"));
     public static VarHandle iwidth$VH() {
         return libraw_image_sizes_t.iwidth$VH;
     }
@@ -163,7 +163,7 @@ public class libraw_image_sizes_t {
     public static void iwidth$set(MemorySegment seg, long index, short x) {
         libraw_image_sizes_t.iwidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_pitch$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("raw_pitch"));
+    static final VarHandle raw_pitch$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_pitch"));
     public static VarHandle raw_pitch$VH() {
         return libraw_image_sizes_t.raw_pitch$VH;
     }
@@ -179,7 +179,7 @@ public class libraw_image_sizes_t {
     public static void raw_pitch$set(MemorySegment seg, long index, int x) {
         libraw_image_sizes_t.raw_pitch$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle pixel_aspect$VH = $struct$LAYOUT.varHandle(double.class, MemoryLayout.PathElement.groupElement("pixel_aspect"));
+    static final VarHandle pixel_aspect$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pixel_aspect"));
     public static VarHandle pixel_aspect$VH() {
         return libraw_image_sizes_t.pixel_aspect$VH;
     }
@@ -195,7 +195,7 @@ public class libraw_image_sizes_t {
     public static void pixel_aspect$set(MemorySegment seg, long index, double x) {
         libraw_image_sizes_t.pixel_aspect$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle flip$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("flip"));
+    static final VarHandle flip$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("flip"));
     public static VarHandle flip$VH() {
         return libraw_image_sizes_t.flip$VH;
     }
@@ -214,7 +214,7 @@ public class libraw_image_sizes_t {
     public static MemorySegment mask$slice(MemorySegment seg) {
         return seg.asSlice(36, 128);
     }
-    static final VarHandle raw_aspect$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("raw_aspect"));
+    static final VarHandle raw_aspect$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_aspect"));
     public static VarHandle raw_aspect$VH() {
         return libraw_image_sizes_t.raw_aspect$VH;
     }
@@ -235,12 +235,12 @@ public class libraw_image_sizes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

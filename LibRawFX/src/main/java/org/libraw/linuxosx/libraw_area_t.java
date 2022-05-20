@@ -6,19 +6,19 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_area_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("t"),
-        C_SHORT.withName("l"),
-        C_SHORT.withName("b"),
-        C_SHORT.withName("r")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("t"),
+        Constants$root.C_SHORT$LAYOUT.withName("l"),
+        Constants$root.C_SHORT$LAYOUT.withName("b"),
+        Constants$root.C_SHORT$LAYOUT.withName("r")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_area_t.$struct$LAYOUT;
     }
-    static final VarHandle t$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("t"));
+    static final VarHandle t$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t"));
     public static VarHandle t$VH() {
         return libraw_area_t.t$VH;
     }
@@ -34,7 +34,7 @@ public class libraw_area_t {
     public static void t$set(MemorySegment seg, long index, short x) {
         libraw_area_t.t$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle l$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("l"));
+    static final VarHandle l$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("l"));
     public static VarHandle l$VH() {
         return libraw_area_t.l$VH;
     }
@@ -50,7 +50,7 @@ public class libraw_area_t {
     public static void l$set(MemorySegment seg, long index, short x) {
         libraw_area_t.l$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle b$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("b"));
+    static final VarHandle b$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("b"));
     public static VarHandle b$VH() {
         return libraw_area_t.b$VH;
     }
@@ -66,7 +66,7 @@ public class libraw_area_t {
     public static void b$set(MemorySegment seg, long index, short x) {
         libraw_area_t.b$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle r$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("r"));
+    static final VarHandle r$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("r"));
     public static VarHandle r$VH() {
         return libraw_area_t.r$VH;
     }
@@ -84,12 +84,12 @@ public class libraw_area_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

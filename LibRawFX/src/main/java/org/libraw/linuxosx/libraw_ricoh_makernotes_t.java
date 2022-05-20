@@ -6,34 +6,34 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_ricoh_makernotes_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("AFStatus"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("AFStatus"),
         MemoryLayout.paddingLayout(16),
-        MemoryLayout.sequenceLayout(2, C_INT).withName("AFAreaXPosition"),
-        MemoryLayout.sequenceLayout(2, C_INT).withName("AFAreaYPosition"),
-        C_SHORT.withName("AFAreaMode"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("AFAreaXPosition"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("AFAreaYPosition"),
+        Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
         MemoryLayout.paddingLayout(16),
-        C_INT.withName("SensorWidth"),
-        C_INT.withName("SensorHeight"),
-        C_INT.withName("CroppedImageWidth"),
-        C_INT.withName("CroppedImageHeight"),
-        C_SHORT.withName("WideAdapter"),
-        C_SHORT.withName("CropMode"),
-        C_SHORT.withName("NDFilter"),
-        C_SHORT.withName("AutoBracketing"),
-        C_SHORT.withName("MacroMode"),
-        C_SHORT.withName("FlashMode"),
+        Constants$root.C_INT$LAYOUT.withName("SensorWidth"),
+        Constants$root.C_INT$LAYOUT.withName("SensorHeight"),
+        Constants$root.C_INT$LAYOUT.withName("CroppedImageWidth"),
+        Constants$root.C_INT$LAYOUT.withName("CroppedImageHeight"),
+        Constants$root.C_SHORT$LAYOUT.withName("WideAdapter"),
+        Constants$root.C_SHORT$LAYOUT.withName("CropMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("NDFilter"),
+        Constants$root.C_SHORT$LAYOUT.withName("AutoBracketing"),
+        Constants$root.C_SHORT$LAYOUT.withName("MacroMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
         MemoryLayout.paddingLayout(32),
-        C_DOUBLE.withName("FlashExposureComp"),
-        C_DOUBLE.withName("ManualFlashOutput")
+        Constants$root.C_DOUBLE$LAYOUT.withName("FlashExposureComp"),
+        Constants$root.C_DOUBLE$LAYOUT.withName("ManualFlashOutput")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_ricoh_makernotes_t.$struct$LAYOUT;
     }
-    static final VarHandle AFStatus$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFStatus"));
+    static final VarHandle AFStatus$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFStatus"));
     public static VarHandle AFStatus$VH() {
         return libraw_ricoh_makernotes_t.AFStatus$VH;
     }
@@ -55,7 +55,7 @@ public class libraw_ricoh_makernotes_t {
     public static MemorySegment AFAreaYPosition$slice(MemorySegment seg) {
         return seg.asSlice(12, 8);
     }
-    static final VarHandle AFAreaMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFAreaMode"));
+    static final VarHandle AFAreaMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFAreaMode"));
     public static VarHandle AFAreaMode$VH() {
         return libraw_ricoh_makernotes_t.AFAreaMode$VH;
     }
@@ -71,7 +71,7 @@ public class libraw_ricoh_makernotes_t {
     public static void AFAreaMode$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.AFAreaMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorWidth$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SensorWidth"));
+    static final VarHandle SensorWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorWidth"));
     public static VarHandle SensorWidth$VH() {
         return libraw_ricoh_makernotes_t.SensorWidth$VH;
     }
@@ -87,7 +87,7 @@ public class libraw_ricoh_makernotes_t {
     public static void SensorWidth$set(MemorySegment seg, long index, int x) {
         libraw_ricoh_makernotes_t.SensorWidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorHeight$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SensorHeight"));
+    static final VarHandle SensorHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorHeight"));
     public static VarHandle SensorHeight$VH() {
         return libraw_ricoh_makernotes_t.SensorHeight$VH;
     }
@@ -103,7 +103,7 @@ public class libraw_ricoh_makernotes_t {
     public static void SensorHeight$set(MemorySegment seg, long index, int x) {
         libraw_ricoh_makernotes_t.SensorHeight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CroppedImageWidth$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("CroppedImageWidth"));
+    static final VarHandle CroppedImageWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CroppedImageWidth"));
     public static VarHandle CroppedImageWidth$VH() {
         return libraw_ricoh_makernotes_t.CroppedImageWidth$VH;
     }
@@ -119,7 +119,7 @@ public class libraw_ricoh_makernotes_t {
     public static void CroppedImageWidth$set(MemorySegment seg, long index, int x) {
         libraw_ricoh_makernotes_t.CroppedImageWidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CroppedImageHeight$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("CroppedImageHeight"));
+    static final VarHandle CroppedImageHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CroppedImageHeight"));
     public static VarHandle CroppedImageHeight$VH() {
         return libraw_ricoh_makernotes_t.CroppedImageHeight$VH;
     }
@@ -135,7 +135,7 @@ public class libraw_ricoh_makernotes_t {
     public static void CroppedImageHeight$set(MemorySegment seg, long index, int x) {
         libraw_ricoh_makernotes_t.CroppedImageHeight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle WideAdapter$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("WideAdapter"));
+    static final VarHandle WideAdapter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("WideAdapter"));
     public static VarHandle WideAdapter$VH() {
         return libraw_ricoh_makernotes_t.WideAdapter$VH;
     }
@@ -151,7 +151,7 @@ public class libraw_ricoh_makernotes_t {
     public static void WideAdapter$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.WideAdapter$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CropMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("CropMode"));
+    static final VarHandle CropMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CropMode"));
     public static VarHandle CropMode$VH() {
         return libraw_ricoh_makernotes_t.CropMode$VH;
     }
@@ -167,7 +167,7 @@ public class libraw_ricoh_makernotes_t {
     public static void CropMode$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.CropMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle NDFilter$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("NDFilter"));
+    static final VarHandle NDFilter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("NDFilter"));
     public static VarHandle NDFilter$VH() {
         return libraw_ricoh_makernotes_t.NDFilter$VH;
     }
@@ -183,7 +183,7 @@ public class libraw_ricoh_makernotes_t {
     public static void NDFilter$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.NDFilter$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AutoBracketing$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AutoBracketing"));
+    static final VarHandle AutoBracketing$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AutoBracketing"));
     public static VarHandle AutoBracketing$VH() {
         return libraw_ricoh_makernotes_t.AutoBracketing$VH;
     }
@@ -199,7 +199,7 @@ public class libraw_ricoh_makernotes_t {
     public static void AutoBracketing$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.AutoBracketing$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MacroMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("MacroMode"));
+    static final VarHandle MacroMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MacroMode"));
     public static VarHandle MacroMode$VH() {
         return libraw_ricoh_makernotes_t.MacroMode$VH;
     }
@@ -215,7 +215,7 @@ public class libraw_ricoh_makernotes_t {
     public static void MacroMode$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.MacroMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FlashMode"));
+    static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashMode"));
     public static VarHandle FlashMode$VH() {
         return libraw_ricoh_makernotes_t.FlashMode$VH;
     }
@@ -231,7 +231,7 @@ public class libraw_ricoh_makernotes_t {
     public static void FlashMode$set(MemorySegment seg, long index, short x) {
         libraw_ricoh_makernotes_t.FlashMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashExposureComp$VH = $struct$LAYOUT.varHandle(double.class, MemoryLayout.PathElement.groupElement("FlashExposureComp"));
+    static final VarHandle FlashExposureComp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashExposureComp"));
     public static VarHandle FlashExposureComp$VH() {
         return libraw_ricoh_makernotes_t.FlashExposureComp$VH;
     }
@@ -247,7 +247,7 @@ public class libraw_ricoh_makernotes_t {
     public static void FlashExposureComp$set(MemorySegment seg, long index, double x) {
         libraw_ricoh_makernotes_t.FlashExposureComp$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ManualFlashOutput$VH = $struct$LAYOUT.varHandle(double.class, MemoryLayout.PathElement.groupElement("ManualFlashOutput"));
+    static final VarHandle ManualFlashOutput$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ManualFlashOutput"));
     public static VarHandle ManualFlashOutput$VH() {
         return libraw_ricoh_makernotes_t.ManualFlashOutput$VH;
     }
@@ -265,12 +265,12 @@ public class libraw_ricoh_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

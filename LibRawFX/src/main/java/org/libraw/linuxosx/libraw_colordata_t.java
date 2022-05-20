@@ -6,80 +6,80 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_colordata_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(65536, C_SHORT).withName("curve"),
-        MemoryLayout.sequenceLayout(4104, C_INT).withName("cblack"),
-        C_INT.withName("black"),
-        C_INT.withName("data_maximum"),
-        C_INT.withName("maximum"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(65536, Constants$root.C_SHORT$LAYOUT).withName("curve"),
+        MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("cblack"),
+        Constants$root.C_INT$LAYOUT.withName("black"),
+        Constants$root.C_INT$LAYOUT.withName("data_maximum"),
+        Constants$root.C_INT$LAYOUT.withName("maximum"),
         MemoryLayout.paddingLayout(32),
-        MemoryLayout.sequenceLayout(4, C_LONG).withName("linear_max"),
-        C_FLOAT.withName("fmaximum"),
-        C_FLOAT.withName("fnorm"),
-        MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, C_SHORT)).withName("white"),
-        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("cam_mul"),
-        MemoryLayout.sequenceLayout(4, C_FLOAT).withName("pre_mul"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("cmatrix"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("ccm"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("rgb_cam"),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("cam_xyz"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_LONG_LONG$LAYOUT).withName("linear_max"),
+        Constants$root.C_FLOAT$LAYOUT.withName("fmaximum"),
+        Constants$root.C_FLOAT$LAYOUT.withName("fnorm"),
+        MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, Constants$root.C_SHORT$LAYOUT)).withName("white"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("cam_mul"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("pre_mul"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("cmatrix"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("ccm"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("rgb_cam"),
+        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("cam_xyz"),
         MemoryLayout.structLayout(
-            C_INT.withName("format"),
-            C_INT.withName("key_off"),
-            C_INT.withName("tag_21a"),
-            C_INT.withName("t_black"),
-            C_INT.withName("split_col"),
-            C_INT.withName("black_col"),
-            C_INT.withName("split_row"),
-            C_INT.withName("black_row"),
-            C_FLOAT.withName("tag_210")
+            Constants$root.C_INT$LAYOUT.withName("format"),
+            Constants$root.C_INT$LAYOUT.withName("key_off"),
+            Constants$root.C_INT$LAYOUT.withName("tag_21a"),
+            Constants$root.C_INT$LAYOUT.withName("t_black"),
+            Constants$root.C_INT$LAYOUT.withName("split_col"),
+            Constants$root.C_INT$LAYOUT.withName("black_col"),
+            Constants$root.C_INT$LAYOUT.withName("split_row"),
+            Constants$root.C_INT$LAYOUT.withName("black_row"),
+            Constants$root.C_FLOAT$LAYOUT.withName("tag_210")
         ).withName("phase_one_data"),
-        C_FLOAT.withName("flash_used"),
-        C_FLOAT.withName("canon_ev"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("model2"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("UniqueCameraModel"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("LocalizedCameraModel"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("ImageUniqueID"),
-        MemoryLayout.sequenceLayout(17, C_CHAR).withName("RawDataUniqueID"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("OriginalRawFileName"),
+        Constants$root.C_FLOAT$LAYOUT.withName("flash_used"),
+        Constants$root.C_FLOAT$LAYOUT.withName("canon_ev"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model2"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("UniqueCameraModel"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("LocalizedCameraModel"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("ImageUniqueID"),
+        MemoryLayout.sequenceLayout(17, Constants$root.C_CHAR$LAYOUT).withName("RawDataUniqueID"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("OriginalRawFileName"),
         MemoryLayout.paddingLayout(24),
-        C_POINTER.withName("profile"),
-        C_INT.withName("profile_length"),
-        MemoryLayout.sequenceLayout(8, C_INT).withName("black_stat"),
+        Constants$root.C_POINTER$LAYOUT.withName("profile"),
+        Constants$root.C_INT$LAYOUT.withName("profile_length"),
+        MemoryLayout.sequenceLayout(8, Constants$root.C_INT$LAYOUT).withName("black_stat"),
         MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-            C_INT.withName("parsedfields"),
-            C_SHORT.withName("illuminant"),
+            Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+            Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
             MemoryLayout.paddingLayout(16),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("calibration"),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("colormatrix"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("forwardmatrix")
+            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
+            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
+            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
         )).withName("dng_color"),
         MemoryLayout.structLayout(
-            C_INT.withName("parsedfields"),
-            MemoryLayout.sequenceLayout(4104, C_INT).withName("dng_cblack"),
-            C_INT.withName("dng_black"),
-            MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
-            C_FLOAT.withName("dng_fblack"),
-            MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-            MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
-            C_INT.withName("preview_colorspace"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
-            C_FLOAT.withName("baseline_exposure"),
-            C_FLOAT.withName("LinearResponseLimit")
+            Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+            MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
+            Constants$root.C_INT$LAYOUT.withName("dng_black"),
+            MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
+            Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("dng_whitelevel"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
+            Constants$root.C_INT$LAYOUT.withName("preview_colorspace"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
+            Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
+            Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
         ).withName("dng_levels"),
-        MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, C_INT)).withName("WB_Coeffs"),
-        MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, C_FLOAT)).withName("WBCT_Coeffs"),
-        C_INT.withName("as_shot_wb_applied"),
+        MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("WB_Coeffs"),
+        MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, Constants$root.C_FLOAT$LAYOUT)).withName("WBCT_Coeffs"),
+        Constants$root.C_INT$LAYOUT.withName("as_shot_wb_applied"),
         MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(9, C_FLOAT).withName("romm_cam")
+            MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
         )).withName("P1_color"),
-        C_INT.withName("raw_bps"),
-        C_INT.withName("ExifColorSpace")
+        Constants$root.C_INT$LAYOUT.withName("raw_bps"),
+        Constants$root.C_INT$LAYOUT.withName("ExifColorSpace")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_colordata_t.$struct$LAYOUT;
@@ -90,7 +90,7 @@ public class libraw_colordata_t {
     public static MemorySegment cblack$slice(MemorySegment seg) {
         return seg.asSlice(131072, 16416);
     }
-    static final VarHandle black$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("black"));
+    static final VarHandle black$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("black"));
     public static VarHandle black$VH() {
         return libraw_colordata_t.black$VH;
     }
@@ -106,7 +106,7 @@ public class libraw_colordata_t {
     public static void black$set(MemorySegment seg, long index, int x) {
         libraw_colordata_t.black$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle data_maximum$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("data_maximum"));
+    static final VarHandle data_maximum$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("data_maximum"));
     public static VarHandle data_maximum$VH() {
         return libraw_colordata_t.data_maximum$VH;
     }
@@ -122,7 +122,7 @@ public class libraw_colordata_t {
     public static void data_maximum$set(MemorySegment seg, long index, int x) {
         libraw_colordata_t.data_maximum$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle maximum$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("maximum"));
+    static final VarHandle maximum$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("maximum"));
     public static VarHandle maximum$VH() {
         return libraw_colordata_t.maximum$VH;
     }
@@ -141,7 +141,7 @@ public class libraw_colordata_t {
     public static MemorySegment linear_max$slice(MemorySegment seg) {
         return seg.asSlice(147504, 32);
     }
-    static final VarHandle fmaximum$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("fmaximum"));
+    static final VarHandle fmaximum$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fmaximum"));
     public static VarHandle fmaximum$VH() {
         return libraw_colordata_t.fmaximum$VH;
     }
@@ -157,7 +157,7 @@ public class libraw_colordata_t {
     public static void fmaximum$set(MemorySegment seg, long index, float x) {
         libraw_colordata_t.fmaximum$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fnorm$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("fnorm"));
+    static final VarHandle fnorm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fnorm"));
     public static VarHandle fnorm$VH() {
         return libraw_colordata_t.fnorm$VH;
     }
@@ -197,7 +197,7 @@ public class libraw_colordata_t {
     public static MemorySegment phase_one_data$slice(MemorySegment seg) {
         return seg.asSlice(147896, 36);
     }
-    static final VarHandle flash_used$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("flash_used"));
+    static final VarHandle flash_used$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("flash_used"));
     public static VarHandle flash_used$VH() {
         return libraw_colordata_t.flash_used$VH;
     }
@@ -213,7 +213,7 @@ public class libraw_colordata_t {
     public static void flash_used$set(MemorySegment seg, long index, float x) {
         libraw_colordata_t.flash_used$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle canon_ev$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("canon_ev"));
+    static final VarHandle canon_ev$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("canon_ev"));
     public static VarHandle canon_ev$VH() {
         return libraw_colordata_t.canon_ev$VH;
     }
@@ -247,7 +247,7 @@ public class libraw_colordata_t {
     public static MemorySegment OriginalRawFileName$slice(MemorySegment seg) {
         return seg.asSlice(148213, 64);
     }
-    static final VarHandle profile$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("profile")));
+    static final VarHandle profile$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("profile"));
     public static VarHandle profile$VH() {
         return libraw_colordata_t.profile$VH;
     }
@@ -263,7 +263,7 @@ public class libraw_colordata_t {
     public static void profile$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_colordata_t.profile$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle profile_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("profile_length"));
+    static final VarHandle profile_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("profile_length"));
     public static VarHandle profile_length$VH() {
         return libraw_colordata_t.profile_length$VH;
     }
@@ -294,7 +294,7 @@ public class libraw_colordata_t {
     public static MemorySegment WBCT_Coeffs$slice(MemorySegment seg) {
         return seg.asSlice(185684, 1280);
     }
-    static final VarHandle as_shot_wb_applied$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("as_shot_wb_applied"));
+    static final VarHandle as_shot_wb_applied$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("as_shot_wb_applied"));
     public static VarHandle as_shot_wb_applied$VH() {
         return libraw_colordata_t.as_shot_wb_applied$VH;
     }
@@ -313,7 +313,7 @@ public class libraw_colordata_t {
     public static MemorySegment P1_color$slice(MemorySegment seg) {
         return seg.asSlice(186968, 72);
     }
-    static final VarHandle raw_bps$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("raw_bps"));
+    static final VarHandle raw_bps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_bps"));
     public static VarHandle raw_bps$VH() {
         return libraw_colordata_t.raw_bps$VH;
     }
@@ -329,7 +329,7 @@ public class libraw_colordata_t {
     public static void raw_bps$set(MemorySegment seg, long index, int x) {
         libraw_colordata_t.raw_bps$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExifColorSpace$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("ExifColorSpace"));
+    static final VarHandle ExifColorSpace$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExifColorSpace"));
     public static VarHandle ExifColorSpace$VH() {
         return libraw_colordata_t.ExifColorSpace$VH;
     }
@@ -347,12 +347,12 @@ public class libraw_colordata_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,20 +6,18 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public interface process_step_callback {
 
     void apply(jdk.incubator.foreign.MemoryAddress x0);
-    static MemoryAddress allocate(process_step_callback fi) {
-        return RuntimeHelper.upcallStub(process_step_callback.class, fi, constants$2.process_step_callback$FUNC, "(Ljdk/incubator/foreign/MemoryAddress;)V");
-    }
-    static MemoryAddress allocate(process_step_callback fi, ResourceScope scope) {
+    static NativeSymbol allocate(process_step_callback fi, ResourceScope scope) {
         return RuntimeHelper.upcallStub(process_step_callback.class, fi, constants$2.process_step_callback$FUNC, "(Ljdk/incubator/foreign/MemoryAddress;)V", scope);
     }
-    static process_step_callback ofAddress(MemoryAddress addr) {
-        return (jdk.incubator.foreign.MemoryAddress x0) -> {
+    static process_step_callback ofAddress(MemoryAddress addr, ResourceScope scope) {
+        NativeSymbol symbol = NativeSymbol.ofAddress("process_step_callback::" + Long.toHexString(addr.toRawLongValue()), addr, scope);
+return (jdk.incubator.foreign.MemoryAddress x0) -> {
             try {
-                constants$2.process_step_callback$MH.invokeExact((Addressable)addr, x0);
+                constants$2.process_step_callback$MH.invokeExact(symbol, (jdk.incubator.foreign.Addressable)x0);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

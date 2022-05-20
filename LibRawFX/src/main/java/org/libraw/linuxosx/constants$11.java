@@ -6,51 +6,46 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 class constants$11 {
 
-    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(C_INT,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_color_maximum",
-        "(Ljdk/incubator/foreign/MemoryAddress;)I",
+        "libraw_get_color_maximum",
         constants$11.libraw_get_color_maximum$FUNC, false
     );
     static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_INT
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_set_output_tif$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_output_tif",
-        "(Ljdk/incubator/foreign/MemoryAddress;I)V",
+        "libraw_set_output_tif",
         constants$11.libraw_set_output_tif$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(C_POINTER,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_iparams$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_iparams",
-        "(Ljdk/incubator/foreign/MemoryAddress;)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_get_iparams",
         constants$11.libraw_get_iparams$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_lensinfo$FUNC = FunctionDescriptor.of(C_POINTER,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_lensinfo$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_lensinfo$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_lensinfo",
-        "(Ljdk/incubator/foreign/MemoryAddress;)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_get_lensinfo",
         constants$11.libraw_get_lensinfo$FUNC, false
     );
-    static final FunctionDescriptor libraw_get_imgother$FUNC = FunctionDescriptor.of(C_POINTER,
-        C_POINTER
+    static final FunctionDescriptor libraw_get_imgother$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_imgother$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_get_imgother",
-        "(Ljdk/incubator/foreign/MemoryAddress;)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_get_imgother",
         constants$11.libraw_get_imgother$FUNC, false
     );
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = CLinker.toCString("0.21.0-Snapshot202110", ResourceScope.newImplicitScope());
+    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.21.0-Snapshot202110");
 }
 
 

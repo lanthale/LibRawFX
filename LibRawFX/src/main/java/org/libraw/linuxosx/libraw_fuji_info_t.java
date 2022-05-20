@@ -6,58 +6,58 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_fuji_info_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_FLOAT.withName("ExpoMidPointShift"),
-        C_SHORT.withName("DynamicRange"),
-        C_SHORT.withName("FilmMode"),
-        C_SHORT.withName("DynamicRangeSetting"),
-        C_SHORT.withName("DevelopmentDynamicRange"),
-        C_SHORT.withName("AutoDynamicRange"),
-        C_SHORT.withName("DRangePriority"),
-        C_SHORT.withName("DRangePriorityAuto"),
-        C_SHORT.withName("DRangePriorityFixed"),
-        C_FLOAT.withName("BrightnessCompensation"),
-        C_SHORT.withName("FocusMode"),
-        C_SHORT.withName("AFMode"),
-        MemoryLayout.sequenceLayout(2, C_SHORT).withName("FocusPixel"),
-        C_SHORT.withName("PrioritySettings"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_FLOAT$LAYOUT.withName("ExpoMidPointShift"),
+        Constants$root.C_SHORT$LAYOUT.withName("DynamicRange"),
+        Constants$root.C_SHORT$LAYOUT.withName("FilmMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("DynamicRangeSetting"),
+        Constants$root.C_SHORT$LAYOUT.withName("DevelopmentDynamicRange"),
+        Constants$root.C_SHORT$LAYOUT.withName("AutoDynamicRange"),
+        Constants$root.C_SHORT$LAYOUT.withName("DRangePriority"),
+        Constants$root.C_SHORT$LAYOUT.withName("DRangePriorityAuto"),
+        Constants$root.C_SHORT$LAYOUT.withName("DRangePriorityFixed"),
+        Constants$root.C_FLOAT$LAYOUT.withName("BrightnessCompensation"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("AFMode"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusPixel"),
+        Constants$root.C_SHORT$LAYOUT.withName("PrioritySettings"),
         MemoryLayout.paddingLayout(16),
-        C_INT.withName("FocusSettings"),
-        C_INT.withName("AF_C_Settings"),
-        C_SHORT.withName("FocusWarning"),
-        MemoryLayout.sequenceLayout(3, C_SHORT).withName("ImageStabilization"),
-        C_SHORT.withName("FlashMode"),
-        C_SHORT.withName("WB_Preset"),
-        C_SHORT.withName("ShutterType"),
-        C_SHORT.withName("ExrMode"),
-        C_SHORT.withName("Macro"),
+        Constants$root.C_INT$LAYOUT.withName("FocusSettings"),
+        Constants$root.C_INT$LAYOUT.withName("AF_C_Settings"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocusWarning"),
+        MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("ImageStabilization"),
+        Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("WB_Preset"),
+        Constants$root.C_SHORT$LAYOUT.withName("ShutterType"),
+        Constants$root.C_SHORT$LAYOUT.withName("ExrMode"),
+        Constants$root.C_SHORT$LAYOUT.withName("Macro"),
         MemoryLayout.paddingLayout(16),
-        C_INT.withName("Rating"),
-        C_SHORT.withName("CropMode"),
-        MemoryLayout.sequenceLayout(13, C_CHAR).withName("SerialSignature"),
-        MemoryLayout.sequenceLayout(5, C_CHAR).withName("SensorID"),
-        MemoryLayout.sequenceLayout(5, C_CHAR).withName("RAFVersion"),
+        Constants$root.C_INT$LAYOUT.withName("Rating"),
+        Constants$root.C_SHORT$LAYOUT.withName("CropMode"),
+        MemoryLayout.sequenceLayout(13, Constants$root.C_CHAR$LAYOUT).withName("SerialSignature"),
+        MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("SensorID"),
+        MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("RAFVersion"),
         MemoryLayout.paddingLayout(24),
-        C_INT.withName("RAFDataGeneration"),
-        C_SHORT.withName("RAFDataVersion"),
+        Constants$root.C_INT$LAYOUT.withName("RAFDataGeneration"),
+        Constants$root.C_SHORT$LAYOUT.withName("RAFDataVersion"),
         MemoryLayout.paddingLayout(16),
-        C_INT.withName("isTSNERDTS"),
-        C_SHORT.withName("DriveMode"),
-        MemoryLayout.sequenceLayout(9, C_SHORT).withName("BlackLevel"),
-        MemoryLayout.sequenceLayout(32, C_INT).withName("RAFData_ImageSizeTable"),
-        C_INT.withName("AutoBracketing"),
-        C_INT.withName("SequenceNumber"),
-        C_INT.withName("SeriesLength"),
-        MemoryLayout.sequenceLayout(2, C_FLOAT).withName("PixelShiftOffset"),
-        C_INT.withName("ImageCount")
+        Constants$root.C_INT$LAYOUT.withName("isTSNERDTS"),
+        Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
+        MemoryLayout.sequenceLayout(9, Constants$root.C_SHORT$LAYOUT).withName("BlackLevel"),
+        MemoryLayout.sequenceLayout(32, Constants$root.C_INT$LAYOUT).withName("RAFData_ImageSizeTable"),
+        Constants$root.C_INT$LAYOUT.withName("AutoBracketing"),
+        Constants$root.C_INT$LAYOUT.withName("SequenceNumber"),
+        Constants$root.C_INT$LAYOUT.withName("SeriesLength"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_FLOAT$LAYOUT).withName("PixelShiftOffset"),
+        Constants$root.C_INT$LAYOUT.withName("ImageCount")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_fuji_info_t.$struct$LAYOUT;
     }
-    static final VarHandle ExpoMidPointShift$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("ExpoMidPointShift"));
+    static final VarHandle ExpoMidPointShift$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExpoMidPointShift"));
     public static VarHandle ExpoMidPointShift$VH() {
         return libraw_fuji_info_t.ExpoMidPointShift$VH;
     }
@@ -73,7 +73,7 @@ public class libraw_fuji_info_t {
     public static void ExpoMidPointShift$set(MemorySegment seg, long index, float x) {
         libraw_fuji_info_t.ExpoMidPointShift$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DynamicRange$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DynamicRange"));
+    static final VarHandle DynamicRange$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DynamicRange"));
     public static VarHandle DynamicRange$VH() {
         return libraw_fuji_info_t.DynamicRange$VH;
     }
@@ -89,7 +89,7 @@ public class libraw_fuji_info_t {
     public static void DynamicRange$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DynamicRange$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FilmMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FilmMode"));
+    static final VarHandle FilmMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FilmMode"));
     public static VarHandle FilmMode$VH() {
         return libraw_fuji_info_t.FilmMode$VH;
     }
@@ -105,7 +105,7 @@ public class libraw_fuji_info_t {
     public static void FilmMode$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.FilmMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DynamicRangeSetting$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DynamicRangeSetting"));
+    static final VarHandle DynamicRangeSetting$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DynamicRangeSetting"));
     public static VarHandle DynamicRangeSetting$VH() {
         return libraw_fuji_info_t.DynamicRangeSetting$VH;
     }
@@ -121,7 +121,7 @@ public class libraw_fuji_info_t {
     public static void DynamicRangeSetting$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DynamicRangeSetting$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DevelopmentDynamicRange$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DevelopmentDynamicRange"));
+    static final VarHandle DevelopmentDynamicRange$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DevelopmentDynamicRange"));
     public static VarHandle DevelopmentDynamicRange$VH() {
         return libraw_fuji_info_t.DevelopmentDynamicRange$VH;
     }
@@ -137,7 +137,7 @@ public class libraw_fuji_info_t {
     public static void DevelopmentDynamicRange$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DevelopmentDynamicRange$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AutoDynamicRange$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AutoDynamicRange"));
+    static final VarHandle AutoDynamicRange$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AutoDynamicRange"));
     public static VarHandle AutoDynamicRange$VH() {
         return libraw_fuji_info_t.AutoDynamicRange$VH;
     }
@@ -153,7 +153,7 @@ public class libraw_fuji_info_t {
     public static void AutoDynamicRange$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.AutoDynamicRange$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DRangePriority$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DRangePriority"));
+    static final VarHandle DRangePriority$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DRangePriority"));
     public static VarHandle DRangePriority$VH() {
         return libraw_fuji_info_t.DRangePriority$VH;
     }
@@ -169,7 +169,7 @@ public class libraw_fuji_info_t {
     public static void DRangePriority$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DRangePriority$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DRangePriorityAuto$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DRangePriorityAuto"));
+    static final VarHandle DRangePriorityAuto$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DRangePriorityAuto"));
     public static VarHandle DRangePriorityAuto$VH() {
         return libraw_fuji_info_t.DRangePriorityAuto$VH;
     }
@@ -185,7 +185,7 @@ public class libraw_fuji_info_t {
     public static void DRangePriorityAuto$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DRangePriorityAuto$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DRangePriorityFixed$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DRangePriorityFixed"));
+    static final VarHandle DRangePriorityFixed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DRangePriorityFixed"));
     public static VarHandle DRangePriorityFixed$VH() {
         return libraw_fuji_info_t.DRangePriorityFixed$VH;
     }
@@ -201,7 +201,7 @@ public class libraw_fuji_info_t {
     public static void DRangePriorityFixed$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.DRangePriorityFixed$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle BrightnessCompensation$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("BrightnessCompensation"));
+    static final VarHandle BrightnessCompensation$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BrightnessCompensation"));
     public static VarHandle BrightnessCompensation$VH() {
         return libraw_fuji_info_t.BrightnessCompensation$VH;
     }
@@ -217,7 +217,7 @@ public class libraw_fuji_info_t {
     public static void BrightnessCompensation$set(MemorySegment seg, long index, float x) {
         libraw_fuji_info_t.BrightnessCompensation$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusMode"));
+    static final VarHandle FocusMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusMode"));
     public static VarHandle FocusMode$VH() {
         return libraw_fuji_info_t.FocusMode$VH;
     }
@@ -233,7 +233,7 @@ public class libraw_fuji_info_t {
     public static void FocusMode$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.FocusMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("AFMode"));
+    static final VarHandle AFMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMode"));
     public static VarHandle AFMode$VH() {
         return libraw_fuji_info_t.AFMode$VH;
     }
@@ -252,7 +252,7 @@ public class libraw_fuji_info_t {
     public static MemorySegment FocusPixel$slice(MemorySegment seg) {
         return seg.asSlice(28, 4);
     }
-    static final VarHandle PrioritySettings$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("PrioritySettings"));
+    static final VarHandle PrioritySettings$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("PrioritySettings"));
     public static VarHandle PrioritySettings$VH() {
         return libraw_fuji_info_t.PrioritySettings$VH;
     }
@@ -268,7 +268,7 @@ public class libraw_fuji_info_t {
     public static void PrioritySettings$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.PrioritySettings$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusSettings$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("FocusSettings"));
+    static final VarHandle FocusSettings$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusSettings"));
     public static VarHandle FocusSettings$VH() {
         return libraw_fuji_info_t.FocusSettings$VH;
     }
@@ -284,7 +284,7 @@ public class libraw_fuji_info_t {
     public static void FocusSettings$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.FocusSettings$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AF_C_Settings$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AF_C_Settings"));
+    static final VarHandle AF_C_Settings$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AF_C_Settings"));
     public static VarHandle AF_C_Settings$VH() {
         return libraw_fuji_info_t.AF_C_Settings$VH;
     }
@@ -300,7 +300,7 @@ public class libraw_fuji_info_t {
     public static void AF_C_Settings$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.AF_C_Settings$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusWarning$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocusWarning"));
+    static final VarHandle FocusWarning$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusWarning"));
     public static VarHandle FocusWarning$VH() {
         return libraw_fuji_info_t.FocusWarning$VH;
     }
@@ -319,7 +319,7 @@ public class libraw_fuji_info_t {
     public static MemorySegment ImageStabilization$slice(MemorySegment seg) {
         return seg.asSlice(46, 6);
     }
-    static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FlashMode"));
+    static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashMode"));
     public static VarHandle FlashMode$VH() {
         return libraw_fuji_info_t.FlashMode$VH;
     }
@@ -335,7 +335,7 @@ public class libraw_fuji_info_t {
     public static void FlashMode$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.FlashMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle WB_Preset$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("WB_Preset"));
+    static final VarHandle WB_Preset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("WB_Preset"));
     public static VarHandle WB_Preset$VH() {
         return libraw_fuji_info_t.WB_Preset$VH;
     }
@@ -351,7 +351,7 @@ public class libraw_fuji_info_t {
     public static void WB_Preset$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.WB_Preset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ShutterType$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ShutterType"));
+    static final VarHandle ShutterType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ShutterType"));
     public static VarHandle ShutterType$VH() {
         return libraw_fuji_info_t.ShutterType$VH;
     }
@@ -367,7 +367,7 @@ public class libraw_fuji_info_t {
     public static void ShutterType$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.ShutterType$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExrMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ExrMode"));
+    static final VarHandle ExrMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExrMode"));
     public static VarHandle ExrMode$VH() {
         return libraw_fuji_info_t.ExrMode$VH;
     }
@@ -383,7 +383,7 @@ public class libraw_fuji_info_t {
     public static void ExrMode$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.ExrMode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Macro$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("Macro"));
+    static final VarHandle Macro$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Macro"));
     public static VarHandle Macro$VH() {
         return libraw_fuji_info_t.Macro$VH;
     }
@@ -399,7 +399,7 @@ public class libraw_fuji_info_t {
     public static void Macro$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.Macro$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Rating$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("Rating"));
+    static final VarHandle Rating$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Rating"));
     public static VarHandle Rating$VH() {
         return libraw_fuji_info_t.Rating$VH;
     }
@@ -415,7 +415,7 @@ public class libraw_fuji_info_t {
     public static void Rating$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.Rating$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CropMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("CropMode"));
+    static final VarHandle CropMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CropMode"));
     public static VarHandle CropMode$VH() {
         return libraw_fuji_info_t.CropMode$VH;
     }
@@ -440,7 +440,7 @@ public class libraw_fuji_info_t {
     public static MemorySegment RAFVersion$slice(MemorySegment seg) {
         return seg.asSlice(88, 5);
     }
-    static final VarHandle RAFDataGeneration$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("RAFDataGeneration"));
+    static final VarHandle RAFDataGeneration$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RAFDataGeneration"));
     public static VarHandle RAFDataGeneration$VH() {
         return libraw_fuji_info_t.RAFDataGeneration$VH;
     }
@@ -456,7 +456,7 @@ public class libraw_fuji_info_t {
     public static void RAFDataGeneration$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.RAFDataGeneration$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle RAFDataVersion$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("RAFDataVersion"));
+    static final VarHandle RAFDataVersion$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RAFDataVersion"));
     public static VarHandle RAFDataVersion$VH() {
         return libraw_fuji_info_t.RAFDataVersion$VH;
     }
@@ -472,7 +472,7 @@ public class libraw_fuji_info_t {
     public static void RAFDataVersion$set(MemorySegment seg, long index, short x) {
         libraw_fuji_info_t.RAFDataVersion$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle isTSNERDTS$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("isTSNERDTS"));
+    static final VarHandle isTSNERDTS$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("isTSNERDTS"));
     public static VarHandle isTSNERDTS$VH() {
         return libraw_fuji_info_t.isTSNERDTS$VH;
     }
@@ -488,7 +488,7 @@ public class libraw_fuji_info_t {
     public static void isTSNERDTS$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.isTSNERDTS$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle DriveMode$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("DriveMode"));
+    static final VarHandle DriveMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DriveMode"));
     public static VarHandle DriveMode$VH() {
         return libraw_fuji_info_t.DriveMode$VH;
     }
@@ -510,7 +510,7 @@ public class libraw_fuji_info_t {
     public static MemorySegment RAFData_ImageSizeTable$slice(MemorySegment seg) {
         return seg.asSlice(128, 128);
     }
-    static final VarHandle AutoBracketing$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("AutoBracketing"));
+    static final VarHandle AutoBracketing$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AutoBracketing"));
     public static VarHandle AutoBracketing$VH() {
         return libraw_fuji_info_t.AutoBracketing$VH;
     }
@@ -526,7 +526,7 @@ public class libraw_fuji_info_t {
     public static void AutoBracketing$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.AutoBracketing$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SequenceNumber$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SequenceNumber"));
+    static final VarHandle SequenceNumber$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SequenceNumber"));
     public static VarHandle SequenceNumber$VH() {
         return libraw_fuji_info_t.SequenceNumber$VH;
     }
@@ -542,7 +542,7 @@ public class libraw_fuji_info_t {
     public static void SequenceNumber$set(MemorySegment seg, long index, int x) {
         libraw_fuji_info_t.SequenceNumber$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SeriesLength$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SeriesLength"));
+    static final VarHandle SeriesLength$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SeriesLength"));
     public static VarHandle SeriesLength$VH() {
         return libraw_fuji_info_t.SeriesLength$VH;
     }
@@ -561,7 +561,7 @@ public class libraw_fuji_info_t {
     public static MemorySegment PixelShiftOffset$slice(MemorySegment seg) {
         return seg.asSlice(268, 8);
     }
-    static final VarHandle ImageCount$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("ImageCount"));
+    static final VarHandle ImageCount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageCount"));
     public static VarHandle ImageCount$VH() {
         return libraw_fuji_info_t.ImageCount$VH;
     }
@@ -579,12 +579,12 @@ public class libraw_fuji_info_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

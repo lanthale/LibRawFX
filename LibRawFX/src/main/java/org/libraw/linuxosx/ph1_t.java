@@ -6,24 +6,24 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class ph1_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("format"),
-        C_INT.withName("key_off"),
-        C_INT.withName("tag_21a"),
-        C_INT.withName("t_black"),
-        C_INT.withName("split_col"),
-        C_INT.withName("black_col"),
-        C_INT.withName("split_row"),
-        C_INT.withName("black_row"),
-        C_FLOAT.withName("tag_210")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("format"),
+        Constants$root.C_INT$LAYOUT.withName("key_off"),
+        Constants$root.C_INT$LAYOUT.withName("tag_21a"),
+        Constants$root.C_INT$LAYOUT.withName("t_black"),
+        Constants$root.C_INT$LAYOUT.withName("split_col"),
+        Constants$root.C_INT$LAYOUT.withName("black_col"),
+        Constants$root.C_INT$LAYOUT.withName("split_row"),
+        Constants$root.C_INT$LAYOUT.withName("black_row"),
+        Constants$root.C_FLOAT$LAYOUT.withName("tag_210")
     ).withName("ph1_t");
     public static MemoryLayout $LAYOUT() {
         return ph1_t.$struct$LAYOUT;
     }
-    static final VarHandle format$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("format"));
+    static final VarHandle format$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("format"));
     public static VarHandle format$VH() {
         return ph1_t.format$VH;
     }
@@ -39,7 +39,7 @@ public class ph1_t {
     public static void format$set(MemorySegment seg, long index, int x) {
         ph1_t.format$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle key_off$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("key_off"));
+    static final VarHandle key_off$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("key_off"));
     public static VarHandle key_off$VH() {
         return ph1_t.key_off$VH;
     }
@@ -55,7 +55,7 @@ public class ph1_t {
     public static void key_off$set(MemorySegment seg, long index, int x) {
         ph1_t.key_off$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tag_21a$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tag_21a"));
+    static final VarHandle tag_21a$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tag_21a"));
     public static VarHandle tag_21a$VH() {
         return ph1_t.tag_21a$VH;
     }
@@ -71,7 +71,7 @@ public class ph1_t {
     public static void tag_21a$set(MemorySegment seg, long index, int x) {
         ph1_t.tag_21a$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_black$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_black"));
+    static final VarHandle t_black$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_black"));
     public static VarHandle t_black$VH() {
         return ph1_t.t_black$VH;
     }
@@ -87,7 +87,7 @@ public class ph1_t {
     public static void t_black$set(MemorySegment seg, long index, int x) {
         ph1_t.t_black$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle split_col$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("split_col"));
+    static final VarHandle split_col$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("split_col"));
     public static VarHandle split_col$VH() {
         return ph1_t.split_col$VH;
     }
@@ -103,7 +103,7 @@ public class ph1_t {
     public static void split_col$set(MemorySegment seg, long index, int x) {
         ph1_t.split_col$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle black_col$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("black_col"));
+    static final VarHandle black_col$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("black_col"));
     public static VarHandle black_col$VH() {
         return ph1_t.black_col$VH;
     }
@@ -119,7 +119,7 @@ public class ph1_t {
     public static void black_col$set(MemorySegment seg, long index, int x) {
         ph1_t.black_col$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle split_row$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("split_row"));
+    static final VarHandle split_row$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("split_row"));
     public static VarHandle split_row$VH() {
         return ph1_t.split_row$VH;
     }
@@ -135,7 +135,7 @@ public class ph1_t {
     public static void split_row$set(MemorySegment seg, long index, int x) {
         ph1_t.split_row$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle black_row$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("black_row"));
+    static final VarHandle black_row$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("black_row"));
     public static VarHandle black_row$VH() {
         return ph1_t.black_row$VH;
     }
@@ -151,7 +151,7 @@ public class ph1_t {
     public static void black_row$set(MemorySegment seg, long index, int x) {
         ph1_t.black_row$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tag_210$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("tag_210"));
+    static final VarHandle tag_210$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tag_210"));
     public static VarHandle tag_210$VH() {
         return ph1_t.tag_210$VH;
     }
@@ -169,12 +169,12 @@ public class ph1_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

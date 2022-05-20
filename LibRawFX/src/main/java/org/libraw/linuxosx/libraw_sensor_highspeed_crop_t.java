@@ -6,19 +6,19 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_sensor_highspeed_crop_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("cleft"),
-        C_SHORT.withName("ctop"),
-        C_SHORT.withName("cwidth"),
-        C_SHORT.withName("cheight")
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("cleft"),
+        Constants$root.C_SHORT$LAYOUT.withName("ctop"),
+        Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
+        Constants$root.C_SHORT$LAYOUT.withName("cheight")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_sensor_highspeed_crop_t.$struct$LAYOUT;
     }
-    static final VarHandle cleft$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("cleft"));
+    static final VarHandle cleft$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cleft"));
     public static VarHandle cleft$VH() {
         return libraw_sensor_highspeed_crop_t.cleft$VH;
     }
@@ -34,7 +34,7 @@ public class libraw_sensor_highspeed_crop_t {
     public static void cleft$set(MemorySegment seg, long index, short x) {
         libraw_sensor_highspeed_crop_t.cleft$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ctop$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ctop"));
+    static final VarHandle ctop$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ctop"));
     public static VarHandle ctop$VH() {
         return libraw_sensor_highspeed_crop_t.ctop$VH;
     }
@@ -50,7 +50,7 @@ public class libraw_sensor_highspeed_crop_t {
     public static void ctop$set(MemorySegment seg, long index, short x) {
         libraw_sensor_highspeed_crop_t.ctop$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cwidth$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("cwidth"));
+    static final VarHandle cwidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cwidth"));
     public static VarHandle cwidth$VH() {
         return libraw_sensor_highspeed_crop_t.cwidth$VH;
     }
@@ -66,7 +66,7 @@ public class libraw_sensor_highspeed_crop_t {
     public static void cwidth$set(MemorySegment seg, long index, short x) {
         libraw_sensor_highspeed_crop_t.cwidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cheight$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("cheight"));
+    static final VarHandle cheight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cheight"));
     public static VarHandle cheight$VH() {
         return libraw_sensor_highspeed_crop_t.cheight$VH;
     }
@@ -84,12 +84,12 @@ public class libraw_sensor_highspeed_crop_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

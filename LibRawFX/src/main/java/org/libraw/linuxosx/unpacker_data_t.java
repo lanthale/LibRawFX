@@ -6,84 +6,84 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class unpacker_data_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_SHORT.withName("order"),
-        MemoryLayout.sequenceLayout(4, C_SHORT).withName("sraw_mul"),
-        MemoryLayout.sequenceLayout(3, C_SHORT).withName("cr2_slice"),
-        C_INT.withName("kodak_cbpp"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("order"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("sraw_mul"),
+        MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("cr2_slice"),
+        Constants$root.C_INT$LAYOUT.withName("kodak_cbpp"),
         MemoryLayout.paddingLayout(32),
-        C_LONG_LONG.withName("strip_offset"),
-        C_LONG_LONG.withName("data_offset"),
-        C_LONG_LONG.withName("meta_offset"),
-        C_LONG_LONG.withName("exif_offset"),
-        C_LONG_LONG.withName("ifd0_offset"),
-        C_INT.withName("data_size"),
-        C_INT.withName("meta_length"),
-        C_INT.withName("cr3_exif_length"),
-        C_INT.withName("cr3_ifd0_length"),
-        C_INT.withName("thumb_misc"),
-        C_INT.withName("fuji_layout"),
-        C_INT.withName("tiff_samples"),
-        C_INT.withName("tiff_bps"),
-        C_INT.withName("tiff_compress"),
-        C_INT.withName("tiff_sampleformat"),
-        C_INT.withName("zero_after_ff"),
-        C_INT.withName("tile_width"),
-        C_INT.withName("tile_length"),
-        C_INT.withName("load_flags"),
-        C_INT.withName("data_error"),
-        C_INT.withName("hasselblad_parser_flag"),
-        C_LONG_LONG.withName("posRAFData"),
-        C_INT.withName("lenRAFData"),
-        C_INT.withName("fuji_total_lines"),
-        C_INT.withName("fuji_total_blocks"),
-        C_INT.withName("fuji_block_width"),
-        C_INT.withName("fuji_bits"),
-        C_INT.withName("fuji_raw_type"),
-        C_INT.withName("fuji_lossless"),
-        C_INT.withName("pana_encoding"),
-        C_INT.withName("pana_bpp"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("strip_offset"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("data_offset"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("meta_offset"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("exif_offset"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("ifd0_offset"),
+        Constants$root.C_INT$LAYOUT.withName("data_size"),
+        Constants$root.C_INT$LAYOUT.withName("meta_length"),
+        Constants$root.C_INT$LAYOUT.withName("cr3_exif_length"),
+        Constants$root.C_INT$LAYOUT.withName("cr3_ifd0_length"),
+        Constants$root.C_INT$LAYOUT.withName("thumb_misc"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_layout"),
+        Constants$root.C_INT$LAYOUT.withName("tiff_samples"),
+        Constants$root.C_INT$LAYOUT.withName("tiff_bps"),
+        Constants$root.C_INT$LAYOUT.withName("tiff_compress"),
+        Constants$root.C_INT$LAYOUT.withName("tiff_sampleformat"),
+        Constants$root.C_INT$LAYOUT.withName("zero_after_ff"),
+        Constants$root.C_INT$LAYOUT.withName("tile_width"),
+        Constants$root.C_INT$LAYOUT.withName("tile_length"),
+        Constants$root.C_INT$LAYOUT.withName("load_flags"),
+        Constants$root.C_INT$LAYOUT.withName("data_error"),
+        Constants$root.C_INT$LAYOUT.withName("hasselblad_parser_flag"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("posRAFData"),
+        Constants$root.C_INT$LAYOUT.withName("lenRAFData"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_total_lines"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_total_blocks"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_block_width"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_bits"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_raw_type"),
+        Constants$root.C_INT$LAYOUT.withName("fuji_lossless"),
+        Constants$root.C_INT$LAYOUT.withName("pana_encoding"),
+        Constants$root.C_INT$LAYOUT.withName("pana_bpp"),
         MemoryLayout.paddingLayout(32),
         MemoryLayout.sequenceLayout(16, MemoryLayout.structLayout(
-            C_INT.withName("version"),
-            C_INT.withName("f_width"),
-            C_INT.withName("f_height"),
-            C_INT.withName("tileWidth"),
-            C_INT.withName("tileHeight"),
-            C_INT.withName("nBits"),
-            C_INT.withName("nPlanes"),
-            C_INT.withName("cfaLayout"),
-            C_INT.withName("encType"),
-            C_INT.withName("imageLevels"),
-            C_INT.withName("hasTileCols"),
-            C_INT.withName("hasTileRows"),
-            C_INT.withName("mdatHdrSize"),
-            C_INT.withName("MediaSize"),
-            C_LONG_LONG.withName("MediaOffset"),
-            C_INT.withName("MediaType"),
+            Constants$root.C_INT$LAYOUT.withName("version"),
+            Constants$root.C_INT$LAYOUT.withName("f_width"),
+            Constants$root.C_INT$LAYOUT.withName("f_height"),
+            Constants$root.C_INT$LAYOUT.withName("tileWidth"),
+            Constants$root.C_INT$LAYOUT.withName("tileHeight"),
+            Constants$root.C_INT$LAYOUT.withName("nBits"),
+            Constants$root.C_INT$LAYOUT.withName("nPlanes"),
+            Constants$root.C_INT$LAYOUT.withName("cfaLayout"),
+            Constants$root.C_INT$LAYOUT.withName("encType"),
+            Constants$root.C_INT$LAYOUT.withName("imageLevels"),
+            Constants$root.C_INT$LAYOUT.withName("hasTileCols"),
+            Constants$root.C_INT$LAYOUT.withName("hasTileRows"),
+            Constants$root.C_INT$LAYOUT.withName("mdatHdrSize"),
+            Constants$root.C_INT$LAYOUT.withName("MediaSize"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
+            Constants$root.C_INT$LAYOUT.withName("MediaType"),
             MemoryLayout.paddingLayout(32)
         )).withName("crx_header"),
-        C_INT.withName("crx_track_selected"),
-        C_SHORT.withName("CR3_CTMDtag"),
-        C_SHORT.withName("CR3_Version"),
-        C_INT.withName("CM_found"),
-        C_INT.withName("is_NikonTransfer"),
-        C_INT.withName("is_Olympus"),
-        C_INT.withName("OlympusDNG_SubDirOffsetValid"),
-        C_INT.withName("is_Sony"),
-        C_INT.withName("is_pana_raw"),
-        C_INT.withName("is_PentaxRicohMakernotes"),
-        MemoryLayout.sequenceLayout(20, C_INT).withName("dng_frames"),
-        C_SHORT.withName("raw_stride"),
+        Constants$root.C_INT$LAYOUT.withName("crx_track_selected"),
+        Constants$root.C_SHORT$LAYOUT.withName("CR3_CTMDtag"),
+        Constants$root.C_SHORT$LAYOUT.withName("CR3_Version"),
+        Constants$root.C_INT$LAYOUT.withName("CM_found"),
+        Constants$root.C_INT$LAYOUT.withName("is_NikonTransfer"),
+        Constants$root.C_INT$LAYOUT.withName("is_Olympus"),
+        Constants$root.C_INT$LAYOUT.withName("OlympusDNG_SubDirOffsetValid"),
+        Constants$root.C_INT$LAYOUT.withName("is_Sony"),
+        Constants$root.C_INT$LAYOUT.withName("is_pana_raw"),
+        Constants$root.C_INT$LAYOUT.withName("is_PentaxRicohMakernotes"),
+        MemoryLayout.sequenceLayout(20, Constants$root.C_INT$LAYOUT).withName("dng_frames"),
+        Constants$root.C_SHORT$LAYOUT.withName("raw_stride"),
         MemoryLayout.paddingLayout(16)
     );
     public static MemoryLayout $LAYOUT() {
         return unpacker_data_t.$struct$LAYOUT;
     }
-    static final VarHandle order$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("order"));
+    static final VarHandle order$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("order"));
     public static VarHandle order$VH() {
         return unpacker_data_t.order$VH;
     }
@@ -105,7 +105,7 @@ public class unpacker_data_t {
     public static MemorySegment cr2_slice$slice(MemorySegment seg) {
         return seg.asSlice(10, 6);
     }
-    static final VarHandle kodak_cbpp$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("kodak_cbpp"));
+    static final VarHandle kodak_cbpp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("kodak_cbpp"));
     public static VarHandle kodak_cbpp$VH() {
         return unpacker_data_t.kodak_cbpp$VH;
     }
@@ -121,7 +121,7 @@ public class unpacker_data_t {
     public static void kodak_cbpp$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.kodak_cbpp$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle strip_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("strip_offset"));
+    static final VarHandle strip_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("strip_offset"));
     public static VarHandle strip_offset$VH() {
         return unpacker_data_t.strip_offset$VH;
     }
@@ -137,7 +137,7 @@ public class unpacker_data_t {
     public static void strip_offset$set(MemorySegment seg, long index, long x) {
         unpacker_data_t.strip_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle data_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("data_offset"));
+    static final VarHandle data_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("data_offset"));
     public static VarHandle data_offset$VH() {
         return unpacker_data_t.data_offset$VH;
     }
@@ -153,7 +153,7 @@ public class unpacker_data_t {
     public static void data_offset$set(MemorySegment seg, long index, long x) {
         unpacker_data_t.data_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle meta_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("meta_offset"));
+    static final VarHandle meta_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("meta_offset"));
     public static VarHandle meta_offset$VH() {
         return unpacker_data_t.meta_offset$VH;
     }
@@ -169,7 +169,7 @@ public class unpacker_data_t {
     public static void meta_offset$set(MemorySegment seg, long index, long x) {
         unpacker_data_t.meta_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exif_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("exif_offset"));
+    static final VarHandle exif_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exif_offset"));
     public static VarHandle exif_offset$VH() {
         return unpacker_data_t.exif_offset$VH;
     }
@@ -185,7 +185,7 @@ public class unpacker_data_t {
     public static void exif_offset$set(MemorySegment seg, long index, long x) {
         unpacker_data_t.exif_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ifd0_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("ifd0_offset"));
+    static final VarHandle ifd0_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ifd0_offset"));
     public static VarHandle ifd0_offset$VH() {
         return unpacker_data_t.ifd0_offset$VH;
     }
@@ -201,7 +201,7 @@ public class unpacker_data_t {
     public static void ifd0_offset$set(MemorySegment seg, long index, long x) {
         unpacker_data_t.ifd0_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle data_size$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("data_size"));
+    static final VarHandle data_size$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("data_size"));
     public static VarHandle data_size$VH() {
         return unpacker_data_t.data_size$VH;
     }
@@ -217,7 +217,7 @@ public class unpacker_data_t {
     public static void data_size$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.data_size$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle meta_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("meta_length"));
+    static final VarHandle meta_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("meta_length"));
     public static VarHandle meta_length$VH() {
         return unpacker_data_t.meta_length$VH;
     }
@@ -233,7 +233,7 @@ public class unpacker_data_t {
     public static void meta_length$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.meta_length$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cr3_exif_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("cr3_exif_length"));
+    static final VarHandle cr3_exif_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cr3_exif_length"));
     public static VarHandle cr3_exif_length$VH() {
         return unpacker_data_t.cr3_exif_length$VH;
     }
@@ -249,7 +249,7 @@ public class unpacker_data_t {
     public static void cr3_exif_length$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.cr3_exif_length$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cr3_ifd0_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("cr3_ifd0_length"));
+    static final VarHandle cr3_ifd0_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cr3_ifd0_length"));
     public static VarHandle cr3_ifd0_length$VH() {
         return unpacker_data_t.cr3_ifd0_length$VH;
     }
@@ -265,7 +265,7 @@ public class unpacker_data_t {
     public static void cr3_ifd0_length$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.cr3_ifd0_length$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle thumb_misc$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("thumb_misc"));
+    static final VarHandle thumb_misc$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("thumb_misc"));
     public static VarHandle thumb_misc$VH() {
         return unpacker_data_t.thumb_misc$VH;
     }
@@ -281,7 +281,7 @@ public class unpacker_data_t {
     public static void thumb_misc$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.thumb_misc$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_layout$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_layout"));
+    static final VarHandle fuji_layout$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_layout"));
     public static VarHandle fuji_layout$VH() {
         return unpacker_data_t.fuji_layout$VH;
     }
@@ -297,7 +297,7 @@ public class unpacker_data_t {
     public static void fuji_layout$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_layout$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tiff_samples$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tiff_samples"));
+    static final VarHandle tiff_samples$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tiff_samples"));
     public static VarHandle tiff_samples$VH() {
         return unpacker_data_t.tiff_samples$VH;
     }
@@ -313,7 +313,7 @@ public class unpacker_data_t {
     public static void tiff_samples$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.tiff_samples$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tiff_bps$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tiff_bps"));
+    static final VarHandle tiff_bps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tiff_bps"));
     public static VarHandle tiff_bps$VH() {
         return unpacker_data_t.tiff_bps$VH;
     }
@@ -329,7 +329,7 @@ public class unpacker_data_t {
     public static void tiff_bps$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.tiff_bps$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tiff_compress$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tiff_compress"));
+    static final VarHandle tiff_compress$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tiff_compress"));
     public static VarHandle tiff_compress$VH() {
         return unpacker_data_t.tiff_compress$VH;
     }
@@ -345,7 +345,7 @@ public class unpacker_data_t {
     public static void tiff_compress$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.tiff_compress$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tiff_sampleformat$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tiff_sampleformat"));
+    static final VarHandle tiff_sampleformat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tiff_sampleformat"));
     public static VarHandle tiff_sampleformat$VH() {
         return unpacker_data_t.tiff_sampleformat$VH;
     }
@@ -361,7 +361,7 @@ public class unpacker_data_t {
     public static void tiff_sampleformat$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.tiff_sampleformat$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle zero_after_ff$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("zero_after_ff"));
+    static final VarHandle zero_after_ff$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("zero_after_ff"));
     public static VarHandle zero_after_ff$VH() {
         return unpacker_data_t.zero_after_ff$VH;
     }
@@ -377,7 +377,7 @@ public class unpacker_data_t {
     public static void zero_after_ff$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.zero_after_ff$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tile_width$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tile_width"));
+    static final VarHandle tile_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tile_width"));
     public static VarHandle tile_width$VH() {
         return unpacker_data_t.tile_width$VH;
     }
@@ -393,7 +393,7 @@ public class unpacker_data_t {
     public static void tile_width$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.tile_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tile_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tile_length"));
+    static final VarHandle tile_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tile_length"));
     public static VarHandle tile_length$VH() {
         return unpacker_data_t.tile_length$VH;
     }
@@ -409,7 +409,7 @@ public class unpacker_data_t {
     public static void tile_length$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.tile_length$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle load_flags$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("load_flags"));
+    static final VarHandle load_flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("load_flags"));
     public static VarHandle load_flags$VH() {
         return unpacker_data_t.load_flags$VH;
     }
@@ -425,7 +425,7 @@ public class unpacker_data_t {
     public static void load_flags$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.load_flags$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle data_error$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("data_error"));
+    static final VarHandle data_error$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("data_error"));
     public static VarHandle data_error$VH() {
         return unpacker_data_t.data_error$VH;
     }
@@ -441,7 +441,7 @@ public class unpacker_data_t {
     public static void data_error$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.data_error$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle hasselblad_parser_flag$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("hasselblad_parser_flag"));
+    static final VarHandle hasselblad_parser_flag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("hasselblad_parser_flag"));
     public static VarHandle hasselblad_parser_flag$VH() {
         return unpacker_data_t.hasselblad_parser_flag$VH;
     }
@@ -457,7 +457,7 @@ public class unpacker_data_t {
     public static void hasselblad_parser_flag$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.hasselblad_parser_flag$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle posRAFData$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("posRAFData"));
+    static final VarHandle posRAFData$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("posRAFData"));
     public static VarHandle posRAFData$VH() {
         return unpacker_data_t.posRAFData$VH;
     }
@@ -473,7 +473,7 @@ public class unpacker_data_t {
     public static void posRAFData$set(MemorySegment seg, long index, long x) {
         unpacker_data_t.posRAFData$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lenRAFData$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("lenRAFData"));
+    static final VarHandle lenRAFData$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lenRAFData"));
     public static VarHandle lenRAFData$VH() {
         return unpacker_data_t.lenRAFData$VH;
     }
@@ -489,7 +489,7 @@ public class unpacker_data_t {
     public static void lenRAFData$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.lenRAFData$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_total_lines$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_total_lines"));
+    static final VarHandle fuji_total_lines$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_total_lines"));
     public static VarHandle fuji_total_lines$VH() {
         return unpacker_data_t.fuji_total_lines$VH;
     }
@@ -505,7 +505,7 @@ public class unpacker_data_t {
     public static void fuji_total_lines$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_total_lines$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_total_blocks$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_total_blocks"));
+    static final VarHandle fuji_total_blocks$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_total_blocks"));
     public static VarHandle fuji_total_blocks$VH() {
         return unpacker_data_t.fuji_total_blocks$VH;
     }
@@ -521,7 +521,7 @@ public class unpacker_data_t {
     public static void fuji_total_blocks$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_total_blocks$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_block_width$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_block_width"));
+    static final VarHandle fuji_block_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_block_width"));
     public static VarHandle fuji_block_width$VH() {
         return unpacker_data_t.fuji_block_width$VH;
     }
@@ -537,7 +537,7 @@ public class unpacker_data_t {
     public static void fuji_block_width$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_block_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_bits$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_bits"));
+    static final VarHandle fuji_bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_bits"));
     public static VarHandle fuji_bits$VH() {
         return unpacker_data_t.fuji_bits$VH;
     }
@@ -553,7 +553,7 @@ public class unpacker_data_t {
     public static void fuji_bits$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_bits$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_raw_type$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_raw_type"));
+    static final VarHandle fuji_raw_type$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_raw_type"));
     public static VarHandle fuji_raw_type$VH() {
         return unpacker_data_t.fuji_raw_type$VH;
     }
@@ -569,7 +569,7 @@ public class unpacker_data_t {
     public static void fuji_raw_type$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_raw_type$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_lossless$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("fuji_lossless"));
+    static final VarHandle fuji_lossless$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_lossless"));
     public static VarHandle fuji_lossless$VH() {
         return unpacker_data_t.fuji_lossless$VH;
     }
@@ -585,7 +585,7 @@ public class unpacker_data_t {
     public static void fuji_lossless$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.fuji_lossless$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle pana_encoding$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("pana_encoding"));
+    static final VarHandle pana_encoding$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pana_encoding"));
     public static VarHandle pana_encoding$VH() {
         return unpacker_data_t.pana_encoding$VH;
     }
@@ -601,7 +601,7 @@ public class unpacker_data_t {
     public static void pana_encoding$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.pana_encoding$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle pana_bpp$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("pana_bpp"));
+    static final VarHandle pana_bpp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pana_bpp"));
     public static VarHandle pana_bpp$VH() {
         return unpacker_data_t.pana_bpp$VH;
     }
@@ -620,7 +620,7 @@ public class unpacker_data_t {
     public static MemorySegment crx_header$slice(MemorySegment seg) {
         return seg.asSlice(176, 1152);
     }
-    static final VarHandle crx_track_selected$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("crx_track_selected"));
+    static final VarHandle crx_track_selected$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("crx_track_selected"));
     public static VarHandle crx_track_selected$VH() {
         return unpacker_data_t.crx_track_selected$VH;
     }
@@ -636,7 +636,7 @@ public class unpacker_data_t {
     public static void crx_track_selected$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.crx_track_selected$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CR3_CTMDtag$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("CR3_CTMDtag"));
+    static final VarHandle CR3_CTMDtag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CR3_CTMDtag"));
     public static VarHandle CR3_CTMDtag$VH() {
         return unpacker_data_t.CR3_CTMDtag$VH;
     }
@@ -652,7 +652,7 @@ public class unpacker_data_t {
     public static void CR3_CTMDtag$set(MemorySegment seg, long index, short x) {
         unpacker_data_t.CR3_CTMDtag$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CR3_Version$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("CR3_Version"));
+    static final VarHandle CR3_Version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CR3_Version"));
     public static VarHandle CR3_Version$VH() {
         return unpacker_data_t.CR3_Version$VH;
     }
@@ -668,7 +668,7 @@ public class unpacker_data_t {
     public static void CR3_Version$set(MemorySegment seg, long index, short x) {
         unpacker_data_t.CR3_Version$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CM_found$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("CM_found"));
+    static final VarHandle CM_found$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CM_found"));
     public static VarHandle CM_found$VH() {
         return unpacker_data_t.CM_found$VH;
     }
@@ -684,7 +684,7 @@ public class unpacker_data_t {
     public static void CM_found$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.CM_found$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle is_NikonTransfer$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("is_NikonTransfer"));
+    static final VarHandle is_NikonTransfer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("is_NikonTransfer"));
     public static VarHandle is_NikonTransfer$VH() {
         return unpacker_data_t.is_NikonTransfer$VH;
     }
@@ -700,7 +700,7 @@ public class unpacker_data_t {
     public static void is_NikonTransfer$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.is_NikonTransfer$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle is_Olympus$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("is_Olympus"));
+    static final VarHandle is_Olympus$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("is_Olympus"));
     public static VarHandle is_Olympus$VH() {
         return unpacker_data_t.is_Olympus$VH;
     }
@@ -716,7 +716,7 @@ public class unpacker_data_t {
     public static void is_Olympus$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.is_Olympus$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle OlympusDNG_SubDirOffsetValid$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("OlympusDNG_SubDirOffsetValid"));
+    static final VarHandle OlympusDNG_SubDirOffsetValid$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("OlympusDNG_SubDirOffsetValid"));
     public static VarHandle OlympusDNG_SubDirOffsetValid$VH() {
         return unpacker_data_t.OlympusDNG_SubDirOffsetValid$VH;
     }
@@ -732,7 +732,7 @@ public class unpacker_data_t {
     public static void OlympusDNG_SubDirOffsetValid$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.OlympusDNG_SubDirOffsetValid$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle is_Sony$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("is_Sony"));
+    static final VarHandle is_Sony$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("is_Sony"));
     public static VarHandle is_Sony$VH() {
         return unpacker_data_t.is_Sony$VH;
     }
@@ -748,7 +748,7 @@ public class unpacker_data_t {
     public static void is_Sony$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.is_Sony$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle is_pana_raw$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("is_pana_raw"));
+    static final VarHandle is_pana_raw$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("is_pana_raw"));
     public static VarHandle is_pana_raw$VH() {
         return unpacker_data_t.is_pana_raw$VH;
     }
@@ -764,7 +764,7 @@ public class unpacker_data_t {
     public static void is_pana_raw$set(MemorySegment seg, long index, int x) {
         unpacker_data_t.is_pana_raw$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle is_PentaxRicohMakernotes$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("is_PentaxRicohMakernotes"));
+    static final VarHandle is_PentaxRicohMakernotes$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("is_PentaxRicohMakernotes"));
     public static VarHandle is_PentaxRicohMakernotes$VH() {
         return unpacker_data_t.is_PentaxRicohMakernotes$VH;
     }
@@ -783,7 +783,7 @@ public class unpacker_data_t {
     public static MemorySegment dng_frames$slice(MemorySegment seg) {
         return seg.asSlice(1364, 80);
     }
-    static final VarHandle raw_stride$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("raw_stride"));
+    static final VarHandle raw_stride$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_stride"));
     public static VarHandle raw_stride$VH() {
         return unpacker_data_t.raw_stride$VH;
     }
@@ -801,12 +801,12 @@ public class unpacker_data_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

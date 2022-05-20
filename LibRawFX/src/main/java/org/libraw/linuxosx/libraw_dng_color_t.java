@@ -6,21 +6,21 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_dng_color_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("parsedfields"),
-        C_SHORT.withName("illuminant"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+        Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
         MemoryLayout.paddingLayout(16),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("calibration"),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("colormatrix"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("forwardmatrix")
+        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
+        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_dng_color_t.$struct$LAYOUT;
     }
-    static final VarHandle parsedfields$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("parsedfields"));
+    static final VarHandle parsedfields$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("parsedfields"));
     public static VarHandle parsedfields$VH() {
         return libraw_dng_color_t.parsedfields$VH;
     }
@@ -36,7 +36,7 @@ public class libraw_dng_color_t {
     public static void parsedfields$set(MemorySegment seg, long index, int x) {
         libraw_dng_color_t.parsedfields$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle illuminant$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("illuminant"));
+    static final VarHandle illuminant$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("illuminant"));
     public static VarHandle illuminant$VH() {
         return libraw_dng_color_t.illuminant$VH;
     }
@@ -63,12 +63,12 @@ public class libraw_dng_color_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

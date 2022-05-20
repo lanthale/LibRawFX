@@ -6,70 +6,70 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class tiff_ifd_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("t_width"),
-        C_INT.withName("t_height"),
-        C_INT.withName("bps"),
-        C_INT.withName("comp"),
-        C_INT.withName("phint"),
-        C_INT.withName("offset"),
-        C_INT.withName("t_flip"),
-        C_INT.withName("samples"),
-        C_INT.withName("bytes"),
-        C_INT.withName("extrasamples"),
-        C_INT.withName("t_tile_width"),
-        C_INT.withName("t_tile_length"),
-        C_INT.withName("sample_format"),
-        C_INT.withName("predictor"),
-        C_INT.withName("rows_per_strip"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("t_width"),
+        Constants$root.C_INT$LAYOUT.withName("t_height"),
+        Constants$root.C_INT$LAYOUT.withName("bps"),
+        Constants$root.C_INT$LAYOUT.withName("comp"),
+        Constants$root.C_INT$LAYOUT.withName("phint"),
+        Constants$root.C_INT$LAYOUT.withName("offset"),
+        Constants$root.C_INT$LAYOUT.withName("t_flip"),
+        Constants$root.C_INT$LAYOUT.withName("samples"),
+        Constants$root.C_INT$LAYOUT.withName("bytes"),
+        Constants$root.C_INT$LAYOUT.withName("extrasamples"),
+        Constants$root.C_INT$LAYOUT.withName("t_tile_width"),
+        Constants$root.C_INT$LAYOUT.withName("t_tile_length"),
+        Constants$root.C_INT$LAYOUT.withName("sample_format"),
+        Constants$root.C_INT$LAYOUT.withName("predictor"),
+        Constants$root.C_INT$LAYOUT.withName("rows_per_strip"),
         MemoryLayout.paddingLayout(32),
-        C_POINTER.withName("strip_offsets"),
-        C_INT.withName("strip_offsets_count"),
+        Constants$root.C_POINTER$LAYOUT.withName("strip_offsets"),
+        Constants$root.C_INT$LAYOUT.withName("strip_offsets_count"),
         MemoryLayout.paddingLayout(32),
-        C_POINTER.withName("strip_byte_counts"),
-        C_INT.withName("strip_byte_counts_count"),
-        C_INT.withName("t_filters"),
-        C_INT.withName("t_vwidth"),
-        C_INT.withName("t_vheight"),
-        C_INT.withName("t_lm"),
-        C_INT.withName("t_tm"),
-        C_INT.withName("t_fuji_width"),
-        C_FLOAT.withName("t_shutter"),
-        C_LONG_LONG.withName("opcode2_offset"),
-        C_LONG_LONG.withName("lineartable_offset"),
-        C_INT.withName("lineartable_len"),
+        Constants$root.C_POINTER$LAYOUT.withName("strip_byte_counts"),
+        Constants$root.C_INT$LAYOUT.withName("strip_byte_counts_count"),
+        Constants$root.C_INT$LAYOUT.withName("t_filters"),
+        Constants$root.C_INT$LAYOUT.withName("t_vwidth"),
+        Constants$root.C_INT$LAYOUT.withName("t_vheight"),
+        Constants$root.C_INT$LAYOUT.withName("t_lm"),
+        Constants$root.C_INT$LAYOUT.withName("t_tm"),
+        Constants$root.C_INT$LAYOUT.withName("t_fuji_width"),
+        Constants$root.C_FLOAT$LAYOUT.withName("t_shutter"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("opcode2_offset"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("lineartable_offset"),
+        Constants$root.C_INT$LAYOUT.withName("lineartable_len"),
         MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-            C_INT.withName("parsedfields"),
-            C_SHORT.withName("illuminant"),
+            Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+            Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
             MemoryLayout.paddingLayout(16),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("calibration"),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_FLOAT)).withName("colormatrix"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, C_FLOAT)).withName("forwardmatrix")
+            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
+            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
+            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
         )).withName("dng_color"),
         MemoryLayout.structLayout(
-            C_INT.withName("parsedfields"),
-            MemoryLayout.sequenceLayout(4104, C_INT).withName("dng_cblack"),
-            C_INT.withName("dng_black"),
-            MemoryLayout.sequenceLayout(4104, C_FLOAT).withName("dng_fcblack"),
-            C_FLOAT.withName("dng_fblack"),
-            MemoryLayout.sequenceLayout(4, C_INT).withName("dng_whitelevel"),
-            MemoryLayout.sequenceLayout(4, C_SHORT).withName("default_crop"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("user_crop"),
-            C_INT.withName("preview_colorspace"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("analogbalance"),
-            MemoryLayout.sequenceLayout(4, C_FLOAT).withName("asshotneutral"),
-            C_FLOAT.withName("baseline_exposure"),
-            C_FLOAT.withName("LinearResponseLimit")
+            Constants$root.C_INT$LAYOUT.withName("parsedfields"),
+            MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
+            Constants$root.C_INT$LAYOUT.withName("dng_black"),
+            MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
+            Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("dng_whitelevel"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
+            Constants$root.C_INT$LAYOUT.withName("preview_colorspace"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
+            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
+            Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
+            Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
         ).withName("dng_levels"),
-        C_INT.withName("newsubfiletype")
+        Constants$root.C_INT$LAYOUT.withName("newsubfiletype")
     ).withName("tiff_ifd_t");
     public static MemoryLayout $LAYOUT() {
         return tiff_ifd_t.$struct$LAYOUT;
     }
-    static final VarHandle t_width$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_width"));
+    static final VarHandle t_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_width"));
     public static VarHandle t_width$VH() {
         return tiff_ifd_t.t_width$VH;
     }
@@ -85,7 +85,7 @@ public class tiff_ifd_t {
     public static void t_width$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_height$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_height"));
+    static final VarHandle t_height$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_height"));
     public static VarHandle t_height$VH() {
         return tiff_ifd_t.t_height$VH;
     }
@@ -101,7 +101,7 @@ public class tiff_ifd_t {
     public static void t_height$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_height$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bps$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("bps"));
+    static final VarHandle bps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bps"));
     public static VarHandle bps$VH() {
         return tiff_ifd_t.bps$VH;
     }
@@ -117,7 +117,7 @@ public class tiff_ifd_t {
     public static void bps$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.bps$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle comp$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("comp"));
+    static final VarHandle comp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("comp"));
     public static VarHandle comp$VH() {
         return tiff_ifd_t.comp$VH;
     }
@@ -133,7 +133,7 @@ public class tiff_ifd_t {
     public static void comp$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.comp$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle phint$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("phint"));
+    static final VarHandle phint$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("phint"));
     public static VarHandle phint$VH() {
         return tiff_ifd_t.phint$VH;
     }
@@ -149,7 +149,7 @@ public class tiff_ifd_t {
     public static void phint$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.phint$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle offset$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("offset"));
+    static final VarHandle offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset"));
     public static VarHandle offset$VH() {
         return tiff_ifd_t.offset$VH;
     }
@@ -165,7 +165,7 @@ public class tiff_ifd_t {
     public static void offset$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_flip$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_flip"));
+    static final VarHandle t_flip$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_flip"));
     public static VarHandle t_flip$VH() {
         return tiff_ifd_t.t_flip$VH;
     }
@@ -181,7 +181,7 @@ public class tiff_ifd_t {
     public static void t_flip$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_flip$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle samples$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("samples"));
+    static final VarHandle samples$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("samples"));
     public static VarHandle samples$VH() {
         return tiff_ifd_t.samples$VH;
     }
@@ -197,7 +197,7 @@ public class tiff_ifd_t {
     public static void samples$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.samples$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bytes$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("bytes"));
+    static final VarHandle bytes$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bytes"));
     public static VarHandle bytes$VH() {
         return tiff_ifd_t.bytes$VH;
     }
@@ -213,7 +213,7 @@ public class tiff_ifd_t {
     public static void bytes$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.bytes$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle extrasamples$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("extrasamples"));
+    static final VarHandle extrasamples$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("extrasamples"));
     public static VarHandle extrasamples$VH() {
         return tiff_ifd_t.extrasamples$VH;
     }
@@ -229,7 +229,7 @@ public class tiff_ifd_t {
     public static void extrasamples$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.extrasamples$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_tile_width$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_tile_width"));
+    static final VarHandle t_tile_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_tile_width"));
     public static VarHandle t_tile_width$VH() {
         return tiff_ifd_t.t_tile_width$VH;
     }
@@ -245,7 +245,7 @@ public class tiff_ifd_t {
     public static void t_tile_width$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_tile_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_tile_length$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_tile_length"));
+    static final VarHandle t_tile_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_tile_length"));
     public static VarHandle t_tile_length$VH() {
         return tiff_ifd_t.t_tile_length$VH;
     }
@@ -261,7 +261,7 @@ public class tiff_ifd_t {
     public static void t_tile_length$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_tile_length$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle sample_format$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("sample_format"));
+    static final VarHandle sample_format$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sample_format"));
     public static VarHandle sample_format$VH() {
         return tiff_ifd_t.sample_format$VH;
     }
@@ -277,7 +277,7 @@ public class tiff_ifd_t {
     public static void sample_format$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.sample_format$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle predictor$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("predictor"));
+    static final VarHandle predictor$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("predictor"));
     public static VarHandle predictor$VH() {
         return tiff_ifd_t.predictor$VH;
     }
@@ -293,7 +293,7 @@ public class tiff_ifd_t {
     public static void predictor$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.predictor$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rows_per_strip$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("rows_per_strip"));
+    static final VarHandle rows_per_strip$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rows_per_strip"));
     public static VarHandle rows_per_strip$VH() {
         return tiff_ifd_t.rows_per_strip$VH;
     }
@@ -309,7 +309,7 @@ public class tiff_ifd_t {
     public static void rows_per_strip$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.rows_per_strip$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle strip_offsets$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("strip_offsets")));
+    static final VarHandle strip_offsets$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("strip_offsets"));
     public static VarHandle strip_offsets$VH() {
         return tiff_ifd_t.strip_offsets$VH;
     }
@@ -325,7 +325,7 @@ public class tiff_ifd_t {
     public static void strip_offsets$set(MemorySegment seg, long index, MemoryAddress x) {
         tiff_ifd_t.strip_offsets$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle strip_offsets_count$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("strip_offsets_count"));
+    static final VarHandle strip_offsets_count$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("strip_offsets_count"));
     public static VarHandle strip_offsets_count$VH() {
         return tiff_ifd_t.strip_offsets_count$VH;
     }
@@ -341,7 +341,7 @@ public class tiff_ifd_t {
     public static void strip_offsets_count$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.strip_offsets_count$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle strip_byte_counts$VH = MemoryHandles.asAddressVarHandle($struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("strip_byte_counts")));
+    static final VarHandle strip_byte_counts$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("strip_byte_counts"));
     public static VarHandle strip_byte_counts$VH() {
         return tiff_ifd_t.strip_byte_counts$VH;
     }
@@ -357,7 +357,7 @@ public class tiff_ifd_t {
     public static void strip_byte_counts$set(MemorySegment seg, long index, MemoryAddress x) {
         tiff_ifd_t.strip_byte_counts$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle strip_byte_counts_count$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("strip_byte_counts_count"));
+    static final VarHandle strip_byte_counts_count$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("strip_byte_counts_count"));
     public static VarHandle strip_byte_counts_count$VH() {
         return tiff_ifd_t.strip_byte_counts_count$VH;
     }
@@ -373,7 +373,7 @@ public class tiff_ifd_t {
     public static void strip_byte_counts_count$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.strip_byte_counts_count$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_filters$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_filters"));
+    static final VarHandle t_filters$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_filters"));
     public static VarHandle t_filters$VH() {
         return tiff_ifd_t.t_filters$VH;
     }
@@ -389,7 +389,7 @@ public class tiff_ifd_t {
     public static void t_filters$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_filters$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_vwidth$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_vwidth"));
+    static final VarHandle t_vwidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_vwidth"));
     public static VarHandle t_vwidth$VH() {
         return tiff_ifd_t.t_vwidth$VH;
     }
@@ -405,7 +405,7 @@ public class tiff_ifd_t {
     public static void t_vwidth$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_vwidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_vheight$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_vheight"));
+    static final VarHandle t_vheight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_vheight"));
     public static VarHandle t_vheight$VH() {
         return tiff_ifd_t.t_vheight$VH;
     }
@@ -421,7 +421,7 @@ public class tiff_ifd_t {
     public static void t_vheight$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_vheight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_lm$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_lm"));
+    static final VarHandle t_lm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_lm"));
     public static VarHandle t_lm$VH() {
         return tiff_ifd_t.t_lm$VH;
     }
@@ -437,7 +437,7 @@ public class tiff_ifd_t {
     public static void t_lm$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_lm$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_tm$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_tm"));
+    static final VarHandle t_tm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_tm"));
     public static VarHandle t_tm$VH() {
         return tiff_ifd_t.t_tm$VH;
     }
@@ -453,7 +453,7 @@ public class tiff_ifd_t {
     public static void t_tm$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_tm$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_fuji_width$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("t_fuji_width"));
+    static final VarHandle t_fuji_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_fuji_width"));
     public static VarHandle t_fuji_width$VH() {
         return tiff_ifd_t.t_fuji_width$VH;
     }
@@ -469,7 +469,7 @@ public class tiff_ifd_t {
     public static void t_fuji_width$set(MemorySegment seg, long index, int x) {
         tiff_ifd_t.t_fuji_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle t_shutter$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("t_shutter"));
+    static final VarHandle t_shutter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_shutter"));
     public static VarHandle t_shutter$VH() {
         return tiff_ifd_t.t_shutter$VH;
     }
@@ -485,7 +485,7 @@ public class tiff_ifd_t {
     public static void t_shutter$set(MemorySegment seg, long index, float x) {
         tiff_ifd_t.t_shutter$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle opcode2_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("opcode2_offset"));
+    static final VarHandle opcode2_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("opcode2_offset"));
     public static VarHandle opcode2_offset$VH() {
         return tiff_ifd_t.opcode2_offset$VH;
     }
@@ -501,7 +501,7 @@ public class tiff_ifd_t {
     public static void opcode2_offset$set(MemorySegment seg, long index, long x) {
         tiff_ifd_t.opcode2_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lineartable_offset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("lineartable_offset"));
+    static final VarHandle lineartable_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lineartable_offset"));
     public static VarHandle lineartable_offset$VH() {
         return tiff_ifd_t.lineartable_offset$VH;
     }
@@ -517,7 +517,7 @@ public class tiff_ifd_t {
     public static void lineartable_offset$set(MemorySegment seg, long index, long x) {
         tiff_ifd_t.lineartable_offset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lineartable_len$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("lineartable_len"));
+    static final VarHandle lineartable_len$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lineartable_len"));
     public static VarHandle lineartable_len$VH() {
         return tiff_ifd_t.lineartable_len$VH;
     }
@@ -539,7 +539,7 @@ public class tiff_ifd_t {
     public static MemorySegment dng_levels$slice(MemorySegment seg) {
         return seg.asSlice(476, 32928);
     }
-    static final VarHandle newsubfiletype$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("newsubfiletype"));
+    static final VarHandle newsubfiletype$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("newsubfiletype"));
     public static VarHandle newsubfiletype$VH() {
         return tiff_ifd_t.newsubfiletype$VH;
     }
@@ -557,12 +557,12 @@ public class tiff_ifd_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

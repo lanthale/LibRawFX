@@ -6,32 +6,32 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_hasselblad_makernotes_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("BaseISO"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("BaseISO"),
         MemoryLayout.paddingLayout(32),
-        C_DOUBLE.withName("Gain"),
-        MemoryLayout.sequenceLayout(8, C_CHAR).withName("Sensor"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("SensorUnit"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("HostBody"),
-        C_INT.withName("SensorCode"),
-        C_INT.withName("SensorSubCode"),
-        C_INT.withName("CoatingCode"),
-        C_INT.withName("uncropped"),
-        MemoryLayout.sequenceLayout(32, C_CHAR).withName("CaptureSequenceInitiator"),
-        MemoryLayout.sequenceLayout(64, C_CHAR).withName("SensorUnitConnector"),
-        C_INT.withName("format"),
-        MemoryLayout.sequenceLayout(2, C_INT).withName("nIFD_CM"),
-        MemoryLayout.sequenceLayout(2, C_INT).withName("RecommendedCrop"),
+        Constants$root.C_DOUBLE$LAYOUT.withName("Gain"),
+        MemoryLayout.sequenceLayout(8, Constants$root.C_CHAR$LAYOUT).withName("Sensor"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SensorUnit"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("HostBody"),
+        Constants$root.C_INT$LAYOUT.withName("SensorCode"),
+        Constants$root.C_INT$LAYOUT.withName("SensorSubCode"),
+        Constants$root.C_INT$LAYOUT.withName("CoatingCode"),
+        Constants$root.C_INT$LAYOUT.withName("uncropped"),
+        MemoryLayout.sequenceLayout(32, Constants$root.C_CHAR$LAYOUT).withName("CaptureSequenceInitiator"),
+        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SensorUnitConnector"),
+        Constants$root.C_INT$LAYOUT.withName("format"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("nIFD_CM"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("RecommendedCrop"),
         MemoryLayout.paddingLayout(32),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, C_DOUBLE)).withName("mnColorMatrix")
+        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_DOUBLE$LAYOUT)).withName("mnColorMatrix")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_hasselblad_makernotes_t.$struct$LAYOUT;
     }
-    static final VarHandle BaseISO$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("BaseISO"));
+    static final VarHandle BaseISO$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BaseISO"));
     public static VarHandle BaseISO$VH() {
         return libraw_hasselblad_makernotes_t.BaseISO$VH;
     }
@@ -47,7 +47,7 @@ public class libraw_hasselblad_makernotes_t {
     public static void BaseISO$set(MemorySegment seg, long index, int x) {
         libraw_hasselblad_makernotes_t.BaseISO$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Gain$VH = $struct$LAYOUT.varHandle(double.class, MemoryLayout.PathElement.groupElement("Gain"));
+    static final VarHandle Gain$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Gain"));
     public static VarHandle Gain$VH() {
         return libraw_hasselblad_makernotes_t.Gain$VH;
     }
@@ -72,7 +72,7 @@ public class libraw_hasselblad_makernotes_t {
     public static MemorySegment HostBody$slice(MemorySegment seg) {
         return seg.asSlice(88, 64);
     }
-    static final VarHandle SensorCode$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SensorCode"));
+    static final VarHandle SensorCode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorCode"));
     public static VarHandle SensorCode$VH() {
         return libraw_hasselblad_makernotes_t.SensorCode$VH;
     }
@@ -88,7 +88,7 @@ public class libraw_hasselblad_makernotes_t {
     public static void SensorCode$set(MemorySegment seg, long index, int x) {
         libraw_hasselblad_makernotes_t.SensorCode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorSubCode$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("SensorSubCode"));
+    static final VarHandle SensorSubCode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorSubCode"));
     public static VarHandle SensorSubCode$VH() {
         return libraw_hasselblad_makernotes_t.SensorSubCode$VH;
     }
@@ -104,7 +104,7 @@ public class libraw_hasselblad_makernotes_t {
     public static void SensorSubCode$set(MemorySegment seg, long index, int x) {
         libraw_hasselblad_makernotes_t.SensorSubCode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CoatingCode$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("CoatingCode"));
+    static final VarHandle CoatingCode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CoatingCode"));
     public static VarHandle CoatingCode$VH() {
         return libraw_hasselblad_makernotes_t.CoatingCode$VH;
     }
@@ -120,7 +120,7 @@ public class libraw_hasselblad_makernotes_t {
     public static void CoatingCode$set(MemorySegment seg, long index, int x) {
         libraw_hasselblad_makernotes_t.CoatingCode$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle uncropped$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("uncropped"));
+    static final VarHandle uncropped$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("uncropped"));
     public static VarHandle uncropped$VH() {
         return libraw_hasselblad_makernotes_t.uncropped$VH;
     }
@@ -142,7 +142,7 @@ public class libraw_hasselblad_makernotes_t {
     public static MemorySegment SensorUnitConnector$slice(MemorySegment seg) {
         return seg.asSlice(200, 64);
     }
-    static final VarHandle format$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("format"));
+    static final VarHandle format$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("format"));
     public static VarHandle format$VH() {
         return libraw_hasselblad_makernotes_t.format$VH;
     }
@@ -169,12 +169,12 @@ public class libraw_hasselblad_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

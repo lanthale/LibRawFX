@@ -6,13 +6,18 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_h  {
 
-    static {
-    }
-
-    static final SymbolLookup LIBRARIES = RuntimeHelper.lookup();    /* package-private */ libraw_h() {}
+    /* package-private */ libraw_h() {}
+    public static OfByte C_CHAR = Constants$root.C_CHAR$LAYOUT;
+    public static OfShort C_SHORT = Constants$root.C_SHORT$LAYOUT;
+    public static OfInt C_INT = Constants$root.C_INT$LAYOUT;
+    public static OfLong C_LONG = Constants$root.C_LONG_LONG$LAYOUT;
+    public static OfLong C_LONG_LONG = Constants$root.C_LONG_LONG$LAYOUT;
+    public static OfFloat C_FLOAT = Constants$root.C_FLOAT$LAYOUT;
+    public static OfDouble C_DOUBLE = Constants$root.C_DOUBLE$LAYOUT;
+    public static OfAddress C_POINTER = Constants$root.C_POINTER$LAYOUT;
     public static int LIBRAW_MAX_METADATA_BLOCKS() {
         return (int)1024L;
     }
@@ -1564,14 +1569,14 @@ public class libraw_h  {
     public static int LIBRAW_IMAGE_BITMAP() {
         return (int)2L;
     }
-    public static ValueLayout INT64 = C_LONG_LONG;
+    public static OfLong INT64 = Constants$root.C_LONG_LONG$LAYOUT;
     public static MethodHandle default_memory_callback$MH() {
         return RuntimeHelper.requireNonNull(constants$0.default_memory_callback$MH,"default_memory_callback");
     }
     public static void default_memory_callback ( Addressable data,  Addressable file,  Addressable where) {
         var mh$ = RuntimeHelper.requireNonNull(constants$0.default_memory_callback$MH, "default_memory_callback");
         try {
-            mh$.invokeExact(data.address(), file.address(), where.address());
+            mh$.invokeExact(data, file, where);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1582,7 +1587,7 @@ public class libraw_h  {
     public static void default_data_callback ( Addressable data,  Addressable file,  int offset) {
         var mh$ = RuntimeHelper.requireNonNull(constants$1.default_data_callback$MH, "default_data_callback");
         try {
-            mh$.invokeExact(data.address(), file.address(), offset);
+            mh$.invokeExact(data, file, offset);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1626,7 +1631,7 @@ public class libraw_h  {
     public static int libraw_open_file ( Addressable x0,  Addressable x1) {
         var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_file$MH, "libraw_open_file");
         try {
-            return (int)mh$.invokeExact(x0.address(), x1.address());
+            return (int)mh$.invokeExact(x0, x1);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1637,7 +1642,7 @@ public class libraw_h  {
     public static int libraw_open_buffer ( Addressable x0,  Addressable buffer,  long size) {
         var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_buffer$MH, "libraw_open_buffer");
         try {
-            return (int)mh$.invokeExact(x0.address(), buffer.address(), size);
+            return (int)mh$.invokeExact(x0, buffer, size);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1648,7 +1653,7 @@ public class libraw_h  {
     public static int libraw_open_bayer ( Addressable lr,  Addressable data,  int datalen,  short _raw_width,  short _raw_height,  short _left_margin,  short _top_margin,  short _right_margin,  short _bottom_margin,  byte procflags,  byte bayer_battern,  int unused_bits,  int otherflags,  int black_level) {
         var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_bayer$MH, "libraw_open_bayer");
         try {
-            return (int)mh$.invokeExact(lr.address(), data.address(), datalen, _raw_width, _raw_height, _left_margin, _top_margin, _right_margin, _bottom_margin, procflags, bayer_battern, unused_bits, otherflags, black_level);
+            return (int)mh$.invokeExact(lr, data, datalen, _raw_width, _raw_height, _left_margin, _top_margin, _right_margin, _bottom_margin, procflags, bayer_battern, unused_bits, otherflags, black_level);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1659,7 +1664,7 @@ public class libraw_h  {
     public static int libraw_unpack ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_unpack$MH, "libraw_unpack");
         try {
-            return (int)mh$.invokeExact(x0.address());
+            return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1670,7 +1675,7 @@ public class libraw_h  {
     public static int libraw_unpack_thumb ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_unpack_thumb$MH, "libraw_unpack_thumb");
         try {
-            return (int)mh$.invokeExact(x0.address());
+            return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1681,7 +1686,7 @@ public class libraw_h  {
     public static void libraw_recycle_datastream ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_recycle_datastream$MH, "libraw_recycle_datastream");
         try {
-            mh$.invokeExact(x0.address());
+            mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1692,7 +1697,7 @@ public class libraw_h  {
     public static void libraw_recycle ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_recycle$MH, "libraw_recycle");
         try {
-            mh$.invokeExact(x0.address());
+            mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1703,7 +1708,7 @@ public class libraw_h  {
     public static void libraw_close ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_close$MH, "libraw_close");
         try {
-            mh$.invokeExact(x0.address());
+            mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1714,7 +1719,7 @@ public class libraw_h  {
     public static void libraw_subtract_black ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_subtract_black$MH, "libraw_subtract_black");
         try {
-            mh$.invokeExact(x0.address());
+            mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1725,7 +1730,7 @@ public class libraw_h  {
     public static int libraw_raw2image ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_raw2image$MH, "libraw_raw2image");
         try {
-            return (int)mh$.invokeExact(x0.address());
+            return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1736,7 +1741,7 @@ public class libraw_h  {
     public static void libraw_free_image ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_free_image$MH, "libraw_free_image");
         try {
-            mh$.invokeExact(x0.address());
+            mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1791,7 +1796,7 @@ public class libraw_h  {
     public static void libraw_set_memerror_handler ( Addressable x0,  Addressable cb,  Addressable datap) {
         var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_set_memerror_handler$MH, "libraw_set_memerror_handler");
         try {
-            mh$.invokeExact(x0.address(), cb.address(), datap.address());
+            mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1802,7 +1807,7 @@ public class libraw_h  {
     public static void libraw_set_exifparser_handler ( Addressable x0,  Addressable cb,  Addressable datap) {
         var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_set_exifparser_handler$MH, "libraw_set_exifparser_handler");
         try {
-            mh$.invokeExact(x0.address(), cb.address(), datap.address());
+            mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1813,7 +1818,7 @@ public class libraw_h  {
     public static void libraw_set_dataerror_handler ( Addressable x0,  Addressable func,  Addressable datap) {
         var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_set_dataerror_handler$MH, "libraw_set_dataerror_handler");
         try {
-            mh$.invokeExact(x0.address(), func.address(), datap.address());
+            mh$.invokeExact(x0, func, datap);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1824,7 +1829,7 @@ public class libraw_h  {
     public static void libraw_set_progress_handler ( Addressable x0,  Addressable cb,  Addressable datap) {
         var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_set_progress_handler$MH, "libraw_set_progress_handler");
         try {
-            mh$.invokeExact(x0.address(), cb.address(), datap.address());
+            mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1835,7 +1840,7 @@ public class libraw_h  {
     public static MemoryAddress libraw_unpack_function_name ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_unpack_function_name$MH, "libraw_unpack_function_name");
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr.address());
+            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1846,7 +1851,7 @@ public class libraw_h  {
     public static int libraw_get_decoder_info ( Addressable lr,  Addressable d) {
         var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_get_decoder_info$MH, "libraw_get_decoder_info");
         try {
-            return (int)mh$.invokeExact(lr.address(), d.address());
+            return (int)mh$.invokeExact(lr, d);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1857,7 +1862,7 @@ public class libraw_h  {
     public static int libraw_COLOR ( Addressable x0,  int row,  int col) {
         var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_COLOR$MH, "libraw_COLOR");
         try {
-            return (int)mh$.invokeExact(x0.address(), row, col);
+            return (int)mh$.invokeExact(x0, row, col);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1879,7 +1884,7 @@ public class libraw_h  {
     public static int libraw_adjust_sizes_info_only ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_adjust_sizes_info_only$MH, "libraw_adjust_sizes_info_only");
         try {
-            return (int)mh$.invokeExact(x0.address());
+            return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1890,7 +1895,7 @@ public class libraw_h  {
     public static int libraw_dcraw_ppm_tiff_writer ( Addressable lr,  Addressable filename) {
         var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_ppm_tiff_writer$MH, "libraw_dcraw_ppm_tiff_writer");
         try {
-            return (int)mh$.invokeExact(lr.address(), filename.address());
+            return (int)mh$.invokeExact(lr, filename);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1901,7 +1906,7 @@ public class libraw_h  {
     public static int libraw_dcraw_thumb_writer ( Addressable lr,  Addressable fname) {
         var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_thumb_writer$MH, "libraw_dcraw_thumb_writer");
         try {
-            return (int)mh$.invokeExact(lr.address(), fname.address());
+            return (int)mh$.invokeExact(lr, fname);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1912,7 +1917,7 @@ public class libraw_h  {
     public static int libraw_dcraw_process ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_process$MH, "libraw_dcraw_process");
         try {
-            return (int)mh$.invokeExact(lr.address());
+            return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1923,7 +1928,7 @@ public class libraw_h  {
     public static MemoryAddress libraw_dcraw_make_mem_image ( Addressable lr,  Addressable errc) {
         var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_make_mem_image$MH, "libraw_dcraw_make_mem_image");
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr.address(), errc.address());
+            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr, errc);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1934,7 +1939,7 @@ public class libraw_h  {
     public static MemoryAddress libraw_dcraw_make_mem_thumb ( Addressable lr,  Addressable errc) {
         var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_make_mem_thumb$MH, "libraw_dcraw_make_mem_thumb");
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr.address(), errc.address());
+            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr, errc);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1945,7 +1950,7 @@ public class libraw_h  {
     public static void libraw_dcraw_clear_mem ( Addressable x0) {
         var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_dcraw_clear_mem$MH, "libraw_dcraw_clear_mem");
         try {
-            mh$.invokeExact(x0.address());
+            mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1956,7 +1961,7 @@ public class libraw_h  {
     public static void libraw_set_demosaic ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_demosaic$MH, "libraw_set_demosaic");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1967,7 +1972,7 @@ public class libraw_h  {
     public static void libraw_set_output_color ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_output_color$MH, "libraw_set_output_color");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1978,7 +1983,7 @@ public class libraw_h  {
     public static void libraw_set_adjust_maximum_thr ( Addressable lr,  float value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_adjust_maximum_thr$MH, "libraw_set_adjust_maximum_thr");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1989,7 +1994,7 @@ public class libraw_h  {
     public static void libraw_set_user_mul ( Addressable lr,  int index,  float val) {
         var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_user_mul$MH, "libraw_set_user_mul");
         try {
-            mh$.invokeExact(lr.address(), index, val);
+            mh$.invokeExact(lr, index, val);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2000,7 +2005,7 @@ public class libraw_h  {
     public static void libraw_set_output_bps ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_output_bps$MH, "libraw_set_output_bps");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2011,7 +2016,7 @@ public class libraw_h  {
     public static void libraw_set_gamma ( Addressable lr,  int index,  float value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_gamma$MH, "libraw_set_gamma");
         try {
-            mh$.invokeExact(lr.address(), index, value);
+            mh$.invokeExact(lr, index, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2022,7 +2027,7 @@ public class libraw_h  {
     public static void libraw_set_no_auto_bright ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_no_auto_bright$MH, "libraw_set_no_auto_bright");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2033,7 +2038,7 @@ public class libraw_h  {
     public static void libraw_set_bright ( Addressable lr,  float value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_bright$MH, "libraw_set_bright");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2044,7 +2049,7 @@ public class libraw_h  {
     public static void libraw_set_highlight ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_highlight$MH, "libraw_set_highlight");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2055,7 +2060,7 @@ public class libraw_h  {
     public static void libraw_set_fbdd_noiserd ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_fbdd_noiserd$MH, "libraw_set_fbdd_noiserd");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2066,7 +2071,7 @@ public class libraw_h  {
     public static int libraw_get_raw_height ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_get_raw_height$MH, "libraw_get_raw_height");
         try {
-            return (int)mh$.invokeExact(lr.address());
+            return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2077,7 +2082,7 @@ public class libraw_h  {
     public static int libraw_get_raw_width ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_raw_width$MH, "libraw_get_raw_width");
         try {
-            return (int)mh$.invokeExact(lr.address());
+            return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2088,7 +2093,7 @@ public class libraw_h  {
     public static int libraw_get_iheight ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_iheight$MH, "libraw_get_iheight");
         try {
-            return (int)mh$.invokeExact(lr.address());
+            return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2099,7 +2104,7 @@ public class libraw_h  {
     public static int libraw_get_iwidth ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_iwidth$MH, "libraw_get_iwidth");
         try {
-            return (int)mh$.invokeExact(lr.address());
+            return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2110,7 +2115,7 @@ public class libraw_h  {
     public static float libraw_get_cam_mul ( Addressable lr,  int index) {
         var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_cam_mul$MH, "libraw_get_cam_mul");
         try {
-            return (float)mh$.invokeExact(lr.address(), index);
+            return (float)mh$.invokeExact(lr, index);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2121,7 +2126,7 @@ public class libraw_h  {
     public static float libraw_get_pre_mul ( Addressable lr,  int index) {
         var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_pre_mul$MH, "libraw_get_pre_mul");
         try {
-            return (float)mh$.invokeExact(lr.address(), index);
+            return (float)mh$.invokeExact(lr, index);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2132,7 +2137,7 @@ public class libraw_h  {
     public static float libraw_get_rgb_cam ( Addressable lr,  int index1,  int index2) {
         var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_rgb_cam$MH, "libraw_get_rgb_cam");
         try {
-            return (float)mh$.invokeExact(lr.address(), index1, index2);
+            return (float)mh$.invokeExact(lr, index1, index2);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2143,7 +2148,7 @@ public class libraw_h  {
     public static int libraw_get_color_maximum ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_color_maximum$MH, "libraw_get_color_maximum");
         try {
-            return (int)mh$.invokeExact(lr.address());
+            return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2154,7 +2159,7 @@ public class libraw_h  {
     public static void libraw_set_output_tif ( Addressable lr,  int value) {
         var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_set_output_tif$MH, "libraw_set_output_tif");
         try {
-            mh$.invokeExact(lr.address(), value);
+            mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2165,7 +2170,7 @@ public class libraw_h  {
     public static MemoryAddress libraw_get_iparams ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_iparams$MH, "libraw_get_iparams");
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr.address());
+            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2176,7 +2181,7 @@ public class libraw_h  {
     public static MemoryAddress libraw_get_lensinfo ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_lensinfo$MH, "libraw_get_lensinfo");
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr.address());
+            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2187,7 +2192,7 @@ public class libraw_h  {
     public static MemoryAddress libraw_get_imgother ( Addressable lr) {
         var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_imgother$MH, "libraw_get_imgother");
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr.address());
+            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

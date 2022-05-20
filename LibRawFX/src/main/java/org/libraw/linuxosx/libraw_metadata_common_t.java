@@ -6,45 +6,45 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_metadata_common_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_FLOAT.withName("FlashEC"),
-        C_FLOAT.withName("FlashGN"),
-        C_FLOAT.withName("CameraTemperature"),
-        C_FLOAT.withName("SensorTemperature"),
-        C_FLOAT.withName("SensorTemperature2"),
-        C_FLOAT.withName("LensTemperature"),
-        C_FLOAT.withName("AmbientTemperature"),
-        C_FLOAT.withName("BatteryTemperature"),
-        C_FLOAT.withName("exifAmbientTemperature"),
-        C_FLOAT.withName("exifHumidity"),
-        C_FLOAT.withName("exifPressure"),
-        C_FLOAT.withName("exifWaterDepth"),
-        C_FLOAT.withName("exifAcceleration"),
-        C_FLOAT.withName("exifCameraElevationAngle"),
-        C_FLOAT.withName("real_ISO"),
-        C_FLOAT.withName("exifExposureIndex"),
-        C_SHORT.withName("ColorSpace"),
-        MemoryLayout.sequenceLayout(128, C_CHAR).withName("firmware"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_FLOAT$LAYOUT.withName("FlashEC"),
+        Constants$root.C_FLOAT$LAYOUT.withName("FlashGN"),
+        Constants$root.C_FLOAT$LAYOUT.withName("CameraTemperature"),
+        Constants$root.C_FLOAT$LAYOUT.withName("SensorTemperature"),
+        Constants$root.C_FLOAT$LAYOUT.withName("SensorTemperature2"),
+        Constants$root.C_FLOAT$LAYOUT.withName("LensTemperature"),
+        Constants$root.C_FLOAT$LAYOUT.withName("AmbientTemperature"),
+        Constants$root.C_FLOAT$LAYOUT.withName("BatteryTemperature"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifAmbientTemperature"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifHumidity"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifPressure"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifWaterDepth"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifAcceleration"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifCameraElevationAngle"),
+        Constants$root.C_FLOAT$LAYOUT.withName("real_ISO"),
+        Constants$root.C_FLOAT$LAYOUT.withName("exifExposureIndex"),
+        Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
+        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("firmware"),
         MemoryLayout.paddingLayout(16),
-        C_FLOAT.withName("ExposureCalibrationShift"),
+        Constants$root.C_FLOAT$LAYOUT.withName("ExposureCalibrationShift"),
         MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
-            C_INT.withName("AFInfoData_tag"),
-            C_SHORT.withName("AFInfoData_order"),
+            Constants$root.C_INT$LAYOUT.withName("AFInfoData_tag"),
+            Constants$root.C_SHORT$LAYOUT.withName("AFInfoData_order"),
             MemoryLayout.paddingLayout(16),
-            C_INT.withName("AFInfoData_version"),
-            C_INT.withName("AFInfoData_length"),
-            C_POINTER.withName("AFInfoData")
+            Constants$root.C_INT$LAYOUT.withName("AFInfoData_version"),
+            Constants$root.C_INT$LAYOUT.withName("AFInfoData_length"),
+            Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
         )).withName("afdata"),
-        C_INT.withName("afcount"),
+        Constants$root.C_INT$LAYOUT.withName("afcount"),
         MemoryLayout.paddingLayout(32)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_metadata_common_t.$struct$LAYOUT;
     }
-    static final VarHandle FlashEC$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("FlashEC"));
+    static final VarHandle FlashEC$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashEC"));
     public static VarHandle FlashEC$VH() {
         return libraw_metadata_common_t.FlashEC$VH;
     }
@@ -60,7 +60,7 @@ public class libraw_metadata_common_t {
     public static void FlashEC$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.FlashEC$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashGN$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("FlashGN"));
+    static final VarHandle FlashGN$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashGN"));
     public static VarHandle FlashGN$VH() {
         return libraw_metadata_common_t.FlashGN$VH;
     }
@@ -76,7 +76,7 @@ public class libraw_metadata_common_t {
     public static void FlashGN$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.FlashGN$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CameraTemperature$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("CameraTemperature"));
+    static final VarHandle CameraTemperature$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CameraTemperature"));
     public static VarHandle CameraTemperature$VH() {
         return libraw_metadata_common_t.CameraTemperature$VH;
     }
@@ -92,7 +92,7 @@ public class libraw_metadata_common_t {
     public static void CameraTemperature$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.CameraTemperature$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorTemperature$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("SensorTemperature"));
+    static final VarHandle SensorTemperature$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorTemperature"));
     public static VarHandle SensorTemperature$VH() {
         return libraw_metadata_common_t.SensorTemperature$VH;
     }
@@ -108,7 +108,7 @@ public class libraw_metadata_common_t {
     public static void SensorTemperature$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.SensorTemperature$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorTemperature2$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("SensorTemperature2"));
+    static final VarHandle SensorTemperature2$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorTemperature2"));
     public static VarHandle SensorTemperature2$VH() {
         return libraw_metadata_common_t.SensorTemperature2$VH;
     }
@@ -124,7 +124,7 @@ public class libraw_metadata_common_t {
     public static void SensorTemperature2$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.SensorTemperature2$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensTemperature$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("LensTemperature"));
+    static final VarHandle LensTemperature$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensTemperature"));
     public static VarHandle LensTemperature$VH() {
         return libraw_metadata_common_t.LensTemperature$VH;
     }
@@ -140,7 +140,7 @@ public class libraw_metadata_common_t {
     public static void LensTemperature$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.LensTemperature$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AmbientTemperature$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("AmbientTemperature"));
+    static final VarHandle AmbientTemperature$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AmbientTemperature"));
     public static VarHandle AmbientTemperature$VH() {
         return libraw_metadata_common_t.AmbientTemperature$VH;
     }
@@ -156,7 +156,7 @@ public class libraw_metadata_common_t {
     public static void AmbientTemperature$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.AmbientTemperature$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle BatteryTemperature$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("BatteryTemperature"));
+    static final VarHandle BatteryTemperature$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BatteryTemperature"));
     public static VarHandle BatteryTemperature$VH() {
         return libraw_metadata_common_t.BatteryTemperature$VH;
     }
@@ -172,7 +172,7 @@ public class libraw_metadata_common_t {
     public static void BatteryTemperature$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.BatteryTemperature$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifAmbientTemperature$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifAmbientTemperature"));
+    static final VarHandle exifAmbientTemperature$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifAmbientTemperature"));
     public static VarHandle exifAmbientTemperature$VH() {
         return libraw_metadata_common_t.exifAmbientTemperature$VH;
     }
@@ -188,7 +188,7 @@ public class libraw_metadata_common_t {
     public static void exifAmbientTemperature$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifAmbientTemperature$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifHumidity$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifHumidity"));
+    static final VarHandle exifHumidity$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifHumidity"));
     public static VarHandle exifHumidity$VH() {
         return libraw_metadata_common_t.exifHumidity$VH;
     }
@@ -204,7 +204,7 @@ public class libraw_metadata_common_t {
     public static void exifHumidity$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifHumidity$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifPressure$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifPressure"));
+    static final VarHandle exifPressure$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifPressure"));
     public static VarHandle exifPressure$VH() {
         return libraw_metadata_common_t.exifPressure$VH;
     }
@@ -220,7 +220,7 @@ public class libraw_metadata_common_t {
     public static void exifPressure$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifPressure$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifWaterDepth$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifWaterDepth"));
+    static final VarHandle exifWaterDepth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifWaterDepth"));
     public static VarHandle exifWaterDepth$VH() {
         return libraw_metadata_common_t.exifWaterDepth$VH;
     }
@@ -236,7 +236,7 @@ public class libraw_metadata_common_t {
     public static void exifWaterDepth$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifWaterDepth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifAcceleration$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifAcceleration"));
+    static final VarHandle exifAcceleration$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifAcceleration"));
     public static VarHandle exifAcceleration$VH() {
         return libraw_metadata_common_t.exifAcceleration$VH;
     }
@@ -252,7 +252,7 @@ public class libraw_metadata_common_t {
     public static void exifAcceleration$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifAcceleration$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifCameraElevationAngle$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifCameraElevationAngle"));
+    static final VarHandle exifCameraElevationAngle$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifCameraElevationAngle"));
     public static VarHandle exifCameraElevationAngle$VH() {
         return libraw_metadata_common_t.exifCameraElevationAngle$VH;
     }
@@ -268,7 +268,7 @@ public class libraw_metadata_common_t {
     public static void exifCameraElevationAngle$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifCameraElevationAngle$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle real_ISO$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("real_ISO"));
+    static final VarHandle real_ISO$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("real_ISO"));
     public static VarHandle real_ISO$VH() {
         return libraw_metadata_common_t.real_ISO$VH;
     }
@@ -284,7 +284,7 @@ public class libraw_metadata_common_t {
     public static void real_ISO$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.real_ISO$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle exifExposureIndex$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("exifExposureIndex"));
+    static final VarHandle exifExposureIndex$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifExposureIndex"));
     public static VarHandle exifExposureIndex$VH() {
         return libraw_metadata_common_t.exifExposureIndex$VH;
     }
@@ -300,7 +300,7 @@ public class libraw_metadata_common_t {
     public static void exifExposureIndex$set(MemorySegment seg, long index, float x) {
         libraw_metadata_common_t.exifExposureIndex$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ColorSpace$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("ColorSpace"));
+    static final VarHandle ColorSpace$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ColorSpace"));
     public static VarHandle ColorSpace$VH() {
         return libraw_metadata_common_t.ColorSpace$VH;
     }
@@ -319,7 +319,7 @@ public class libraw_metadata_common_t {
     public static MemorySegment firmware$slice(MemorySegment seg) {
         return seg.asSlice(66, 128);
     }
-    static final VarHandle ExposureCalibrationShift$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("ExposureCalibrationShift"));
+    static final VarHandle ExposureCalibrationShift$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureCalibrationShift"));
     public static VarHandle ExposureCalibrationShift$VH() {
         return libraw_metadata_common_t.ExposureCalibrationShift$VH;
     }
@@ -338,7 +338,7 @@ public class libraw_metadata_common_t {
     public static MemorySegment afdata$slice(MemorySegment seg) {
         return seg.asSlice(200, 96);
     }
-    static final VarHandle afcount$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("afcount"));
+    static final VarHandle afcount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("afcount"));
     public static VarHandle afcount$VH() {
         return libraw_metadata_common_t.afcount$VH;
     }
@@ -356,12 +356,12 @@ public class libraw_metadata_common_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

@@ -6,79 +6,79 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class libraw_lensinfo_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_FLOAT.withName("MinFocal"),
-        C_FLOAT.withName("MaxFocal"),
-        C_FLOAT.withName("MaxAp4MinFocal"),
-        C_FLOAT.withName("MaxAp4MaxFocal"),
-        C_FLOAT.withName("EXIF_MaxAp"),
-        MemoryLayout.sequenceLayout(128, C_CHAR).withName("LensMake"),
-        MemoryLayout.sequenceLayout(128, C_CHAR).withName("Lens"),
-        MemoryLayout.sequenceLayout(128, C_CHAR).withName("LensSerial"),
-        MemoryLayout.sequenceLayout(128, C_CHAR).withName("InternalLensSerial"),
-        C_SHORT.withName("FocalLengthIn35mmFormat"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
+        Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
+        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
+        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal"),
+        Constants$root.C_FLOAT$LAYOUT.withName("EXIF_MaxAp"),
+        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("LensMake"),
+        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Lens"),
+        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("LensSerial"),
+        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("InternalLensSerial"),
+        Constants$root.C_SHORT$LAYOUT.withName("FocalLengthIn35mmFormat"),
         MemoryLayout.paddingLayout(16),
         MemoryLayout.structLayout(
-            C_FLOAT.withName("EffectiveMaxAp"),
-            C_CHAR.withName("LensIDNumber"),
-            C_CHAR.withName("LensFStops"),
-            C_CHAR.withName("MCUVersion"),
-            C_CHAR.withName("LensType")
+            Constants$root.C_FLOAT$LAYOUT.withName("EffectiveMaxAp"),
+            Constants$root.C_CHAR$LAYOUT.withName("LensIDNumber"),
+            Constants$root.C_CHAR$LAYOUT.withName("LensFStops"),
+            Constants$root.C_CHAR$LAYOUT.withName("MCUVersion"),
+            Constants$root.C_CHAR$LAYOUT.withName("LensType")
         ).withName("nikon"),
         MemoryLayout.structLayout(
-            C_FLOAT.withName("MinFocal"),
-            C_FLOAT.withName("MaxFocal"),
-            C_FLOAT.withName("MaxAp4MinFocal"),
-            C_FLOAT.withName("MaxAp4MaxFocal")
+            Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal")
         ).withName("dng"),
         MemoryLayout.structLayout(
-            C_LONG_LONG.withName("LensID"),
-            MemoryLayout.sequenceLayout(128, C_CHAR).withName("Lens"),
-            C_SHORT.withName("LensFormat"),
-            C_SHORT.withName("LensMount"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("LensID"),
+            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Lens"),
+            Constants$root.C_SHORT$LAYOUT.withName("LensFormat"),
+            Constants$root.C_SHORT$LAYOUT.withName("LensMount"),
             MemoryLayout.paddingLayout(32),
-            C_LONG_LONG.withName("CamID"),
-            C_SHORT.withName("CameraFormat"),
-            C_SHORT.withName("CameraMount"),
-            MemoryLayout.sequenceLayout(64, C_CHAR).withName("body"),
-            C_SHORT.withName("FocalType"),
-            MemoryLayout.sequenceLayout(16, C_CHAR).withName("LensFeatures_pre"),
-            MemoryLayout.sequenceLayout(16, C_CHAR).withName("LensFeatures_suf"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("CamID"),
+            Constants$root.C_SHORT$LAYOUT.withName("CameraFormat"),
+            Constants$root.C_SHORT$LAYOUT.withName("CameraMount"),
+            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("body"),
+            Constants$root.C_SHORT$LAYOUT.withName("FocalType"),
+            MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("LensFeatures_pre"),
+            MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("LensFeatures_suf"),
             MemoryLayout.paddingLayout(16),
-            C_FLOAT.withName("MinFocal"),
-            C_FLOAT.withName("MaxFocal"),
-            C_FLOAT.withName("MaxAp4MinFocal"),
-            C_FLOAT.withName("MaxAp4MaxFocal"),
-            C_FLOAT.withName("MinAp4MinFocal"),
-            C_FLOAT.withName("MinAp4MaxFocal"),
-            C_FLOAT.withName("MaxAp"),
-            C_FLOAT.withName("MinAp"),
-            C_FLOAT.withName("CurFocal"),
-            C_FLOAT.withName("CurAp"),
-            C_FLOAT.withName("MaxAp4CurFocal"),
-            C_FLOAT.withName("MinAp4CurFocal"),
-            C_FLOAT.withName("MinFocusDistance"),
-            C_FLOAT.withName("FocusRangeIndex"),
-            C_FLOAT.withName("LensFStops"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MinAp4MinFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MinAp4MaxFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MinAp"),
+            Constants$root.C_FLOAT$LAYOUT.withName("CurFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("CurAp"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4CurFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MinAp4CurFocal"),
+            Constants$root.C_FLOAT$LAYOUT.withName("MinFocusDistance"),
+            Constants$root.C_FLOAT$LAYOUT.withName("FocusRangeIndex"),
+            Constants$root.C_FLOAT$LAYOUT.withName("LensFStops"),
             MemoryLayout.paddingLayout(32),
-            C_LONG_LONG.withName("TeleconverterID"),
-            MemoryLayout.sequenceLayout(128, C_CHAR).withName("Teleconverter"),
-            C_LONG_LONG.withName("AdapterID"),
-            MemoryLayout.sequenceLayout(128, C_CHAR).withName("Adapter"),
-            C_LONG_LONG.withName("AttachmentID"),
-            MemoryLayout.sequenceLayout(128, C_CHAR).withName("Attachment"),
-            C_SHORT.withName("FocalUnits"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("TeleconverterID"),
+            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Teleconverter"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("AdapterID"),
+            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Adapter"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("AttachmentID"),
+            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Attachment"),
+            Constants$root.C_SHORT$LAYOUT.withName("FocalUnits"),
             MemoryLayout.paddingLayout(16),
-            C_FLOAT.withName("FocalLengthIn35mmFormat")
+            Constants$root.C_FLOAT$LAYOUT.withName("FocalLengthIn35mmFormat")
         ).withName("makernotes")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_lensinfo_t.$struct$LAYOUT;
     }
-    static final VarHandle MinFocal$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("MinFocal"));
+    static final VarHandle MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinFocal"));
     public static VarHandle MinFocal$VH() {
         return libraw_lensinfo_t.MinFocal$VH;
     }
@@ -94,7 +94,7 @@ public class libraw_lensinfo_t {
     public static void MinFocal$set(MemorySegment seg, long index, float x) {
         libraw_lensinfo_t.MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxFocal$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("MaxFocal"));
+    static final VarHandle MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxFocal"));
     public static VarHandle MaxFocal$VH() {
         return libraw_lensinfo_t.MaxFocal$VH;
     }
@@ -110,7 +110,7 @@ public class libraw_lensinfo_t {
     public static void MaxFocal$set(MemorySegment seg, long index, float x) {
         libraw_lensinfo_t.MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4MinFocal$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("MaxAp4MinFocal"));
+    static final VarHandle MaxAp4MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4MinFocal"));
     public static VarHandle MaxAp4MinFocal$VH() {
         return libraw_lensinfo_t.MaxAp4MinFocal$VH;
     }
@@ -126,7 +126,7 @@ public class libraw_lensinfo_t {
     public static void MaxAp4MinFocal$set(MemorySegment seg, long index, float x) {
         libraw_lensinfo_t.MaxAp4MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4MaxFocal$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("MaxAp4MaxFocal"));
+    static final VarHandle MaxAp4MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4MaxFocal"));
     public static VarHandle MaxAp4MaxFocal$VH() {
         return libraw_lensinfo_t.MaxAp4MaxFocal$VH;
     }
@@ -142,7 +142,7 @@ public class libraw_lensinfo_t {
     public static void MaxAp4MaxFocal$set(MemorySegment seg, long index, float x) {
         libraw_lensinfo_t.MaxAp4MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle EXIF_MaxAp$VH = $struct$LAYOUT.varHandle(float.class, MemoryLayout.PathElement.groupElement("EXIF_MaxAp"));
+    static final VarHandle EXIF_MaxAp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("EXIF_MaxAp"));
     public static VarHandle EXIF_MaxAp$VH() {
         return libraw_lensinfo_t.EXIF_MaxAp$VH;
     }
@@ -170,7 +170,7 @@ public class libraw_lensinfo_t {
     public static MemorySegment InternalLensSerial$slice(MemorySegment seg) {
         return seg.asSlice(404, 128);
     }
-    static final VarHandle FocalLengthIn35mmFormat$VH = $struct$LAYOUT.varHandle(short.class, MemoryLayout.PathElement.groupElement("FocalLengthIn35mmFormat"));
+    static final VarHandle FocalLengthIn35mmFormat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocalLengthIn35mmFormat"));
     public static VarHandle FocalLengthIn35mmFormat$VH() {
         return libraw_lensinfo_t.FocalLengthIn35mmFormat$VH;
     }
@@ -197,12 +197,12 @@ public class libraw_lensinfo_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }

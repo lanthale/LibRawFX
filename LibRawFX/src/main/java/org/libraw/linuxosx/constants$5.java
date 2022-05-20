@@ -6,51 +6,45 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 class constants$5 {
 
-    static final FunctionDescriptor libraw_version$FUNC = FunctionDescriptor.of(C_POINTER);
+    static final FunctionDescriptor libraw_version$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
     static final MethodHandle libraw_version$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_version",
-        "([Ljava/lang/Object;)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_version",
         constants$5.libraw_version$FUNC, true
     );
-    static final FunctionDescriptor libraw_versionNumber$FUNC = FunctionDescriptor.of(C_INT);
+    static final FunctionDescriptor libraw_versionNumber$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT);
     static final MethodHandle libraw_versionNumber$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_versionNumber",
-        "([Ljava/lang/Object;)I",
+        "libraw_versionNumber",
         constants$5.libraw_versionNumber$FUNC, true
     );
-    static final FunctionDescriptor libraw_cameraList$FUNC = FunctionDescriptor.of(C_POINTER);
+    static final FunctionDescriptor libraw_cameraList$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
     static final MethodHandle libraw_cameraList$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_cameraList",
-        "([Ljava/lang/Object;)Ljdk/incubator/foreign/MemoryAddress;",
+        "libraw_cameraList",
         constants$5.libraw_cameraList$FUNC, true
     );
-    static final FunctionDescriptor libraw_cameraCount$FUNC = FunctionDescriptor.of(C_INT);
+    static final FunctionDescriptor libraw_cameraCount$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT);
     static final MethodHandle libraw_cameraCount$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_cameraCount",
-        "([Ljava/lang/Object;)I",
+        "libraw_cameraCount",
         constants$5.libraw_cameraCount$FUNC, true
     );
     static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_POINTER,
-        C_POINTER
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_memerror_handler",
-        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)V",
+        "libraw_set_memerror_handler",
         constants$5.libraw_set_memerror_handler$FUNC, false
     );
     static final FunctionDescriptor libraw_set_exifparser_handler$FUNC = FunctionDescriptor.ofVoid(
-        C_POINTER,
-        C_POINTER,
-        C_POINTER
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_set_exifparser_handler$MH = RuntimeHelper.downcallHandle(
-        libraw_h.LIBRARIES, "libraw_set_exifparser_handler",
-        "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)V",
+        "libraw_set_exifparser_handler",
         constants$5.libraw_set_exifparser_handler$FUNC, false
     );
 }

@@ -6,32 +6,32 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.ValueLayout.*;
 public class crx_data_header_t {
 
-    static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        C_INT.withName("version"),
-        C_INT.withName("f_width"),
-        C_INT.withName("f_height"),
-        C_INT.withName("tileWidth"),
-        C_INT.withName("tileHeight"),
-        C_INT.withName("nBits"),
-        C_INT.withName("nPlanes"),
-        C_INT.withName("cfaLayout"),
-        C_INT.withName("encType"),
-        C_INT.withName("imageLevels"),
-        C_INT.withName("hasTileCols"),
-        C_INT.withName("hasTileRows"),
-        C_INT.withName("mdatHdrSize"),
-        C_INT.withName("MediaSize"),
-        C_LONG_LONG.withName("MediaOffset"),
-        C_INT.withName("MediaType"),
+    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+        Constants$root.C_INT$LAYOUT.withName("version"),
+        Constants$root.C_INT$LAYOUT.withName("f_width"),
+        Constants$root.C_INT$LAYOUT.withName("f_height"),
+        Constants$root.C_INT$LAYOUT.withName("tileWidth"),
+        Constants$root.C_INT$LAYOUT.withName("tileHeight"),
+        Constants$root.C_INT$LAYOUT.withName("nBits"),
+        Constants$root.C_INT$LAYOUT.withName("nPlanes"),
+        Constants$root.C_INT$LAYOUT.withName("cfaLayout"),
+        Constants$root.C_INT$LAYOUT.withName("encType"),
+        Constants$root.C_INT$LAYOUT.withName("imageLevels"),
+        Constants$root.C_INT$LAYOUT.withName("hasTileCols"),
+        Constants$root.C_INT$LAYOUT.withName("hasTileRows"),
+        Constants$root.C_INT$LAYOUT.withName("mdatHdrSize"),
+        Constants$root.C_INT$LAYOUT.withName("MediaSize"),
+        Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
+        Constants$root.C_INT$LAYOUT.withName("MediaType"),
         MemoryLayout.paddingLayout(32)
     );
     public static MemoryLayout $LAYOUT() {
         return crx_data_header_t.$struct$LAYOUT;
     }
-    static final VarHandle version$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("version"));
+    static final VarHandle version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("version"));
     public static VarHandle version$VH() {
         return crx_data_header_t.version$VH;
     }
@@ -47,7 +47,7 @@ public class crx_data_header_t {
     public static void version$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.version$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle f_width$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("f_width"));
+    static final VarHandle f_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("f_width"));
     public static VarHandle f_width$VH() {
         return crx_data_header_t.f_width$VH;
     }
@@ -63,7 +63,7 @@ public class crx_data_header_t {
     public static void f_width$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.f_width$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle f_height$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("f_height"));
+    static final VarHandle f_height$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("f_height"));
     public static VarHandle f_height$VH() {
         return crx_data_header_t.f_height$VH;
     }
@@ -79,7 +79,7 @@ public class crx_data_header_t {
     public static void f_height$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.f_height$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tileWidth$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tileWidth"));
+    static final VarHandle tileWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tileWidth"));
     public static VarHandle tileWidth$VH() {
         return crx_data_header_t.tileWidth$VH;
     }
@@ -95,7 +95,7 @@ public class crx_data_header_t {
     public static void tileWidth$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.tileWidth$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tileHeight$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("tileHeight"));
+    static final VarHandle tileHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tileHeight"));
     public static VarHandle tileHeight$VH() {
         return crx_data_header_t.tileHeight$VH;
     }
@@ -111,7 +111,7 @@ public class crx_data_header_t {
     public static void tileHeight$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.tileHeight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nBits$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("nBits"));
+    static final VarHandle nBits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nBits"));
     public static VarHandle nBits$VH() {
         return crx_data_header_t.nBits$VH;
     }
@@ -127,7 +127,7 @@ public class crx_data_header_t {
     public static void nBits$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.nBits$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nPlanes$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("nPlanes"));
+    static final VarHandle nPlanes$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nPlanes"));
     public static VarHandle nPlanes$VH() {
         return crx_data_header_t.nPlanes$VH;
     }
@@ -143,7 +143,7 @@ public class crx_data_header_t {
     public static void nPlanes$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.nPlanes$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cfaLayout$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("cfaLayout"));
+    static final VarHandle cfaLayout$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cfaLayout"));
     public static VarHandle cfaLayout$VH() {
         return crx_data_header_t.cfaLayout$VH;
     }
@@ -159,7 +159,7 @@ public class crx_data_header_t {
     public static void cfaLayout$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.cfaLayout$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle encType$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("encType"));
+    static final VarHandle encType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("encType"));
     public static VarHandle encType$VH() {
         return crx_data_header_t.encType$VH;
     }
@@ -175,7 +175,7 @@ public class crx_data_header_t {
     public static void encType$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.encType$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle imageLevels$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("imageLevels"));
+    static final VarHandle imageLevels$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("imageLevels"));
     public static VarHandle imageLevels$VH() {
         return crx_data_header_t.imageLevels$VH;
     }
@@ -191,7 +191,7 @@ public class crx_data_header_t {
     public static void imageLevels$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.imageLevels$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle hasTileCols$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("hasTileCols"));
+    static final VarHandle hasTileCols$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("hasTileCols"));
     public static VarHandle hasTileCols$VH() {
         return crx_data_header_t.hasTileCols$VH;
     }
@@ -207,7 +207,7 @@ public class crx_data_header_t {
     public static void hasTileCols$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.hasTileCols$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle hasTileRows$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("hasTileRows"));
+    static final VarHandle hasTileRows$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("hasTileRows"));
     public static VarHandle hasTileRows$VH() {
         return crx_data_header_t.hasTileRows$VH;
     }
@@ -223,7 +223,7 @@ public class crx_data_header_t {
     public static void hasTileRows$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.hasTileRows$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle mdatHdrSize$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("mdatHdrSize"));
+    static final VarHandle mdatHdrSize$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("mdatHdrSize"));
     public static VarHandle mdatHdrSize$VH() {
         return crx_data_header_t.mdatHdrSize$VH;
     }
@@ -239,7 +239,7 @@ public class crx_data_header_t {
     public static void mdatHdrSize$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.mdatHdrSize$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MediaSize$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("MediaSize"));
+    static final VarHandle MediaSize$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MediaSize"));
     public static VarHandle MediaSize$VH() {
         return crx_data_header_t.MediaSize$VH;
     }
@@ -255,7 +255,7 @@ public class crx_data_header_t {
     public static void MediaSize$set(MemorySegment seg, long index, int x) {
         crx_data_header_t.MediaSize$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MediaOffset$VH = $struct$LAYOUT.varHandle(long.class, MemoryLayout.PathElement.groupElement("MediaOffset"));
+    static final VarHandle MediaOffset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MediaOffset"));
     public static VarHandle MediaOffset$VH() {
         return crx_data_header_t.MediaOffset$VH;
     }
@@ -271,7 +271,7 @@ public class crx_data_header_t {
     public static void MediaOffset$set(MemorySegment seg, long index, long x) {
         crx_data_header_t.MediaOffset$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MediaType$VH = $struct$LAYOUT.varHandle(int.class, MemoryLayout.PathElement.groupElement("MediaType"));
+    static final VarHandle MediaType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MediaType"));
     public static VarHandle MediaType$VH() {
         return crx_data_header_t.MediaType$VH;
     }
@@ -289,12 +289,12 @@ public class crx_data_header_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.ofScope(scope)); }
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
+    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
     public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.ofScope(scope));
+        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
     }
     public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
