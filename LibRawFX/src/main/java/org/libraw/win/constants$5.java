@@ -9,13 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.ValueLayout.*;
 class constants$5 {
 
-    static final FunctionDescriptor libraw_raw2image$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_raw2image$MH = RuntimeHelper.downcallHandle(
-        "libraw_raw2image",
-        constants$5.libraw_raw2image$FUNC, false
-    );
     static final FunctionDescriptor libraw_free_image$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
@@ -42,6 +35,15 @@ class constants$5 {
     static final MethodHandle libraw_cameraCount$MH = RuntimeHelper.downcallHandle(
         "libraw_cameraCount",
         constants$5.libraw_cameraCount$FUNC, true
+    );
+    static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_memerror_handler",
+        constants$5.libraw_set_memerror_handler$FUNC, false
     );
 }
 

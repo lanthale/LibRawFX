@@ -9,7 +9,7 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.ValueLayout.*;
 class constants$12 {
 
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.20.2-Release");
+    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.21.0-Snapshot202110");
 }
 
 

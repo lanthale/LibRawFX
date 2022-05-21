@@ -28,7 +28,18 @@ public class libraw_metadata_common_t {
         Constants$root.C_FLOAT$LAYOUT.withName("exifExposureIndex"),
         Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
         MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("firmware"),
-        MemoryLayout.paddingLayout(16)
+        MemoryLayout.paddingLayout(16),
+        Constants$root.C_FLOAT$LAYOUT.withName("ExposureCalibrationShift"),
+        MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
+            Constants$root.C_LONG$LAYOUT.withName("AFInfoData_tag"),
+            Constants$root.C_SHORT$LAYOUT.withName("AFInfoData_order"),
+            MemoryLayout.paddingLayout(16),
+            Constants$root.C_LONG$LAYOUT.withName("AFInfoData_version"),
+            Constants$root.C_LONG$LAYOUT.withName("AFInfoData_length"),
+            Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
+        )).withName("afdata"),
+        Constants$root.C_LONG$LAYOUT.withName("afcount"),
+        MemoryLayout.paddingLayout(32)
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_metadata_common_t.$struct$LAYOUT;
@@ -307,6 +318,41 @@ public class libraw_metadata_common_t {
     }
     public static MemorySegment firmware$slice(MemorySegment seg) {
         return seg.asSlice(66, 128);
+    }
+    static final VarHandle ExposureCalibrationShift$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureCalibrationShift"));
+    public static VarHandle ExposureCalibrationShift$VH() {
+        return libraw_metadata_common_t.ExposureCalibrationShift$VH;
+    }
+    public static float ExposureCalibrationShift$get(MemorySegment seg) {
+        return (float)libraw_metadata_common_t.ExposureCalibrationShift$VH.get(seg);
+    }
+    public static void ExposureCalibrationShift$set( MemorySegment seg, float x) {
+        libraw_metadata_common_t.ExposureCalibrationShift$VH.set(seg, x);
+    }
+    public static float ExposureCalibrationShift$get(MemorySegment seg, long index) {
+        return (float)libraw_metadata_common_t.ExposureCalibrationShift$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void ExposureCalibrationShift$set(MemorySegment seg, long index, float x) {
+        libraw_metadata_common_t.ExposureCalibrationShift$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment afdata$slice(MemorySegment seg) {
+        return seg.asSlice(200, 96);
+    }
+    static final VarHandle afcount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("afcount"));
+    public static VarHandle afcount$VH() {
+        return libraw_metadata_common_t.afcount$VH;
+    }
+    public static int afcount$get(MemorySegment seg) {
+        return (int)libraw_metadata_common_t.afcount$VH.get(seg);
+    }
+    public static void afcount$set( MemorySegment seg, int x) {
+        libraw_metadata_common_t.afcount$VH.set(seg, x);
+    }
+    public static int afcount$get(MemorySegment seg, long index) {
+        return (int)libraw_metadata_common_t.afcount$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void afcount$set(MemorySegment seg, long index, int x) {
+        libraw_metadata_common_t.afcount$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

@@ -16,7 +16,8 @@ public class libraw_dng_levels_t {
         MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
         Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("dng_whitelevel"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("default_crop"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
         Constants$root.C_LONG$LAYOUT.withName("preview_colorspace"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
@@ -84,7 +85,10 @@ public class libraw_dng_levels_t {
         return seg.asSlice(32844, 16);
     }
     public static MemorySegment default_crop$slice(MemorySegment seg) {
-        return seg.asSlice(32860, 16);
+        return seg.asSlice(32860, 8);
+    }
+    public static MemorySegment user_crop$slice(MemorySegment seg) {
+        return seg.asSlice(32868, 16);
     }
     static final VarHandle preview_colorspace$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("preview_colorspace"));
     public static VarHandle preview_colorspace$VH() {
@@ -103,10 +107,10 @@ public class libraw_dng_levels_t {
         libraw_dng_levels_t.preview_colorspace$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment analogbalance$slice(MemorySegment seg) {
-        return seg.asSlice(32880, 16);
+        return seg.asSlice(32888, 16);
     }
     public static MemorySegment asshotneutral$slice(MemorySegment seg) {
-        return seg.asSlice(32896, 16);
+        return seg.asSlice(32904, 16);
     }
     static final VarHandle baseline_exposure$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("baseline_exposure"));
     public static VarHandle baseline_exposure$VH() {

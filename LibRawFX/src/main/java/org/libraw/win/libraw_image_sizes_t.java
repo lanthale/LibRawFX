@@ -23,13 +23,13 @@ public class libraw_image_sizes_t {
         Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
         Constants$root.C_LONG$LAYOUT.withName("flip"),
         MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT)).withName("mask"),
-        MemoryLayout.structLayout(
+        Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
+        MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
             Constants$root.C_SHORT$LAYOUT.withName("cleft"),
             Constants$root.C_SHORT$LAYOUT.withName("ctop"),
             Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-            Constants$root.C_SHORT$LAYOUT.withName("cheight"),
-            Constants$root.C_SHORT$LAYOUT.withName("aspect")
-        ).withName("raw_inset_crop"),
+            Constants$root.C_SHORT$LAYOUT.withName("cheight")
+        )).withName("raw_inset_crops"),
         MemoryLayout.paddingLayout(16)
     );
     public static MemoryLayout $LAYOUT() {
@@ -214,8 +214,24 @@ public class libraw_image_sizes_t {
     public static MemorySegment mask$slice(MemorySegment seg) {
         return seg.asSlice(36, 128);
     }
-    public static MemorySegment raw_inset_crop$slice(MemorySegment seg) {
-        return seg.asSlice(164, 10);
+    static final VarHandle raw_aspect$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_aspect"));
+    public static VarHandle raw_aspect$VH() {
+        return libraw_image_sizes_t.raw_aspect$VH;
+    }
+    public static short raw_aspect$get(MemorySegment seg) {
+        return (short)libraw_image_sizes_t.raw_aspect$VH.get(seg);
+    }
+    public static void raw_aspect$set( MemorySegment seg, short x) {
+        libraw_image_sizes_t.raw_aspect$VH.set(seg, x);
+    }
+    public static short raw_aspect$get(MemorySegment seg, long index) {
+        return (short)libraw_image_sizes_t.raw_aspect$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void raw_aspect$set(MemorySegment seg, long index, short x) {
+        libraw_image_sizes_t.raw_aspect$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment raw_inset_crops$slice(MemorySegment seg) {
+        return seg.asSlice(166, 16);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

@@ -9,14 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.ValueLayout.*;
 class constants$8 {
 
-    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_make_mem_image",
-        constants$8.libraw_dcraw_make_mem_image$FUNC, false
-    );
     static final FunctionDescriptor libraw_dcraw_make_mem_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
@@ -47,6 +39,14 @@ class constants$8 {
     static final MethodHandle libraw_set_output_color$MH = RuntimeHelper.downcallHandle(
         "libraw_set_output_color",
         constants$8.libraw_set_output_color$FUNC, false
+    );
+    static final FunctionDescriptor libraw_set_adjust_maximum_thr$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_FLOAT$LAYOUT
+    );
+    static final MethodHandle libraw_set_adjust_maximum_thr$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_adjust_maximum_thr",
+        constants$8.libraw_set_adjust_maximum_thr$FUNC, false
     );
     static final FunctionDescriptor libraw_set_user_mul$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,

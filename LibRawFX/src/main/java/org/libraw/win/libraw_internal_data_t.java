@@ -50,8 +50,12 @@ public class libraw_internal_data_t {
             Constants$root.C_LONG_LONG$LAYOUT.withName("strip_offset"),
             Constants$root.C_LONG_LONG$LAYOUT.withName("data_offset"),
             Constants$root.C_LONG_LONG$LAYOUT.withName("meta_offset"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("exif_offset"),
+            Constants$root.C_LONG_LONG$LAYOUT.withName("ifd0_offset"),
             Constants$root.C_LONG$LAYOUT.withName("data_size"),
             Constants$root.C_LONG$LAYOUT.withName("meta_length"),
+            Constants$root.C_LONG$LAYOUT.withName("cr3_exif_length"),
+            Constants$root.C_LONG$LAYOUT.withName("cr3_ifd0_length"),
             Constants$root.C_LONG$LAYOUT.withName("thumb_misc"),
             Constants$root.C_LONG$LAYOUT.withName("fuji_layout"),
             Constants$root.C_LONG$LAYOUT.withName("tiff_samples"),
@@ -71,8 +75,10 @@ public class libraw_internal_data_t {
             Constants$root.C_LONG$LAYOUT.withName("fuji_block_width"),
             Constants$root.C_LONG$LAYOUT.withName("fuji_bits"),
             Constants$root.C_LONG$LAYOUT.withName("fuji_raw_type"),
+            Constants$root.C_LONG$LAYOUT.withName("fuji_lossless"),
             Constants$root.C_LONG$LAYOUT.withName("pana_encoding"),
             Constants$root.C_LONG$LAYOUT.withName("pana_bpp"),
+            MemoryLayout.paddingLayout(32),
             MemoryLayout.sequenceLayout(16, MemoryLayout.structLayout(
                 Constants$root.C_LONG$LAYOUT.withName("version"),
                 Constants$root.C_LONG$LAYOUT.withName("f_width"),
@@ -97,13 +103,14 @@ public class libraw_internal_data_t {
             Constants$root.C_SHORT$LAYOUT.withName("CR3_Version"),
             Constants$root.C_LONG$LAYOUT.withName("CM_found"),
             Constants$root.C_LONG$LAYOUT.withName("is_NikonTransfer"),
+            Constants$root.C_LONG$LAYOUT.withName("is_Olympus"),
+            Constants$root.C_LONG$LAYOUT.withName("OlympusDNG_SubDirOffsetValid"),
             Constants$root.C_LONG$LAYOUT.withName("is_Sony"),
             Constants$root.C_LONG$LAYOUT.withName("is_pana_raw"),
-            Constants$root.C_LONG$LAYOUT.withName("is_4K_RAFdata"),
             Constants$root.C_LONG$LAYOUT.withName("is_PentaxRicohMakernotes"),
             MemoryLayout.sequenceLayout(20, Constants$root.C_LONG$LAYOUT).withName("dng_frames"),
             Constants$root.C_SHORT$LAYOUT.withName("raw_stride"),
-            MemoryLayout.paddingLayout(48)
+            MemoryLayout.paddingLayout(16)
         ).withName("unpacker_data")
     );
     public static MemoryLayout $LAYOUT() {
@@ -122,7 +129,7 @@ public class libraw_internal_data_t {
         return seg.asSlice(96, 40);
     }
     public static MemorySegment unpacker_data$slice(MemorySegment seg) {
-        return seg.asSlice(136, 1416);
+        return seg.asSlice(136, 1448);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

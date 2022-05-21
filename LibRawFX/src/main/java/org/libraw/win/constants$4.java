@@ -9,13 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.ValueLayout.*;
 class constants$4 {
 
-    static final FunctionDescriptor libraw_unpack$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_unpack$MH = RuntimeHelper.downcallHandle(
-        "libraw_unpack",
-        constants$4.libraw_unpack$FUNC, false
-    );
     static final FunctionDescriptor libraw_unpack_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
@@ -50,6 +43,13 @@ class constants$4 {
     static final MethodHandle libraw_subtract_black$MH = RuntimeHelper.downcallHandle(
         "libraw_subtract_black",
         constants$4.libraw_subtract_black$FUNC, false
+    );
+    static final FunctionDescriptor libraw_raw2image$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_raw2image$MH = RuntimeHelper.downcallHandle(
+        "libraw_raw2image",
+        constants$4.libraw_raw2image$FUNC, false
     );
 }
 

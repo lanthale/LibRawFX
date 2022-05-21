@@ -9,15 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.ValueLayout.*;
 class constants$7 {
 
-    static final FunctionDescriptor libraw_COLOR$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_COLOR$MH = RuntimeHelper.downcallHandle(
-        "libraw_COLOR",
-        constants$7.libraw_COLOR$FUNC, false
-    );
     static final FunctionDescriptor libraw_capabilities$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
     static final MethodHandle libraw_capabilities$MH = RuntimeHelper.downcallHandle(
         "libraw_capabilities",
@@ -52,6 +43,14 @@ class constants$7 {
     static final MethodHandle libraw_dcraw_process$MH = RuntimeHelper.downcallHandle(
         "libraw_dcraw_process",
         constants$7.libraw_dcraw_process$FUNC, false
+    );
+    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
+        "libraw_dcraw_make_mem_image",
+        constants$7.libraw_dcraw_make_mem_image$FUNC, false
     );
 }
 

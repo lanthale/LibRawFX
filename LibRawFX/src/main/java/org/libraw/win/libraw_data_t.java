@@ -25,13 +25,13 @@ public class libraw_data_t {
             Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
             Constants$root.C_LONG$LAYOUT.withName("flip"),
             MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT)).withName("mask"),
-            MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
+            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
                 Constants$root.C_SHORT$LAYOUT.withName("cleft"),
                 Constants$root.C_SHORT$LAYOUT.withName("ctop"),
                 Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("cheight"),
-                Constants$root.C_SHORT$LAYOUT.withName("aspect")
-            ).withName("raw_inset_crop"),
+                Constants$root.C_SHORT$LAYOUT.withName("cheight")
+            )).withName("raw_inset_crops"),
             MemoryLayout.paddingLayout(16)
         ).withName("sizes"),
         MemoryLayout.structLayout(
@@ -136,27 +136,7 @@ public class libraw_data_t {
                 Constants$root.C_SHORT$LAYOUT.withName("FlashExposureLock"),
                 Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("AESetting"),
-                Constants$root.C_CHAR$LAYOUT.withName("HighlightTonePriority"),
-                MemoryLayout.paddingLayout(8),
                 Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusContinuous"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPointsInFocus30D"),
-                MemoryLayout.sequenceLayout(8, Constants$root.C_CHAR$LAYOUT).withName("AFPointsInFocus1D"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPointsInFocus5D"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("NumAFPoints"),
-                Constants$root.C_SHORT$LAYOUT.withName("ValidAFPoints"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFImageWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFImageHeight"),
-                MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaWidths"),
-                MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaHeights"),
-                MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaXPositions"),
-                MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaYPositions"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("AFPointsInFocus"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("AFPointsSelected"),
-                Constants$root.C_SHORT$LAYOUT.withName("PrimaryAFPoint"),
                 Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("FlashActivity"),
                 Constants$root.C_SHORT$LAYOUT.withName("FlashBits"),
@@ -166,14 +146,6 @@ public class libraw_data_t {
                 Constants$root.C_SHORT$LAYOUT.withName("ContinuousDrive"),
                 Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
                 Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorLeftBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorTopBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorRightBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorBottomBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("BlackMaskLeftBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("BlackMaskTopBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("BlackMaskRightBorder"),
-                Constants$root.C_SHORT$LAYOUT.withName("BlackMaskBottomBorder"),
                 Constants$root.C_LONG$LAYOUT.withName("AFMicroAdjMode"),
                 Constants$root.C_FLOAT$LAYOUT.withName("AFMicroAdjValue"),
                 Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
@@ -181,9 +153,41 @@ public class libraw_data_t {
                 Constants$root.C_SHORT$LAYOUT.withName("SRAWQuality"),
                 MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("wbi"),
-                Constants$root.C_FLOAT$LAYOUT.withName("firmware"),
                 Constants$root.C_SHORT$LAYOUT.withName("RF_lensID"),
-                MemoryLayout.paddingLayout(16)
+                MemoryLayout.paddingLayout(16),
+                Constants$root.C_LONG$LAYOUT.withName("AutoLightingOptimizer"),
+                Constants$root.C_LONG$LAYOUT.withName("HighlightTonePriority"),
+                MemoryLayout.structLayout(
+                    Constants$root.C_SHORT$LAYOUT.withName("t"),
+                    Constants$root.C_SHORT$LAYOUT.withName("l"),
+                    Constants$root.C_SHORT$LAYOUT.withName("b"),
+                    Constants$root.C_SHORT$LAYOUT.withName("r")
+                ).withName("DefaultCropAbsolute"),
+                MemoryLayout.structLayout(
+                    Constants$root.C_SHORT$LAYOUT.withName("t"),
+                    Constants$root.C_SHORT$LAYOUT.withName("l"),
+                    Constants$root.C_SHORT$LAYOUT.withName("b"),
+                    Constants$root.C_SHORT$LAYOUT.withName("r")
+                ).withName("RecommendedImageArea"),
+                MemoryLayout.structLayout(
+                    Constants$root.C_SHORT$LAYOUT.withName("t"),
+                    Constants$root.C_SHORT$LAYOUT.withName("l"),
+                    Constants$root.C_SHORT$LAYOUT.withName("b"),
+                    Constants$root.C_SHORT$LAYOUT.withName("r")
+                ).withName("LeftOpticalBlack"),
+                MemoryLayout.structLayout(
+                    Constants$root.C_SHORT$LAYOUT.withName("t"),
+                    Constants$root.C_SHORT$LAYOUT.withName("l"),
+                    Constants$root.C_SHORT$LAYOUT.withName("b"),
+                    Constants$root.C_SHORT$LAYOUT.withName("r")
+                ).withName("UpperOpticalBlack"),
+                MemoryLayout.structLayout(
+                    Constants$root.C_SHORT$LAYOUT.withName("t"),
+                    Constants$root.C_SHORT$LAYOUT.withName("l"),
+                    Constants$root.C_SHORT$LAYOUT.withName("b"),
+                    Constants$root.C_SHORT$LAYOUT.withName("r")
+                ).withName("ActiveArea"),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("ISOgain")
             ).withName("canon"),
             MemoryLayout.structLayout(
                 Constants$root.C_DOUBLE$LAYOUT.withName("ExposureBracketValue"),
@@ -192,23 +196,6 @@ public class libraw_data_t {
                 MemoryLayout.sequenceLayout(7, Constants$root.C_CHAR$LAYOUT).withName("ImageStabilization"),
                 Constants$root.C_CHAR$LAYOUT.withName("VibrationReduction"),
                 Constants$root.C_CHAR$LAYOUT.withName("VRMode"),
-                MemoryLayout.sequenceLayout(7, Constants$root.C_CHAR$LAYOUT).withName("FocusMode"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFPoint"),
-                MemoryLayout.paddingLayout(8),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPointsInFocus"),
-                Constants$root.C_CHAR$LAYOUT.withName("ContrastDetectAF"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFAreaMode"),
-                Constants$root.C_CHAR$LAYOUT.withName("PhaseDetectAF"),
-                Constants$root.C_CHAR$LAYOUT.withName("PrimaryAFPoint"),
-                MemoryLayout.sequenceLayout(29, Constants$root.C_CHAR$LAYOUT).withName("AFPointsUsed"),
-                MemoryLayout.paddingLayout(8),
-                Constants$root.C_SHORT$LAYOUT.withName("AFImageWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFImageHeight"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaXPposition"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaYPosition"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaHeight"),
-                Constants$root.C_CHAR$LAYOUT.withName("ContrastDetectAFInFocus"),
                 MemoryLayout.sequenceLayout(13, Constants$root.C_CHAR$LAYOUT).withName("FlashSetting"),
                 MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("FlashType"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashExposureCompensation"),
@@ -230,6 +217,7 @@ public class libraw_data_t {
                 Constants$root.C_CHAR$LAYOUT.withName("FlashColorFilter"),
                 MemoryLayout.paddingLayout(8),
                 Constants$root.C_SHORT$LAYOUT.withName("NEFCompression"),
+                MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("ExposureMode"),
                 Constants$root.C_LONG$LAYOUT.withName("ExposureProgram"),
                 Constants$root.C_LONG$LAYOUT.withName("nMEshots"),
@@ -254,7 +242,15 @@ public class libraw_data_t {
                     Constants$root.C_SHORT$LAYOUT.withName("cheight")
                 ).withName("SensorHighSpeedCrop"),
                 Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorHeight")
+                Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
+                Constants$root.C_SHORT$LAYOUT.withName("Active_D_Lighting"),
+                MemoryLayout.paddingLayout(16),
+                Constants$root.C_LONG$LAYOUT.withName("ShotInfoVersion"),
+                Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
+                MemoryLayout.paddingLayout(48),
+                Constants$root.C_DOUBLE$LAYOUT.withName("RollAngle"),
+                Constants$root.C_DOUBLE$LAYOUT.withName("PitchAngle"),
+                Constants$root.C_DOUBLE$LAYOUT.withName("YawAngle")
             ).withName("nikon"),
             MemoryLayout.structLayout(
                 Constants$root.C_LONG$LAYOUT.withName("BaseISO"),
@@ -289,38 +285,67 @@ public class libraw_data_t {
                 Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("AFMode"),
                 MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusPixel"),
+                Constants$root.C_SHORT$LAYOUT.withName("PrioritySettings"),
+                MemoryLayout.paddingLayout(16),
+                Constants$root.C_LONG$LAYOUT.withName("FocusSettings"),
+                Constants$root.C_LONG$LAYOUT.withName("AF_C_Settings"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusWarning"),
                 MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("ImageStabilization"),
                 Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("WB_Preset"),
                 Constants$root.C_SHORT$LAYOUT.withName("ShutterType"),
                 Constants$root.C_SHORT$LAYOUT.withName("ExrMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("Macro"),
+                MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("Rating"),
                 Constants$root.C_SHORT$LAYOUT.withName("CropMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("FrameRate"),
-                Constants$root.C_SHORT$LAYOUT.withName("FrameWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("FrameHeight"),
                 MemoryLayout.sequenceLayout(13, Constants$root.C_CHAR$LAYOUT).withName("SerialSignature"),
+                MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("SensorID"),
                 MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("RAFVersion"),
+                MemoryLayout.paddingLayout(24),
+                Constants$root.C_LONG$LAYOUT.withName("RAFDataGeneration"),
                 Constants$root.C_SHORT$LAYOUT.withName("RAFDataVersion"),
+                MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("isTSNERDTS"),
                 Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
-                MemoryLayout.paddingLayout(16)
+                MemoryLayout.sequenceLayout(9, Constants$root.C_SHORT$LAYOUT).withName("BlackLevel"),
+                MemoryLayout.sequenceLayout(32, Constants$root.C_LONG$LAYOUT).withName("RAFData_ImageSizeTable"),
+                Constants$root.C_LONG$LAYOUT.withName("AutoBracketing"),
+                Constants$root.C_LONG$LAYOUT.withName("SequenceNumber"),
+                Constants$root.C_LONG$LAYOUT.withName("SeriesLength"),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_FLOAT$LAYOUT).withName("PixelShiftOffset"),
+                Constants$root.C_LONG$LAYOUT.withName("ImageCount")
             ).withName("fuji"),
             MemoryLayout.structLayout(
+                MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT).withName("CameraType2"),
+                Constants$root.C_SHORT$LAYOUT.withName("ValidBits"),
                 MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("SensorCalibration"),
+                MemoryLayout.sequenceLayout(5, Constants$root.C_SHORT$LAYOUT).withName("DriveMode"),
+                Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
                 MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("AutoFocus"),
                 Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
                 MemoryLayout.sequenceLayout(64, Constants$root.C_LONG$LAYOUT).withName("AFAreas"),
+                MemoryLayout.paddingLayout(32),
                 MemoryLayout.sequenceLayout(5, Constants$root.C_DOUBLE$LAYOUT).withName("AFPointSelected"),
                 Constants$root.C_SHORT$LAYOUT.withName("AFResult"),
-                MemoryLayout.sequenceLayout(5, Constants$root.C_SHORT$LAYOUT).withName("DriveMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFFineTune"),
                 MemoryLayout.paddingLayout(8),
                 MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("AFFineTuneAdj"),
-                MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT).withName("CameraType2"),
+                MemoryLayout.paddingLayout(16),
+                MemoryLayout.sequenceLayout(3, Constants$root.C_LONG$LAYOUT).withName("SpecialMode"),
+                Constants$root.C_SHORT$LAYOUT.withName("ZoomStepCount"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusStepCount"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusStepInfinity"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusStepNear"),
+                Constants$root.C_DOUBLE$LAYOUT.withName("FocusDistance"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("AspectFrame"),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("StackedImage"),
+                Constants$root.C_CHAR$LAYOUT.withName("isLiveND"),
+                MemoryLayout.paddingLayout(24),
+                Constants$root.C_LONG$LAYOUT.withName("LiveNDfactor"),
+                Constants$root.C_SHORT$LAYOUT.withName("Panorama_mode"),
+                Constants$root.C_SHORT$LAYOUT.withName("Panorama_frameNum"),
                 MemoryLayout.paddingLayout(32)
             ).withName("olympus"),
             MemoryLayout.structLayout(
@@ -333,27 +358,31 @@ public class libraw_data_t {
                 Constants$root.C_LONG$LAYOUT.withName("Sony0x9400_SequenceFileNumber"),
                 Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_SequenceLength2"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFAreaModeSetting"),
+                Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
                 MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FlexibleSpotPosition"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFPointSelected"),
+                Constants$root.C_CHAR$LAYOUT.withName("AFPointSelected_0x201e"),
+                Constants$root.C_SHORT$LAYOUT.withName("nAFPointsUsed"),
                 MemoryLayout.sequenceLayout(10, Constants$root.C_CHAR$LAYOUT).withName("AFPointsUsed"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFTracking"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFType"),
-                MemoryLayout.paddingLayout(8),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("FocusLocation"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusPosition"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjValue"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjOn"),
                 Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjRegisteredLenses"),
                 MemoryLayout.paddingLayout(8),
                 Constants$root.C_SHORT$LAYOUT.withName("VariableLowPassFilter"),
-                MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("LongExposureNoiseReduction"),
                 Constants$root.C_SHORT$LAYOUT.withName("HighISONoiseReduction"),
                 MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("HDR"),
                 Constants$root.C_SHORT$LAYOUT.withName("group2010"),
+                Constants$root.C_SHORT$LAYOUT.withName("group9050"),
                 Constants$root.C_SHORT$LAYOUT.withName("real_iso_offset"),
                 Constants$root.C_SHORT$LAYOUT.withName("MeteringMode_offset"),
                 Constants$root.C_SHORT$LAYOUT.withName("ExposureProgram_offset"),
                 Constants$root.C_SHORT$LAYOUT.withName("ReleaseMode2_offset"),
+                MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("MinoltaCamID"),
                 Constants$root.C_FLOAT$LAYOUT.withName("firmware"),
                 Constants$root.C_SHORT$LAYOUT.withName("ImageCount3_offset"),
@@ -371,13 +400,16 @@ public class libraw_data_t {
                 Constants$root.C_CHAR$LAYOUT.withName("numInPixelShiftGroup"),
                 Constants$root.C_SHORT$LAYOUT.withName("prd_ImageHeight"),
                 Constants$root.C_SHORT$LAYOUT.withName("prd_ImageWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_RawBitDepth"),
+                Constants$root.C_SHORT$LAYOUT.withName("prd_Total_bps"),
+                Constants$root.C_SHORT$LAYOUT.withName("prd_Active_bps"),
                 Constants$root.C_SHORT$LAYOUT.withName("prd_StorageMethod"),
                 Constants$root.C_SHORT$LAYOUT.withName("prd_BayerPattern"),
                 Constants$root.C_SHORT$LAYOUT.withName("SonyRawFileType"),
                 Constants$root.C_SHORT$LAYOUT.withName("RAWFileType"),
+                MemoryLayout.paddingLayout(16),
                 Constants$root.C_LONG$LAYOUT.withName("Quality"),
                 Constants$root.C_SHORT$LAYOUT.withName("FileFormat"),
+                MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("MetaVersion"),
                 MemoryLayout.paddingLayout(16)
             ).withName("sony"),
             MemoryLayout.structLayout(
@@ -406,17 +438,24 @@ public class libraw_data_t {
                 MemoryLayout.sequenceLayout(8, Constants$root.C_FLOAT$LAYOUT).withName("BlackLevel"),
                 Constants$root.C_LONG$LAYOUT.withName("Multishot"),
                 Constants$root.C_FLOAT$LAYOUT.withName("gamma"),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_LONG$LAYOUT).withName("HighISOMultiplier")
+                MemoryLayout.sequenceLayout(3, Constants$root.C_LONG$LAYOUT).withName("HighISOMultiplier"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusStepNear"),
+                Constants$root.C_SHORT$LAYOUT.withName("FocusStepCount"),
+                Constants$root.C_LONG$LAYOUT.withName("ZoomPosition"),
+                Constants$root.C_LONG$LAYOUT.withName("LensManufacturer")
             ).withName("panasonic"),
             MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPointSelected"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("DriveMode"),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusMode"),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("AFPointSelected"),
+                Constants$root.C_SHORT$LAYOUT.withName("AFPointSelected_Area"),
+                MemoryLayout.paddingLayout(16),
+                Constants$root.C_LONG$LAYOUT.withName("AFPointsInFocus_version"),
                 Constants$root.C_LONG$LAYOUT.withName("AFPointsInFocus"),
                 Constants$root.C_SHORT$LAYOUT.withName("FocusPosition"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("DriveMode"),
                 Constants$root.C_SHORT$LAYOUT.withName("AFAdjustment"),
+                Constants$root.C_CHAR$LAYOUT.withName("AFPointMode"),
                 Constants$root.C_CHAR$LAYOUT.withName("MultiExposure"),
-                MemoryLayout.paddingLayout(8),
                 Constants$root.C_SHORT$LAYOUT.withName("Quality")
             ).withName("pentax"),
             MemoryLayout.structLayout(
@@ -425,6 +464,28 @@ public class libraw_data_t {
                 MemoryLayout.sequenceLayout(256, Constants$root.C_CHAR$LAYOUT).withName("FirmwareString"),
                 MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SystemModel")
             ).withName("phaseone"),
+            MemoryLayout.paddingLayout(32),
+            MemoryLayout.structLayout(
+                Constants$root.C_SHORT$LAYOUT.withName("AFStatus"),
+                MemoryLayout.paddingLayout(16),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("AFAreaXPosition"),
+                MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("AFAreaYPosition"),
+                Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
+                MemoryLayout.paddingLayout(16),
+                Constants$root.C_LONG$LAYOUT.withName("SensorWidth"),
+                Constants$root.C_LONG$LAYOUT.withName("SensorHeight"),
+                Constants$root.C_LONG$LAYOUT.withName("CroppedImageWidth"),
+                Constants$root.C_LONG$LAYOUT.withName("CroppedImageHeight"),
+                Constants$root.C_SHORT$LAYOUT.withName("WideAdapter"),
+                Constants$root.C_SHORT$LAYOUT.withName("CropMode"),
+                Constants$root.C_SHORT$LAYOUT.withName("NDFilter"),
+                Constants$root.C_SHORT$LAYOUT.withName("AutoBracketing"),
+                Constants$root.C_SHORT$LAYOUT.withName("MacroMode"),
+                Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
+                MemoryLayout.paddingLayout(32),
+                Constants$root.C_DOUBLE$LAYOUT.withName("FlashExposureComp"),
+                Constants$root.C_DOUBLE$LAYOUT.withName("ManualFlashOutput")
+            ).withName("ricoh"),
             MemoryLayout.structLayout(
                 MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("ImageSizeFull"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("ImageSizeCrop"),
@@ -455,9 +516,19 @@ public class libraw_data_t {
                 Constants$root.C_FLOAT$LAYOUT.withName("exifExposureIndex"),
                 Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
                 MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("firmware"),
-                MemoryLayout.paddingLayout(16)
-            ).withName("common"),
-            MemoryLayout.paddingLayout(32)
+                MemoryLayout.paddingLayout(16),
+                Constants$root.C_FLOAT$LAYOUT.withName("ExposureCalibrationShift"),
+                MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
+                    Constants$root.C_LONG$LAYOUT.withName("AFInfoData_tag"),
+                    Constants$root.C_SHORT$LAYOUT.withName("AFInfoData_order"),
+                    MemoryLayout.paddingLayout(16),
+                    Constants$root.C_LONG$LAYOUT.withName("AFInfoData_version"),
+                    Constants$root.C_LONG$LAYOUT.withName("AFInfoData_length"),
+                    Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
+                )).withName("afdata"),
+                Constants$root.C_LONG$LAYOUT.withName("afcount"),
+                MemoryLayout.paddingLayout(32)
+            ).withName("common")
         ).withName("makernotes"),
         MemoryLayout.structLayout(
             Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
@@ -477,7 +548,6 @@ public class libraw_data_t {
             MemoryLayout.sequenceLayout(4, Constants$root.C_DOUBLE$LAYOUT).withName("aber"),
             MemoryLayout.sequenceLayout(6, Constants$root.C_DOUBLE$LAYOUT).withName("gamm"),
             MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_mul"),
-            Constants$root.C_LONG$LAYOUT.withName("shot_select"),
             Constants$root.C_FLOAT$LAYOUT.withName("bright"),
             Constants$root.C_FLOAT$LAYOUT.withName("threshold"),
             Constants$root.C_LONG$LAYOUT.withName("half_size"),
@@ -487,12 +557,14 @@ public class libraw_data_t {
             Constants$root.C_LONG$LAYOUT.withName("use_camera_wb"),
             Constants$root.C_LONG$LAYOUT.withName("use_camera_matrix"),
             Constants$root.C_LONG$LAYOUT.withName("output_color"),
+            MemoryLayout.paddingLayout(32),
             Constants$root.C_POINTER$LAYOUT.withName("output_profile"),
             Constants$root.C_POINTER$LAYOUT.withName("camera_profile"),
             Constants$root.C_POINTER$LAYOUT.withName("bad_pixels"),
             Constants$root.C_POINTER$LAYOUT.withName("dark_frame"),
             Constants$root.C_LONG$LAYOUT.withName("output_bps"),
             Constants$root.C_LONG$LAYOUT.withName("output_tiff"),
+            Constants$root.C_LONG$LAYOUT.withName("output_flags"),
             Constants$root.C_LONG$LAYOUT.withName("user_flip"),
             Constants$root.C_LONG$LAYOUT.withName("user_qual"),
             Constants$root.C_LONG$LAYOUT.withName("user_black"),
@@ -510,18 +582,23 @@ public class libraw_data_t {
             Constants$root.C_LONG$LAYOUT.withName("exp_correc"),
             Constants$root.C_FLOAT$LAYOUT.withName("exp_shift"),
             Constants$root.C_FLOAT$LAYOUT.withName("exp_preser"),
-            Constants$root.C_LONG$LAYOUT.withName("use_rawspeed"),
-            Constants$root.C_LONG$LAYOUT.withName("use_dngsdk"),
             Constants$root.C_LONG$LAYOUT.withName("no_auto_scale"),
             Constants$root.C_LONG$LAYOUT.withName("no_interpolation"),
-            Constants$root.C_LONG$LAYOUT.withName("raw_processing_options"),
+            MemoryLayout.paddingLayout(32)
+        ).withName("params"),
+        MemoryLayout.structLayout(
+            Constants$root.C_LONG$LAYOUT.withName("use_rawspeed"),
+            Constants$root.C_LONG$LAYOUT.withName("use_dngsdk"),
+            Constants$root.C_LONG$LAYOUT.withName("options"),
+            Constants$root.C_LONG$LAYOUT.withName("shot_select"),
+            Constants$root.C_LONG$LAYOUT.withName("specials"),
             Constants$root.C_LONG$LAYOUT.withName("max_raw_memory_mb"),
             Constants$root.C_LONG$LAYOUT.withName("sony_arw2_posterization_thr"),
             Constants$root.C_FLOAT$LAYOUT.withName("coolscan_nef_gamma"),
             MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("p4shot_order"),
             MemoryLayout.paddingLayout(24),
             Constants$root.C_POINTER$LAYOUT.withName("custom_camera_strings")
-        ).withName("params"),
+        ).withName("rawparams"),
         Constants$root.C_LONG$LAYOUT.withName("progress_flags"),
         Constants$root.C_LONG$LAYOUT.withName("process_warnings"),
         MemoryLayout.structLayout(
@@ -578,7 +655,8 @@ public class libraw_data_t {
                 MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
                 Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("dng_whitelevel"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
                 Constants$root.C_LONG$LAYOUT.withName("preview_colorspace"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
@@ -671,13 +749,13 @@ public class libraw_data_t {
                 Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
                 Constants$root.C_LONG$LAYOUT.withName("flip"),
                 MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT)).withName("mask"),
-                MemoryLayout.structLayout(
+                Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
+                MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
                     Constants$root.C_SHORT$LAYOUT.withName("cleft"),
                     Constants$root.C_SHORT$LAYOUT.withName("ctop"),
                     Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                    Constants$root.C_SHORT$LAYOUT.withName("cheight"),
-                    Constants$root.C_SHORT$LAYOUT.withName("aspect")
-                ).withName("raw_inset_crop"),
+                    Constants$root.C_SHORT$LAYOUT.withName("cheight")
+                )).withName("raw_inset_crops"),
                 MemoryLayout.paddingLayout(16)
             ).withName("sizes"),
             MemoryLayout.structLayout(
@@ -741,7 +819,8 @@ public class libraw_data_t {
                     MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
                     Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
                     MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("dng_whitelevel"),
-                    MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("default_crop"),
+                    MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+                    MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
                     Constants$root.C_LONG$LAYOUT.withName("preview_colorspace"),
                     MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
                     MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
@@ -780,22 +859,25 @@ public class libraw_data_t {
         libraw_data_t.image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment sizes$slice(MemorySegment seg) {
-        return seg.asSlice(8, 176);
+        return seg.asSlice(8, 184);
     }
     public static MemorySegment idata$slice(MemorySegment seg) {
-        return seg.asSlice(184, 440);
+        return seg.asSlice(192, 440);
     }
     public static MemorySegment lens$slice(MemorySegment seg) {
-        return seg.asSlice(624, 1296);
+        return seg.asSlice(632, 1296);
     }
     public static MemorySegment makernotes$slice(MemorySegment seg) {
-        return seg.asSlice(1920, 2976);
+        return seg.asSlice(1928, 2944);
     }
     public static MemorySegment shootinginfo$slice(MemorySegment seg) {
-        return seg.asSlice(4896, 142);
+        return seg.asSlice(4872, 142);
     }
     public static MemorySegment params$slice(MemorySegment seg) {
-        return seg.asSlice(5040, 336);
+        return seg.asSlice(5016, 304);
+    }
+    public static MemorySegment rawparams$slice(MemorySegment seg) {
+        return seg.asSlice(5320, 48);
     }
     static final VarHandle progress_flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("progress_flags"));
     public static VarHandle progress_flags$VH() {
@@ -830,7 +912,7 @@ public class libraw_data_t {
         libraw_data_t.process_warnings$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment color$slice(MemorySegment seg) {
-        return seg.asSlice(5384, 187024);
+        return seg.asSlice(5376, 187032);
     }
     public static MemorySegment other$slice(MemorySegment seg) {
         return seg.asSlice(192408, 800);
@@ -839,7 +921,7 @@ public class libraw_data_t {
         return seg.asSlice(193208, 24);
     }
     public static MemorySegment rawdata$slice(MemorySegment seg) {
-        return seg.asSlice(193232, 187728);
+        return seg.asSlice(193232, 187744);
     }
     static final VarHandle parent_class$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("parent_class"));
     public static VarHandle parent_class$VH() {

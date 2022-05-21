@@ -9,15 +9,6 @@ import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.ValueLayout.*;
 class constants$6 {
 
-    static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_memerror_handler",
-        constants$6.libraw_set_memerror_handler$FUNC, false
-    );
     static final FunctionDescriptor libraw_set_exifparser_handler$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -59,6 +50,15 @@ class constants$6 {
     static final MethodHandle libraw_get_decoder_info$MH = RuntimeHelper.downcallHandle(
         "libraw_get_decoder_info",
         constants$6.libraw_get_decoder_info$FUNC, false
+    );
+    static final FunctionDescriptor libraw_COLOR$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_COLOR$MH = RuntimeHelper.downcallHandle(
+        "libraw_COLOR",
+        constants$6.libraw_COLOR$FUNC, false
     );
 }
 

@@ -24,27 +24,7 @@ public class libraw_canon_makernotes_t {
         Constants$root.C_SHORT$LAYOUT.withName("FlashExposureLock"),
         Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
         Constants$root.C_SHORT$LAYOUT.withName("AESetting"),
-        Constants$root.C_CHAR$LAYOUT.withName("HighlightTonePriority"),
-        MemoryLayout.paddingLayout(8),
         Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocusContinuous"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFPointsInFocus30D"),
-        MemoryLayout.sequenceLayout(8, Constants$root.C_CHAR$LAYOUT).withName("AFPointsInFocus1D"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFPointsInFocus5D"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("NumAFPoints"),
-        Constants$root.C_SHORT$LAYOUT.withName("ValidAFPoints"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFImageWidth"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFImageHeight"),
-        MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaWidths"),
-        MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaHeights"),
-        MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaXPositions"),
-        MemoryLayout.sequenceLayout(61, Constants$root.C_SHORT$LAYOUT).withName("AFAreaYPositions"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("AFPointsInFocus"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("AFPointsSelected"),
-        Constants$root.C_SHORT$LAYOUT.withName("PrimaryAFPoint"),
         Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
         Constants$root.C_SHORT$LAYOUT.withName("FlashActivity"),
         Constants$root.C_SHORT$LAYOUT.withName("FlashBits"),
@@ -54,14 +34,6 @@ public class libraw_canon_makernotes_t {
         Constants$root.C_SHORT$LAYOUT.withName("ContinuousDrive"),
         Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
         Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorLeftBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorTopBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorRightBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorBottomBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("BlackMaskLeftBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("BlackMaskTopBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("BlackMaskRightBorder"),
-        Constants$root.C_SHORT$LAYOUT.withName("BlackMaskBottomBorder"),
         Constants$root.C_LONG$LAYOUT.withName("AFMicroAdjMode"),
         Constants$root.C_FLOAT$LAYOUT.withName("AFMicroAdjValue"),
         Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
@@ -69,9 +41,41 @@ public class libraw_canon_makernotes_t {
         Constants$root.C_SHORT$LAYOUT.withName("SRAWQuality"),
         MemoryLayout.paddingLayout(16),
         Constants$root.C_LONG$LAYOUT.withName("wbi"),
-        Constants$root.C_FLOAT$LAYOUT.withName("firmware"),
         Constants$root.C_SHORT$LAYOUT.withName("RF_lensID"),
-        MemoryLayout.paddingLayout(16)
+        MemoryLayout.paddingLayout(16),
+        Constants$root.C_LONG$LAYOUT.withName("AutoLightingOptimizer"),
+        Constants$root.C_LONG$LAYOUT.withName("HighlightTonePriority"),
+        MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("t"),
+            Constants$root.C_SHORT$LAYOUT.withName("l"),
+            Constants$root.C_SHORT$LAYOUT.withName("b"),
+            Constants$root.C_SHORT$LAYOUT.withName("r")
+        ).withName("DefaultCropAbsolute"),
+        MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("t"),
+            Constants$root.C_SHORT$LAYOUT.withName("l"),
+            Constants$root.C_SHORT$LAYOUT.withName("b"),
+            Constants$root.C_SHORT$LAYOUT.withName("r")
+        ).withName("RecommendedImageArea"),
+        MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("t"),
+            Constants$root.C_SHORT$LAYOUT.withName("l"),
+            Constants$root.C_SHORT$LAYOUT.withName("b"),
+            Constants$root.C_SHORT$LAYOUT.withName("r")
+        ).withName("LeftOpticalBlack"),
+        MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("t"),
+            Constants$root.C_SHORT$LAYOUT.withName("l"),
+            Constants$root.C_SHORT$LAYOUT.withName("b"),
+            Constants$root.C_SHORT$LAYOUT.withName("r")
+        ).withName("UpperOpticalBlack"),
+        MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("t"),
+            Constants$root.C_SHORT$LAYOUT.withName("l"),
+            Constants$root.C_SHORT$LAYOUT.withName("b"),
+            Constants$root.C_SHORT$LAYOUT.withName("r")
+        ).withName("ActiveArea"),
+        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("ISOgain")
     );
     public static MemoryLayout $LAYOUT() {
         return libraw_canon_makernotes_t.$struct$LAYOUT;
@@ -258,22 +262,6 @@ public class libraw_canon_makernotes_t {
     public static void AESetting$set(MemorySegment seg, long index, short x) {
         libraw_canon_makernotes_t.AESetting$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle HighlightTonePriority$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("HighlightTonePriority"));
-    public static VarHandle HighlightTonePriority$VH() {
-        return libraw_canon_makernotes_t.HighlightTonePriority$VH;
-    }
-    public static byte HighlightTonePriority$get(MemorySegment seg) {
-        return (byte)libraw_canon_makernotes_t.HighlightTonePriority$VH.get(seg);
-    }
-    public static void HighlightTonePriority$set( MemorySegment seg, byte x) {
-        libraw_canon_makernotes_t.HighlightTonePriority$VH.set(seg, x);
-    }
-    public static byte HighlightTonePriority$get(MemorySegment seg, long index) {
-        return (byte)libraw_canon_makernotes_t.HighlightTonePriority$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void HighlightTonePriority$set(MemorySegment seg, long index, byte x) {
-        libraw_canon_makernotes_t.HighlightTonePriority$VH.set(seg.asSlice(index*sizeof()), x);
-    }
     static final VarHandle ImageStabilization$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageStabilization"));
     public static VarHandle ImageStabilization$VH() {
         return libraw_canon_makernotes_t.ImageStabilization$VH;
@@ -289,203 +277,6 @@ public class libraw_canon_makernotes_t {
     }
     public static void ImageStabilization$set(MemorySegment seg, long index, short x) {
         libraw_canon_makernotes_t.ImageStabilization$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle FocusMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusMode"));
-    public static VarHandle FocusMode$VH() {
-        return libraw_canon_makernotes_t.FocusMode$VH;
-    }
-    public static short FocusMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FocusMode$VH.get(seg);
-    }
-    public static void FocusMode$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FocusMode$VH.set(seg, x);
-    }
-    public static short FocusMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FocusMode$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FocusMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FocusMode$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle AFPoint$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPoint"));
-    public static VarHandle AFPoint$VH() {
-        return libraw_canon_makernotes_t.AFPoint$VH;
-    }
-    public static short AFPoint$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AFPoint$VH.get(seg);
-    }
-    public static void AFPoint$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AFPoint$VH.set(seg, x);
-    }
-    public static short AFPoint$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AFPoint$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFPoint$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AFPoint$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle FocusContinuous$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusContinuous"));
-    public static VarHandle FocusContinuous$VH() {
-        return libraw_canon_makernotes_t.FocusContinuous$VH;
-    }
-    public static short FocusContinuous$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FocusContinuous$VH.get(seg);
-    }
-    public static void FocusContinuous$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FocusContinuous$VH.set(seg, x);
-    }
-    public static short FocusContinuous$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FocusContinuous$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FocusContinuous$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FocusContinuous$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle AFPointsInFocus30D$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointsInFocus30D"));
-    public static VarHandle AFPointsInFocus30D$VH() {
-        return libraw_canon_makernotes_t.AFPointsInFocus30D$VH;
-    }
-    public static short AFPointsInFocus30D$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AFPointsInFocus30D$VH.get(seg);
-    }
-    public static void AFPointsInFocus30D$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AFPointsInFocus30D$VH.set(seg, x);
-    }
-    public static short AFPointsInFocus30D$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AFPointsInFocus30D$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFPointsInFocus30D$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AFPointsInFocus30D$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment AFPointsInFocus1D$slice(MemorySegment seg) {
-        return seg.asSlice(76, 8);
-    }
-    static final VarHandle AFPointsInFocus5D$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointsInFocus5D"));
-    public static VarHandle AFPointsInFocus5D$VH() {
-        return libraw_canon_makernotes_t.AFPointsInFocus5D$VH;
-    }
-    public static short AFPointsInFocus5D$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AFPointsInFocus5D$VH.get(seg);
-    }
-    public static void AFPointsInFocus5D$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AFPointsInFocus5D$VH.set(seg, x);
-    }
-    public static short AFPointsInFocus5D$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AFPointsInFocus5D$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFPointsInFocus5D$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AFPointsInFocus5D$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle AFAreaMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFAreaMode"));
-    public static VarHandle AFAreaMode$VH() {
-        return libraw_canon_makernotes_t.AFAreaMode$VH;
-    }
-    public static short AFAreaMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AFAreaMode$VH.get(seg);
-    }
-    public static void AFAreaMode$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AFAreaMode$VH.set(seg, x);
-    }
-    public static short AFAreaMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AFAreaMode$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFAreaMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AFAreaMode$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle NumAFPoints$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("NumAFPoints"));
-    public static VarHandle NumAFPoints$VH() {
-        return libraw_canon_makernotes_t.NumAFPoints$VH;
-    }
-    public static short NumAFPoints$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.NumAFPoints$VH.get(seg);
-    }
-    public static void NumAFPoints$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.NumAFPoints$VH.set(seg, x);
-    }
-    public static short NumAFPoints$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.NumAFPoints$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void NumAFPoints$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.NumAFPoints$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle ValidAFPoints$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ValidAFPoints"));
-    public static VarHandle ValidAFPoints$VH() {
-        return libraw_canon_makernotes_t.ValidAFPoints$VH;
-    }
-    public static short ValidAFPoints$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.ValidAFPoints$VH.get(seg);
-    }
-    public static void ValidAFPoints$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.ValidAFPoints$VH.set(seg, x);
-    }
-    public static short ValidAFPoints$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.ValidAFPoints$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void ValidAFPoints$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.ValidAFPoints$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle AFImageWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFImageWidth"));
-    public static VarHandle AFImageWidth$VH() {
-        return libraw_canon_makernotes_t.AFImageWidth$VH;
-    }
-    public static short AFImageWidth$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AFImageWidth$VH.get(seg);
-    }
-    public static void AFImageWidth$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AFImageWidth$VH.set(seg, x);
-    }
-    public static short AFImageWidth$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AFImageWidth$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFImageWidth$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AFImageWidth$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle AFImageHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFImageHeight"));
-    public static VarHandle AFImageHeight$VH() {
-        return libraw_canon_makernotes_t.AFImageHeight$VH;
-    }
-    public static short AFImageHeight$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AFImageHeight$VH.get(seg);
-    }
-    public static void AFImageHeight$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AFImageHeight$VH.set(seg, x);
-    }
-    public static short AFImageHeight$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AFImageHeight$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFImageHeight$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AFImageHeight$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment AFAreaWidths$slice(MemorySegment seg) {
-        return seg.asSlice(96, 122);
-    }
-    public static MemorySegment AFAreaHeights$slice(MemorySegment seg) {
-        return seg.asSlice(218, 122);
-    }
-    public static MemorySegment AFAreaXPositions$slice(MemorySegment seg) {
-        return seg.asSlice(340, 122);
-    }
-    public static MemorySegment AFAreaYPositions$slice(MemorySegment seg) {
-        return seg.asSlice(462, 122);
-    }
-    public static MemorySegment AFPointsInFocus$slice(MemorySegment seg) {
-        return seg.asSlice(584, 8);
-    }
-    public static MemorySegment AFPointsSelected$slice(MemorySegment seg) {
-        return seg.asSlice(592, 8);
-    }
-    static final VarHandle PrimaryAFPoint$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("PrimaryAFPoint"));
-    public static VarHandle PrimaryAFPoint$VH() {
-        return libraw_canon_makernotes_t.PrimaryAFPoint$VH;
-    }
-    public static short PrimaryAFPoint$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.PrimaryAFPoint$VH.get(seg);
-    }
-    public static void PrimaryAFPoint$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.PrimaryAFPoint$VH.set(seg, x);
-    }
-    public static short PrimaryAFPoint$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.PrimaryAFPoint$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void PrimaryAFPoint$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.PrimaryAFPoint$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashMode"));
     public static VarHandle FlashMode$VH() {
@@ -631,134 +422,6 @@ public class libraw_canon_makernotes_t {
     public static void SensorHeight$set(MemorySegment seg, long index, short x) {
         libraw_canon_makernotes_t.SensorHeight$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorLeftBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorLeftBorder"));
-    public static VarHandle SensorLeftBorder$VH() {
-        return libraw_canon_makernotes_t.SensorLeftBorder$VH;
-    }
-    public static short SensorLeftBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SensorLeftBorder$VH.get(seg);
-    }
-    public static void SensorLeftBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SensorLeftBorder$VH.set(seg, x);
-    }
-    public static short SensorLeftBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SensorLeftBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void SensorLeftBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SensorLeftBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle SensorTopBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorTopBorder"));
-    public static VarHandle SensorTopBorder$VH() {
-        return libraw_canon_makernotes_t.SensorTopBorder$VH;
-    }
-    public static short SensorTopBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SensorTopBorder$VH.get(seg);
-    }
-    public static void SensorTopBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SensorTopBorder$VH.set(seg, x);
-    }
-    public static short SensorTopBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SensorTopBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void SensorTopBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SensorTopBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle SensorRightBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorRightBorder"));
-    public static VarHandle SensorRightBorder$VH() {
-        return libraw_canon_makernotes_t.SensorRightBorder$VH;
-    }
-    public static short SensorRightBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SensorRightBorder$VH.get(seg);
-    }
-    public static void SensorRightBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SensorRightBorder$VH.set(seg, x);
-    }
-    public static short SensorRightBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SensorRightBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void SensorRightBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SensorRightBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle SensorBottomBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorBottomBorder"));
-    public static VarHandle SensorBottomBorder$VH() {
-        return libraw_canon_makernotes_t.SensorBottomBorder$VH;
-    }
-    public static short SensorBottomBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SensorBottomBorder$VH.get(seg);
-    }
-    public static void SensorBottomBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SensorBottomBorder$VH.set(seg, x);
-    }
-    public static short SensorBottomBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SensorBottomBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void SensorBottomBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SensorBottomBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle BlackMaskLeftBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackMaskLeftBorder"));
-    public static VarHandle BlackMaskLeftBorder$VH() {
-        return libraw_canon_makernotes_t.BlackMaskLeftBorder$VH;
-    }
-    public static short BlackMaskLeftBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.BlackMaskLeftBorder$VH.get(seg);
-    }
-    public static void BlackMaskLeftBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.BlackMaskLeftBorder$VH.set(seg, x);
-    }
-    public static short BlackMaskLeftBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.BlackMaskLeftBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void BlackMaskLeftBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.BlackMaskLeftBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle BlackMaskTopBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackMaskTopBorder"));
-    public static VarHandle BlackMaskTopBorder$VH() {
-        return libraw_canon_makernotes_t.BlackMaskTopBorder$VH;
-    }
-    public static short BlackMaskTopBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.BlackMaskTopBorder$VH.get(seg);
-    }
-    public static void BlackMaskTopBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.BlackMaskTopBorder$VH.set(seg, x);
-    }
-    public static short BlackMaskTopBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.BlackMaskTopBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void BlackMaskTopBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.BlackMaskTopBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle BlackMaskRightBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackMaskRightBorder"));
-    public static VarHandle BlackMaskRightBorder$VH() {
-        return libraw_canon_makernotes_t.BlackMaskRightBorder$VH;
-    }
-    public static short BlackMaskRightBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.BlackMaskRightBorder$VH.get(seg);
-    }
-    public static void BlackMaskRightBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.BlackMaskRightBorder$VH.set(seg, x);
-    }
-    public static short BlackMaskRightBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.BlackMaskRightBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void BlackMaskRightBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.BlackMaskRightBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
-    static final VarHandle BlackMaskBottomBorder$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackMaskBottomBorder"));
-    public static VarHandle BlackMaskBottomBorder$VH() {
-        return libraw_canon_makernotes_t.BlackMaskBottomBorder$VH;
-    }
-    public static short BlackMaskBottomBorder$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.BlackMaskBottomBorder$VH.get(seg);
-    }
-    public static void BlackMaskBottomBorder$set( MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.BlackMaskBottomBorder$VH.set(seg, x);
-    }
-    public static short BlackMaskBottomBorder$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.BlackMaskBottomBorder$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void BlackMaskBottomBorder$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.BlackMaskBottomBorder$VH.set(seg.asSlice(index*sizeof()), x);
-    }
     static final VarHandle AFMicroAdjMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMicroAdjMode"));
     public static VarHandle AFMicroAdjMode$VH() {
         return libraw_canon_makernotes_t.AFMicroAdjMode$VH;
@@ -855,22 +518,6 @@ public class libraw_canon_makernotes_t {
     public static void wbi$set(MemorySegment seg, long index, int x) {
         libraw_canon_makernotes_t.wbi$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle firmware$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("firmware"));
-    public static VarHandle firmware$VH() {
-        return libraw_canon_makernotes_t.firmware$VH;
-    }
-    public static float firmware$get(MemorySegment seg) {
-        return (float)libraw_canon_makernotes_t.firmware$VH.get(seg);
-    }
-    public static void firmware$set( MemorySegment seg, float x) {
-        libraw_canon_makernotes_t.firmware$VH.set(seg, x);
-    }
-    public static float firmware$get(MemorySegment seg, long index) {
-        return (float)libraw_canon_makernotes_t.firmware$VH.get(seg.asSlice(index*sizeof()));
-    }
-    public static void firmware$set(MemorySegment seg, long index, float x) {
-        libraw_canon_makernotes_t.firmware$VH.set(seg.asSlice(index*sizeof()), x);
-    }
     static final VarHandle RF_lensID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RF_lensID"));
     public static VarHandle RF_lensID$VH() {
         return libraw_canon_makernotes_t.RF_lensID$VH;
@@ -886,6 +533,56 @@ public class libraw_canon_makernotes_t {
     }
     public static void RF_lensID$set(MemorySegment seg, long index, short x) {
         libraw_canon_makernotes_t.RF_lensID$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle AutoLightingOptimizer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AutoLightingOptimizer"));
+    public static VarHandle AutoLightingOptimizer$VH() {
+        return libraw_canon_makernotes_t.AutoLightingOptimizer$VH;
+    }
+    public static int AutoLightingOptimizer$get(MemorySegment seg) {
+        return (int)libraw_canon_makernotes_t.AutoLightingOptimizer$VH.get(seg);
+    }
+    public static void AutoLightingOptimizer$set( MemorySegment seg, int x) {
+        libraw_canon_makernotes_t.AutoLightingOptimizer$VH.set(seg, x);
+    }
+    public static int AutoLightingOptimizer$get(MemorySegment seg, long index) {
+        return (int)libraw_canon_makernotes_t.AutoLightingOptimizer$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void AutoLightingOptimizer$set(MemorySegment seg, long index, int x) {
+        libraw_canon_makernotes_t.AutoLightingOptimizer$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    static final VarHandle HighlightTonePriority$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("HighlightTonePriority"));
+    public static VarHandle HighlightTonePriority$VH() {
+        return libraw_canon_makernotes_t.HighlightTonePriority$VH;
+    }
+    public static int HighlightTonePriority$get(MemorySegment seg) {
+        return (int)libraw_canon_makernotes_t.HighlightTonePriority$VH.get(seg);
+    }
+    public static void HighlightTonePriority$set( MemorySegment seg, int x) {
+        libraw_canon_makernotes_t.HighlightTonePriority$VH.set(seg, x);
+    }
+    public static int HighlightTonePriority$get(MemorySegment seg, long index) {
+        return (int)libraw_canon_makernotes_t.HighlightTonePriority$VH.get(seg.asSlice(index*sizeof()));
+    }
+    public static void HighlightTonePriority$set(MemorySegment seg, long index, int x) {
+        libraw_canon_makernotes_t.HighlightTonePriority$VH.set(seg.asSlice(index*sizeof()), x);
+    }
+    public static MemorySegment DefaultCropAbsolute$slice(MemorySegment seg) {
+        return seg.asSlice(116, 8);
+    }
+    public static MemorySegment RecommendedImageArea$slice(MemorySegment seg) {
+        return seg.asSlice(124, 8);
+    }
+    public static MemorySegment LeftOpticalBlack$slice(MemorySegment seg) {
+        return seg.asSlice(132, 8);
+    }
+    public static MemorySegment UpperOpticalBlack$slice(MemorySegment seg) {
+        return seg.asSlice(140, 8);
+    }
+    public static MemorySegment ActiveArea$slice(MemorySegment seg) {
+        return seg.asSlice(148, 8);
+    }
+    public static MemorySegment ISOgain$slice(MemorySegment seg) {
+        return seg.asSlice(156, 4);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }

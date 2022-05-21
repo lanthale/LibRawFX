@@ -53,13 +53,13 @@ public class libraw_rawdata_t {
             Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
             Constants$root.C_LONG$LAYOUT.withName("flip"),
             MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT)).withName("mask"),
-            MemoryLayout.structLayout(
+            Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
+            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
                 Constants$root.C_SHORT$LAYOUT.withName("cleft"),
                 Constants$root.C_SHORT$LAYOUT.withName("ctop"),
                 Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("cheight"),
-                Constants$root.C_SHORT$LAYOUT.withName("aspect")
-            ).withName("raw_inset_crop"),
+                Constants$root.C_SHORT$LAYOUT.withName("cheight")
+            )).withName("raw_inset_crops"),
             MemoryLayout.paddingLayout(16)
         ).withName("sizes"),
         MemoryLayout.structLayout(
@@ -123,7 +123,8 @@ public class libraw_rawdata_t {
                 MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
                 Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("dng_whitelevel"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
+                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
                 Constants$root.C_LONG$LAYOUT.withName("preview_colorspace"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
                 MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
@@ -291,13 +292,13 @@ public class libraw_rawdata_t {
         return seg.asSlice(72, 440);
     }
     public static MemorySegment sizes$slice(MemorySegment seg) {
-        return seg.asSlice(512, 176);
+        return seg.asSlice(512, 184);
     }
     public static MemorySegment ioparams$slice(MemorySegment seg) {
-        return seg.asSlice(688, 16);
+        return seg.asSlice(696, 16);
     }
     public static MemorySegment color$slice(MemorySegment seg) {
-        return seg.asSlice(704, 187024);
+        return seg.asSlice(712, 187032);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
