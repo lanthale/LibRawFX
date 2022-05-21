@@ -47,9 +47,9 @@ public class TestApp extends Application {
         VBox stack = new VBox();
         stack.setPadding(new Insets(10));
         stack.setSpacing(5);
-        stack.setAlignment(Pos.TOP_CENTER);
+        //stack.setAlignment(Pos.TOP_CENTER);
         loadImagesByStream(stack, file, file2, file3);
-        //loadImagesByFile(stack);
+        //loadImagesByFile(stack, file);
 
         var scene = new Scene(stack, 640, 480);
         stage.setScene(scene);
@@ -197,7 +197,7 @@ public class TestApp extends Application {
         view3.setPreserveRatio(true);
     }
 
-    private void loadImagesByFile(FlowPane stack, String file) throws IOException {
+    private void loadImagesByFile(VBox stack, String file) throws IOException {
         //stack.getChildren().add(ind);
         //ind.progressProperty().bind(img.progressProperty());
         for (int i = 0; i < 1; i++) {

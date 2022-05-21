@@ -46,8 +46,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target> 
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target> 
         <javafx.version>17.0.2</javafx.version>       
     </properties>
     
@@ -96,7 +96,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>17</release>
+                    <release>18</release>
                     <fork>true</fork>
                     <compilerArgs>                        
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</arg>                                
