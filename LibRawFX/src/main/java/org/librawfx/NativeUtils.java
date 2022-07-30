@@ -123,9 +123,11 @@ public class NativeUtils {
                 Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 nativeLibs[i] = temp.toString();
             } catch (IOException e) {
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, null, "Cannot accesss lib " + part + "!");
                 temp.delete();
                 throw e;
             } catch (NullPointerException e) {
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, null, "Cannot find lib " + part + "!");
                 temp.delete();
                 throw new FileNotFoundException("File " + path + " was not found inside JAR.");
             }

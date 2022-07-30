@@ -68,11 +68,14 @@ public class LibrawImage {
     public static void loadLibs(String tempDir) throws IOException {
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...");
         operatingSystem = System.getProperty("os.name").toUpperCase();
+        String arch = System.getProperty("os.arch").toUpperCase();        
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "OS was: " + operatingSystem);
         if (operatingSystem.contains("WIN")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
-        } else if (operatingSystem.contains("MAC")) {
-            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx/liblcms2.2.dylib", "/lib/osx/libjasper.4.dylib", "/lib/osx/libjpeg.9.dylib", "/lib/osx/libz.1.dylib", "/lib/osx/libraw.22.dylib");
+        } else if (operatingSystem.contains("MAC") && !arch.contains("AARCH64")) {
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx-x86_64/liblcms2.2.dylib", "/lib/osx-x86_64/libjasper.4.dylib", "/lib/osx-x86_64/libjpeg.9.dylib", "/lib/osx-x86_64/libz.1.dylib", "/lib/osx-x86_64/libraw.22.dylib");
+        } else if (operatingSystem.contains("MAC") && arch.contains("AARCH64")) {            
+            loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx-arm64/liblcms2.2.dylib", "/lib/osx-arm64/libjasper.6.dylib", "/lib/osx-arm64/libjpeg.9.dylib", "/lib/osx-arm64/libraw_r.22.dylib");
         } else if (operatingSystem.contains("NUX")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/linux-x86_64/libstdc++.so.6", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/liblcms2.so.2", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjpeg.so.62", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libraw.so.22");
         }
