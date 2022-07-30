@@ -11,7 +11,8 @@ Now the lib is in production ready status. That means it is tested on all operat
 
 Supported OS:
 - Linux (min. glibc 2.27 which means Ubuntu 18 or later)
-- OSX up to 10.15 (actually no M1 build)
+- OSX up to 10.15
+- OSX 11/12/13 (Apple M1)
 - Windows 10/11
 
 I have integrated LibRaw SNAPSHOT version 202110 (https://www.libraw.org/news/libraw-202110-snapshot)
@@ -37,7 +38,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.7.9</version>  
+    <version>1.8.0</version>  
 </dependency>  
 ```  
 
