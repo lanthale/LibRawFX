@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$11 {
 
     static final FunctionDescriptor libraw_get_rgb_cam$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
@@ -16,14 +16,14 @@ class constants$11 {
     );
     static final MethodHandle libraw_get_rgb_cam$MH = RuntimeHelper.downcallHandle(
         "libraw_get_rgb_cam",
-        constants$11.libraw_get_rgb_cam$FUNC, false
+        constants$11.libraw_get_rgb_cam$FUNC
     );
     static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
         "libraw_get_color_maximum",
-        constants$11.libraw_get_color_maximum$FUNC, false
+        constants$11.libraw_get_color_maximum$FUNC
     );
     static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -31,28 +31,28 @@ class constants$11 {
     );
     static final MethodHandle libraw_set_output_tif$MH = RuntimeHelper.downcallHandle(
         "libraw_set_output_tif",
-        constants$11.libraw_set_output_tif$FUNC, false
+        constants$11.libraw_set_output_tif$FUNC
     );
     static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_iparams$MH = RuntimeHelper.downcallHandle(
         "libraw_get_iparams",
-        constants$11.libraw_get_iparams$FUNC, false
+        constants$11.libraw_get_iparams$FUNC
     );
     static final FunctionDescriptor libraw_get_lensinfo$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_lensinfo$MH = RuntimeHelper.downcallHandle(
         "libraw_get_lensinfo",
-        constants$11.libraw_get_lensinfo$FUNC, false
+        constants$11.libraw_get_lensinfo$FUNC
     );
     static final FunctionDescriptor libraw_get_imgother$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_imgother$MH = RuntimeHelper.downcallHandle(
         "libraw_get_imgother",
-        constants$11.libraw_get_imgother$FUNC, false
+        constants$11.libraw_get_imgother$FUNC
     );
 }
 

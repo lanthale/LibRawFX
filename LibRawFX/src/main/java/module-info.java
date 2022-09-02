@@ -3,7 +3,7 @@ module org.librawfx {
     requires java.desktop;
     requires javafx.graphics;
     requires javafx.base;
-    requires jdk.incubator.foreign; 
+    requires jdk.incubator.foreign;
     requires java.logging;
     exports org.librawfx;    
     exports org.libraw.linuxosx;

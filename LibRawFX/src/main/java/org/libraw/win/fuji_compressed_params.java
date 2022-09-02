@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public class fuji_compressed_params {
 
     static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
@@ -37,13 +37,13 @@ public class fuji_compressed_params {
         return fuji_compressed_params.buf$VH;
     }
     public static MemoryAddress buf$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg);
     }
     public static void buf$set( MemorySegment seg, MemoryAddress x) {
         fuji_compressed_params.buf$VH.set(seg, x);
     }
     public static MemoryAddress buf$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void buf$set(MemorySegment seg, long index, MemoryAddress x) {
         fuji_compressed_params.buf$VH.set(seg.asSlice(index*sizeof()), x);
@@ -117,11 +117,7 @@ public class fuji_compressed_params {
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
-    public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
-    }
-    public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
 }
 
 

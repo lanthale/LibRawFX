@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$9 {
 
     static final FunctionDescriptor libraw_set_output_bps$FUNC = FunctionDescriptor.ofVoid(
@@ -15,7 +15,7 @@ class constants$9 {
     );
     static final MethodHandle libraw_set_output_bps$MH = RuntimeHelper.downcallHandle(
         "libraw_set_output_bps",
-        constants$9.libraw_set_output_bps$FUNC, false
+        constants$9.libraw_set_output_bps$FUNC
     );
     static final FunctionDescriptor libraw_set_gamma$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -24,7 +24,7 @@ class constants$9 {
     );
     static final MethodHandle libraw_set_gamma$MH = RuntimeHelper.downcallHandle(
         "libraw_set_gamma",
-        constants$9.libraw_set_gamma$FUNC, false
+        constants$9.libraw_set_gamma$FUNC
     );
     static final FunctionDescriptor libraw_set_no_auto_bright$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -32,7 +32,7 @@ class constants$9 {
     );
     static final MethodHandle libraw_set_no_auto_bright$MH = RuntimeHelper.downcallHandle(
         "libraw_set_no_auto_bright",
-        constants$9.libraw_set_no_auto_bright$FUNC, false
+        constants$9.libraw_set_no_auto_bright$FUNC
     );
     static final FunctionDescriptor libraw_set_bright$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -40,7 +40,7 @@ class constants$9 {
     );
     static final MethodHandle libraw_set_bright$MH = RuntimeHelper.downcallHandle(
         "libraw_set_bright",
-        constants$9.libraw_set_bright$FUNC, false
+        constants$9.libraw_set_bright$FUNC
     );
     static final FunctionDescriptor libraw_set_highlight$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -48,7 +48,7 @@ class constants$9 {
     );
     static final MethodHandle libraw_set_highlight$MH = RuntimeHelper.downcallHandle(
         "libraw_set_highlight",
-        constants$9.libraw_set_highlight$FUNC, false
+        constants$9.libraw_set_highlight$FUNC
     );
     static final FunctionDescriptor libraw_set_fbdd_noiserd$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -56,7 +56,7 @@ class constants$9 {
     );
     static final MethodHandle libraw_set_fbdd_noiserd$MH = RuntimeHelper.downcallHandle(
         "libraw_set_fbdd_noiserd",
-        constants$9.libraw_set_fbdd_noiserd$FUNC, false
+        constants$9.libraw_set_fbdd_noiserd$FUNC
     );
 }
 

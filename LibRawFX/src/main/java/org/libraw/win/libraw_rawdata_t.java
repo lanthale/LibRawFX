@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public class libraw_rawdata_t {
 
     static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
@@ -149,13 +149,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.raw_alloc$VH;
     }
     public static MemoryAddress raw_alloc$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.raw_alloc$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_alloc$VH.get(seg);
     }
     public static void raw_alloc$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.raw_alloc$VH.set(seg, x);
     }
     public static MemoryAddress raw_alloc$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.raw_alloc$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_alloc$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_alloc$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.raw_alloc$VH.set(seg.asSlice(index*sizeof()), x);
@@ -165,13 +165,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.raw_image$VH;
     }
     public static MemoryAddress raw_image$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.raw_image$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_image$VH.get(seg);
     }
     public static void raw_image$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.raw_image$VH.set(seg, x);
     }
     public static MemoryAddress raw_image$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.raw_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_image$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.raw_image$VH.set(seg.asSlice(index*sizeof()), x);
@@ -181,13 +181,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.color4_image$VH;
     }
     public static MemoryAddress color4_image$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.color4_image$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color4_image$VH.get(seg);
     }
     public static void color4_image$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.color4_image$VH.set(seg, x);
     }
     public static MemoryAddress color4_image$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.color4_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color4_image$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void color4_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.color4_image$VH.set(seg.asSlice(index*sizeof()), x);
@@ -197,13 +197,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.color3_image$VH;
     }
     public static MemoryAddress color3_image$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.color3_image$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color3_image$VH.get(seg);
     }
     public static void color3_image$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.color3_image$VH.set(seg, x);
     }
     public static MemoryAddress color3_image$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.color3_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color3_image$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void color3_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.color3_image$VH.set(seg.asSlice(index*sizeof()), x);
@@ -213,13 +213,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.float_image$VH;
     }
     public static MemoryAddress float_image$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.float_image$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float_image$VH.get(seg);
     }
     public static void float_image$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.float_image$VH.set(seg, x);
     }
     public static MemoryAddress float_image$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.float_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float_image$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void float_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.float_image$VH.set(seg.asSlice(index*sizeof()), x);
@@ -229,13 +229,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.float3_image$VH;
     }
     public static MemoryAddress float3_image$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.float3_image$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float3_image$VH.get(seg);
     }
     public static void float3_image$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.float3_image$VH.set(seg, x);
     }
     public static MemoryAddress float3_image$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.float3_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float3_image$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void float3_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.float3_image$VH.set(seg.asSlice(index*sizeof()), x);
@@ -245,13 +245,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.float4_image$VH;
     }
     public static MemoryAddress float4_image$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.float4_image$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float4_image$VH.get(seg);
     }
     public static void float4_image$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.float4_image$VH.set(seg, x);
     }
     public static MemoryAddress float4_image$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.float4_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float4_image$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void float4_image$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.float4_image$VH.set(seg.asSlice(index*sizeof()), x);
@@ -261,13 +261,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.ph1_cblack$VH;
     }
     public static MemoryAddress ph1_cblack$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.ph1_cblack$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_cblack$VH.get(seg);
     }
     public static void ph1_cblack$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.ph1_cblack$VH.set(seg, x);
     }
     public static MemoryAddress ph1_cblack$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.ph1_cblack$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_cblack$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void ph1_cblack$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.ph1_cblack$VH.set(seg.asSlice(index*sizeof()), x);
@@ -277,13 +277,13 @@ public class libraw_rawdata_t {
         return libraw_rawdata_t.ph1_rblack$VH;
     }
     public static MemoryAddress ph1_rblack$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.ph1_rblack$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_rblack$VH.get(seg);
     }
     public static void ph1_rblack$set( MemorySegment seg, MemoryAddress x) {
         libraw_rawdata_t.ph1_rblack$VH.set(seg, x);
     }
     public static MemoryAddress ph1_rblack$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_rawdata_t.ph1_rblack$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_rblack$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void ph1_rblack$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_rawdata_t.ph1_rblack$VH.set(seg.asSlice(index*sizeof()), x);
@@ -305,11 +305,7 @@ public class libraw_rawdata_t {
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
-    public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
-    }
-    public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
 }
 
 

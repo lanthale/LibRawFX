@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$12 {
 
     static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.21.0-Snapshot202110");

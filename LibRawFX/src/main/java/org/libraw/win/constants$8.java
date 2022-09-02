@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$8 {
 
     static final FunctionDescriptor libraw_dcraw_make_mem_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
@@ -15,14 +15,14 @@ class constants$8 {
     );
     static final MethodHandle libraw_dcraw_make_mem_thumb$MH = RuntimeHelper.downcallHandle(
         "libraw_dcraw_make_mem_thumb",
-        constants$8.libraw_dcraw_make_mem_thumb$FUNC, false
+        constants$8.libraw_dcraw_make_mem_thumb$FUNC
     );
     static final FunctionDescriptor libraw_dcraw_clear_mem$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_dcraw_clear_mem$MH = RuntimeHelper.downcallHandle(
         "libraw_dcraw_clear_mem",
-        constants$8.libraw_dcraw_clear_mem$FUNC, false
+        constants$8.libraw_dcraw_clear_mem$FUNC
     );
     static final FunctionDescriptor libraw_set_demosaic$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -30,7 +30,7 @@ class constants$8 {
     );
     static final MethodHandle libraw_set_demosaic$MH = RuntimeHelper.downcallHandle(
         "libraw_set_demosaic",
-        constants$8.libraw_set_demosaic$FUNC, false
+        constants$8.libraw_set_demosaic$FUNC
     );
     static final FunctionDescriptor libraw_set_output_color$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -38,7 +38,7 @@ class constants$8 {
     );
     static final MethodHandle libraw_set_output_color$MH = RuntimeHelper.downcallHandle(
         "libraw_set_output_color",
-        constants$8.libraw_set_output_color$FUNC, false
+        constants$8.libraw_set_output_color$FUNC
     );
     static final FunctionDescriptor libraw_set_adjust_maximum_thr$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -46,7 +46,7 @@ class constants$8 {
     );
     static final MethodHandle libraw_set_adjust_maximum_thr$MH = RuntimeHelper.downcallHandle(
         "libraw_set_adjust_maximum_thr",
-        constants$8.libraw_set_adjust_maximum_thr$FUNC, false
+        constants$8.libraw_set_adjust_maximum_thr$FUNC
     );
     static final FunctionDescriptor libraw_set_user_mul$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -55,7 +55,7 @@ class constants$8 {
     );
     static final MethodHandle libraw_set_user_mul$MH = RuntimeHelper.downcallHandle(
         "libraw_set_user_mul",
-        constants$8.libraw_set_user_mul$FUNC, false
+        constants$8.libraw_set_user_mul$FUNC
     );
 }
 

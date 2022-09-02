@@ -5,19 +5,19 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public interface progress_callback {
 
-    int apply(jdk.incubator.foreign.MemoryAddress x0, int x1, int x2, int x3);
-    static NativeSymbol allocate(progress_callback fi, ResourceScope scope) {
-        return RuntimeHelper.upcallStub(progress_callback.class, fi, constants$1.progress_callback$FUNC, "(Ljdk/incubator/foreign/MemoryAddress;III)I", scope);
+    int apply(java.lang.foreign.MemoryAddress data, int stage, int iteration, int expected);
+    static MemorySegment allocate(progress_callback fi, MemorySession session) {
+        return RuntimeHelper.upcallStub(progress_callback.class, fi, constants$1.progress_callback$FUNC, session);
     }
-    static progress_callback ofAddress(MemoryAddress addr, ResourceScope scope) {
-        NativeSymbol symbol = NativeSymbol.ofAddress("progress_callback::" + Long.toHexString(addr.toRawLongValue()), addr, scope);
-return (jdk.incubator.foreign.MemoryAddress x0, int x1, int x2, int x3) -> {
+    static progress_callback ofAddress(MemoryAddress addr, MemorySession session) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
+        return (java.lang.foreign.MemoryAddress _data, int _stage, int _iteration, int _expected) -> {
             try {
-                return (int)constants$1.progress_callback$MH.invokeExact(symbol, (jdk.incubator.foreign.Addressable)x0, x1, x2, x3);
+                return (int)constants$1.progress_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_data, _stage, _iteration, _expected);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

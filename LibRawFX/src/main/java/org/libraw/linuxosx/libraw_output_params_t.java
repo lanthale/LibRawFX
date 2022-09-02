@@ -5,8 +5,8 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public class libraw_output_params_t {
 
     static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
@@ -220,13 +220,13 @@ public class libraw_output_params_t {
         return libraw_output_params_t.output_profile$VH;
     }
     public static MemoryAddress output_profile$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.output_profile$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.output_profile$VH.get(seg);
     }
     public static void output_profile$set( MemorySegment seg, MemoryAddress x) {
         libraw_output_params_t.output_profile$VH.set(seg, x);
     }
     public static MemoryAddress output_profile$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.output_profile$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.output_profile$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void output_profile$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_output_params_t.output_profile$VH.set(seg.asSlice(index*sizeof()), x);
@@ -236,13 +236,13 @@ public class libraw_output_params_t {
         return libraw_output_params_t.camera_profile$VH;
     }
     public static MemoryAddress camera_profile$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.camera_profile$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.camera_profile$VH.get(seg);
     }
     public static void camera_profile$set( MemorySegment seg, MemoryAddress x) {
         libraw_output_params_t.camera_profile$VH.set(seg, x);
     }
     public static MemoryAddress camera_profile$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.camera_profile$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.camera_profile$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void camera_profile$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_output_params_t.camera_profile$VH.set(seg.asSlice(index*sizeof()), x);
@@ -252,13 +252,13 @@ public class libraw_output_params_t {
         return libraw_output_params_t.bad_pixels$VH;
     }
     public static MemoryAddress bad_pixels$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.bad_pixels$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.bad_pixels$VH.get(seg);
     }
     public static void bad_pixels$set( MemorySegment seg, MemoryAddress x) {
         libraw_output_params_t.bad_pixels$VH.set(seg, x);
     }
     public static MemoryAddress bad_pixels$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.bad_pixels$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.bad_pixels$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void bad_pixels$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_output_params_t.bad_pixels$VH.set(seg.asSlice(index*sizeof()), x);
@@ -268,13 +268,13 @@ public class libraw_output_params_t {
         return libraw_output_params_t.dark_frame$VH;
     }
     public static MemoryAddress dark_frame$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.dark_frame$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.dark_frame$VH.get(seg);
     }
     public static void dark_frame$set( MemorySegment seg, MemoryAddress x) {
         libraw_output_params_t.dark_frame$VH.set(seg, x);
     }
     public static MemoryAddress dark_frame$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_output_params_t.dark_frame$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.dark_frame$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void dark_frame$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_output_params_t.dark_frame$VH.set(seg.asSlice(index*sizeof()), x);
@@ -623,11 +623,7 @@ public class libraw_output_params_t {
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
-    public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
-    }
-    public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
 }
 
 

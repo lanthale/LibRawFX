@@ -5,8 +5,8 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public class internal_data_t {
 
     static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
@@ -27,13 +27,13 @@ public class internal_data_t {
         return internal_data_t.input$VH;
     }
     public static MemoryAddress input$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)internal_data_t.input$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)internal_data_t.input$VH.get(seg);
     }
     public static void input$set( MemorySegment seg, MemoryAddress x) {
         internal_data_t.input$VH.set(seg, x);
     }
     public static MemoryAddress input$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)internal_data_t.input$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)internal_data_t.input$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void input$set(MemorySegment seg, long index, MemoryAddress x) {
         internal_data_t.input$VH.set(seg.asSlice(index*sizeof()), x);
@@ -43,13 +43,13 @@ public class internal_data_t {
         return internal_data_t.output$VH;
     }
     public static MemoryAddress output$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)internal_data_t.output$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)internal_data_t.output$VH.get(seg);
     }
     public static void output$set( MemorySegment seg, MemoryAddress x) {
         internal_data_t.output$VH.set(seg, x);
     }
     public static MemoryAddress output$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)internal_data_t.output$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)internal_data_t.output$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void output$set(MemorySegment seg, long index, MemoryAddress x) {
         internal_data_t.output$VH.set(seg.asSlice(index*sizeof()), x);
@@ -75,13 +75,13 @@ public class internal_data_t {
         return internal_data_t.meta_data$VH;
     }
     public static MemoryAddress meta_data$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)internal_data_t.meta_data$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)internal_data_t.meta_data$VH.get(seg);
     }
     public static void meta_data$set( MemorySegment seg, MemoryAddress x) {
         internal_data_t.meta_data$VH.set(seg, x);
     }
     public static MemoryAddress meta_data$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)internal_data_t.meta_data$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)internal_data_t.meta_data$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void meta_data$set(MemorySegment seg, long index, MemoryAddress x) {
         internal_data_t.meta_data$VH.set(seg.asSlice(index*sizeof()), x);
@@ -126,11 +126,7 @@ public class internal_data_t {
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
-    public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
-    }
-    public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
 }
 
 

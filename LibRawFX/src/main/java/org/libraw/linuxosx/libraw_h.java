@@ -5,8 +5,8 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public class libraw_h  {
 
     /* package-private */ libraw_h() {}
@@ -1574,7 +1574,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$0.default_memory_callback$MH,"default_memory_callback");
     }
     public static void default_memory_callback ( Addressable data,  Addressable file,  Addressable where) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$0.default_memory_callback$MH, "default_memory_callback");
+        var mh$ = default_memory_callback$MH();
         try {
             mh$.invokeExact(data, file, where);
         } catch (Throwable ex$) {
@@ -1585,7 +1585,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$1.default_data_callback$MH,"default_data_callback");
     }
     public static void default_data_callback ( Addressable data,  Addressable file,  int offset) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$1.default_data_callback$MH, "default_data_callback");
+        var mh$ = default_data_callback$MH();
         try {
             mh$.invokeExact(data, file, offset);
         } catch (Throwable ex$) {
@@ -1596,9 +1596,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$2.libraw_strerror$MH,"libraw_strerror");
     }
     public static MemoryAddress libraw_strerror ( int errorcode) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$2.libraw_strerror$MH, "libraw_strerror");
+        var mh$ = libraw_strerror$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(errorcode);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(errorcode);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1607,9 +1607,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$2.libraw_strprogress$MH,"libraw_strprogress");
     }
     public static MemoryAddress libraw_strprogress ( int x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$2.libraw_strprogress$MH, "libraw_strprogress");
+        var mh$ = libraw_strprogress$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(x0);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1618,9 +1618,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$3.libraw_init$MH,"libraw_init");
     }
     public static MemoryAddress libraw_init ( int flags) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_init$MH, "libraw_init");
+        var mh$ = libraw_init$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(flags);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(flags);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1629,7 +1629,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$3.libraw_open_file$MH,"libraw_open_file");
     }
     public static int libraw_open_file ( Addressable x0,  Addressable x1) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_file$MH, "libraw_open_file");
+        var mh$ = libraw_open_file$MH();
         try {
             return (int)mh$.invokeExact(x0, x1);
         } catch (Throwable ex$) {
@@ -1640,7 +1640,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$3.libraw_open_buffer$MH,"libraw_open_buffer");
     }
     public static int libraw_open_buffer ( Addressable x0,  Addressable buffer,  long size) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_buffer$MH, "libraw_open_buffer");
+        var mh$ = libraw_open_buffer$MH();
         try {
             return (int)mh$.invokeExact(x0, buffer, size);
         } catch (Throwable ex$) {
@@ -1651,7 +1651,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$3.libraw_open_bayer$MH,"libraw_open_bayer");
     }
     public static int libraw_open_bayer ( Addressable lr,  Addressable data,  int datalen,  short _raw_width,  short _raw_height,  short _left_margin,  short _top_margin,  short _right_margin,  short _bottom_margin,  byte procflags,  byte bayer_battern,  int unused_bits,  int otherflags,  int black_level) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_open_bayer$MH, "libraw_open_bayer");
+        var mh$ = libraw_open_bayer$MH();
         try {
             return (int)mh$.invokeExact(lr, data, datalen, _raw_width, _raw_height, _left_margin, _top_margin, _right_margin, _bottom_margin, procflags, bayer_battern, unused_bits, otherflags, black_level);
         } catch (Throwable ex$) {
@@ -1662,7 +1662,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$3.libraw_unpack$MH,"libraw_unpack");
     }
     public static int libraw_unpack ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_unpack$MH, "libraw_unpack");
+        var mh$ = libraw_unpack$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1673,7 +1673,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$3.libraw_unpack_thumb$MH,"libraw_unpack_thumb");
     }
     public static int libraw_unpack_thumb ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$3.libraw_unpack_thumb$MH, "libraw_unpack_thumb");
+        var mh$ = libraw_unpack_thumb$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1684,7 +1684,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$4.libraw_recycle_datastream$MH,"libraw_recycle_datastream");
     }
     public static void libraw_recycle_datastream ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_recycle_datastream$MH, "libraw_recycle_datastream");
+        var mh$ = libraw_recycle_datastream$MH();
         try {
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1695,7 +1695,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$4.libraw_recycle$MH,"libraw_recycle");
     }
     public static void libraw_recycle ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_recycle$MH, "libraw_recycle");
+        var mh$ = libraw_recycle$MH();
         try {
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1706,7 +1706,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$4.libraw_close$MH,"libraw_close");
     }
     public static void libraw_close ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_close$MH, "libraw_close");
+        var mh$ = libraw_close$MH();
         try {
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1717,7 +1717,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$4.libraw_subtract_black$MH,"libraw_subtract_black");
     }
     public static void libraw_subtract_black ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_subtract_black$MH, "libraw_subtract_black");
+        var mh$ = libraw_subtract_black$MH();
         try {
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1728,7 +1728,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$4.libraw_raw2image$MH,"libraw_raw2image");
     }
     public static int libraw_raw2image ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_raw2image$MH, "libraw_raw2image");
+        var mh$ = libraw_raw2image$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1739,7 +1739,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$4.libraw_free_image$MH,"libraw_free_image");
     }
     public static void libraw_free_image ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$4.libraw_free_image$MH, "libraw_free_image");
+        var mh$ = libraw_free_image$MH();
         try {
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1750,9 +1750,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$5.libraw_version$MH,"libraw_version");
     }
     public static MemoryAddress libraw_version (Object... x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_version$MH, "libraw_version");
+        var mh$ = libraw_version$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(x0);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1761,7 +1761,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$5.libraw_versionNumber$MH,"libraw_versionNumber");
     }
     public static int libraw_versionNumber (Object... x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_versionNumber$MH, "libraw_versionNumber");
+        var mh$ = libraw_versionNumber$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1772,9 +1772,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$5.libraw_cameraList$MH,"libraw_cameraList");
     }
     public static MemoryAddress libraw_cameraList (Object... x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_cameraList$MH, "libraw_cameraList");
+        var mh$ = libraw_cameraList$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(x0);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1783,7 +1783,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$5.libraw_cameraCount$MH,"libraw_cameraCount");
     }
     public static int libraw_cameraCount (Object... x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_cameraCount$MH, "libraw_cameraCount");
+        var mh$ = libraw_cameraCount$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1794,7 +1794,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$5.libraw_set_memerror_handler$MH,"libraw_set_memerror_handler");
     }
     public static void libraw_set_memerror_handler ( Addressable x0,  Addressable cb,  Addressable datap) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_set_memerror_handler$MH, "libraw_set_memerror_handler");
+        var mh$ = libraw_set_memerror_handler$MH();
         try {
             mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
@@ -1805,7 +1805,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$5.libraw_set_exifparser_handler$MH,"libraw_set_exifparser_handler");
     }
     public static void libraw_set_exifparser_handler ( Addressable x0,  Addressable cb,  Addressable datap) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$5.libraw_set_exifparser_handler$MH, "libraw_set_exifparser_handler");
+        var mh$ = libraw_set_exifparser_handler$MH();
         try {
             mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
@@ -1816,7 +1816,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$6.libraw_set_dataerror_handler$MH,"libraw_set_dataerror_handler");
     }
     public static void libraw_set_dataerror_handler ( Addressable x0,  Addressable func,  Addressable datap) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_set_dataerror_handler$MH, "libraw_set_dataerror_handler");
+        var mh$ = libraw_set_dataerror_handler$MH();
         try {
             mh$.invokeExact(x0, func, datap);
         } catch (Throwable ex$) {
@@ -1827,7 +1827,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$6.libraw_set_progress_handler$MH,"libraw_set_progress_handler");
     }
     public static void libraw_set_progress_handler ( Addressable x0,  Addressable cb,  Addressable datap) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_set_progress_handler$MH, "libraw_set_progress_handler");
+        var mh$ = libraw_set_progress_handler$MH();
         try {
             mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
@@ -1838,9 +1838,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$6.libraw_unpack_function_name$MH,"libraw_unpack_function_name");
     }
     public static MemoryAddress libraw_unpack_function_name ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_unpack_function_name$MH, "libraw_unpack_function_name");
+        var mh$ = libraw_unpack_function_name$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1849,7 +1849,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$6.libraw_get_decoder_info$MH,"libraw_get_decoder_info");
     }
     public static int libraw_get_decoder_info ( Addressable lr,  Addressable d) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_get_decoder_info$MH, "libraw_get_decoder_info");
+        var mh$ = libraw_get_decoder_info$MH();
         try {
             return (int)mh$.invokeExact(lr, d);
         } catch (Throwable ex$) {
@@ -1860,7 +1860,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$6.libraw_COLOR$MH,"libraw_COLOR");
     }
     public static int libraw_COLOR ( Addressable x0,  int row,  int col) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_COLOR$MH, "libraw_COLOR");
+        var mh$ = libraw_COLOR$MH();
         try {
             return (int)mh$.invokeExact(x0, row, col);
         } catch (Throwable ex$) {
@@ -1871,7 +1871,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$6.libraw_capabilities$MH,"libraw_capabilities");
     }
     public static int libraw_capabilities (Object... x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$6.libraw_capabilities$MH, "libraw_capabilities");
+        var mh$ = libraw_capabilities$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1882,7 +1882,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$7.libraw_adjust_sizes_info_only$MH,"libraw_adjust_sizes_info_only");
     }
     public static int libraw_adjust_sizes_info_only ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_adjust_sizes_info_only$MH, "libraw_adjust_sizes_info_only");
+        var mh$ = libraw_adjust_sizes_info_only$MH();
         try {
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1893,7 +1893,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_ppm_tiff_writer$MH,"libraw_dcraw_ppm_tiff_writer");
     }
     public static int libraw_dcraw_ppm_tiff_writer ( Addressable lr,  Addressable filename) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_ppm_tiff_writer$MH, "libraw_dcraw_ppm_tiff_writer");
+        var mh$ = libraw_dcraw_ppm_tiff_writer$MH();
         try {
             return (int)mh$.invokeExact(lr, filename);
         } catch (Throwable ex$) {
@@ -1904,7 +1904,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_thumb_writer$MH,"libraw_dcraw_thumb_writer");
     }
     public static int libraw_dcraw_thumb_writer ( Addressable lr,  Addressable fname) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_thumb_writer$MH, "libraw_dcraw_thumb_writer");
+        var mh$ = libraw_dcraw_thumb_writer$MH();
         try {
             return (int)mh$.invokeExact(lr, fname);
         } catch (Throwable ex$) {
@@ -1915,7 +1915,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_process$MH,"libraw_dcraw_process");
     }
     public static int libraw_dcraw_process ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_process$MH, "libraw_dcraw_process");
+        var mh$ = libraw_dcraw_process$MH();
         try {
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
@@ -1926,9 +1926,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_make_mem_image$MH,"libraw_dcraw_make_mem_image");
     }
     public static MemoryAddress libraw_dcraw_make_mem_image ( Addressable lr,  Addressable errc) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_make_mem_image$MH, "libraw_dcraw_make_mem_image");
+        var mh$ = libraw_dcraw_make_mem_image$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr, errc);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(lr, errc);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1937,9 +1937,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_make_mem_thumb$MH,"libraw_dcraw_make_mem_thumb");
     }
     public static MemoryAddress libraw_dcraw_make_mem_thumb ( Addressable lr,  Addressable errc) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$7.libraw_dcraw_make_mem_thumb$MH, "libraw_dcraw_make_mem_thumb");
+        var mh$ = libraw_dcraw_make_mem_thumb$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr, errc);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(lr, errc);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -1948,7 +1948,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$8.libraw_dcraw_clear_mem$MH,"libraw_dcraw_clear_mem");
     }
     public static void libraw_dcraw_clear_mem ( Addressable x0) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_dcraw_clear_mem$MH, "libraw_dcraw_clear_mem");
+        var mh$ = libraw_dcraw_clear_mem$MH();
         try {
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
@@ -1959,7 +1959,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$8.libraw_set_demosaic$MH,"libraw_set_demosaic");
     }
     public static void libraw_set_demosaic ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_demosaic$MH, "libraw_set_demosaic");
+        var mh$ = libraw_set_demosaic$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -1970,7 +1970,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$8.libraw_set_output_color$MH,"libraw_set_output_color");
     }
     public static void libraw_set_output_color ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_output_color$MH, "libraw_set_output_color");
+        var mh$ = libraw_set_output_color$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -1981,7 +1981,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$8.libraw_set_adjust_maximum_thr$MH,"libraw_set_adjust_maximum_thr");
     }
     public static void libraw_set_adjust_maximum_thr ( Addressable lr,  float value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_adjust_maximum_thr$MH, "libraw_set_adjust_maximum_thr");
+        var mh$ = libraw_set_adjust_maximum_thr$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -1992,7 +1992,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$8.libraw_set_user_mul$MH,"libraw_set_user_mul");
     }
     public static void libraw_set_user_mul ( Addressable lr,  int index,  float val) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_user_mul$MH, "libraw_set_user_mul");
+        var mh$ = libraw_set_user_mul$MH();
         try {
             mh$.invokeExact(lr, index, val);
         } catch (Throwable ex$) {
@@ -2003,7 +2003,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$8.libraw_set_output_bps$MH,"libraw_set_output_bps");
     }
     public static void libraw_set_output_bps ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$8.libraw_set_output_bps$MH, "libraw_set_output_bps");
+        var mh$ = libraw_set_output_bps$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -2014,7 +2014,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$9.libraw_set_gamma$MH,"libraw_set_gamma");
     }
     public static void libraw_set_gamma ( Addressable lr,  int index,  float value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_gamma$MH, "libraw_set_gamma");
+        var mh$ = libraw_set_gamma$MH();
         try {
             mh$.invokeExact(lr, index, value);
         } catch (Throwable ex$) {
@@ -2025,7 +2025,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$9.libraw_set_no_auto_bright$MH,"libraw_set_no_auto_bright");
     }
     public static void libraw_set_no_auto_bright ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_no_auto_bright$MH, "libraw_set_no_auto_bright");
+        var mh$ = libraw_set_no_auto_bright$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -2036,7 +2036,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$9.libraw_set_bright$MH,"libraw_set_bright");
     }
     public static void libraw_set_bright ( Addressable lr,  float value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_bright$MH, "libraw_set_bright");
+        var mh$ = libraw_set_bright$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -2047,7 +2047,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$9.libraw_set_highlight$MH,"libraw_set_highlight");
     }
     public static void libraw_set_highlight ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_highlight$MH, "libraw_set_highlight");
+        var mh$ = libraw_set_highlight$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -2058,7 +2058,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$9.libraw_set_fbdd_noiserd$MH,"libraw_set_fbdd_noiserd");
     }
     public static void libraw_set_fbdd_noiserd ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_set_fbdd_noiserd$MH, "libraw_set_fbdd_noiserd");
+        var mh$ = libraw_set_fbdd_noiserd$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -2069,7 +2069,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$9.libraw_get_raw_height$MH,"libraw_get_raw_height");
     }
     public static int libraw_get_raw_height ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$9.libraw_get_raw_height$MH, "libraw_get_raw_height");
+        var mh$ = libraw_get_raw_height$MH();
         try {
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
@@ -2080,7 +2080,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$10.libraw_get_raw_width$MH,"libraw_get_raw_width");
     }
     public static int libraw_get_raw_width ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_raw_width$MH, "libraw_get_raw_width");
+        var mh$ = libraw_get_raw_width$MH();
         try {
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
@@ -2091,7 +2091,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$10.libraw_get_iheight$MH,"libraw_get_iheight");
     }
     public static int libraw_get_iheight ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_iheight$MH, "libraw_get_iheight");
+        var mh$ = libraw_get_iheight$MH();
         try {
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
@@ -2102,7 +2102,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$10.libraw_get_iwidth$MH,"libraw_get_iwidth");
     }
     public static int libraw_get_iwidth ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_iwidth$MH, "libraw_get_iwidth");
+        var mh$ = libraw_get_iwidth$MH();
         try {
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
@@ -2113,7 +2113,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$10.libraw_get_cam_mul$MH,"libraw_get_cam_mul");
     }
     public static float libraw_get_cam_mul ( Addressable lr,  int index) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_cam_mul$MH, "libraw_get_cam_mul");
+        var mh$ = libraw_get_cam_mul$MH();
         try {
             return (float)mh$.invokeExact(lr, index);
         } catch (Throwable ex$) {
@@ -2124,7 +2124,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$10.libraw_get_pre_mul$MH,"libraw_get_pre_mul");
     }
     public static float libraw_get_pre_mul ( Addressable lr,  int index) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_pre_mul$MH, "libraw_get_pre_mul");
+        var mh$ = libraw_get_pre_mul$MH();
         try {
             return (float)mh$.invokeExact(lr, index);
         } catch (Throwable ex$) {
@@ -2135,7 +2135,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$10.libraw_get_rgb_cam$MH,"libraw_get_rgb_cam");
     }
     public static float libraw_get_rgb_cam ( Addressable lr,  int index1,  int index2) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$10.libraw_get_rgb_cam$MH, "libraw_get_rgb_cam");
+        var mh$ = libraw_get_rgb_cam$MH();
         try {
             return (float)mh$.invokeExact(lr, index1, index2);
         } catch (Throwable ex$) {
@@ -2146,7 +2146,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$11.libraw_get_color_maximum$MH,"libraw_get_color_maximum");
     }
     public static int libraw_get_color_maximum ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_color_maximum$MH, "libraw_get_color_maximum");
+        var mh$ = libraw_get_color_maximum$MH();
         try {
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
@@ -2157,7 +2157,7 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$11.libraw_set_output_tif$MH,"libraw_set_output_tif");
     }
     public static void libraw_set_output_tif ( Addressable lr,  int value) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_set_output_tif$MH, "libraw_set_output_tif");
+        var mh$ = libraw_set_output_tif$MH();
         try {
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
@@ -2168,9 +2168,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$11.libraw_get_iparams$MH,"libraw_get_iparams");
     }
     public static MemoryAddress libraw_get_iparams ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_iparams$MH, "libraw_get_iparams");
+        var mh$ = libraw_get_iparams$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2179,9 +2179,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$11.libraw_get_lensinfo$MH,"libraw_get_lensinfo");
     }
     public static MemoryAddress libraw_get_lensinfo ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_lensinfo$MH, "libraw_get_lensinfo");
+        var mh$ = libraw_get_lensinfo$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
@@ -2190,9 +2190,9 @@ public class libraw_h  {
         return RuntimeHelper.requireNonNull(constants$11.libraw_get_imgother$MH,"libraw_get_imgother");
     }
     public static MemoryAddress libraw_get_imgother ( Addressable lr) {
-        var mh$ = RuntimeHelper.requireNonNull(constants$11.libraw_get_imgother$MH, "libraw_get_imgother");
+        var mh$ = libraw_get_imgother$MH();
         try {
-            return (jdk.incubator.foreign.MemoryAddress)mh$.invokeExact(lr);
+            return (java.lang.foreign.MemoryAddress)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

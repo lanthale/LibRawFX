@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$1 {
 
     static final FunctionDescriptor data_callback$FUNC = FunctionDescriptor.ofVoid(
@@ -15,7 +15,7 @@ class constants$1 {
         Constants$root.C_LONG$LAYOUT
     );
     static final MethodHandle data_callback$MH = RuntimeHelper.downcallHandle(
-        constants$1.data_callback$FUNC, false
+        constants$1.data_callback$FUNC
     );
     static final FunctionDescriptor default_data_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -24,7 +24,7 @@ class constants$1 {
     );
     static final MethodHandle default_data_callback$MH = RuntimeHelper.downcallHandle(
         "default_data_callback",
-        constants$1.default_data_callback$FUNC, false
+        constants$1.default_data_callback$FUNC
     );
     static final FunctionDescriptor progress_callback$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -33,13 +33,13 @@ class constants$1 {
         Constants$root.C_LONG$LAYOUT
     );
     static final MethodHandle progress_callback$MH = RuntimeHelper.downcallHandle(
-        constants$1.progress_callback$FUNC, false
+        constants$1.progress_callback$FUNC
     );
     static final FunctionDescriptor pre_identify_callback$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle pre_identify_callback$MH = RuntimeHelper.downcallHandle(
-        constants$1.pre_identify_callback$FUNC, false
+        constants$1.pre_identify_callback$FUNC
     );
 }
 

@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$4 {
 
     static final FunctionDescriptor libraw_unpack_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
@@ -14,42 +14,42 @@ class constants$4 {
     );
     static final MethodHandle libraw_unpack_thumb$MH = RuntimeHelper.downcallHandle(
         "libraw_unpack_thumb",
-        constants$4.libraw_unpack_thumb$FUNC, false
+        constants$4.libraw_unpack_thumb$FUNC
     );
     static final FunctionDescriptor libraw_recycle_datastream$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_recycle_datastream$MH = RuntimeHelper.downcallHandle(
         "libraw_recycle_datastream",
-        constants$4.libraw_recycle_datastream$FUNC, false
+        constants$4.libraw_recycle_datastream$FUNC
     );
     static final FunctionDescriptor libraw_recycle$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_recycle$MH = RuntimeHelper.downcallHandle(
         "libraw_recycle",
-        constants$4.libraw_recycle$FUNC, false
+        constants$4.libraw_recycle$FUNC
     );
     static final FunctionDescriptor libraw_close$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_close$MH = RuntimeHelper.downcallHandle(
         "libraw_close",
-        constants$4.libraw_close$FUNC, false
+        constants$4.libraw_close$FUNC
     );
     static final FunctionDescriptor libraw_subtract_black$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_subtract_black$MH = RuntimeHelper.downcallHandle(
         "libraw_subtract_black",
-        constants$4.libraw_subtract_black$FUNC, false
+        constants$4.libraw_subtract_black$FUNC
     );
     static final FunctionDescriptor libraw_raw2image$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_raw2image$MH = RuntimeHelper.downcallHandle(
         "libraw_raw2image",
-        constants$4.libraw_raw2image$FUNC, false
+        constants$4.libraw_raw2image$FUNC
     );
 }
 

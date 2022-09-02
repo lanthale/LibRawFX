@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$5 {
 
     static final FunctionDescriptor libraw_free_image$FUNC = FunctionDescriptor.ofVoid(
@@ -14,27 +14,27 @@ class constants$5 {
     );
     static final MethodHandle libraw_free_image$MH = RuntimeHelper.downcallHandle(
         "libraw_free_image",
-        constants$5.libraw_free_image$FUNC, false
+        constants$5.libraw_free_image$FUNC
     );
     static final FunctionDescriptor libraw_version$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
-    static final MethodHandle libraw_version$MH = RuntimeHelper.downcallHandle(
+    static final MethodHandle libraw_version$MH = RuntimeHelper.downcallHandleVariadic(
         "libraw_version",
-        constants$5.libraw_version$FUNC, true
+        constants$5.libraw_version$FUNC
     );
     static final FunctionDescriptor libraw_versionNumber$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
-    static final MethodHandle libraw_versionNumber$MH = RuntimeHelper.downcallHandle(
+    static final MethodHandle libraw_versionNumber$MH = RuntimeHelper.downcallHandleVariadic(
         "libraw_versionNumber",
-        constants$5.libraw_versionNumber$FUNC, true
+        constants$5.libraw_versionNumber$FUNC
     );
     static final FunctionDescriptor libraw_cameraList$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
-    static final MethodHandle libraw_cameraList$MH = RuntimeHelper.downcallHandle(
+    static final MethodHandle libraw_cameraList$MH = RuntimeHelper.downcallHandleVariadic(
         "libraw_cameraList",
-        constants$5.libraw_cameraList$FUNC, true
+        constants$5.libraw_cameraList$FUNC
     );
     static final FunctionDescriptor libraw_cameraCount$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
-    static final MethodHandle libraw_cameraCount$MH = RuntimeHelper.downcallHandle(
+    static final MethodHandle libraw_cameraCount$MH = RuntimeHelper.downcallHandleVariadic(
         "libraw_cameraCount",
-        constants$5.libraw_cameraCount$FUNC, true
+        constants$5.libraw_cameraCount$FUNC
     );
     static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -43,7 +43,7 @@ class constants$5 {
     );
     static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
         "libraw_set_memerror_handler",
-        constants$5.libraw_set_memerror_handler$FUNC, false
+        constants$5.libraw_set_memerror_handler$FUNC
     );
 }
 

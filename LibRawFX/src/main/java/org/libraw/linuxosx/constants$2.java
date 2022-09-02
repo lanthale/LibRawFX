@@ -5,35 +5,35 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$2 {
 
     static final FunctionDescriptor post_identify_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle post_identify_callback$MH = RuntimeHelper.downcallHandle(
-        constants$2.post_identify_callback$FUNC, false
+        constants$2.post_identify_callback$FUNC
     );
     static final FunctionDescriptor process_step_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle process_step_callback$MH = RuntimeHelper.downcallHandle(
-        constants$2.process_step_callback$FUNC, false
+        constants$2.process_step_callback$FUNC
     );
     static final FunctionDescriptor libraw_strerror$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_strerror$MH = RuntimeHelper.downcallHandle(
         "libraw_strerror",
-        constants$2.libraw_strerror$FUNC, false
+        constants$2.libraw_strerror$FUNC
     );
     static final FunctionDescriptor libraw_strprogress$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT
     );
     static final MethodHandle libraw_strprogress$MH = RuntimeHelper.downcallHandle(
         "libraw_strprogress",
-        constants$2.libraw_strprogress$FUNC, false
+        constants$2.libraw_strprogress$FUNC
     );
 }
 

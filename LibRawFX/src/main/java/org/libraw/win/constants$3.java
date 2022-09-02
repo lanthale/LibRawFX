@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$3 {
 
     static final FunctionDescriptor libraw_init$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
@@ -14,7 +14,7 @@ class constants$3 {
     );
     static final MethodHandle libraw_init$MH = RuntimeHelper.downcallHandle(
         "libraw_init",
-        constants$3.libraw_init$FUNC, false
+        constants$3.libraw_init$FUNC
     );
     static final FunctionDescriptor libraw_open_file$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -22,7 +22,7 @@ class constants$3 {
     );
     static final MethodHandle libraw_open_file$MH = RuntimeHelper.downcallHandle(
         "libraw_open_file",
-        constants$3.libraw_open_file$FUNC, false
+        constants$3.libraw_open_file$FUNC
     );
     static final FunctionDescriptor libraw_open_wfile$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -30,7 +30,7 @@ class constants$3 {
     );
     static final MethodHandle libraw_open_wfile$MH = RuntimeHelper.downcallHandle(
         "libraw_open_wfile",
-        constants$3.libraw_open_wfile$FUNC, false
+        constants$3.libraw_open_wfile$FUNC
     );
     static final FunctionDescriptor libraw_open_buffer$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -39,7 +39,7 @@ class constants$3 {
     );
     static final MethodHandle libraw_open_buffer$MH = RuntimeHelper.downcallHandle(
         "libraw_open_buffer",
-        constants$3.libraw_open_buffer$FUNC, false
+        constants$3.libraw_open_buffer$FUNC
     );
     static final FunctionDescriptor libraw_open_bayer$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -59,14 +59,14 @@ class constants$3 {
     );
     static final MethodHandle libraw_open_bayer$MH = RuntimeHelper.downcallHandle(
         "libraw_open_bayer",
-        constants$3.libraw_open_bayer$FUNC, false
+        constants$3.libraw_open_bayer$FUNC
     );
     static final FunctionDescriptor libraw_unpack$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_unpack$MH = RuntimeHelper.downcallHandle(
         "libraw_unpack",
-        constants$3.libraw_unpack$FUNC, false
+        constants$3.libraw_unpack$FUNC
     );
 }
 

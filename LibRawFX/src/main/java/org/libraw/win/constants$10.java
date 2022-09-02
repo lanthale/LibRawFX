@@ -5,8 +5,8 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 class constants$10 {
 
     static final FunctionDescriptor libraw_get_raw_height$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
@@ -14,28 +14,28 @@ class constants$10 {
     );
     static final MethodHandle libraw_get_raw_height$MH = RuntimeHelper.downcallHandle(
         "libraw_get_raw_height",
-        constants$10.libraw_get_raw_height$FUNC, false
+        constants$10.libraw_get_raw_height$FUNC
     );
     static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
         "libraw_get_raw_width",
-        constants$10.libraw_get_raw_width$FUNC, false
+        constants$10.libraw_get_raw_width$FUNC
     );
     static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_iheight$MH = RuntimeHelper.downcallHandle(
         "libraw_get_iheight",
-        constants$10.libraw_get_iheight$FUNC, false
+        constants$10.libraw_get_iheight$FUNC
     );
     static final FunctionDescriptor libraw_get_iwidth$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
     static final MethodHandle libraw_get_iwidth$MH = RuntimeHelper.downcallHandle(
         "libraw_get_iwidth",
-        constants$10.libraw_get_iwidth$FUNC, false
+        constants$10.libraw_get_iwidth$FUNC
     );
     static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -43,7 +43,7 @@ class constants$10 {
     );
     static final MethodHandle libraw_get_cam_mul$MH = RuntimeHelper.downcallHandle(
         "libraw_get_cam_mul",
-        constants$10.libraw_get_cam_mul$FUNC, false
+        constants$10.libraw_get_cam_mul$FUNC
     );
     static final FunctionDescriptor libraw_get_pre_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
@@ -51,7 +51,7 @@ class constants$10 {
     );
     static final MethodHandle libraw_get_pre_mul$MH = RuntimeHelper.downcallHandle(
         "libraw_get_pre_mul",
-        constants$10.libraw_get_pre_mul$FUNC, false
+        constants$10.libraw_get_pre_mul$FUNC
     );
 }
 

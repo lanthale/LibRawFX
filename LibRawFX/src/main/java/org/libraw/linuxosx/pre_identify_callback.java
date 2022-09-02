@@ -5,19 +5,19 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public interface pre_identify_callback {
 
-    int apply(jdk.incubator.foreign.MemoryAddress x0);
-    static NativeSymbol allocate(pre_identify_callback fi, ResourceScope scope) {
-        return RuntimeHelper.upcallStub(pre_identify_callback.class, fi, constants$1.pre_identify_callback$FUNC, "(Ljdk/incubator/foreign/MemoryAddress;)I", scope);
+    int apply(java.lang.foreign.MemoryAddress ctx);
+    static MemorySegment allocate(pre_identify_callback fi, MemorySession session) {
+        return RuntimeHelper.upcallStub(pre_identify_callback.class, fi, constants$1.pre_identify_callback$FUNC, session);
     }
-    static pre_identify_callback ofAddress(MemoryAddress addr, ResourceScope scope) {
-        NativeSymbol symbol = NativeSymbol.ofAddress("pre_identify_callback::" + Long.toHexString(addr.toRawLongValue()), addr, scope);
-return (jdk.incubator.foreign.MemoryAddress x0) -> {
+    static pre_identify_callback ofAddress(MemoryAddress addr, MemorySession session) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
+        return (java.lang.foreign.MemoryAddress _ctx) -> {
             try {
-                return (int)constants$1.pre_identify_callback$MH.invokeExact(symbol, (jdk.incubator.foreign.Addressable)x0);
+                return (int)constants$1.pre_identify_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_ctx);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

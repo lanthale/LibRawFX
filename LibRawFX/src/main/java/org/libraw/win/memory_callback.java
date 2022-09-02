@@ -5,19 +5,19 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public interface memory_callback {
 
-    void apply(jdk.incubator.foreign.MemoryAddress x0, jdk.incubator.foreign.MemoryAddress x1, jdk.incubator.foreign.MemoryAddress x2);
-    static NativeSymbol allocate(memory_callback fi, ResourceScope scope) {
-        return RuntimeHelper.upcallStub(memory_callback.class, fi, constants$0.memory_callback$FUNC, "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)V", scope);
+    void apply(java.lang.foreign.MemoryAddress data, java.lang.foreign.MemoryAddress file, java.lang.foreign.MemoryAddress where);
+    static MemorySegment allocate(memory_callback fi, MemorySession session) {
+        return RuntimeHelper.upcallStub(memory_callback.class, fi, constants$0.memory_callback$FUNC, session);
     }
-    static memory_callback ofAddress(MemoryAddress addr, ResourceScope scope) {
-        NativeSymbol symbol = NativeSymbol.ofAddress("memory_callback::" + Long.toHexString(addr.toRawLongValue()), addr, scope);
-return (jdk.incubator.foreign.MemoryAddress x0, jdk.incubator.foreign.MemoryAddress x1, jdk.incubator.foreign.MemoryAddress x2) -> {
+    static memory_callback ofAddress(MemoryAddress addr, MemorySession session) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
+        return (java.lang.foreign.MemoryAddress _data, java.lang.foreign.MemoryAddress _file, java.lang.foreign.MemoryAddress _where) -> {
             try {
-                constants$0.memory_callback$MH.invokeExact(symbol, (jdk.incubator.foreign.Addressable)x0, (jdk.incubator.foreign.Addressable)x1, (jdk.incubator.foreign.Addressable)x2);
+                constants$0.memory_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_data, (java.lang.foreign.Addressable)_file, (java.lang.foreign.Addressable)_where);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

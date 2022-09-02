@@ -5,8 +5,8 @@ package org.libraw.linuxosx;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public class libraw_thumbnail_t {
 
     static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
@@ -105,13 +105,13 @@ public class libraw_thumbnail_t {
         return libraw_thumbnail_t.thumb$VH;
     }
     public static MemoryAddress thumb$get(MemorySegment seg) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_thumbnail_t.thumb$VH.get(seg);
+        return (java.lang.foreign.MemoryAddress)libraw_thumbnail_t.thumb$VH.get(seg);
     }
     public static void thumb$set( MemorySegment seg, MemoryAddress x) {
         libraw_thumbnail_t.thumb$VH.set(seg, x);
     }
     public static MemoryAddress thumb$get(MemorySegment seg, long index) {
-        return (jdk.incubator.foreign.MemoryAddress)libraw_thumbnail_t.thumb$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemoryAddress)libraw_thumbnail_t.thumb$VH.get(seg.asSlice(index*sizeof()));
     }
     public static void thumb$set(MemorySegment seg, long index, MemoryAddress x) {
         libraw_thumbnail_t.thumb$VH.set(seg.asSlice(index*sizeof()), x);
@@ -121,11 +121,7 @@ public class libraw_thumbnail_t {
     public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment allocate(ResourceScope scope) { return allocate(SegmentAllocator.nativeAllocator(scope)); }
-    public static MemorySegment allocateArray(int len, ResourceScope scope) {
-        return allocateArray(len, SegmentAllocator.nativeAllocator(scope));
-    }
-    public static MemorySegment ofAddress(MemoryAddress addr, ResourceScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
 }
 
 

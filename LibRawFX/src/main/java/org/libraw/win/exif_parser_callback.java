@@ -5,19 +5,19 @@ package org.libraw.win;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.ValueLayout.*;
+import java.lang.foreign.*;
+import static java.lang.foreign.ValueLayout.*;
 public interface exif_parser_callback {
 
-    void apply(jdk.incubator.foreign.MemoryAddress x0, int x1, int x2, int x3, int x4, jdk.incubator.foreign.MemoryAddress x5, long x6);
-    static NativeSymbol allocate(exif_parser_callback fi, ResourceScope scope) {
-        return RuntimeHelper.upcallStub(exif_parser_callback.class, fi, constants$0.exif_parser_callback$FUNC, "(Ljdk/incubator/foreign/MemoryAddress;IIIILjdk/incubator/foreign/MemoryAddress;J)V", scope);
+    void apply(java.lang.foreign.MemoryAddress context, int tag, int type, int len, int ord, java.lang.foreign.MemoryAddress ifp, long base);
+    static MemorySegment allocate(exif_parser_callback fi, MemorySession session) {
+        return RuntimeHelper.upcallStub(exif_parser_callback.class, fi, constants$0.exif_parser_callback$FUNC, session);
     }
-    static exif_parser_callback ofAddress(MemoryAddress addr, ResourceScope scope) {
-        NativeSymbol symbol = NativeSymbol.ofAddress("exif_parser_callback::" + Long.toHexString(addr.toRawLongValue()), addr, scope);
-return (jdk.incubator.foreign.MemoryAddress x0, int x1, int x2, int x3, int x4, jdk.incubator.foreign.MemoryAddress x5, long x6) -> {
+    static exif_parser_callback ofAddress(MemoryAddress addr, MemorySession session) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
+        return (java.lang.foreign.MemoryAddress _context, int _tag, int _type, int _len, int _ord, java.lang.foreign.MemoryAddress _ifp, long _base) -> {
             try {
-                constants$0.exif_parser_callback$MH.invokeExact(symbol, (jdk.incubator.foreign.Addressable)x0, x1, x2, x3, x4, (jdk.incubator.foreign.Addressable)x5, x6);
+                constants$0.exif_parser_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_context, _tag, _type, _len, _ord, (java.lang.foreign.Addressable)_ifp, _base);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }
