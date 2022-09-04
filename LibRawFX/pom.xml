@@ -96,14 +96,23 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>18</release>
+                    <release>19</release>
                     <fork>true</fork>
                     <compilerArgs>                        
+                        <arg>--enable-preview</arg>
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</arg>                                
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
                     </compilerArgs>                                        
                 </configuration>
-            </plugin>            
+            </plugin> 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M7</version>
+                <configuration>
+                    <argLine>--enable-preview</argLine>
+                </configuration>
+            </plugin>           
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -117,7 +126,8 @@
                             <mainClass>org.librawfx.TestApp</mainClass>  
                             <options>                                   
                                 <option>--enable-native-access org.librawfx</option>
-                                <option>--add-modules jdk.incubator.foreign</option>                                
+                                <option>--enable-preview</option>
+                                <option>--add-modules java.se</option>                              
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
@@ -130,8 +140,9 @@
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
                             <options> 
-                                <option>--enable-native-access org.librawfx</option>                               
-                                <option>--add-modules jdk.incubator.foreign -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
+                                <option>--enable-native-access org.librawfx</option>  
+                                <option>--add-modules java.se</option>                                                           
+                                <option>--enable-preview -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
@@ -143,8 +154,9 @@
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
                             <options> 
-                                <option>--enable-native-access org.librawfx</option>                               
-                                <option>--add-modules jdk.incubator.foreign -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
+                                <option>--enable-native-access org.librawfx</option> 
+                                <option>--add-modules java.se</option>                                                            
+                                <option>--enable-preview -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
@@ -162,7 +174,7 @@
                                 <option>${profiler.jvmargs.arg4}</option>
                                 <option>${profiler.jvmargs.arg5}</option>
                                 <option>--enable-native-access org.librawfx</option>                               
-                                <option>--add-modules jdk.incubator.foreign</option>
+                                <option>--enable-preview</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
