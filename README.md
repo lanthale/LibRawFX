@@ -4,16 +4,16 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=CXWX6CAQ5MMV4)
 
-**JDK 18 is required for 1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
+**JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 19 is required for 1.8.1** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK19
+**JDK 19 is required for v1.8.1** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK19
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
 
 Supported OS:
 - Linux (min. glibc 2.27 which means Ubuntu 18 or later)
-- OSX 12.5 including Apple M1
+- OSX up to 12.5 including Apple M1
 - Windows 10/11
 
 I have integrated LibRaw SNAPSHOT version 202110 (https://www.libraw.org/news/libraw-202110-snapshot)
