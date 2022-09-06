@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
-    <version>1.8.1-SNAPSHOT</version>
+    <version>1.8.1</version>
     
     <name>LibRawFX</name>
     <description>This installs the native lib libraw as a JavaFX Image format provider similar to imageIO before on Swing</description>
@@ -245,7 +245,9 @@
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
-                                <configuration>                            
+                                <configuration>    
+                                    <release>19</release>
+                                    <additionalOptions>--enable-preview</additionalOptions>                        
                                     <additionalJOptions>                                
                                         <additionalJOption>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</additionalJOption>                                
                                         <additionalJOption>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</additionalJOption>
