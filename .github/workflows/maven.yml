@@ -18,8 +18,8 @@ jobs:
     - name: Set up JDK 19
       uses: oracle-actions/setup-java@v1
       with:
-        java-version: 'EA'
-        website: oracle.com
+        website: 'oracle.com'
+        release: 'EA'
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
