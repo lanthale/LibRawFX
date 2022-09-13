@@ -31,10 +31,12 @@ public class RAWDescriptor extends ImageDescriptor {
         new Signature(hexStringToByteArray("49495500080000002200")) //Leica raw
     };
 
+    private static final String[] mimeSubtypes = {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"};
+
     private static ImageDescriptor theInstance = null;
 
     private RAWDescriptor() {
-        super(formatName, extensions, signatures);
+        super(formatName, extensions, signatures, mimeSubtypes);
     }
 
     public static synchronized ImageDescriptor getInstance() {
