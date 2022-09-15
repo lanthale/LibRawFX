@@ -6,7 +6,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 19 is required for v1.8.1** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK19
+**JDK 19 and JavaFX 19 is required for v1.8.2** because of the foreign linker API usage, changes in JavaFX 19 and the big changes for threading happenend in Panama in JDK19. Warning: The lib is actually not working on Apple M1 due to a bug in JDK19. This will be fixed with JDK20.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
@@ -48,7 +48,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.8.1</version>  
+    <version>1.8.2</version>  
 </dependency>  
 ```
 
@@ -56,12 +56,20 @@ Point to the maven coordinates:
 
      `RAWImageLoaderFactory.install();`  
 
-- and add the following lines to your java config:
+- and add the following lines to your java config on JDK 18:
 ```
 --add-modules jdk.incubator.foreign --enable-native-access=org.librawfx  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
+
+- and add the following lines to your java config on JDK 19:
+```
+--enable-preview --enable-native-access=org.librawfx  
+--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
+--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
+```
+
 
 - **Metadata**
 Just create an instance of class LibrawImage with the file to get the metadata and print the return values
