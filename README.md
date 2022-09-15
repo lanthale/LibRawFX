@@ -6,7 +6,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 19 and JavaFX 19 is required for v1.8.2** because of the foreign linker API usage, changes in JavaFX 19 and the big changes for threading happenend in Panama in JDK19
+**JDK 19 and JavaFX 19 is required for v1.8.2** because of the foreign linker API usage, changes in JavaFX 19 and the big changes for threading happenend in Panama in JDK19. Warning: The lib is actually not working on Apple M1 due to a bug in JDK19. This will be fixed with JDK20.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
