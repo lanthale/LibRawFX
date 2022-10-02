@@ -4,6 +4,8 @@
  */
 package org.librawfx;
 
+import java.lang.foreign.*;
+
 /**
  *
  * @author cleme
@@ -12,12 +14,12 @@ public class RawDecoderSettings {
 
     private boolean autoBrightness = true;
     private float autoBrightnessThreashold = 0.0f;
-    private float brightNess=1.0f;
+    private float brightNess = 1.0f;
     private float coolScanNEFGamma = 1.0f;
     private int exposureCorrection = 0;
     private float exposureShift = 1.0f;
     private int noiseReduction = 0;
-    
+
     private boolean fixColorsHighlights = false;
     private boolean autoWhitebalance = false;
     private String whiteBalance = "CAMERA";
@@ -58,7 +60,26 @@ public class RawDecoderSettings {
     private double expoCorrectionShift = 1.0;
     private double expoCorrectionHighlight = 0.0;
 
-    public RawDecoderSettings() {
+    private MemorySegment parameterSegment;
+    private String os;
+
+    public RawDecoderSettings(MemorySegment parameterSegment, String os) {
+        this.parameterSegment = parameterSegment;
+        this.os = os;
+        // setting default parameters
+        if (os.toUpperCase().contains("WIN")) {
+            org.libraw.win.libraw_output_params_t.use_camera_wb$set(parameterSegment, 0);
+            org.libraw.win.libraw_output_params_t.use_auto_wb$set(parameterSegment, 0);
+            org.libraw.win.libraw_output_params_t.output_tiff$set(parameterSegment, 0);
+            org.libraw.win.libraw_output_params_t.half_size$set(parameterSegment, 0);
+            org.libraw.win.libraw_output_params_t.user_qual$set(parameterSegment, 0);
+        } else {
+            org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(parameterSegment, 0);
+            org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(parameterSegment, 0);
+            org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(parameterSegment, 0);
+            org.libraw.linuxosx.libraw_output_params_t.half_size$set(parameterSegment, 0);
+            org.libraw.linuxosx.libraw_output_params_t.user_qual$set(parameterSegment, 0);
+        }
     }
 
     public boolean isFixColorsHighlights() {
@@ -66,6 +87,19 @@ public class RawDecoderSettings {
     }
 
     public void setFixColorsHighlights(boolean fixColorsHighlights) {
+        if (os.toUpperCase().contains("WIN")) {
+            if (fixColorsHighlights == true) {
+                org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 1);
+            } else {
+                org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 0);
+            }
+        } else {
+            if (fixColorsHighlights == true) {
+                org.libraw.linuxosx.libraw_output_params_t.highlight$set(parameterSegment, 1);
+            } else {
+                org.libraw.linuxosx.libraw_output_params_t.highlight$set(parameterSegment, 0);
+            }
+        }
         this.fixColorsHighlights = fixColorsHighlights;
     }
 
@@ -300,8 +334,5 @@ public class RawDecoderSettings {
     public void setExpoCorrectionHighlight(double expoCorrectionHighlight) {
         this.expoCorrectionHighlight = expoCorrectionHighlight;
     }
-    
-    
-    
-    
+
 }

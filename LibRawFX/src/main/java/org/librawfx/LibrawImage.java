@@ -41,14 +41,12 @@ public class LibrawImage {
     private static SymbolLookup loaderLookup;
 
     public LibrawImage(String imageFile) {
-        this.imageFileURL = imageFile;
-        this.rawSettings=new RawDecoderSettings();
+        this.imageFileURL = imageFile;        
     }
 
     LibrawImage(RAWImageLoader loader) {
         imageFileURL = null;
-        this.loader = loader;
-        this.rawSettings=new RawDecoderSettings();
+        this.loader = loader;        
     }
 
     /**
@@ -111,11 +109,12 @@ public class LibrawImage {
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
                 
-                org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
+                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
+                /*org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);              
+                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);*/
 
                 MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
                 MemorySegment allocateNative = SegmentAllocator.newNativeArena(scope).allocateArray(org.libraw.win.libraw_h.C_CHAR, sourceFileAsByteArray);
@@ -180,11 +179,13 @@ public class LibrawImage {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.toRawLongValue());
                 MemorySegment datasegment = org.libraw.linuxosx.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
-                org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
+                
+                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
+                /*org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);
+                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);*/
                 
 
                 MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
@@ -271,11 +272,8 @@ public class LibrawImage {
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
-                org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);            
+                
+                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
 
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
                 int libraw_open_file = org.libraw.win.libraw_h.libraw_open_file(iprc, SegmentAllocator.newNativeArena(scope).allocateUtf8String(imageFileURL).address());
@@ -337,11 +335,8 @@ public class LibrawImage {
                 MemoryAddress iprc = org.libraw.linuxosx.libraw_h.libraw_init(0);
                 MemorySegment datasegment = org.libraw.linuxosx.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
-                org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);              
+                
+                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
 
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
                 int libraw_open_file = org.libraw.linuxosx.libraw_h.libraw_open_file(iprc, SegmentAllocator.newNativeArena(scope).allocateUtf8String(imageFileURL).address());
@@ -731,6 +726,12 @@ public class LibrawImage {
     public LocalDateTime getShootingDateTime() {
         return shootingDateTime;
     }
+    
+    public RawDecoderSettings getRawSettings() {
+        return rawSettings;
+    }
+    
+    
 
     /**
      * String representation of the image
