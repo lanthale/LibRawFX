@@ -40,13 +40,15 @@ public class LibrawImage {
     private RawDecoderSettings rawSettings;
     private static SymbolLookup loaderLookup;
 
-    public LibrawImage(String imageFile) {
-        this.imageFileURL = imageFile;        
+    public LibrawImage(String imageFile, RawDecoderSettings settings) {
+        this.imageFileURL = imageFile;     
+        this.rawSettings=settings;
     }
 
-    LibrawImage(RAWImageLoader loader) {
+    public LibrawImage(RAWImageLoader loader, RawDecoderSettings settings) {
         imageFileURL = null;
         this.loader = loader;        
+        this.rawSettings=settings;
     }
 
     /**
@@ -109,7 +111,8 @@ public class LibrawImage {
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
                 
-                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
+                this.rawSettings=new RawDecoderSettings();
+                new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
                 /*org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
@@ -180,7 +183,8 @@ public class LibrawImage {
                 MemorySegment datasegment = org.libraw.linuxosx.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
                 
-                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
+                this.rawSettings=new RawDecoderSettings();
+                new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
                 /*org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
@@ -273,7 +277,8 @@ public class LibrawImage {
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
                 
-                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
+                this.rawSettings=new RawDecoderSettings();
+                new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
 
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
                 int libraw_open_file = org.libraw.win.libraw_h.libraw_open_file(iprc, SegmentAllocator.newNativeArena(scope).allocateUtf8String(imageFileURL).address());
@@ -336,7 +341,8 @@ public class LibrawImage {
                 MemorySegment datasegment = org.libraw.linuxosx.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
                 
-                this.rawSettings=new RawDecoderSettings(params$slice, operatingSystem);
+                this.rawSettings=new RawDecoderSettings();
+                new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
 
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
                 int libraw_open_file = org.libraw.linuxosx.libraw_h.libraw_open_file(iprc, SegmentAllocator.newNativeArena(scope).allocateUtf8String(imageFileURL).address());

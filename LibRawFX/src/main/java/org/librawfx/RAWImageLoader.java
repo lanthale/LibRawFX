@@ -32,6 +32,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
     private final Lock accessLock = new Lock();
     private boolean isDisposed = false;
     private LibrawImage libraw;
+    private RawDecoderSettings settings;
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
         super(RAWDescriptor.getInstance());
@@ -40,7 +41,8 @@ public class RAWImageLoader extends ImageLoaderImpl {
         }
         this.input = input;
         this.dimensionProvider = dimensionProvider;
-        libraw = new LibrawImage(this);
+        this.settings=new RawDecoderSettings();
+        libraw = new LibrawImage(this, settings);
     }
 
     @Override

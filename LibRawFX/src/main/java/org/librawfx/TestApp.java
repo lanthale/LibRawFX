@@ -67,7 +67,7 @@ public class TestApp extends Application {
         loadImages(stack, initialFile, initialFile2, initialFile3);
 
         btn.setOnAction((t) -> {
-            stack.getChildren().clear();            
+            stack.getChildren().clear();
             stack.getChildren().add(btn);
             stack.getChildren().add(new ProgressBar());
             Platform.runLater(() -> {
@@ -89,7 +89,7 @@ public class TestApp extends Application {
         ImageView view3 = new ImageView();
         ProgressIndicator ind = new ProgressIndicator();
         ProgressIndicator ind2 = new ProgressIndicator();
-        ProgressIndicator ind3 = new ProgressIndicator();        
+        ProgressIndicator ind3 = new ProgressIndicator();
         stack.getChildren().add(ind);
         stack.getChildren().add(ind2);
         stack.getChildren().add(ind3);
@@ -102,7 +102,7 @@ public class TestApp extends Application {
                 hb.getChildren().add(view);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath()).getMetaData();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), new RawDecoderSettings()).getMetaData();
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -132,7 +132,7 @@ public class TestApp extends Application {
                 hb.getChildren().add(view2);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath()).getMetaData();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), new RawDecoderSettings()).getMetaData();
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -162,7 +162,7 @@ public class TestApp extends Application {
                 hb.getChildren().add(view3);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath()).getMetaData();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), new RawDecoderSettings()).getMetaData();
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -202,7 +202,7 @@ public class TestApp extends Application {
         //ind.progressProperty().bind(img.progressProperty());
         for (int i = 0; i < 1; i++) {
             File initialFile = new File(file);
-            LibrawImage libraw = new LibrawImage(initialFile.getAbsolutePath());
+            LibrawImage libraw = new LibrawImage(initialFile.getAbsolutePath(), new RawDecoderSettings());
             int[] raw = libraw.readPixelData();
             WritableImage img = new WritableImage(libraw.getImageWidth(), libraw.getImageHeight());
             PixelWriter pw = img.getPixelWriter();
@@ -218,7 +218,7 @@ public class TestApp extends Application {
     }
 
     public static void main(String[] args) {
-        args = new String[3];        
+        args = new String[3];
         args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW-ADOBE_DNG_Sample.dng";
         args[1] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_SIGMA_DP2_MERRILL.X3F";
         args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";

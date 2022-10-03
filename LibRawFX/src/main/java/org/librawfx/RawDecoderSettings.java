@@ -4,14 +4,18 @@
  */
 package org.librawfx;
 
-import java.lang.foreign.*;
-
 /**
  *
  * @author cleme
  */
 public class RawDecoderSettings {
 
+    private String whiteBalance = "CAMERA";
+    private boolean autoWhitebalance = false;
+    private boolean output_tiff = false;
+    private boolean halfSizeOutput = false;
+    private boolean customQuality = false;
+    
     private boolean autoBrightness = true;
     private float autoBrightnessThreashold = 0.0f;
     private float brightNess = 1.0f;
@@ -20,9 +24,7 @@ public class RawDecoderSettings {
     private float exposureShift = 1.0f;
     private int noiseReduction = 0;
 
-    private boolean fixColorsHighlights = false;
-    private boolean autoWhitebalance = false;
-    private String whiteBalance = "CAMERA";
+    private boolean fixColorsHighlights = false;        
     private boolean sixteenBitsImage = false;
     private double brightness = 1.0;
     private String RAWQuality = "BILINEAR";
@@ -59,47 +61,16 @@ public class RawDecoderSettings {
     private boolean expoCorrection = false;
     private double expoCorrectionShift = 1.0;
     private double expoCorrectionHighlight = 0.0;
+    
 
-    private MemorySegment parameterSegment;
-    private String os;
-
-    public RawDecoderSettings(MemorySegment parameterSegment, String os) {
-        this.parameterSegment = parameterSegment;
-        this.os = os;
-        // setting default parameters
-        if (os.toUpperCase().contains("WIN")) {
-            org.libraw.win.libraw_output_params_t.use_camera_wb$set(parameterSegment, 0);
-            org.libraw.win.libraw_output_params_t.use_auto_wb$set(parameterSegment, 0);
-            org.libraw.win.libraw_output_params_t.output_tiff$set(parameterSegment, 0);
-            org.libraw.win.libraw_output_params_t.half_size$set(parameterSegment, 0);
-            org.libraw.win.libraw_output_params_t.user_qual$set(parameterSegment, 0);
-        } else {
-            org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(parameterSegment, 0);
-            org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(parameterSegment, 0);
-            org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(parameterSegment, 0);
-            org.libraw.linuxosx.libraw_output_params_t.half_size$set(parameterSegment, 0);
-            org.libraw.linuxosx.libraw_output_params_t.user_qual$set(parameterSegment, 0);
-        }
+    public RawDecoderSettings() {
     }
-
+    
     public boolean isFixColorsHighlights() {
         return fixColorsHighlights;
     }
 
-    public void setFixColorsHighlights(boolean fixColorsHighlights) {
-        if (os.toUpperCase().contains("WIN")) {
-            if (fixColorsHighlights == true) {
-                org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 1);
-            } else {
-                org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 0);
-            }
-        } else {
-            if (fixColorsHighlights == true) {
-                org.libraw.linuxosx.libraw_output_params_t.highlight$set(parameterSegment, 1);
-            } else {
-                org.libraw.linuxosx.libraw_output_params_t.highlight$set(parameterSegment, 0);
-            }
-        }
+    public void setFixColorsHighlights(boolean fixColorsHighlights) {        
         this.fixColorsHighlights = fixColorsHighlights;
     }
 
@@ -334,5 +305,87 @@ public class RawDecoderSettings {
     public void setExpoCorrectionHighlight(double expoCorrectionHighlight) {
         this.expoCorrectionHighlight = expoCorrectionHighlight;
     }
+    
+    public boolean isAutoWhitebalance() {
+        return autoWhitebalance;
+    }
+
+    public void setAutoWhitebalance(boolean autoWhitebalance) {
+        this.autoWhitebalance = autoWhitebalance;
+    }
+
+    public boolean isOutput_tiff() {
+        return output_tiff;
+    }
+
+    public void setOutput_tiff(boolean output_tiff) {
+        this.output_tiff = output_tiff;
+    }
+
+    public boolean isHalfSizeOutput() {
+        return halfSizeOutput;
+    }
+
+    public void setHalfSizeOutput(boolean halfSizeOutput) {
+        this.halfSizeOutput = halfSizeOutput;
+    }
+
+    public boolean isCustomQuality() {
+        return customQuality;
+    }
+
+    public void setCustomQuality(boolean customQuality) {
+        this.customQuality = customQuality;
+    }
+
+    public float getAutoBrightnessThreashold() {
+        return autoBrightnessThreashold;
+    }
+
+    public void setAutoBrightnessThreashold(float autoBrightnessThreashold) {
+        this.autoBrightnessThreashold = autoBrightnessThreashold;
+    }
+
+    public float getBrightNess() {
+        return brightNess;
+    }
+
+    public void setBrightNess(float brightNess) {
+        this.brightNess = brightNess;
+    }
+
+    public float getCoolScanNEFGamma() {
+        return coolScanNEFGamma;
+    }
+
+    public void setCoolScanNEFGamma(float coolScanNEFGamma) {
+        this.coolScanNEFGamma = coolScanNEFGamma;
+    }
+
+    public int getExposureCorrection() {
+        return exposureCorrection;
+    }
+
+    public void setExposureCorrection(int exposureCorrection) {
+        this.exposureCorrection = exposureCorrection;
+    }
+
+    public float getExposureShift() {
+        return exposureShift;
+    }
+
+    public void setExposureShift(float exposureShift) {
+        this.exposureShift = exposureShift;
+    }
+
+    public int getNoiseReduction() {
+        return noiseReduction;
+    }
+
+    public void setNoiseReduction(int noiseReduction) {
+        this.noiseReduction = noiseReduction;
+    }
+    
+    
 
 }
