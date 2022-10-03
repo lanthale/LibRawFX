@@ -20,7 +20,7 @@ public class RawDecoderToNativeTranslator {
         this.os = os;
     }
 
-    public void translate(MemorySegment parameterSegment) {        
+    public void translate(MemorySegment parameterSegment) {
         if (os.toUpperCase().contains("WIN")) {
             if (settings.getWhiteBalance().equalsIgnoreCase("CAMERA")) {
                 org.libraw.win.libraw_output_params_t.use_camera_wb$set(parameterSegment, 1);
@@ -47,6 +47,22 @@ public class RawDecoderToNativeTranslator {
             } else {
                 org.libraw.win.libraw_output_params_t.user_qual$set(parameterSegment, 0);
             }
+            if (settings.isAutoBrightness()) {
+                org.libraw.win.libraw_output_params_t.no_auto_bright$set(parameterSegment, 0);
+                org.libraw.win.libraw_output_params_t.auto_bright_thr$set(parameterSegment, settings.getAutoBrightnessThreashold());
+            } else {
+                org.libraw.win.libraw_output_params_t.no_auto_bright$set(parameterSegment, 1);
+            }
+            org.libraw.win.libraw_output_params_t.bright$set(parameterSegment, settings.getBrightNess());
+            org.libraw.win.libraw_output_params_t.exp_correc$set(parameterSegment, settings.getExposureCorrection());
+            org.libraw.win.libraw_output_params_t.exp_shift$set(parameterSegment, settings.getExposureShift());
+            org.libraw.win.libraw_output_params_t.fbdd_noiserd$set(parameterSegment, settings.getNoiseReduction());
+            if (settings.isFixColorsHighlights()) {
+                org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 1);
+            } else {
+                org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 0);
+            }
+            
         } else {
             if (settings.getWhiteBalance().equalsIgnoreCase("CAMERA")) {
                 org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(parameterSegment, 1);
