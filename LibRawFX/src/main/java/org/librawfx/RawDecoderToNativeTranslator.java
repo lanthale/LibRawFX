@@ -42,11 +42,7 @@ public class RawDecoderToNativeTranslator {
             } else {
                 org.libraw.win.libraw_output_params_t.half_size$set(parameterSegment, 0);
             }
-            if (settings.isCustomQuality()) {
-                org.libraw.win.libraw_output_params_t.user_qual$set(parameterSegment, 1);
-            } else {
-                org.libraw.win.libraw_output_params_t.user_qual$set(parameterSegment, 0);
-            }
+            org.libraw.win.libraw_output_params_t.user_qual$set(parameterSegment, settings.getRAWQuality());
             if (settings.isAutoBrightness()) {
                 org.libraw.win.libraw_output_params_t.no_auto_bright$set(parameterSegment, 0);
                 org.libraw.win.libraw_output_params_t.auto_bright_thr$set(parameterSegment, settings.getAutoBrightnessThreashold());
@@ -54,41 +50,31 @@ public class RawDecoderToNativeTranslator {
                 org.libraw.win.libraw_output_params_t.no_auto_bright$set(parameterSegment, 1);
             }
             org.libraw.win.libraw_output_params_t.bright$set(parameterSegment, settings.getBrightNess());
-            org.libraw.win.libraw_output_params_t.exp_correc$set(parameterSegment, settings.getExposureCorrection());
-            org.libraw.win.libraw_output_params_t.exp_shift$set(parameterSegment, settings.getExposureShift());
+            if (settings.isEnableExposureCorrection()) {
+                org.libraw.win.libraw_output_params_t.exp_correc$set(parameterSegment, settings.getExposureCorrection());
+                org.libraw.win.libraw_output_params_t.exp_shift$set(parameterSegment, settings.getExposureShift());
+                org.libraw.win.libraw_output_params_t.exp_preser$set(parameterSegment, settings.getExpoCorrectionHighlight());
+            }            
             org.libraw.win.libraw_output_params_t.fbdd_noiserd$set(parameterSegment, settings.getNoiseReduction());
             if (settings.isFixColorsHighlights()) {
                 org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 1);
             } else {
                 org.libraw.win.libraw_output_params_t.highlight$set(parameterSegment, 0);
             }
-            
+            if (settings.isSixteenBitsImage()) {
+                org.libraw.win.libraw_output_params_t.output_bps$set(parameterSegment, 16);
+            } else {
+                org.libraw.win.libraw_output_params_t.output_bps$set(parameterSegment, 8);
+            }
+            org.libraw.win.libraw_output_params_t.bright$set(parameterSegment, settings.getBrightNess());
+            org.libraw.win.libraw_output_params_t.output_color$set(parameterSegment, settings.getOutputColorSpace());
+            org.libraw.win.libraw_output_params_t.user_sat$set(parameterSegment, settings.getSaturation());
+            org.libraw.win.libraw_output_params_t.med_passes$set(parameterSegment, settings.getMedianFilterPasses());
+            if (settings.isEnableBlackPoint()) {
+                org.libraw.win.libraw_output_params_t.user_black$set(parameterSegment, settings.getBlackPoint());
+            }            
         } else {
-            if (settings.getWhiteBalance().equalsIgnoreCase("CAMERA")) {
-                org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(parameterSegment, 1);
-            } else {
-                org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(parameterSegment, 0);
-            }
-            if (settings.isAutoWhitebalance()) {
-                org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(parameterSegment, 1);
-            } else {
-                org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(parameterSegment, 0);
-            }
-            if (settings.isOutput_tiff()) {
-                org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(parameterSegment, 1);
-            } else {
-                org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(parameterSegment, 0);
-            }
-            if (settings.isHalfSizeOutput()) {
-                org.libraw.linuxosx.libraw_output_params_t.half_size$set(parameterSegment, 1);
-            } else {
-                org.libraw.linuxosx.libraw_output_params_t.half_size$set(parameterSegment, 0);
-            }
-            if (settings.isCustomQuality()) {
-                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(parameterSegment, 1);
-            } else {
-                org.libraw.linuxosx.libraw_output_params_t.user_qual$set(parameterSegment, 0);
-            }
+
         }
     }
 

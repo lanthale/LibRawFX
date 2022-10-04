@@ -13,54 +13,50 @@ public class RawDecoderSettings {
     private String whiteBalance = "CAMERA";
     private boolean autoWhitebalance = false;
     private boolean output_tiff = false;
-    private boolean halfSizeOutput = false;
-    private boolean customQuality = false;
-    
+    private boolean halfSizeOutput = false;    
+    private int RAWQuality = 0;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
     private boolean autoBrightness = true;
     private float autoBrightnessThreashold = 0.0f;
     private float brightNess = 1.0f;
     private float coolScanNEFGamma = 1.0f;
+    private boolean enableExposureCorrection = false;
     private int exposureCorrection = 0;
     private float exposureShift = 1.0f;
+    private float expoCorrectionHighlight = 0.0f;
     private int noiseReduction = 0;
 
     private boolean fixColorsHighlights = false;        
     private boolean sixteenBitsImage = false;
-    private double brightness = 1.0;
-    private String RAWQuality = "BILINEAR";
-    private String inputColorSpace = "NOINPUTCS";
-    private String outputColorSpace = "SRGB";
+    private double brightness = 1.0;  
+    private int saturation = 0;
+    private int outputColorSpace = 1; //[0-6] Output colorspace (raw, sRGB, Adobe, Wide, ProPhoto, XYZ, ACES)
     private boolean RGBInterpolate4Colors = false;
     private boolean DontStretchPixels = false;
     private int unclipColors = 0;
-    private int customWhiteBalance = 6500;
-    private double customWhiteBalanceGreen = 1.0;
+    //private int customWhiteBalance = 6500;
+    //private double customWhiteBalanceGreen = 1.0;
     private int medianFilterPasses = 0;
-
-    private boolean halfSizeColorImage = false;
+    
 
     private boolean enableBlackPoint = false;
     private int blackPoint = 0;
 
-    private boolean enableWhitePoint = false;
-    private int whitePoint = 0;
+    //private boolean enableWhitePoint = false;
+    //private int whitePoint = 0;
 
     private String NRType = "NONR";
     private int NRThreshold = 0;
 
-    private String inputProfile = "";
-    private String outputProfile = "";
+    //private String inputProfile = "";
+    //private String outputProfile = "";
 
-    private String deadPixelMap = "";
+    //private String deadPixelMap = "";
 
-    private String whiteBalanceArea = "";
+    //private String whiteBalanceArea = "";
 
     //-- Extended demosaicing settings ----------------------------------------------------------
     private int dcbIterations = -1;
-    private boolean dcbEnhanceFl = false;
-    private boolean expoCorrection = false;
-    private double expoCorrectionShift = 1.0;
-    private double expoCorrectionHighlight = 0.0;
+    private boolean dcbEnhanceFl = false;            
     
 
     public RawDecoderSettings() {
@@ -98,28 +94,12 @@ public class RawDecoderSettings {
         this.brightness = brightness;
     }
 
-    public String getRAWQuality() {
+    public int getRAWQuality() {
         return RAWQuality;
     }
 
-    public void setRAWQuality(String RAWQuality) {
+    public void setRAWQuality(int RAWQuality) {
         this.RAWQuality = RAWQuality;
-    }
-
-    public String getInputColorSpace() {
-        return inputColorSpace;
-    }
-
-    public void setInputColorSpace(String inputColorSpace) {
-        this.inputColorSpace = inputColorSpace;
-    }
-
-    public String getOutputColorSpace() {
-        return outputColorSpace;
-    }
-
-    public void setOutputColorSpace(String outputColorSpace) {
-        this.outputColorSpace = outputColorSpace;
     }
 
     public boolean isRGBInterpolate4Colors() {
@@ -154,36 +134,12 @@ public class RawDecoderSettings {
         this.whiteBalance = whiteBalance;
     }
 
-    public int getCustomWhiteBalance() {
-        return customWhiteBalance;
-    }
-
-    public void setCustomWhiteBalance(int customWhiteBalance) {
-        this.customWhiteBalance = customWhiteBalance;
-    }
-
-    public double getCustomWhiteBalanceGreen() {
-        return customWhiteBalanceGreen;
-    }
-
-    public void setCustomWhiteBalanceGreen(double customWhiteBalanceGreen) {
-        this.customWhiteBalanceGreen = customWhiteBalanceGreen;
-    }
-
     public int getMedianFilterPasses() {
         return medianFilterPasses;
     }
 
     public void setMedianFilterPasses(int medianFilterPasses) {
         this.medianFilterPasses = medianFilterPasses;
-    }
-
-    public boolean isHalfSizeColorImage() {
-        return halfSizeColorImage;
-    }
-
-    public void setHalfSizeColorImage(boolean halfSizeColorImage) {
-        this.halfSizeColorImage = halfSizeColorImage;
     }
 
     public boolean isEnableBlackPoint() {
@@ -202,22 +158,6 @@ public class RawDecoderSettings {
         this.blackPoint = blackPoint;
     }
 
-    public boolean isEnableWhitePoint() {
-        return enableWhitePoint;
-    }
-
-    public void setEnableWhitePoint(boolean enableWhitePoint) {
-        this.enableWhitePoint = enableWhitePoint;
-    }
-
-    public int getWhitePoint() {
-        return whitePoint;
-    }
-
-    public void setWhitePoint(int whitePoint) {
-        this.whitePoint = whitePoint;
-    }
-
     public String getNRType() {
         return NRType;
     }
@@ -232,38 +172,6 @@ public class RawDecoderSettings {
 
     public void setNRThreshold(int NRThreshold) {
         this.NRThreshold = NRThreshold;
-    }
-
-    public String getInputProfile() {
-        return inputProfile;
-    }
-
-    public void setInputProfile(String inputProfile) {
-        this.inputProfile = inputProfile;
-    }
-
-    public String getOutputProfile() {
-        return outputProfile;
-    }
-
-    public void setOutputProfile(String outputProfile) {
-        this.outputProfile = outputProfile;
-    }
-
-    public String getDeadPixelMap() {
-        return deadPixelMap;
-    }
-
-    public void setDeadPixelMap(String deadPixelMap) {
-        this.deadPixelMap = deadPixelMap;
-    }
-
-    public String getWhiteBalanceArea() {
-        return whiteBalanceArea;
-    }
-
-    public void setWhiteBalanceArea(String whiteBalanceArea) {
-        this.whiteBalanceArea = whiteBalanceArea;
     }
 
     public int getDcbIterations() {
@@ -282,27 +190,28 @@ public class RawDecoderSettings {
         this.dcbEnhanceFl = dcbEnhanceFl;
     }
 
-    public boolean isExpoCorrection() {
-        return expoCorrection;
+    public boolean isEnableExposureCorrection() {
+        return enableExposureCorrection;
     }
 
-    public void setExpoCorrection(boolean expoCorrection) {
-        this.expoCorrection = expoCorrection;
+    public void setEnableExposureCorrection(boolean enableExposureCorrection) {
+        this.enableExposureCorrection = enableExposureCorrection;
+    }
+        
+
+    public float getExpoCorrectionShift() {
+        return exposureShift;
     }
 
-    public double getExpoCorrectionShift() {
-        return expoCorrectionShift;
+    public void setExpoCorrectionShift(float expoCorrectionShift) {
+        this.exposureShift = expoCorrectionShift;
     }
 
-    public void setExpoCorrectionShift(double expoCorrectionShift) {
-        this.expoCorrectionShift = expoCorrectionShift;
-    }
-
-    public double getExpoCorrectionHighlight() {
+    public float getExpoCorrectionHighlight() {
         return expoCorrectionHighlight;
     }
 
-    public void setExpoCorrectionHighlight(double expoCorrectionHighlight) {
+    public void setExpoCorrectionHighlight(float expoCorrectionHighlight) {
         this.expoCorrectionHighlight = expoCorrectionHighlight;
     }
     
@@ -328,14 +237,6 @@ public class RawDecoderSettings {
 
     public void setHalfSizeOutput(boolean halfSizeOutput) {
         this.halfSizeOutput = halfSizeOutput;
-    }
-
-    public boolean isCustomQuality() {
-        return customQuality;
-    }
-
-    public void setCustomQuality(boolean customQuality) {
-        this.customQuality = customQuality;
     }
 
     public float getAutoBrightnessThreashold() {
@@ -384,6 +285,22 @@ public class RawDecoderSettings {
 
     public void setNoiseReduction(int noiseReduction) {
         this.noiseReduction = noiseReduction;
+    }
+
+    public void setOutputColorSpace(int outputColorSpace) {
+        this.outputColorSpace = outputColorSpace;
+    }
+
+    public int getOutputColorSpace() {
+        return outputColorSpace;
+    }
+
+    public int getSaturation() {
+        return saturation;
+    }
+
+    public void setSaturation(int saturation) {
+        this.saturation = saturation;
     }
     
     
