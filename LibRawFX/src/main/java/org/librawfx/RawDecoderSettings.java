@@ -17,7 +17,7 @@ public class RawDecoderSettings {
     private int RAWQuality = 0;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
     private boolean autoBrightness = true;
     private float autoBrightnessThreashold = 0.0f;
-    private float brightNess = 1.0f;
+    private float brightnes = 1.0f;
     private float coolScanNEFGamma = 1.0f;
     private boolean enableExposureCorrection = false;
     private int exposureCorrection = 0;
@@ -86,11 +86,11 @@ public class RawDecoderSettings {
         this.sixteenBitsImage = sixteenBitsImage;
     }
 
-    public double getBrightness() {
+    public double getBrightnes() {
         return brightness;
     }
 
-    public void setBrightness(double brightness) {
+    public void setBrightnes(double brightness) {
         this.brightness = brightness;
     }
 
@@ -248,11 +248,11 @@ public class RawDecoderSettings {
     }
 
     public float getBrightNess() {
-        return brightNess;
+        return brightnes;
     }
 
     public void setBrightNess(float brightNess) {
-        this.brightNess = brightNess;
+        this.brightnes = brightNess;
     }
 
     public float getCoolScanNEFGamma() {
@@ -301,6 +301,11 @@ public class RawDecoderSettings {
 
     public void setSaturation(int saturation) {
         this.saturation = saturation;
+    }
+
+    @Override
+    public String toString() {
+        return "RawDecoderSettings{" + "whiteBalance=" + whiteBalance + ", autoWhitebalance=" + autoWhitebalance + ", output_tiff=" + output_tiff + ", halfSizeOutput=" + halfSizeOutput + ", RAWQuality=" + RAWQuality + ", autoBrightness=" + autoBrightness + ", autoBrightnessThreashold=" + autoBrightnessThreashold + ", brightNess=" + brightnes + ", coolScanNEFGamma=" + coolScanNEFGamma + ", enableExposureCorrection=" + enableExposureCorrection + ", exposureCorrection=" + exposureCorrection + ", exposureShift=" + exposureShift + ", expoCorrectionHighlight=" + expoCorrectionHighlight + ", noiseReduction=" + noiseReduction + ", fixColorsHighlights=" + fixColorsHighlights + ", sixteenBitsImage=" + sixteenBitsImage + ", brightness=" + brightness + ", saturation=" + saturation + ", outputColorSpace=" + outputColorSpace + ", RGBInterpolate4Colors=" + RGBInterpolate4Colors + ", DontStretchPixels=" + DontStretchPixels + ", unclipColors=" + unclipColors + ", medianFilterPasses=" + medianFilterPasses + ", enableBlackPoint=" + enableBlackPoint + ", blackPoint=" + blackPoint + ", NRType=" + NRType + ", NRThreshold=" + NRThreshold + ", dcbIterations=" + dcbIterations + ", dcbEnhanceFl=" + dcbEnhanceFl + '}';
     }
     
     

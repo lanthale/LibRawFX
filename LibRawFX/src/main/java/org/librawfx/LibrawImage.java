@@ -24,7 +24,7 @@ import java.lang.foreign.*;
  *
  * @author Clemens Lanthaler
  */
-public class LibrawImage {    
+public class LibrawImage {
 
     private final String imageFileURL;
     private short imageWidth;
@@ -41,14 +41,14 @@ public class LibrawImage {
     private static SymbolLookup loaderLookup;
 
     public LibrawImage(String imageFile, RawDecoderSettings settings) {
-        this.imageFileURL = imageFile;     
-        this.rawSettings=settings;
+        this.imageFileURL = imageFile;
+        this.rawSettings = settings;
     }
 
     public LibrawImage(RAWImageLoader loader, RawDecoderSettings settings) {
         imageFileURL = null;
-        this.loader = loader;        
-        this.rawSettings=settings;
+        this.loader = loader;
+        this.rawSettings = settings;
     }
 
     /**
@@ -62,13 +62,13 @@ public class LibrawImage {
     public static void loadLibs(String tempDir) throws IOException {
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...");
         operatingSystem = System.getProperty("os.name").toUpperCase();
-        String arch = System.getProperty("os.arch").toUpperCase();        
+        String arch = System.getProperty("os.arch").toUpperCase();
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "OS was: " + operatingSystem);
         if (operatingSystem.contains("WIN")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
         } else if (operatingSystem.contains("MAC") && !arch.contains("AARCH64")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx-x86_64/liblcms2.2.dylib", "/lib/osx-x86_64/libjasper.4.dylib", "/lib/osx-x86_64/libjpeg.9.dylib", "/lib/osx-x86_64/libz.1.dylib", "/lib/osx-x86_64/libraw.22.dylib");
-        } else if (operatingSystem.contains("MAC") && arch.contains("AARCH64")) {            
+        } else if (operatingSystem.contains("MAC") && arch.contains("AARCH64")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/osx-arm64/liblcms2.2.dylib", "/lib/osx-arm64/libjasper.6.dylib", "/lib/osx-arm64/libjpeg.9.dylib", "/lib/osx-arm64/libraw_r.22.dylib");
         } else if (operatingSystem.contains("NUX")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/linux-x86_64/libstdc++.so.6", "/lib/linux-x86_64/libm.so.6", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/liblcms2.so.2", "/lib/linux-x86_64/libjpeg.so.8", "/lib/linux-x86_64/libjpeg.so.62", "/lib/linux-x86_64/libjasper.so.1", "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/libraw.so.22");
@@ -80,8 +80,8 @@ public class LibrawImage {
             new File(part).deleteOnExit();
         }
         for (String strTemp : loadLibraryFromJar) {
-            System.load(strTemp);            
-            loaderLookup = SymbolLookup.loaderLookup();            
+            System.load(strTemp);
+            loaderLookup = SymbolLookup.loaderLookup();
         }
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...finished");
     }
@@ -103,15 +103,17 @@ public class LibrawImage {
         if (loadLibraryFromJar == null) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
-        }        
+        }
         try ( var scope = MemorySession.openShared()) {
             if (operatingSystem.contains("WIN")) {
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.toRawLongValue());
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
-                
-                this.rawSettings=new RawDecoderSettings();
+
+                if (this.rawSettings == null) {
+                    this.rawSettings = new RawDecoderSettings();
+                }
                 new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
                 /*org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
@@ -150,7 +152,7 @@ public class LibrawImage {
                 imageHeight = org.libraw.win.libraw_processed_image_t.height$get(imageMemSegment);
                 imageBits = org.libraw.win.libraw_processed_image_t.bits$get(imageMemSegment);
                 imageColors = org.libraw.win.libraw_processed_image_t.colors$get(imageMemSegment);
-                
+
                 stride = imageWidth * imageColors * (imageBits / 8);
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Start reading image from native memory...");
                 byte[] line = new byte[stride];
@@ -182,15 +184,16 @@ public class LibrawImage {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.toRawLongValue());
                 MemorySegment datasegment = org.libraw.linuxosx.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
-                
-                this.rawSettings=new RawDecoderSettings();
+
+                if (this.rawSettings == null) {
+                    this.rawSettings = new RawDecoderSettings();
+                }
                 new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
                 /*org.libraw.linuxosx.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.output_tiff$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.half_size$set(params$slice, 0);
                 org.libraw.linuxosx.libraw_output_params_t.user_qual$set(params$slice, 0);*/
-                
 
                 MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
                 MemorySegment allocateNative = SegmentAllocator.newNativeArena(scope).allocateArray(org.libraw.linuxosx.libraw_h.C_CHAR, sourceFileAsByteArray);
@@ -276,8 +279,10 @@ public class LibrawImage {
                 MemoryAddress iprc = org.libraw.win.libraw_h.libraw_init(0);
                 MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.win.libraw_data_t.params$slice(datasegment);
-                
-                this.rawSettings=new RawDecoderSettings();
+
+                if (this.rawSettings == null) {
+                    this.rawSettings = new RawDecoderSettings();
+                }
                 new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
 
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
@@ -340,8 +345,10 @@ public class LibrawImage {
                 MemoryAddress iprc = org.libraw.linuxosx.libraw_h.libraw_init(0);
                 MemorySegment datasegment = org.libraw.linuxosx.libraw_data_t.ofAddress(iprc, scope);
                 MemorySegment params$slice = org.libraw.linuxosx.libraw_data_t.params$slice(datasegment);
-                
-                this.rawSettings=new RawDecoderSettings();
+
+                if (this.rawSettings == null) {
+                    this.rawSettings = new RawDecoderSettings();
+                }
                 new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
 
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
@@ -435,7 +442,7 @@ public class LibrawImage {
         if (loadLibraryFromJar == null) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
-        }                
+        }
         HashMap<String, String> retMap = new HashMap<>();
         try ( var scope = MemorySession.openShared()) {
             if (operatingSystem.contains("WIN")) {
@@ -732,12 +739,23 @@ public class LibrawImage {
     public LocalDateTime getShootingDateTime() {
         return shootingDateTime;
     }
-    
+
+    /**
+     * getting the actual setting for the raw decoder engine
+     * @return the settings object with all settings applied
+     */
     public RawDecoderSettings getRawSettings() {
         return rawSettings;
     }
-    
-    
+
+    /**
+     * Optional settings for the raw decoding engine. If not set than basis engine properties are applied. 
+     * This must be called before any loading of images
+     * @param rawSettings the settings object to be set.
+     */
+    public void setRawSettings(RawDecoderSettings rawSettings) {
+        this.rawSettings = rawSettings;
+    }
 
     /**
      * String representation of the image
@@ -746,7 +764,8 @@ public class LibrawImage {
      */
     @Override
     public String toString() {
-        return "LibrawImage{" + "imageFileURL=" + imageFileURL + ", imageWidth=" + imageWidth + ", imageHeight=" + imageHeight + ", imageBits=" + imageBits + ", imageColors=" + imageColors + ", stride=" + stride + '}';
-    }
+        return "LibrawImage{" + "imageFileURL=" + imageFileURL + ", imageWidth=" + imageWidth + ", imageHeight=" + imageHeight + ", imageBits=" + imageBits + ", imageColors=" + imageColors + ", stride=" + stride + ", loader=" + loader + ", cameraModel=" + cameraModel + ", shootingDateTime=" + shootingDateTime + ", rawSettings=" + rawSettings + '}';
+    }    
+    
 
 }
