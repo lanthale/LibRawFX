@@ -48,13 +48,16 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.8.2</version>  
+    <version>1.8.3</version>  
 </dependency>  
 ```
 
 - In the Class where the start method is add as one of the first lines the following code to install the file handler:
 
-     `RAWImageLoaderFactory.install();`  
+     `RAWImageLoaderFactory.install();
+      RawDecoderSettings settings=RAWImageLoaderFactory.getDecoderSettings();
+      //use the setters provided. They settings will take effect on the next call
+     `  
 
 - and add the following lines to your java config on JDK 18:
 ```
