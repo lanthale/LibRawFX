@@ -105,7 +105,7 @@ You can also use the lib without adding the file handler. What I mean is that yo
 
 ## Steps to create your own build:
 - OpenJDK/Adoptium 19 or newer
-- JavaFX 11 or newer (18 is recommended)
+- JavaFX 11 or newer (19 is recommended)
 - SET JAVA_HOME variable
 - Execute `mvn clean compile package -f LibRawFX/pom.xml`
 - To run the example execute `mvn javafx:run@cli-default`
