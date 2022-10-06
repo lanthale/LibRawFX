@@ -54,10 +54,14 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
         RAWImageLoaderFactory.dimensionProvider = dimensionProvider;
 
         ImageStorage.getInstance().addImageLoaderFactory(instance);        
-    }
+    }    
 
     public static final ImageLoaderFactory getInstance() {
         return instance;
+    }
+    
+    public static final RawDecoderSettings getDecoderSettings(){        
+        return RAWImageLoader.getSettings();
     }
 
     @Override
