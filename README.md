@@ -54,10 +54,12 @@ Point to the maven coordinates:
 
 - In the Class where the start method is add as one of the first lines the following code to install the file handler:
 
-     `RAWImageLoaderFactory.install();
-      RawDecoderSettings settings=RAWImageLoaderFactory.getDecoderSettings();
+     `RAWImageLoaderFactory.install();`
+     `RawDecoderSettings settings=RAWImageLoaderFactory.getDecoderSettings();`
+     `settings.setAutoBrightness(true); 
       //use the setters provided. They settings will take effect on the next call
-     `  
+      
+       
 
 - and add the following lines to your java config on JDK 18:
 ```
