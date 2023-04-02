@@ -7,15 +7,26 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_nikonlens_t {
+ *     float EffectiveMaxAp;
+ *     unsigned char LensIDNumber;
+ *     unsigned char LensFStops;
+ *     unsigned char MCUVersion;
+ *     unsigned char LensType;
+ * };
+ * }
+ */
 public class libraw_nikonlens_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_FLOAT$LAYOUT.withName("EffectiveMaxAp"),
         Constants$root.C_CHAR$LAYOUT.withName("LensIDNumber"),
         Constants$root.C_CHAR$LAYOUT.withName("LensFStops"),
         Constants$root.C_CHAR$LAYOUT.withName("MCUVersion"),
         Constants$root.C_CHAR$LAYOUT.withName("LensType")
-    );
+    ).withName("libraw_nikonlens_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_nikonlens_t.$struct$LAYOUT;
     }
@@ -23,10 +34,22 @@ public class libraw_nikonlens_t {
     public static VarHandle EffectiveMaxAp$VH() {
         return libraw_nikonlens_t.EffectiveMaxAp$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float EffectiveMaxAp;
+     * }
+     */
     public static float EffectiveMaxAp$get(MemorySegment seg) {
         return (float)libraw_nikonlens_t.EffectiveMaxAp$VH.get(seg);
     }
-    public static void EffectiveMaxAp$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float EffectiveMaxAp;
+     * }
+     */
+    public static void EffectiveMaxAp$set(MemorySegment seg, float x) {
         libraw_nikonlens_t.EffectiveMaxAp$VH.set(seg, x);
     }
     public static float EffectiveMaxAp$get(MemorySegment seg, long index) {
@@ -39,10 +62,22 @@ public class libraw_nikonlens_t {
     public static VarHandle LensIDNumber$VH() {
         return libraw_nikonlens_t.LensIDNumber$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char LensIDNumber;
+     * }
+     */
     public static byte LensIDNumber$get(MemorySegment seg) {
         return (byte)libraw_nikonlens_t.LensIDNumber$VH.get(seg);
     }
-    public static void LensIDNumber$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char LensIDNumber;
+     * }
+     */
+    public static void LensIDNumber$set(MemorySegment seg, byte x) {
         libraw_nikonlens_t.LensIDNumber$VH.set(seg, x);
     }
     public static byte LensIDNumber$get(MemorySegment seg, long index) {
@@ -55,10 +90,22 @@ public class libraw_nikonlens_t {
     public static VarHandle LensFStops$VH() {
         return libraw_nikonlens_t.LensFStops$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char LensFStops;
+     * }
+     */
     public static byte LensFStops$get(MemorySegment seg) {
         return (byte)libraw_nikonlens_t.LensFStops$VH.get(seg);
     }
-    public static void LensFStops$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char LensFStops;
+     * }
+     */
+    public static void LensFStops$set(MemorySegment seg, byte x) {
         libraw_nikonlens_t.LensFStops$VH.set(seg, x);
     }
     public static byte LensFStops$get(MemorySegment seg, long index) {
@@ -71,10 +118,22 @@ public class libraw_nikonlens_t {
     public static VarHandle MCUVersion$VH() {
         return libraw_nikonlens_t.MCUVersion$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char MCUVersion;
+     * }
+     */
     public static byte MCUVersion$get(MemorySegment seg) {
         return (byte)libraw_nikonlens_t.MCUVersion$VH.get(seg);
     }
-    public static void MCUVersion$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char MCUVersion;
+     * }
+     */
+    public static void MCUVersion$set(MemorySegment seg, byte x) {
         libraw_nikonlens_t.MCUVersion$VH.set(seg, x);
     }
     public static byte MCUVersion$get(MemorySegment seg, long index) {
@@ -87,10 +146,22 @@ public class libraw_nikonlens_t {
     public static VarHandle LensType$VH() {
         return libraw_nikonlens_t.LensType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char LensType;
+     * }
+     */
     public static byte LensType$get(MemorySegment seg) {
         return (byte)libraw_nikonlens_t.LensType$VH.get(seg);
     }
-    public static void LensType$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char LensType;
+     * }
+     */
+    public static void LensType$set(MemorySegment seg, byte x) {
         libraw_nikonlens_t.LensType$VH.set(seg, x);
     }
     public static byte LensType$get(MemorySegment seg, long index) {
@@ -101,10 +172,10 @@ public class libraw_nikonlens_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

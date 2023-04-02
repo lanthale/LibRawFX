@@ -7,9 +7,29 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct jhead {
+ *     int algo;
+ *     int bits;
+ *     int high;
+ *     int wide;
+ *     int clrs;
+ *     int sraw;
+ *     int psv;
+ *     int restart;
+ *     int vpred[6];
+ *     unsigned short quant[64];
+ *     unsigned short idct[64];
+ *     unsigned short* huff[20];
+ *     unsigned short* free[20];
+ *     unsigned short* row;
+ * };
+ * }
+ */
 public class jhead {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_LONG$LAYOUT.withName("algo"),
         Constants$root.C_LONG$LAYOUT.withName("bits"),
         Constants$root.C_LONG$LAYOUT.withName("high"),
@@ -32,10 +52,22 @@ public class jhead {
     public static VarHandle algo$VH() {
         return jhead.algo$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int algo;
+     * }
+     */
     public static int algo$get(MemorySegment seg) {
         return (int)jhead.algo$VH.get(seg);
     }
-    public static void algo$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int algo;
+     * }
+     */
+    public static void algo$set(MemorySegment seg, int x) {
         jhead.algo$VH.set(seg, x);
     }
     public static int algo$get(MemorySegment seg, long index) {
@@ -48,10 +80,22 @@ public class jhead {
     public static VarHandle bits$VH() {
         return jhead.bits$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int bits;
+     * }
+     */
     public static int bits$get(MemorySegment seg) {
         return (int)jhead.bits$VH.get(seg);
     }
-    public static void bits$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int bits;
+     * }
+     */
+    public static void bits$set(MemorySegment seg, int x) {
         jhead.bits$VH.set(seg, x);
     }
     public static int bits$get(MemorySegment seg, long index) {
@@ -64,10 +108,22 @@ public class jhead {
     public static VarHandle high$VH() {
         return jhead.high$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int high;
+     * }
+     */
     public static int high$get(MemorySegment seg) {
         return (int)jhead.high$VH.get(seg);
     }
-    public static void high$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int high;
+     * }
+     */
+    public static void high$set(MemorySegment seg, int x) {
         jhead.high$VH.set(seg, x);
     }
     public static int high$get(MemorySegment seg, long index) {
@@ -80,10 +136,22 @@ public class jhead {
     public static VarHandle wide$VH() {
         return jhead.wide$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int wide;
+     * }
+     */
     public static int wide$get(MemorySegment seg) {
         return (int)jhead.wide$VH.get(seg);
     }
-    public static void wide$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int wide;
+     * }
+     */
+    public static void wide$set(MemorySegment seg, int x) {
         jhead.wide$VH.set(seg, x);
     }
     public static int wide$get(MemorySegment seg, long index) {
@@ -96,10 +164,22 @@ public class jhead {
     public static VarHandle clrs$VH() {
         return jhead.clrs$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int clrs;
+     * }
+     */
     public static int clrs$get(MemorySegment seg) {
         return (int)jhead.clrs$VH.get(seg);
     }
-    public static void clrs$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int clrs;
+     * }
+     */
+    public static void clrs$set(MemorySegment seg, int x) {
         jhead.clrs$VH.set(seg, x);
     }
     public static int clrs$get(MemorySegment seg, long index) {
@@ -112,10 +192,22 @@ public class jhead {
     public static VarHandle sraw$VH() {
         return jhead.sraw$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int sraw;
+     * }
+     */
     public static int sraw$get(MemorySegment seg) {
         return (int)jhead.sraw$VH.get(seg);
     }
-    public static void sraw$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int sraw;
+     * }
+     */
+    public static void sraw$set(MemorySegment seg, int x) {
         jhead.sraw$VH.set(seg, x);
     }
     public static int sraw$get(MemorySegment seg, long index) {
@@ -128,10 +220,22 @@ public class jhead {
     public static VarHandle psv$VH() {
         return jhead.psv$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int psv;
+     * }
+     */
     public static int psv$get(MemorySegment seg) {
         return (int)jhead.psv$VH.get(seg);
     }
-    public static void psv$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int psv;
+     * }
+     */
+    public static void psv$set(MemorySegment seg, int x) {
         jhead.psv$VH.set(seg, x);
     }
     public static int psv$get(MemorySegment seg, long index) {
@@ -144,10 +248,22 @@ public class jhead {
     public static VarHandle restart$VH() {
         return jhead.restart$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int restart;
+     * }
+     */
     public static int restart$get(MemorySegment seg) {
         return (int)jhead.restart$VH.get(seg);
     }
-    public static void restart$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int restart;
+     * }
+     */
+    public static void restart$set(MemorySegment seg, int x) {
         jhead.restart$VH.set(seg, x);
     }
     public static int restart$get(MemorySegment seg, long index) {
@@ -175,24 +291,36 @@ public class jhead {
     public static VarHandle row$VH() {
         return jhead.row$VH;
     }
-    public static MemoryAddress row$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)jhead.row$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short* row;
+     * }
+     */
+    public static MemorySegment row$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)jhead.row$VH.get(seg);
     }
-    public static void row$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short* row;
+     * }
+     */
+    public static void row$set(MemorySegment seg, MemorySegment x) {
         jhead.row$VH.set(seg, x);
     }
-    public static MemoryAddress row$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)jhead.row$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment row$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)jhead.row$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void row$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void row$set(MemorySegment seg, long index, MemorySegment x) {
         jhead.row$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

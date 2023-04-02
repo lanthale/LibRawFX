@@ -7,9 +7,31 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct crx_data_header_t {
+ *     int version;
+ *     int f_width;
+ *     int f_height;
+ *     int tileWidth;
+ *     int tileHeight;
+ *     int nBits;
+ *     int nPlanes;
+ *     int cfaLayout;
+ *     int encType;
+ *     int imageLevels;
+ *     int hasTileCols;
+ *     int hasTileRows;
+ *     int mdatHdrSize;
+ *     unsigned int MediaSize;
+ *     long long MediaOffset;
+ *     unsigned int MediaType;
+ * };
+ * }
+ */
 public class crx_data_header_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_INT$LAYOUT.withName("version"),
         Constants$root.C_INT$LAYOUT.withName("f_width"),
         Constants$root.C_INT$LAYOUT.withName("f_height"),
@@ -27,7 +49,7 @@ public class crx_data_header_t {
         Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
         Constants$root.C_INT$LAYOUT.withName("MediaType"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("crx_data_header_t");
     public static MemoryLayout $LAYOUT() {
         return crx_data_header_t.$struct$LAYOUT;
     }
@@ -35,10 +57,22 @@ public class crx_data_header_t {
     public static VarHandle version$VH() {
         return crx_data_header_t.version$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int version;
+     * }
+     */
     public static int version$get(MemorySegment seg) {
         return (int)crx_data_header_t.version$VH.get(seg);
     }
-    public static void version$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int version;
+     * }
+     */
+    public static void version$set(MemorySegment seg, int x) {
         crx_data_header_t.version$VH.set(seg, x);
     }
     public static int version$get(MemorySegment seg, long index) {
@@ -51,10 +85,22 @@ public class crx_data_header_t {
     public static VarHandle f_width$VH() {
         return crx_data_header_t.f_width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int f_width;
+     * }
+     */
     public static int f_width$get(MemorySegment seg) {
         return (int)crx_data_header_t.f_width$VH.get(seg);
     }
-    public static void f_width$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int f_width;
+     * }
+     */
+    public static void f_width$set(MemorySegment seg, int x) {
         crx_data_header_t.f_width$VH.set(seg, x);
     }
     public static int f_width$get(MemorySegment seg, long index) {
@@ -67,10 +113,22 @@ public class crx_data_header_t {
     public static VarHandle f_height$VH() {
         return crx_data_header_t.f_height$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int f_height;
+     * }
+     */
     public static int f_height$get(MemorySegment seg) {
         return (int)crx_data_header_t.f_height$VH.get(seg);
     }
-    public static void f_height$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int f_height;
+     * }
+     */
+    public static void f_height$set(MemorySegment seg, int x) {
         crx_data_header_t.f_height$VH.set(seg, x);
     }
     public static int f_height$get(MemorySegment seg, long index) {
@@ -83,10 +141,22 @@ public class crx_data_header_t {
     public static VarHandle tileWidth$VH() {
         return crx_data_header_t.tileWidth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int tileWidth;
+     * }
+     */
     public static int tileWidth$get(MemorySegment seg) {
         return (int)crx_data_header_t.tileWidth$VH.get(seg);
     }
-    public static void tileWidth$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int tileWidth;
+     * }
+     */
+    public static void tileWidth$set(MemorySegment seg, int x) {
         crx_data_header_t.tileWidth$VH.set(seg, x);
     }
     public static int tileWidth$get(MemorySegment seg, long index) {
@@ -99,10 +169,22 @@ public class crx_data_header_t {
     public static VarHandle tileHeight$VH() {
         return crx_data_header_t.tileHeight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int tileHeight;
+     * }
+     */
     public static int tileHeight$get(MemorySegment seg) {
         return (int)crx_data_header_t.tileHeight$VH.get(seg);
     }
-    public static void tileHeight$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int tileHeight;
+     * }
+     */
+    public static void tileHeight$set(MemorySegment seg, int x) {
         crx_data_header_t.tileHeight$VH.set(seg, x);
     }
     public static int tileHeight$get(MemorySegment seg, long index) {
@@ -115,10 +197,22 @@ public class crx_data_header_t {
     public static VarHandle nBits$VH() {
         return crx_data_header_t.nBits$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int nBits;
+     * }
+     */
     public static int nBits$get(MemorySegment seg) {
         return (int)crx_data_header_t.nBits$VH.get(seg);
     }
-    public static void nBits$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int nBits;
+     * }
+     */
+    public static void nBits$set(MemorySegment seg, int x) {
         crx_data_header_t.nBits$VH.set(seg, x);
     }
     public static int nBits$get(MemorySegment seg, long index) {
@@ -131,10 +225,22 @@ public class crx_data_header_t {
     public static VarHandle nPlanes$VH() {
         return crx_data_header_t.nPlanes$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int nPlanes;
+     * }
+     */
     public static int nPlanes$get(MemorySegment seg) {
         return (int)crx_data_header_t.nPlanes$VH.get(seg);
     }
-    public static void nPlanes$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int nPlanes;
+     * }
+     */
+    public static void nPlanes$set(MemorySegment seg, int x) {
         crx_data_header_t.nPlanes$VH.set(seg, x);
     }
     public static int nPlanes$get(MemorySegment seg, long index) {
@@ -147,10 +253,22 @@ public class crx_data_header_t {
     public static VarHandle cfaLayout$VH() {
         return crx_data_header_t.cfaLayout$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int cfaLayout;
+     * }
+     */
     public static int cfaLayout$get(MemorySegment seg) {
         return (int)crx_data_header_t.cfaLayout$VH.get(seg);
     }
-    public static void cfaLayout$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int cfaLayout;
+     * }
+     */
+    public static void cfaLayout$set(MemorySegment seg, int x) {
         crx_data_header_t.cfaLayout$VH.set(seg, x);
     }
     public static int cfaLayout$get(MemorySegment seg, long index) {
@@ -163,10 +281,22 @@ public class crx_data_header_t {
     public static VarHandle encType$VH() {
         return crx_data_header_t.encType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int encType;
+     * }
+     */
     public static int encType$get(MemorySegment seg) {
         return (int)crx_data_header_t.encType$VH.get(seg);
     }
-    public static void encType$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int encType;
+     * }
+     */
+    public static void encType$set(MemorySegment seg, int x) {
         crx_data_header_t.encType$VH.set(seg, x);
     }
     public static int encType$get(MemorySegment seg, long index) {
@@ -179,10 +309,22 @@ public class crx_data_header_t {
     public static VarHandle imageLevels$VH() {
         return crx_data_header_t.imageLevels$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int imageLevels;
+     * }
+     */
     public static int imageLevels$get(MemorySegment seg) {
         return (int)crx_data_header_t.imageLevels$VH.get(seg);
     }
-    public static void imageLevels$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int imageLevels;
+     * }
+     */
+    public static void imageLevels$set(MemorySegment seg, int x) {
         crx_data_header_t.imageLevels$VH.set(seg, x);
     }
     public static int imageLevels$get(MemorySegment seg, long index) {
@@ -195,10 +337,22 @@ public class crx_data_header_t {
     public static VarHandle hasTileCols$VH() {
         return crx_data_header_t.hasTileCols$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int hasTileCols;
+     * }
+     */
     public static int hasTileCols$get(MemorySegment seg) {
         return (int)crx_data_header_t.hasTileCols$VH.get(seg);
     }
-    public static void hasTileCols$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int hasTileCols;
+     * }
+     */
+    public static void hasTileCols$set(MemorySegment seg, int x) {
         crx_data_header_t.hasTileCols$VH.set(seg, x);
     }
     public static int hasTileCols$get(MemorySegment seg, long index) {
@@ -211,10 +365,22 @@ public class crx_data_header_t {
     public static VarHandle hasTileRows$VH() {
         return crx_data_header_t.hasTileRows$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int hasTileRows;
+     * }
+     */
     public static int hasTileRows$get(MemorySegment seg) {
         return (int)crx_data_header_t.hasTileRows$VH.get(seg);
     }
-    public static void hasTileRows$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int hasTileRows;
+     * }
+     */
+    public static void hasTileRows$set(MemorySegment seg, int x) {
         crx_data_header_t.hasTileRows$VH.set(seg, x);
     }
     public static int hasTileRows$get(MemorySegment seg, long index) {
@@ -227,10 +393,22 @@ public class crx_data_header_t {
     public static VarHandle mdatHdrSize$VH() {
         return crx_data_header_t.mdatHdrSize$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int mdatHdrSize;
+     * }
+     */
     public static int mdatHdrSize$get(MemorySegment seg) {
         return (int)crx_data_header_t.mdatHdrSize$VH.get(seg);
     }
-    public static void mdatHdrSize$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int mdatHdrSize;
+     * }
+     */
+    public static void mdatHdrSize$set(MemorySegment seg, int x) {
         crx_data_header_t.mdatHdrSize$VH.set(seg, x);
     }
     public static int mdatHdrSize$get(MemorySegment seg, long index) {
@@ -243,10 +421,22 @@ public class crx_data_header_t {
     public static VarHandle MediaSize$VH() {
         return crx_data_header_t.MediaSize$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int MediaSize;
+     * }
+     */
     public static int MediaSize$get(MemorySegment seg) {
         return (int)crx_data_header_t.MediaSize$VH.get(seg);
     }
-    public static void MediaSize$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int MediaSize;
+     * }
+     */
+    public static void MediaSize$set(MemorySegment seg, int x) {
         crx_data_header_t.MediaSize$VH.set(seg, x);
     }
     public static int MediaSize$get(MemorySegment seg, long index) {
@@ -259,10 +449,22 @@ public class crx_data_header_t {
     public static VarHandle MediaOffset$VH() {
         return crx_data_header_t.MediaOffset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long MediaOffset;
+     * }
+     */
     public static long MediaOffset$get(MemorySegment seg) {
         return (long)crx_data_header_t.MediaOffset$VH.get(seg);
     }
-    public static void MediaOffset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long MediaOffset;
+     * }
+     */
+    public static void MediaOffset$set(MemorySegment seg, long x) {
         crx_data_header_t.MediaOffset$VH.set(seg, x);
     }
     public static long MediaOffset$get(MemorySegment seg, long index) {
@@ -275,10 +477,22 @@ public class crx_data_header_t {
     public static VarHandle MediaType$VH() {
         return crx_data_header_t.MediaType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int MediaType;
+     * }
+     */
     public static int MediaType$get(MemorySegment seg) {
         return (int)crx_data_header_t.MediaType$VH.get(seg);
     }
-    public static void MediaType$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int MediaType;
+     * }
+     */
+    public static void MediaType$set(MemorySegment seg, int x) {
         crx_data_header_t.MediaType$VH.set(seg, x);
     }
     public static int MediaType$get(MemorySegment seg, long index) {
@@ -289,10 +503,10 @@ public class crx_data_header_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

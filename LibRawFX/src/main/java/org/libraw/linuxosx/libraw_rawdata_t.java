@@ -7,9 +7,28 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_rawdata_t {
+ *     void* raw_alloc;
+ *     unsigned short* raw_image;
+ *     unsigned short *color4_image[4];
+ *     unsigned short *color3_image[3];
+ *     float* float_image;
+ *     float *float3_image[3];
+ *     float *float4_image[4];
+ *     short *ph1_cblack[2];
+ *     short *ph1_rblack[2];
+ *     struct libraw_iparams_t iparams;
+ *     struct libraw_image_sizes_t sizes;
+ *     struct libraw_internal_output_params_t ioparams;
+ *     struct libraw_colordata_t color;
+ * };
+ * }
+ */
 public class libraw_rawdata_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_POINTER$LAYOUT.withName("raw_alloc"),
         Constants$root.C_POINTER$LAYOUT.withName("raw_image"),
         Constants$root.C_POINTER$LAYOUT.withName("color4_image"),
@@ -59,7 +78,7 @@ public class libraw_rawdata_t {
                 Constants$root.C_SHORT$LAYOUT.withName("ctop"),
                 Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
                 Constants$root.C_SHORT$LAYOUT.withName("cheight")
-            )).withName("raw_inset_crops"),
+            ).withName("libraw_raw_inset_crop_t")).withName("raw_inset_crops"),
             MemoryLayout.paddingLayout(16)
         ).withName("sizes"),
         MemoryLayout.structLayout(
@@ -116,7 +135,7 @@ public class libraw_rawdata_t {
                 MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
                 MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
                 MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-            )).withName("dng_color"),
+            ).withName("libraw_dng_color_t")).withName("dng_color"),
             MemoryLayout.structLayout(
                 Constants$root.C_INT$LAYOUT.withName("parsedfields"),
                 MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
@@ -137,11 +156,11 @@ public class libraw_rawdata_t {
             Constants$root.C_INT$LAYOUT.withName("as_shot_wb_applied"),
             MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
                 MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
-            )).withName("P1_color"),
+            ).withName("libraw_P1_color_t")).withName("P1_color"),
             Constants$root.C_INT$LAYOUT.withName("raw_bps"),
             Constants$root.C_INT$LAYOUT.withName("ExifColorSpace")
         ).withName("color")
-    );
+    ).withName("libraw_rawdata_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_rawdata_t.$struct$LAYOUT;
     }
@@ -149,144 +168,252 @@ public class libraw_rawdata_t {
     public static VarHandle raw_alloc$VH() {
         return libraw_rawdata_t.raw_alloc$VH;
     }
-    public static MemoryAddress raw_alloc$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_alloc$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* raw_alloc;
+     * }
+     */
+    public static MemorySegment raw_alloc$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_alloc$VH.get(seg);
     }
-    public static void raw_alloc$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* raw_alloc;
+     * }
+     */
+    public static void raw_alloc$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.raw_alloc$VH.set(seg, x);
     }
-    public static MemoryAddress raw_alloc$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_alloc$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment raw_alloc$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_alloc$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void raw_alloc$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void raw_alloc$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.raw_alloc$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle raw_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_image"));
     public static VarHandle raw_image$VH() {
         return libraw_rawdata_t.raw_image$VH;
     }
-    public static MemoryAddress raw_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_image$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short* raw_image;
+     * }
+     */
+    public static MemorySegment raw_image$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_image$VH.get(seg);
     }
-    public static void raw_image$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short* raw_image;
+     * }
+     */
+    public static void raw_image$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.raw_image$VH.set(seg, x);
     }
-    public static MemoryAddress raw_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.raw_image$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment raw_image$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_image$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void raw_image$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void raw_image$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.raw_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle color4_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("color4_image"));
     public static VarHandle color4_image$VH() {
         return libraw_rawdata_t.color4_image$VH;
     }
-    public static MemoryAddress color4_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color4_image$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short *color4_image[4];
+     * }
+     */
+    public static MemorySegment color4_image$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color4_image$VH.get(seg);
     }
-    public static void color4_image$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short *color4_image[4];
+     * }
+     */
+    public static void color4_image$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.color4_image$VH.set(seg, x);
     }
-    public static MemoryAddress color4_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color4_image$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment color4_image$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color4_image$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void color4_image$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void color4_image$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.color4_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle color3_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("color3_image"));
     public static VarHandle color3_image$VH() {
         return libraw_rawdata_t.color3_image$VH;
     }
-    public static MemoryAddress color3_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color3_image$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short *color3_image[3];
+     * }
+     */
+    public static MemorySegment color3_image$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color3_image$VH.get(seg);
     }
-    public static void color3_image$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short *color3_image[3];
+     * }
+     */
+    public static void color3_image$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.color3_image$VH.set(seg, x);
     }
-    public static MemoryAddress color3_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.color3_image$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment color3_image$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color3_image$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void color3_image$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void color3_image$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.color3_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle float_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float_image"));
     public static VarHandle float_image$VH() {
         return libraw_rawdata_t.float_image$VH;
     }
-    public static MemoryAddress float_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float_image$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float* float_image;
+     * }
+     */
+    public static MemorySegment float_image$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float_image$VH.get(seg);
     }
-    public static void float_image$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float* float_image;
+     * }
+     */
+    public static void float_image$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.float_image$VH.set(seg, x);
     }
-    public static MemoryAddress float_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float_image$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment float_image$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float_image$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void float_image$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void float_image$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.float_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle float3_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float3_image"));
     public static VarHandle float3_image$VH() {
         return libraw_rawdata_t.float3_image$VH;
     }
-    public static MemoryAddress float3_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float3_image$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float *float3_image[3];
+     * }
+     */
+    public static MemorySegment float3_image$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float3_image$VH.get(seg);
     }
-    public static void float3_image$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float *float3_image[3];
+     * }
+     */
+    public static void float3_image$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.float3_image$VH.set(seg, x);
     }
-    public static MemoryAddress float3_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float3_image$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment float3_image$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float3_image$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void float3_image$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void float3_image$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.float3_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle float4_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float4_image"));
     public static VarHandle float4_image$VH() {
         return libraw_rawdata_t.float4_image$VH;
     }
-    public static MemoryAddress float4_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float4_image$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float *float4_image[4];
+     * }
+     */
+    public static MemorySegment float4_image$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float4_image$VH.get(seg);
     }
-    public static void float4_image$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float *float4_image[4];
+     * }
+     */
+    public static void float4_image$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.float4_image$VH.set(seg, x);
     }
-    public static MemoryAddress float4_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.float4_image$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment float4_image$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float4_image$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void float4_image$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void float4_image$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.float4_image$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle ph1_cblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ph1_cblack"));
     public static VarHandle ph1_cblack$VH() {
         return libraw_rawdata_t.ph1_cblack$VH;
     }
-    public static MemoryAddress ph1_cblack$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_cblack$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short *ph1_cblack[2];
+     * }
+     */
+    public static MemorySegment ph1_cblack$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_cblack$VH.get(seg);
     }
-    public static void ph1_cblack$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short *ph1_cblack[2];
+     * }
+     */
+    public static void ph1_cblack$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.ph1_cblack$VH.set(seg, x);
     }
-    public static MemoryAddress ph1_cblack$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_cblack$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment ph1_cblack$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_cblack$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void ph1_cblack$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void ph1_cblack$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.ph1_cblack$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle ph1_rblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ph1_rblack"));
     public static VarHandle ph1_rblack$VH() {
         return libraw_rawdata_t.ph1_rblack$VH;
     }
-    public static MemoryAddress ph1_rblack$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_rblack$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short *ph1_rblack[2];
+     * }
+     */
+    public static MemorySegment ph1_rblack$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_rblack$VH.get(seg);
     }
-    public static void ph1_rblack$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short *ph1_rblack[2];
+     * }
+     */
+    public static void ph1_rblack$set(MemorySegment seg, MemorySegment x) {
         libraw_rawdata_t.ph1_rblack$VH.set(seg, x);
     }
-    public static MemoryAddress ph1_rblack$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_rawdata_t.ph1_rblack$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment ph1_rblack$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_rblack$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void ph1_rblack$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void ph1_rblack$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_rawdata_t.ph1_rblack$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment iparams$slice(MemorySegment seg) {
@@ -303,10 +430,10 @@ public class libraw_rawdata_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

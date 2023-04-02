@@ -7,54 +7,77 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$6 {
+final class constants$6 {
 
-    static final FunctionDescriptor libraw_set_dataerror_handler$FUNC = FunctionDescriptor.ofVoid(
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$6() {}
+    static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_set_dataerror_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_dataerror_handler",
-        constants$6.libraw_set_dataerror_handler$FUNC
+    static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_memerror_handler",
+        constants$6.libraw_set_memerror_handler$FUNC
     );
-    static final FunctionDescriptor libraw_set_progress_handler$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_progress_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_progress_handler",
-        constants$6.libraw_set_progress_handler$FUNC
-    );
-    static final FunctionDescriptor libraw_unpack_function_name$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_unpack_function_name$MH = RuntimeHelper.downcallHandle(
-        "libraw_unpack_function_name",
-        constants$6.libraw_unpack_function_name$FUNC
-    );
-    static final FunctionDescriptor libraw_get_decoder_info$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_decoder_info$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_decoder_info",
-        constants$6.libraw_get_decoder_info$FUNC
-    );
-    static final FunctionDescriptor libraw_COLOR$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+    static final FunctionDescriptor libraw_set_exifparser_handler$cb$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final FunctionDescriptor libraw_set_exifparser_handler$cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_set_exifparser_handler$cb_UP$MH = RuntimeHelper.upcallHandle(libraw_set_exifparser_handler$cb.class, "apply", constants$6.libraw_set_exifparser_handler$cb_UP$FUNC);
+    static final FunctionDescriptor libraw_set_exifparser_handler$cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_set_exifparser_handler$cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$6.libraw_set_exifparser_handler$cb_DOWN$FUNC
+    );
+    static final FunctionDescriptor libraw_set_exifparser_handler$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_set_exifparser_handler$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_exifparser_handler",
+        constants$6.libraw_set_exifparser_handler$FUNC
+    );
+    static final FunctionDescriptor libraw_set_dataerror_handler$func$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT
     );
-    static final MethodHandle libraw_COLOR$MH = RuntimeHelper.downcallHandle(
-        "libraw_COLOR",
-        constants$6.libraw_COLOR$FUNC
+    static final FunctionDescriptor libraw_set_dataerror_handler$func_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
     );
-    static final FunctionDescriptor libraw_capabilities$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT);
-    static final MethodHandle libraw_capabilities$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_capabilities",
-        constants$6.libraw_capabilities$FUNC
+    static final MethodHandle libraw_set_dataerror_handler$func_UP$MH = RuntimeHelper.upcallHandle(libraw_set_dataerror_handler$func.class, "apply", constants$6.libraw_set_dataerror_handler$func_UP$FUNC);
+    static final FunctionDescriptor libraw_set_dataerror_handler$func_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
+    );
+    static final MethodHandle libraw_set_dataerror_handler$func_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$6.libraw_set_dataerror_handler$func_DOWN$FUNC
     );
 }
 

@@ -7,50 +7,64 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$7 {
+final class constants$7 {
 
-    static final FunctionDescriptor libraw_capabilities$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
-    static final MethodHandle libraw_capabilities$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_capabilities",
-        constants$7.libraw_capabilities$FUNC
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$7() {}
+    static final FunctionDescriptor libraw_set_dataerror_handler$func_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
     );
-    static final FunctionDescriptor libraw_adjust_sizes_info_only$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
+    static final MethodHandle libraw_set_dataerror_handler$func_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$7.libraw_set_dataerror_handler$func_DOWN$FUNC
     );
-    static final MethodHandle libraw_adjust_sizes_info_only$MH = RuntimeHelper.downcallHandle(
-        "libraw_adjust_sizes_info_only",
-        constants$7.libraw_adjust_sizes_info_only$FUNC
-    );
-    static final FunctionDescriptor libraw_dcraw_ppm_tiff_writer$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+    static final FunctionDescriptor libraw_set_dataerror_handler$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_dcraw_ppm_tiff_writer$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_ppm_tiff_writer",
-        constants$7.libraw_dcraw_ppm_tiff_writer$FUNC
+    static final MethodHandle libraw_set_dataerror_handler$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_dataerror_handler",
+        constants$7.libraw_set_dataerror_handler$FUNC
     );
-    static final FunctionDescriptor libraw_dcraw_thumb_writer$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+    static final FunctionDescriptor libraw_set_progress_handler$cb$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final FunctionDescriptor libraw_set_progress_handler$cb_UP$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_set_progress_handler$cb_UP$MH = RuntimeHelper.upcallHandle(libraw_set_progress_handler$cb.class, "apply", constants$7.libraw_set_progress_handler$cb_UP$FUNC);
+    static final FunctionDescriptor libraw_set_progress_handler$cb_DOWN$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_set_progress_handler$cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$7.libraw_set_progress_handler$cb_DOWN$FUNC
+    );
+    static final FunctionDescriptor libraw_set_progress_handler$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_dcraw_thumb_writer$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_thumb_writer",
-        constants$7.libraw_dcraw_thumb_writer$FUNC
+    static final MethodHandle libraw_set_progress_handler$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_progress_handler",
+        constants$7.libraw_set_progress_handler$FUNC
     );
-    static final FunctionDescriptor libraw_dcraw_process$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+    static final FunctionDescriptor libraw_unpack_function_name$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_dcraw_process$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_process",
-        constants$7.libraw_dcraw_process$FUNC
-    );
-    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_make_mem_image",
-        constants$7.libraw_dcraw_make_mem_image$FUNC
+    static final MethodHandle libraw_unpack_function_name$MH = RuntimeHelper.downcallHandle(
+        "libraw_unpack_function_name",
+        constants$7.libraw_unpack_function_name$FUNC
     );
 }
 

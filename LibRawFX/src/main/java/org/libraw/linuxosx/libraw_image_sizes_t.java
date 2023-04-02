@@ -7,9 +7,29 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_image_sizes_t {
+ *     unsigned short raw_height;
+ *     unsigned short raw_width;
+ *     unsigned short height;
+ *     unsigned short width;
+ *     unsigned short top_margin;
+ *     unsigned short left_margin;
+ *     unsigned short iheight;
+ *     unsigned short iwidth;
+ *     unsigned int raw_pitch;
+ *     double pixel_aspect;
+ *     int flip;
+ *     int  mask[8][4];
+ *     unsigned short raw_aspect;
+ *     struct libraw_raw_inset_crop_t raw_inset_crops[2];
+ * };
+ * }
+ */
 public class libraw_image_sizes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("raw_height"),
         Constants$root.C_SHORT$LAYOUT.withName("raw_width"),
         Constants$root.C_SHORT$LAYOUT.withName("height"),
@@ -29,9 +49,9 @@ public class libraw_image_sizes_t {
             Constants$root.C_SHORT$LAYOUT.withName("ctop"),
             Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
             Constants$root.C_SHORT$LAYOUT.withName("cheight")
-        )).withName("raw_inset_crops"),
+        ).withName("libraw_raw_inset_crop_t")).withName("raw_inset_crops"),
         MemoryLayout.paddingLayout(16)
-    );
+    ).withName("libraw_image_sizes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_image_sizes_t.$struct$LAYOUT;
     }
@@ -39,10 +59,22 @@ public class libraw_image_sizes_t {
     public static VarHandle raw_height$VH() {
         return libraw_image_sizes_t.raw_height$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short raw_height;
+     * }
+     */
     public static short raw_height$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.raw_height$VH.get(seg);
     }
-    public static void raw_height$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short raw_height;
+     * }
+     */
+    public static void raw_height$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.raw_height$VH.set(seg, x);
     }
     public static short raw_height$get(MemorySegment seg, long index) {
@@ -55,10 +87,22 @@ public class libraw_image_sizes_t {
     public static VarHandle raw_width$VH() {
         return libraw_image_sizes_t.raw_width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short raw_width;
+     * }
+     */
     public static short raw_width$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.raw_width$VH.get(seg);
     }
-    public static void raw_width$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short raw_width;
+     * }
+     */
+    public static void raw_width$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.raw_width$VH.set(seg, x);
     }
     public static short raw_width$get(MemorySegment seg, long index) {
@@ -71,10 +115,22 @@ public class libraw_image_sizes_t {
     public static VarHandle height$VH() {
         return libraw_image_sizes_t.height$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short height;
+     * }
+     */
     public static short height$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.height$VH.get(seg);
     }
-    public static void height$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short height;
+     * }
+     */
+    public static void height$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.height$VH.set(seg, x);
     }
     public static short height$get(MemorySegment seg, long index) {
@@ -87,10 +143,22 @@ public class libraw_image_sizes_t {
     public static VarHandle width$VH() {
         return libraw_image_sizes_t.width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short width;
+     * }
+     */
     public static short width$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.width$VH.get(seg);
     }
-    public static void width$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short width;
+     * }
+     */
+    public static void width$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.width$VH.set(seg, x);
     }
     public static short width$get(MemorySegment seg, long index) {
@@ -103,10 +171,22 @@ public class libraw_image_sizes_t {
     public static VarHandle top_margin$VH() {
         return libraw_image_sizes_t.top_margin$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short top_margin;
+     * }
+     */
     public static short top_margin$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.top_margin$VH.get(seg);
     }
-    public static void top_margin$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short top_margin;
+     * }
+     */
+    public static void top_margin$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.top_margin$VH.set(seg, x);
     }
     public static short top_margin$get(MemorySegment seg, long index) {
@@ -119,10 +199,22 @@ public class libraw_image_sizes_t {
     public static VarHandle left_margin$VH() {
         return libraw_image_sizes_t.left_margin$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short left_margin;
+     * }
+     */
     public static short left_margin$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.left_margin$VH.get(seg);
     }
-    public static void left_margin$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short left_margin;
+     * }
+     */
+    public static void left_margin$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.left_margin$VH.set(seg, x);
     }
     public static short left_margin$get(MemorySegment seg, long index) {
@@ -135,10 +227,22 @@ public class libraw_image_sizes_t {
     public static VarHandle iheight$VH() {
         return libraw_image_sizes_t.iheight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short iheight;
+     * }
+     */
     public static short iheight$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.iheight$VH.get(seg);
     }
-    public static void iheight$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short iheight;
+     * }
+     */
+    public static void iheight$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.iheight$VH.set(seg, x);
     }
     public static short iheight$get(MemorySegment seg, long index) {
@@ -151,10 +255,22 @@ public class libraw_image_sizes_t {
     public static VarHandle iwidth$VH() {
         return libraw_image_sizes_t.iwidth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short iwidth;
+     * }
+     */
     public static short iwidth$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.iwidth$VH.get(seg);
     }
-    public static void iwidth$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short iwidth;
+     * }
+     */
+    public static void iwidth$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.iwidth$VH.set(seg, x);
     }
     public static short iwidth$get(MemorySegment seg, long index) {
@@ -167,10 +283,22 @@ public class libraw_image_sizes_t {
     public static VarHandle raw_pitch$VH() {
         return libraw_image_sizes_t.raw_pitch$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int raw_pitch;
+     * }
+     */
     public static int raw_pitch$get(MemorySegment seg) {
         return (int)libraw_image_sizes_t.raw_pitch$VH.get(seg);
     }
-    public static void raw_pitch$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int raw_pitch;
+     * }
+     */
+    public static void raw_pitch$set(MemorySegment seg, int x) {
         libraw_image_sizes_t.raw_pitch$VH.set(seg, x);
     }
     public static int raw_pitch$get(MemorySegment seg, long index) {
@@ -183,10 +311,22 @@ public class libraw_image_sizes_t {
     public static VarHandle pixel_aspect$VH() {
         return libraw_image_sizes_t.pixel_aspect$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * double pixel_aspect;
+     * }
+     */
     public static double pixel_aspect$get(MemorySegment seg) {
         return (double)libraw_image_sizes_t.pixel_aspect$VH.get(seg);
     }
-    public static void pixel_aspect$set( MemorySegment seg, double x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * double pixel_aspect;
+     * }
+     */
+    public static void pixel_aspect$set(MemorySegment seg, double x) {
         libraw_image_sizes_t.pixel_aspect$VH.set(seg, x);
     }
     public static double pixel_aspect$get(MemorySegment seg, long index) {
@@ -199,10 +339,22 @@ public class libraw_image_sizes_t {
     public static VarHandle flip$VH() {
         return libraw_image_sizes_t.flip$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int flip;
+     * }
+     */
     public static int flip$get(MemorySegment seg) {
         return (int)libraw_image_sizes_t.flip$VH.get(seg);
     }
-    public static void flip$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int flip;
+     * }
+     */
+    public static void flip$set(MemorySegment seg, int x) {
         libraw_image_sizes_t.flip$VH.set(seg, x);
     }
     public static int flip$get(MemorySegment seg, long index) {
@@ -218,10 +370,22 @@ public class libraw_image_sizes_t {
     public static VarHandle raw_aspect$VH() {
         return libraw_image_sizes_t.raw_aspect$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short raw_aspect;
+     * }
+     */
     public static short raw_aspect$get(MemorySegment seg) {
         return (short)libraw_image_sizes_t.raw_aspect$VH.get(seg);
     }
-    public static void raw_aspect$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short raw_aspect;
+     * }
+     */
+    public static void raw_aspect$set(MemorySegment seg, short x) {
         libraw_image_sizes_t.raw_aspect$VH.set(seg, x);
     }
     public static short raw_aspect$get(MemorySegment seg, long index) {
@@ -235,10 +399,10 @@ public class libraw_image_sizes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

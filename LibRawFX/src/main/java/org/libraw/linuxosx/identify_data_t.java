@@ -7,9 +7,21 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct identify_data_t {
+ *     unsigned int olympus_exif_cfa;
+ *     unsigned long long unique_id;
+ *     unsigned long long OlyID;
+ *     unsigned int tiff_nifds;
+ *     int tiff_flip;
+ *     int metadata_blocks;
+ * };
+ * }
+ */
 public class identify_data_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_INT$LAYOUT.withName("olympus_exif_cfa"),
         MemoryLayout.paddingLayout(32),
         Constants$root.C_LONG_LONG$LAYOUT.withName("unique_id"),
@@ -18,7 +30,7 @@ public class identify_data_t {
         Constants$root.C_INT$LAYOUT.withName("tiff_flip"),
         Constants$root.C_INT$LAYOUT.withName("metadata_blocks"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("identify_data_t");
     public static MemoryLayout $LAYOUT() {
         return identify_data_t.$struct$LAYOUT;
     }
@@ -26,10 +38,22 @@ public class identify_data_t {
     public static VarHandle olympus_exif_cfa$VH() {
         return identify_data_t.olympus_exif_cfa$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int olympus_exif_cfa;
+     * }
+     */
     public static int olympus_exif_cfa$get(MemorySegment seg) {
         return (int)identify_data_t.olympus_exif_cfa$VH.get(seg);
     }
-    public static void olympus_exif_cfa$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int olympus_exif_cfa;
+     * }
+     */
+    public static void olympus_exif_cfa$set(MemorySegment seg, int x) {
         identify_data_t.olympus_exif_cfa$VH.set(seg, x);
     }
     public static int olympus_exif_cfa$get(MemorySegment seg, long index) {
@@ -42,10 +66,22 @@ public class identify_data_t {
     public static VarHandle unique_id$VH() {
         return identify_data_t.unique_id$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned long long unique_id;
+     * }
+     */
     public static long unique_id$get(MemorySegment seg) {
         return (long)identify_data_t.unique_id$VH.get(seg);
     }
-    public static void unique_id$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned long long unique_id;
+     * }
+     */
+    public static void unique_id$set(MemorySegment seg, long x) {
         identify_data_t.unique_id$VH.set(seg, x);
     }
     public static long unique_id$get(MemorySegment seg, long index) {
@@ -58,10 +94,22 @@ public class identify_data_t {
     public static VarHandle OlyID$VH() {
         return identify_data_t.OlyID$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned long long OlyID;
+     * }
+     */
     public static long OlyID$get(MemorySegment seg) {
         return (long)identify_data_t.OlyID$VH.get(seg);
     }
-    public static void OlyID$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned long long OlyID;
+     * }
+     */
+    public static void OlyID$set(MemorySegment seg, long x) {
         identify_data_t.OlyID$VH.set(seg, x);
     }
     public static long OlyID$get(MemorySegment seg, long index) {
@@ -74,10 +122,22 @@ public class identify_data_t {
     public static VarHandle tiff_nifds$VH() {
         return identify_data_t.tiff_nifds$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tiff_nifds;
+     * }
+     */
     public static int tiff_nifds$get(MemorySegment seg) {
         return (int)identify_data_t.tiff_nifds$VH.get(seg);
     }
-    public static void tiff_nifds$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tiff_nifds;
+     * }
+     */
+    public static void tiff_nifds$set(MemorySegment seg, int x) {
         identify_data_t.tiff_nifds$VH.set(seg, x);
     }
     public static int tiff_nifds$get(MemorySegment seg, long index) {
@@ -90,10 +150,22 @@ public class identify_data_t {
     public static VarHandle tiff_flip$VH() {
         return identify_data_t.tiff_flip$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int tiff_flip;
+     * }
+     */
     public static int tiff_flip$get(MemorySegment seg) {
         return (int)identify_data_t.tiff_flip$VH.get(seg);
     }
-    public static void tiff_flip$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int tiff_flip;
+     * }
+     */
+    public static void tiff_flip$set(MemorySegment seg, int x) {
         identify_data_t.tiff_flip$VH.set(seg, x);
     }
     public static int tiff_flip$get(MemorySegment seg, long index) {
@@ -106,10 +178,22 @@ public class identify_data_t {
     public static VarHandle metadata_blocks$VH() {
         return identify_data_t.metadata_blocks$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int metadata_blocks;
+     * }
+     */
     public static int metadata_blocks$get(MemorySegment seg) {
         return (int)identify_data_t.metadata_blocks$VH.get(seg);
     }
-    public static void metadata_blocks$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int metadata_blocks;
+     * }
+     */
+    public static void metadata_blocks$set(MemorySegment seg, int x) {
         identify_data_t.metadata_blocks$VH.set(seg, x);
     }
     public static int metadata_blocks$get(MemorySegment seg, long index) {
@@ -120,10 +204,10 @@ public class identify_data_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

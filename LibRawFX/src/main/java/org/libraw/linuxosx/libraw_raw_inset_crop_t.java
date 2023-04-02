@@ -7,14 +7,24 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_raw_inset_crop_t {
+ *     unsigned short cleft;
+ *     unsigned short ctop;
+ *     unsigned short cwidth;
+ *     unsigned short cheight;
+ * };
+ * }
+ */
 public class libraw_raw_inset_crop_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("cleft"),
         Constants$root.C_SHORT$LAYOUT.withName("ctop"),
         Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
         Constants$root.C_SHORT$LAYOUT.withName("cheight")
-    );
+    ).withName("libraw_raw_inset_crop_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_raw_inset_crop_t.$struct$LAYOUT;
     }
@@ -22,10 +32,22 @@ public class libraw_raw_inset_crop_t {
     public static VarHandle cleft$VH() {
         return libraw_raw_inset_crop_t.cleft$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short cleft;
+     * }
+     */
     public static short cleft$get(MemorySegment seg) {
         return (short)libraw_raw_inset_crop_t.cleft$VH.get(seg);
     }
-    public static void cleft$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short cleft;
+     * }
+     */
+    public static void cleft$set(MemorySegment seg, short x) {
         libraw_raw_inset_crop_t.cleft$VH.set(seg, x);
     }
     public static short cleft$get(MemorySegment seg, long index) {
@@ -38,10 +60,22 @@ public class libraw_raw_inset_crop_t {
     public static VarHandle ctop$VH() {
         return libraw_raw_inset_crop_t.ctop$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ctop;
+     * }
+     */
     public static short ctop$get(MemorySegment seg) {
         return (short)libraw_raw_inset_crop_t.ctop$VH.get(seg);
     }
-    public static void ctop$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ctop;
+     * }
+     */
+    public static void ctop$set(MemorySegment seg, short x) {
         libraw_raw_inset_crop_t.ctop$VH.set(seg, x);
     }
     public static short ctop$get(MemorySegment seg, long index) {
@@ -54,10 +88,22 @@ public class libraw_raw_inset_crop_t {
     public static VarHandle cwidth$VH() {
         return libraw_raw_inset_crop_t.cwidth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short cwidth;
+     * }
+     */
     public static short cwidth$get(MemorySegment seg) {
         return (short)libraw_raw_inset_crop_t.cwidth$VH.get(seg);
     }
-    public static void cwidth$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short cwidth;
+     * }
+     */
+    public static void cwidth$set(MemorySegment seg, short x) {
         libraw_raw_inset_crop_t.cwidth$VH.set(seg, x);
     }
     public static short cwidth$get(MemorySegment seg, long index) {
@@ -70,10 +116,22 @@ public class libraw_raw_inset_crop_t {
     public static VarHandle cheight$VH() {
         return libraw_raw_inset_crop_t.cheight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short cheight;
+     * }
+     */
     public static short cheight$get(MemorySegment seg) {
         return (short)libraw_raw_inset_crop_t.cheight$VH.get(seg);
     }
-    public static void cheight$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short cheight;
+     * }
+     */
+    public static void cheight$set(MemorySegment seg, short x) {
         libraw_raw_inset_crop_t.cheight$VH.set(seg, x);
     }
     public static short cheight$get(MemorySegment seg, long index) {
@@ -84,10 +142,10 @@ public class libraw_raw_inset_crop_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

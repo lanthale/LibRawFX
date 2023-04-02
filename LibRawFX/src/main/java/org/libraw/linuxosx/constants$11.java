@@ -7,45 +7,54 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$11 {
+final class constants$11 {
 
-    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_color_maximum",
-        constants$11.libraw_get_color_maximum$FUNC
-    );
-    static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$11() {}
+    static final FunctionDescriptor libraw_set_fbdd_noiserd$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT
     );
-    static final MethodHandle libraw_set_output_tif$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_output_tif",
-        constants$11.libraw_set_output_tif$FUNC
+    static final MethodHandle libraw_set_fbdd_noiserd$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_fbdd_noiserd",
+        constants$11.libraw_set_fbdd_noiserd$FUNC
     );
-    static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+    static final FunctionDescriptor libraw_get_raw_height$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_get_iparams$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_iparams",
-        constants$11.libraw_get_iparams$FUNC
+    static final MethodHandle libraw_get_raw_height$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_raw_height",
+        constants$11.libraw_get_raw_height$FUNC
     );
-    static final FunctionDescriptor libraw_get_lensinfo$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_get_lensinfo$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_lensinfo",
-        constants$11.libraw_get_lensinfo$FUNC
+    static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_raw_width",
+        constants$11.libraw_get_raw_width$FUNC
     );
-    static final FunctionDescriptor libraw_get_imgother$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+    static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_get_imgother$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_imgother",
-        constants$11.libraw_get_imgother$FUNC
+    static final MethodHandle libraw_get_iheight$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_iheight",
+        constants$11.libraw_get_iheight$FUNC
     );
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.21.0-Snapshot202110");
+    static final FunctionDescriptor libraw_get_iwidth$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_get_iwidth$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_iwidth",
+        constants$11.libraw_get_iwidth$FUNC
+    );
+    static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT
+    );
+    static final MethodHandle libraw_get_cam_mul$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_cam_mul",
+        constants$11.libraw_get_cam_mul$FUNC
+    );
 }
 
 

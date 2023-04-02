@@ -7,9 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct internal_data_t {
+ *     struct LibRaw_abstract_datastream* input;
+ *     struct _iobuf* output;
+ *     int input_internal;
+ *     char* meta_data;
+ *     long long profile_offset;
+ *     long long toffset;
+ *     unsigned int pana_black[4];
+ * };
+ * }
+ */
 public class internal_data_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_POINTER$LAYOUT.withName("input"),
         Constants$root.C_POINTER$LAYOUT.withName("output"),
         Constants$root.C_LONG$LAYOUT.withName("input_internal"),
@@ -18,7 +31,7 @@ public class internal_data_t {
         Constants$root.C_LONG_LONG$LAYOUT.withName("profile_offset"),
         Constants$root.C_LONG_LONG$LAYOUT.withName("toffset"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("pana_black")
-    );
+    ).withName("internal_data_t");
     public static MemoryLayout $LAYOUT() {
         return internal_data_t.$struct$LAYOUT;
     }
@@ -26,42 +39,78 @@ public class internal_data_t {
     public static VarHandle input$VH() {
         return internal_data_t.input$VH;
     }
-    public static MemoryAddress input$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)internal_data_t.input$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * struct LibRaw_abstract_datastream* input;
+     * }
+     */
+    public static MemorySegment input$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)internal_data_t.input$VH.get(seg);
     }
-    public static void input$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * struct LibRaw_abstract_datastream* input;
+     * }
+     */
+    public static void input$set(MemorySegment seg, MemorySegment x) {
         internal_data_t.input$VH.set(seg, x);
     }
-    public static MemoryAddress input$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)internal_data_t.input$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment input$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)internal_data_t.input$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void input$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void input$set(MemorySegment seg, long index, MemorySegment x) {
         internal_data_t.input$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle output$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("output"));
     public static VarHandle output$VH() {
         return internal_data_t.output$VH;
     }
-    public static MemoryAddress output$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)internal_data_t.output$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * struct _iobuf* output;
+     * }
+     */
+    public static MemorySegment output$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)internal_data_t.output$VH.get(seg);
     }
-    public static void output$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * struct _iobuf* output;
+     * }
+     */
+    public static void output$set(MemorySegment seg, MemorySegment x) {
         internal_data_t.output$VH.set(seg, x);
     }
-    public static MemoryAddress output$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)internal_data_t.output$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment output$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)internal_data_t.output$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void output$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void output$set(MemorySegment seg, long index, MemorySegment x) {
         internal_data_t.output$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle input_internal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("input_internal"));
     public static VarHandle input_internal$VH() {
         return internal_data_t.input_internal$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int input_internal;
+     * }
+     */
     public static int input_internal$get(MemorySegment seg) {
         return (int)internal_data_t.input_internal$VH.get(seg);
     }
-    public static void input_internal$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int input_internal;
+     * }
+     */
+    public static void input_internal$set(MemorySegment seg, int x) {
         internal_data_t.input_internal$VH.set(seg, x);
     }
     public static int input_internal$get(MemorySegment seg, long index) {
@@ -74,26 +123,50 @@ public class internal_data_t {
     public static VarHandle meta_data$VH() {
         return internal_data_t.meta_data$VH;
     }
-    public static MemoryAddress meta_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)internal_data_t.meta_data$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* meta_data;
+     * }
+     */
+    public static MemorySegment meta_data$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)internal_data_t.meta_data$VH.get(seg);
     }
-    public static void meta_data$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* meta_data;
+     * }
+     */
+    public static void meta_data$set(MemorySegment seg, MemorySegment x) {
         internal_data_t.meta_data$VH.set(seg, x);
     }
-    public static MemoryAddress meta_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)internal_data_t.meta_data$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment meta_data$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)internal_data_t.meta_data$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void meta_data$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void meta_data$set(MemorySegment seg, long index, MemorySegment x) {
         internal_data_t.meta_data$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle profile_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("profile_offset"));
     public static VarHandle profile_offset$VH() {
         return internal_data_t.profile_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long profile_offset;
+     * }
+     */
     public static long profile_offset$get(MemorySegment seg) {
         return (long)internal_data_t.profile_offset$VH.get(seg);
     }
-    public static void profile_offset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long profile_offset;
+     * }
+     */
+    public static void profile_offset$set(MemorySegment seg, long x) {
         internal_data_t.profile_offset$VH.set(seg, x);
     }
     public static long profile_offset$get(MemorySegment seg, long index) {
@@ -106,10 +179,22 @@ public class internal_data_t {
     public static VarHandle toffset$VH() {
         return internal_data_t.toffset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long toffset;
+     * }
+     */
     public static long toffset$get(MemorySegment seg) {
         return (long)internal_data_t.toffset$VH.get(seg);
     }
-    public static void toffset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long toffset;
+     * }
+     */
+    public static void toffset$set(MemorySegment seg, long x) {
         internal_data_t.toffset$VH.set(seg, x);
     }
     public static long toffset$get(MemorySegment seg, long index) {
@@ -123,10 +208,10 @@ public class internal_data_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

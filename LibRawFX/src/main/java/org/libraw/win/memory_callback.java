@@ -7,17 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * void (*memory_callback)(void* data,char* file,char* where);
+ * }
+ */
 public interface memory_callback {
 
-    void apply(java.lang.foreign.MemoryAddress data, java.lang.foreign.MemoryAddress file, java.lang.foreign.MemoryAddress where);
-    static MemorySegment allocate(memory_callback fi, MemorySession session) {
-        return RuntimeHelper.upcallStub(memory_callback.class, fi, constants$0.memory_callback$FUNC, session);
+    void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, java.lang.foreign.MemorySegment where);
+    static MemorySegment allocate(memory_callback fi, SegmentScope scope) {
+        return RuntimeHelper.upcallStub(constants$0.memory_callback_UP$MH, fi, constants$0.memory_callback$FUNC, scope);
     }
-    static memory_callback ofAddress(MemoryAddress addr, MemorySession session) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
-        return (java.lang.foreign.MemoryAddress _data, java.lang.foreign.MemoryAddress _file, java.lang.foreign.MemoryAddress _where) -> {
+    static memory_callback ofAddress(MemorySegment addr, SegmentScope scope) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+        return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, java.lang.foreign.MemorySegment _where) -> {
             try {
-                constants$0.memory_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_data, (java.lang.foreign.Addressable)_file, (java.lang.foreign.Addressable)_where);
+                constants$0.memory_callback_DOWN$MH.invokeExact(symbol, _data, _file, _where);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

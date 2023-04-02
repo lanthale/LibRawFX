@@ -7,8 +7,10 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$5 {
+final class constants$5 {
 
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$5() {}
     static final FunctionDescriptor libraw_version$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
     static final MethodHandle libraw_version$MH = RuntimeHelper.downcallHandleVariadic(
         "libraw_version",
@@ -29,23 +31,24 @@ class constants$5 {
         "libraw_cameraCount",
         constants$5.libraw_cameraCount$FUNC
     );
-    static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
+    static final FunctionDescriptor libraw_set_memerror_handler$cb$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_memerror_handler",
-        constants$5.libraw_set_memerror_handler$FUNC
-    );
-    static final FunctionDescriptor libraw_set_exifparser_handler$FUNC = FunctionDescriptor.ofVoid(
+    static final FunctionDescriptor libraw_set_memerror_handler$cb_UP$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_set_exifparser_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_exifparser_handler",
-        constants$5.libraw_set_exifparser_handler$FUNC
+    static final MethodHandle libraw_set_memerror_handler$cb_UP$MH = RuntimeHelper.upcallHandle(libraw_set_memerror_handler$cb.class, "apply", constants$5.libraw_set_memerror_handler$cb_UP$FUNC);
+    static final FunctionDescriptor libraw_set_memerror_handler$cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_set_memerror_handler$cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$5.libraw_set_memerror_handler$cb_DOWN$FUNC
     );
 }
 

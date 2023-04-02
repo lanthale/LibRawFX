@@ -7,52 +7,53 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$11 {
+final class constants$11 {
 
-    static final FunctionDescriptor libraw_get_rgb_cam$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_get_rgb_cam$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_rgb_cam",
-        constants$11.libraw_get_rgb_cam$FUNC
-    );
-    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_color_maximum",
-        constants$11.libraw_get_color_maximum$FUNC
-    );
-    static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$11() {}
+    static final FunctionDescriptor libraw_set_highlight$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_LONG$LAYOUT
     );
-    static final MethodHandle libraw_set_output_tif$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_output_tif",
-        constants$11.libraw_set_output_tif$FUNC
+    static final MethodHandle libraw_set_highlight$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_highlight",
+        constants$11.libraw_set_highlight$FUNC
     );
-    static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+    static final FunctionDescriptor libraw_set_fbdd_noiserd$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_set_fbdd_noiserd$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_fbdd_noiserd",
+        constants$11.libraw_set_fbdd_noiserd$FUNC
+    );
+    static final FunctionDescriptor libraw_get_raw_height$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_get_iparams$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_iparams",
-        constants$11.libraw_get_iparams$FUNC
+    static final MethodHandle libraw_get_raw_height$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_raw_height",
+        constants$11.libraw_get_raw_height$FUNC
     );
-    static final FunctionDescriptor libraw_get_lensinfo$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_get_lensinfo$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_lensinfo",
-        constants$11.libraw_get_lensinfo$FUNC
+    static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_raw_width",
+        constants$11.libraw_get_raw_width$FUNC
     );
-    static final FunctionDescriptor libraw_get_imgother$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+    static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle libraw_get_imgother$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_imgother",
-        constants$11.libraw_get_imgother$FUNC
+    static final MethodHandle libraw_get_iheight$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_iheight",
+        constants$11.libraw_get_iheight$FUNC
+    );
+    static final FunctionDescriptor libraw_get_iwidth$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_get_iwidth$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_iwidth",
+        constants$11.libraw_get_iwidth$FUNC
     );
 }
 

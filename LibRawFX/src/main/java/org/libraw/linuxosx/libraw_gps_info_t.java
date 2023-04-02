@@ -7,9 +7,24 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_gps_info_t {
+ *     float latitude[3];
+ *     float longitude[3];
+ *     float gpstimestamp[3];
+ *     float altitude;
+ *     char altref;
+ *     char latref;
+ *     char longref;
+ *     char gpsstatus;
+ *     char gpsparsed;
+ * };
+ * }
+ */
 public class libraw_gps_info_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("latitude"),
         MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("longitude"),
         MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("gpstimestamp"),
@@ -20,7 +35,7 @@ public class libraw_gps_info_t {
         Constants$root.C_CHAR$LAYOUT.withName("gpsstatus"),
         Constants$root.C_CHAR$LAYOUT.withName("gpsparsed"),
         MemoryLayout.paddingLayout(24)
-    );
+    ).withName("libraw_gps_info_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_gps_info_t.$struct$LAYOUT;
     }
@@ -37,10 +52,22 @@ public class libraw_gps_info_t {
     public static VarHandle altitude$VH() {
         return libraw_gps_info_t.altitude$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float altitude;
+     * }
+     */
     public static float altitude$get(MemorySegment seg) {
         return (float)libraw_gps_info_t.altitude$VH.get(seg);
     }
-    public static void altitude$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float altitude;
+     * }
+     */
+    public static void altitude$set(MemorySegment seg, float x) {
         libraw_gps_info_t.altitude$VH.set(seg, x);
     }
     public static float altitude$get(MemorySegment seg, long index) {
@@ -53,10 +80,22 @@ public class libraw_gps_info_t {
     public static VarHandle altref$VH() {
         return libraw_gps_info_t.altref$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char altref;
+     * }
+     */
     public static byte altref$get(MemorySegment seg) {
         return (byte)libraw_gps_info_t.altref$VH.get(seg);
     }
-    public static void altref$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char altref;
+     * }
+     */
+    public static void altref$set(MemorySegment seg, byte x) {
         libraw_gps_info_t.altref$VH.set(seg, x);
     }
     public static byte altref$get(MemorySegment seg, long index) {
@@ -69,10 +108,22 @@ public class libraw_gps_info_t {
     public static VarHandle latref$VH() {
         return libraw_gps_info_t.latref$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char latref;
+     * }
+     */
     public static byte latref$get(MemorySegment seg) {
         return (byte)libraw_gps_info_t.latref$VH.get(seg);
     }
-    public static void latref$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char latref;
+     * }
+     */
+    public static void latref$set(MemorySegment seg, byte x) {
         libraw_gps_info_t.latref$VH.set(seg, x);
     }
     public static byte latref$get(MemorySegment seg, long index) {
@@ -85,10 +136,22 @@ public class libraw_gps_info_t {
     public static VarHandle longref$VH() {
         return libraw_gps_info_t.longref$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char longref;
+     * }
+     */
     public static byte longref$get(MemorySegment seg) {
         return (byte)libraw_gps_info_t.longref$VH.get(seg);
     }
-    public static void longref$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char longref;
+     * }
+     */
+    public static void longref$set(MemorySegment seg, byte x) {
         libraw_gps_info_t.longref$VH.set(seg, x);
     }
     public static byte longref$get(MemorySegment seg, long index) {
@@ -101,10 +164,22 @@ public class libraw_gps_info_t {
     public static VarHandle gpsstatus$VH() {
         return libraw_gps_info_t.gpsstatus$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char gpsstatus;
+     * }
+     */
     public static byte gpsstatus$get(MemorySegment seg) {
         return (byte)libraw_gps_info_t.gpsstatus$VH.get(seg);
     }
-    public static void gpsstatus$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char gpsstatus;
+     * }
+     */
+    public static void gpsstatus$set(MemorySegment seg, byte x) {
         libraw_gps_info_t.gpsstatus$VH.set(seg, x);
     }
     public static byte gpsstatus$get(MemorySegment seg, long index) {
@@ -117,10 +192,22 @@ public class libraw_gps_info_t {
     public static VarHandle gpsparsed$VH() {
         return libraw_gps_info_t.gpsparsed$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char gpsparsed;
+     * }
+     */
     public static byte gpsparsed$get(MemorySegment seg) {
         return (byte)libraw_gps_info_t.gpsparsed$VH.get(seg);
     }
-    public static void gpsparsed$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char gpsparsed;
+     * }
+     */
+    public static void gpsparsed$set(MemorySegment seg, byte x) {
         libraw_gps_info_t.gpsparsed$VH.set(seg, x);
     }
     public static byte gpsparsed$get(MemorySegment seg, long index) {
@@ -131,10 +218,10 @@ public class libraw_gps_info_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

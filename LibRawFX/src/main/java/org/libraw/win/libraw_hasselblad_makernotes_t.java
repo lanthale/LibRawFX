@@ -7,9 +7,30 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_hasselblad_makernotes_t {
+ *     int BaseISO;
+ *     double Gain;
+ *     char Sensor[8];
+ *     char SensorUnit[64];
+ *     char HostBody[64];
+ *     int SensorCode;
+ *     int SensorSubCode;
+ *     int CoatingCode;
+ *     int uncropped;
+ *     char CaptureSequenceInitiator[32];
+ *     char SensorUnitConnector[64];
+ *     int format;
+ *     int nIFD_CM[2];
+ *     int RecommendedCrop[2];
+ *     double  mnColorMatrix[4][3];
+ * };
+ * }
+ */
 public class libraw_hasselblad_makernotes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_LONG$LAYOUT.withName("BaseISO"),
         MemoryLayout.paddingLayout(32),
         Constants$root.C_DOUBLE$LAYOUT.withName("Gain"),
@@ -27,7 +48,7 @@ public class libraw_hasselblad_makernotes_t {
         MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("RecommendedCrop"),
         MemoryLayout.paddingLayout(32),
         MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_DOUBLE$LAYOUT)).withName("mnColorMatrix")
-    );
+    ).withName("libraw_hasselblad_makernotes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_hasselblad_makernotes_t.$struct$LAYOUT;
     }
@@ -35,10 +56,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle BaseISO$VH() {
         return libraw_hasselblad_makernotes_t.BaseISO$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int BaseISO;
+     * }
+     */
     public static int BaseISO$get(MemorySegment seg) {
         return (int)libraw_hasselblad_makernotes_t.BaseISO$VH.get(seg);
     }
-    public static void BaseISO$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int BaseISO;
+     * }
+     */
+    public static void BaseISO$set(MemorySegment seg, int x) {
         libraw_hasselblad_makernotes_t.BaseISO$VH.set(seg, x);
     }
     public static int BaseISO$get(MemorySegment seg, long index) {
@@ -51,10 +84,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle Gain$VH() {
         return libraw_hasselblad_makernotes_t.Gain$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * double Gain;
+     * }
+     */
     public static double Gain$get(MemorySegment seg) {
         return (double)libraw_hasselblad_makernotes_t.Gain$VH.get(seg);
     }
-    public static void Gain$set( MemorySegment seg, double x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * double Gain;
+     * }
+     */
+    public static void Gain$set(MemorySegment seg, double x) {
         libraw_hasselblad_makernotes_t.Gain$VH.set(seg, x);
     }
     public static double Gain$get(MemorySegment seg, long index) {
@@ -76,10 +121,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle SensorCode$VH() {
         return libraw_hasselblad_makernotes_t.SensorCode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int SensorCode;
+     * }
+     */
     public static int SensorCode$get(MemorySegment seg) {
         return (int)libraw_hasselblad_makernotes_t.SensorCode$VH.get(seg);
     }
-    public static void SensorCode$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int SensorCode;
+     * }
+     */
+    public static void SensorCode$set(MemorySegment seg, int x) {
         libraw_hasselblad_makernotes_t.SensorCode$VH.set(seg, x);
     }
     public static int SensorCode$get(MemorySegment seg, long index) {
@@ -92,10 +149,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle SensorSubCode$VH() {
         return libraw_hasselblad_makernotes_t.SensorSubCode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int SensorSubCode;
+     * }
+     */
     public static int SensorSubCode$get(MemorySegment seg) {
         return (int)libraw_hasselblad_makernotes_t.SensorSubCode$VH.get(seg);
     }
-    public static void SensorSubCode$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int SensorSubCode;
+     * }
+     */
+    public static void SensorSubCode$set(MemorySegment seg, int x) {
         libraw_hasselblad_makernotes_t.SensorSubCode$VH.set(seg, x);
     }
     public static int SensorSubCode$get(MemorySegment seg, long index) {
@@ -108,10 +177,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle CoatingCode$VH() {
         return libraw_hasselblad_makernotes_t.CoatingCode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int CoatingCode;
+     * }
+     */
     public static int CoatingCode$get(MemorySegment seg) {
         return (int)libraw_hasselblad_makernotes_t.CoatingCode$VH.get(seg);
     }
-    public static void CoatingCode$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int CoatingCode;
+     * }
+     */
+    public static void CoatingCode$set(MemorySegment seg, int x) {
         libraw_hasselblad_makernotes_t.CoatingCode$VH.set(seg, x);
     }
     public static int CoatingCode$get(MemorySegment seg, long index) {
@@ -124,10 +205,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle uncropped$VH() {
         return libraw_hasselblad_makernotes_t.uncropped$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int uncropped;
+     * }
+     */
     public static int uncropped$get(MemorySegment seg) {
         return (int)libraw_hasselblad_makernotes_t.uncropped$VH.get(seg);
     }
-    public static void uncropped$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int uncropped;
+     * }
+     */
+    public static void uncropped$set(MemorySegment seg, int x) {
         libraw_hasselblad_makernotes_t.uncropped$VH.set(seg, x);
     }
     public static int uncropped$get(MemorySegment seg, long index) {
@@ -146,10 +239,22 @@ public class libraw_hasselblad_makernotes_t {
     public static VarHandle format$VH() {
         return libraw_hasselblad_makernotes_t.format$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int format;
+     * }
+     */
     public static int format$get(MemorySegment seg) {
         return (int)libraw_hasselblad_makernotes_t.format$VH.get(seg);
     }
-    public static void format$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int format;
+     * }
+     */
+    public static void format$set(MemorySegment seg, int x) {
         libraw_hasselblad_makernotes_t.format$VH.set(seg, x);
     }
     public static int format$get(MemorySegment seg, long index) {
@@ -169,10 +274,10 @@ public class libraw_hasselblad_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

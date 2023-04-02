@@ -7,9 +7,50 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_colordata_t {
+ *     unsigned short curve[65536];
+ *     unsigned int cblack[4104];
+ *     unsigned int black;
+ *     unsigned int data_maximum;
+ *     unsigned int maximum;
+ *     long linear_max[4];
+ *     float fmaximum;
+ *     float fnorm;
+ *     unsigned short  white[8][8];
+ *     float cam_mul[4];
+ *     float pre_mul[4];
+ *     float  cmatrix[3][4];
+ *     float  ccm[3][4];
+ *     float  rgb_cam[3][4];
+ *     float  cam_xyz[4][3];
+ *     struct ph1_t phase_one_data;
+ *     float flash_used;
+ *     float canon_ev;
+ *     char model2[64];
+ *     char UniqueCameraModel[64];
+ *     char LocalizedCameraModel[64];
+ *     char ImageUniqueID[64];
+ *     char RawDataUniqueID[17];
+ *     char OriginalRawFileName[64];
+ *     void* profile;
+ *     unsigned int profile_length;
+ *     unsigned int black_stat[8];
+ *     struct libraw_dng_color_t dng_color[2];
+ *     struct libraw_dng_levels_t dng_levels;
+ *     int  WB_Coeffs[256][4];
+ *     float  WBCT_Coeffs[64][5];
+ *     int as_shot_wb_applied;
+ *     struct libraw_P1_color_t P1_color[2];
+ *     unsigned int raw_bps;
+ *     int ExifColorSpace;
+ * };
+ * }
+ */
 public class libraw_colordata_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(65536, Constants$root.C_SHORT$LAYOUT).withName("curve"),
         MemoryLayout.sequenceLayout(4104, Constants$root.C_LONG$LAYOUT).withName("cblack"),
         Constants$root.C_LONG$LAYOUT.withName("black"),
@@ -55,7 +96,7 @@ public class libraw_colordata_t {
             MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
             MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
             MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-        )).withName("dng_color"),
+        ).withName("libraw_dng_color_t")).withName("dng_color"),
         MemoryLayout.structLayout(
             Constants$root.C_LONG$LAYOUT.withName("parsedfields"),
             MemoryLayout.sequenceLayout(4104, Constants$root.C_LONG$LAYOUT).withName("dng_cblack"),
@@ -76,10 +117,10 @@ public class libraw_colordata_t {
         Constants$root.C_LONG$LAYOUT.withName("as_shot_wb_applied"),
         MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
             MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
-        )).withName("P1_color"),
+        ).withName("libraw_P1_color_t")).withName("P1_color"),
         Constants$root.C_LONG$LAYOUT.withName("raw_bps"),
         Constants$root.C_LONG$LAYOUT.withName("ExifColorSpace")
-    );
+    ).withName("libraw_colordata_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_colordata_t.$struct$LAYOUT;
     }
@@ -93,10 +134,22 @@ public class libraw_colordata_t {
     public static VarHandle black$VH() {
         return libraw_colordata_t.black$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int black;
+     * }
+     */
     public static int black$get(MemorySegment seg) {
         return (int)libraw_colordata_t.black$VH.get(seg);
     }
-    public static void black$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int black;
+     * }
+     */
+    public static void black$set(MemorySegment seg, int x) {
         libraw_colordata_t.black$VH.set(seg, x);
     }
     public static int black$get(MemorySegment seg, long index) {
@@ -109,10 +162,22 @@ public class libraw_colordata_t {
     public static VarHandle data_maximum$VH() {
         return libraw_colordata_t.data_maximum$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int data_maximum;
+     * }
+     */
     public static int data_maximum$get(MemorySegment seg) {
         return (int)libraw_colordata_t.data_maximum$VH.get(seg);
     }
-    public static void data_maximum$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int data_maximum;
+     * }
+     */
+    public static void data_maximum$set(MemorySegment seg, int x) {
         libraw_colordata_t.data_maximum$VH.set(seg, x);
     }
     public static int data_maximum$get(MemorySegment seg, long index) {
@@ -125,10 +190,22 @@ public class libraw_colordata_t {
     public static VarHandle maximum$VH() {
         return libraw_colordata_t.maximum$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int maximum;
+     * }
+     */
     public static int maximum$get(MemorySegment seg) {
         return (int)libraw_colordata_t.maximum$VH.get(seg);
     }
-    public static void maximum$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int maximum;
+     * }
+     */
+    public static void maximum$set(MemorySegment seg, int x) {
         libraw_colordata_t.maximum$VH.set(seg, x);
     }
     public static int maximum$get(MemorySegment seg, long index) {
@@ -144,10 +221,22 @@ public class libraw_colordata_t {
     public static VarHandle fmaximum$VH() {
         return libraw_colordata_t.fmaximum$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float fmaximum;
+     * }
+     */
     public static float fmaximum$get(MemorySegment seg) {
         return (float)libraw_colordata_t.fmaximum$VH.get(seg);
     }
-    public static void fmaximum$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float fmaximum;
+     * }
+     */
+    public static void fmaximum$set(MemorySegment seg, float x) {
         libraw_colordata_t.fmaximum$VH.set(seg, x);
     }
     public static float fmaximum$get(MemorySegment seg, long index) {
@@ -160,10 +249,22 @@ public class libraw_colordata_t {
     public static VarHandle fnorm$VH() {
         return libraw_colordata_t.fnorm$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float fnorm;
+     * }
+     */
     public static float fnorm$get(MemorySegment seg) {
         return (float)libraw_colordata_t.fnorm$VH.get(seg);
     }
-    public static void fnorm$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float fnorm;
+     * }
+     */
+    public static void fnorm$set(MemorySegment seg, float x) {
         libraw_colordata_t.fnorm$VH.set(seg, x);
     }
     public static float fnorm$get(MemorySegment seg, long index) {
@@ -200,10 +301,22 @@ public class libraw_colordata_t {
     public static VarHandle flash_used$VH() {
         return libraw_colordata_t.flash_used$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float flash_used;
+     * }
+     */
     public static float flash_used$get(MemorySegment seg) {
         return (float)libraw_colordata_t.flash_used$VH.get(seg);
     }
-    public static void flash_used$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float flash_used;
+     * }
+     */
+    public static void flash_used$set(MemorySegment seg, float x) {
         libraw_colordata_t.flash_used$VH.set(seg, x);
     }
     public static float flash_used$get(MemorySegment seg, long index) {
@@ -216,10 +329,22 @@ public class libraw_colordata_t {
     public static VarHandle canon_ev$VH() {
         return libraw_colordata_t.canon_ev$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float canon_ev;
+     * }
+     */
     public static float canon_ev$get(MemorySegment seg) {
         return (float)libraw_colordata_t.canon_ev$VH.get(seg);
     }
-    public static void canon_ev$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float canon_ev;
+     * }
+     */
+    public static void canon_ev$set(MemorySegment seg, float x) {
         libraw_colordata_t.canon_ev$VH.set(seg, x);
     }
     public static float canon_ev$get(MemorySegment seg, long index) {
@@ -250,26 +375,50 @@ public class libraw_colordata_t {
     public static VarHandle profile$VH() {
         return libraw_colordata_t.profile$VH;
     }
-    public static MemoryAddress profile$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_colordata_t.profile$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* profile;
+     * }
+     */
+    public static MemorySegment profile$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_colordata_t.profile$VH.get(seg);
     }
-    public static void profile$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* profile;
+     * }
+     */
+    public static void profile$set(MemorySegment seg, MemorySegment x) {
         libraw_colordata_t.profile$VH.set(seg, x);
     }
-    public static MemoryAddress profile$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_colordata_t.profile$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment profile$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_colordata_t.profile$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void profile$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void profile$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_colordata_t.profile$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle profile_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("profile_length"));
     public static VarHandle profile_length$VH() {
         return libraw_colordata_t.profile_length$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int profile_length;
+     * }
+     */
     public static int profile_length$get(MemorySegment seg) {
         return (int)libraw_colordata_t.profile_length$VH.get(seg);
     }
-    public static void profile_length$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int profile_length;
+     * }
+     */
+    public static void profile_length$set(MemorySegment seg, int x) {
         libraw_colordata_t.profile_length$VH.set(seg, x);
     }
     public static int profile_length$get(MemorySegment seg, long index) {
@@ -297,10 +446,22 @@ public class libraw_colordata_t {
     public static VarHandle as_shot_wb_applied$VH() {
         return libraw_colordata_t.as_shot_wb_applied$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int as_shot_wb_applied;
+     * }
+     */
     public static int as_shot_wb_applied$get(MemorySegment seg) {
         return (int)libraw_colordata_t.as_shot_wb_applied$VH.get(seg);
     }
-    public static void as_shot_wb_applied$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int as_shot_wb_applied;
+     * }
+     */
+    public static void as_shot_wb_applied$set(MemorySegment seg, int x) {
         libraw_colordata_t.as_shot_wb_applied$VH.set(seg, x);
     }
     public static int as_shot_wb_applied$get(MemorySegment seg, long index) {
@@ -316,10 +477,22 @@ public class libraw_colordata_t {
     public static VarHandle raw_bps$VH() {
         return libraw_colordata_t.raw_bps$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int raw_bps;
+     * }
+     */
     public static int raw_bps$get(MemorySegment seg) {
         return (int)libraw_colordata_t.raw_bps$VH.get(seg);
     }
-    public static void raw_bps$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int raw_bps;
+     * }
+     */
+    public static void raw_bps$set(MemorySegment seg, int x) {
         libraw_colordata_t.raw_bps$VH.set(seg, x);
     }
     public static int raw_bps$get(MemorySegment seg, long index) {
@@ -332,10 +505,22 @@ public class libraw_colordata_t {
     public static VarHandle ExifColorSpace$VH() {
         return libraw_colordata_t.ExifColorSpace$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int ExifColorSpace;
+     * }
+     */
     public static int ExifColorSpace$get(MemorySegment seg) {
         return (int)libraw_colordata_t.ExifColorSpace$VH.get(seg);
     }
-    public static void ExifColorSpace$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int ExifColorSpace;
+     * }
+     */
+    public static void ExifColorSpace$set(MemorySegment seg, int x) {
         libraw_colordata_t.ExifColorSpace$VH.set(seg, x);
     }
     public static int ExifColorSpace$get(MemorySegment seg, long index) {
@@ -346,10 +531,10 @@ public class libraw_colordata_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

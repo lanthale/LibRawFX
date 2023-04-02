@@ -7,9 +7,55 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_output_params_t {
+ *     unsigned int greybox[4];
+ *     unsigned int cropbox[4];
+ *     double aber[4];
+ *     double gamm[6];
+ *     float user_mul[4];
+ *     float bright;
+ *     float threshold;
+ *     int half_size;
+ *     int four_color_rgb;
+ *     int highlight;
+ *     int use_auto_wb;
+ *     int use_camera_wb;
+ *     int use_camera_matrix;
+ *     int output_color;
+ *     char* output_profile;
+ *     char* camera_profile;
+ *     char* bad_pixels;
+ *     char* dark_frame;
+ *     int output_bps;
+ *     int output_tiff;
+ *     int output_flags;
+ *     int user_flip;
+ *     int user_qual;
+ *     int user_black;
+ *     int user_cblack[4];
+ *     int user_sat;
+ *     int med_passes;
+ *     float auto_bright_thr;
+ *     float adjust_maximum_thr;
+ *     int no_auto_bright;
+ *     int use_fuji_rotate;
+ *     int green_matching;
+ *     int dcb_iterations;
+ *     int dcb_enhance_fl;
+ *     int fbdd_noiserd;
+ *     int exp_correc;
+ *     float exp_shift;
+ *     float exp_preser;
+ *     int no_auto_scale;
+ *     int no_interpolation;
+ * };
+ * }
+ */
 public class libraw_output_params_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("greybox"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("cropbox"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_DOUBLE$LAYOUT).withName("aber"),
@@ -52,7 +98,7 @@ public class libraw_output_params_t {
         Constants$root.C_INT$LAYOUT.withName("no_auto_scale"),
         Constants$root.C_INT$LAYOUT.withName("no_interpolation"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("libraw_output_params_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_output_params_t.$struct$LAYOUT;
     }
@@ -75,10 +121,22 @@ public class libraw_output_params_t {
     public static VarHandle bright$VH() {
         return libraw_output_params_t.bright$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float bright;
+     * }
+     */
     public static float bright$get(MemorySegment seg) {
         return (float)libraw_output_params_t.bright$VH.get(seg);
     }
-    public static void bright$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float bright;
+     * }
+     */
+    public static void bright$set(MemorySegment seg, float x) {
         libraw_output_params_t.bright$VH.set(seg, x);
     }
     public static float bright$get(MemorySegment seg, long index) {
@@ -91,10 +149,22 @@ public class libraw_output_params_t {
     public static VarHandle threshold$VH() {
         return libraw_output_params_t.threshold$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float threshold;
+     * }
+     */
     public static float threshold$get(MemorySegment seg) {
         return (float)libraw_output_params_t.threshold$VH.get(seg);
     }
-    public static void threshold$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float threshold;
+     * }
+     */
+    public static void threshold$set(MemorySegment seg, float x) {
         libraw_output_params_t.threshold$VH.set(seg, x);
     }
     public static float threshold$get(MemorySegment seg, long index) {
@@ -107,10 +177,22 @@ public class libraw_output_params_t {
     public static VarHandle half_size$VH() {
         return libraw_output_params_t.half_size$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int half_size;
+     * }
+     */
     public static int half_size$get(MemorySegment seg) {
         return (int)libraw_output_params_t.half_size$VH.get(seg);
     }
-    public static void half_size$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int half_size;
+     * }
+     */
+    public static void half_size$set(MemorySegment seg, int x) {
         libraw_output_params_t.half_size$VH.set(seg, x);
     }
     public static int half_size$get(MemorySegment seg, long index) {
@@ -123,10 +205,22 @@ public class libraw_output_params_t {
     public static VarHandle four_color_rgb$VH() {
         return libraw_output_params_t.four_color_rgb$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int four_color_rgb;
+     * }
+     */
     public static int four_color_rgb$get(MemorySegment seg) {
         return (int)libraw_output_params_t.four_color_rgb$VH.get(seg);
     }
-    public static void four_color_rgb$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int four_color_rgb;
+     * }
+     */
+    public static void four_color_rgb$set(MemorySegment seg, int x) {
         libraw_output_params_t.four_color_rgb$VH.set(seg, x);
     }
     public static int four_color_rgb$get(MemorySegment seg, long index) {
@@ -139,10 +233,22 @@ public class libraw_output_params_t {
     public static VarHandle highlight$VH() {
         return libraw_output_params_t.highlight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int highlight;
+     * }
+     */
     public static int highlight$get(MemorySegment seg) {
         return (int)libraw_output_params_t.highlight$VH.get(seg);
     }
-    public static void highlight$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int highlight;
+     * }
+     */
+    public static void highlight$set(MemorySegment seg, int x) {
         libraw_output_params_t.highlight$VH.set(seg, x);
     }
     public static int highlight$get(MemorySegment seg, long index) {
@@ -155,10 +261,22 @@ public class libraw_output_params_t {
     public static VarHandle use_auto_wb$VH() {
         return libraw_output_params_t.use_auto_wb$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int use_auto_wb;
+     * }
+     */
     public static int use_auto_wb$get(MemorySegment seg) {
         return (int)libraw_output_params_t.use_auto_wb$VH.get(seg);
     }
-    public static void use_auto_wb$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int use_auto_wb;
+     * }
+     */
+    public static void use_auto_wb$set(MemorySegment seg, int x) {
         libraw_output_params_t.use_auto_wb$VH.set(seg, x);
     }
     public static int use_auto_wb$get(MemorySegment seg, long index) {
@@ -171,10 +289,22 @@ public class libraw_output_params_t {
     public static VarHandle use_camera_wb$VH() {
         return libraw_output_params_t.use_camera_wb$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int use_camera_wb;
+     * }
+     */
     public static int use_camera_wb$get(MemorySegment seg) {
         return (int)libraw_output_params_t.use_camera_wb$VH.get(seg);
     }
-    public static void use_camera_wb$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int use_camera_wb;
+     * }
+     */
+    public static void use_camera_wb$set(MemorySegment seg, int x) {
         libraw_output_params_t.use_camera_wb$VH.set(seg, x);
     }
     public static int use_camera_wb$get(MemorySegment seg, long index) {
@@ -187,10 +317,22 @@ public class libraw_output_params_t {
     public static VarHandle use_camera_matrix$VH() {
         return libraw_output_params_t.use_camera_matrix$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int use_camera_matrix;
+     * }
+     */
     public static int use_camera_matrix$get(MemorySegment seg) {
         return (int)libraw_output_params_t.use_camera_matrix$VH.get(seg);
     }
-    public static void use_camera_matrix$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int use_camera_matrix;
+     * }
+     */
+    public static void use_camera_matrix$set(MemorySegment seg, int x) {
         libraw_output_params_t.use_camera_matrix$VH.set(seg, x);
     }
     public static int use_camera_matrix$get(MemorySegment seg, long index) {
@@ -203,10 +345,22 @@ public class libraw_output_params_t {
     public static VarHandle output_color$VH() {
         return libraw_output_params_t.output_color$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int output_color;
+     * }
+     */
     public static int output_color$get(MemorySegment seg) {
         return (int)libraw_output_params_t.output_color$VH.get(seg);
     }
-    public static void output_color$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int output_color;
+     * }
+     */
+    public static void output_color$set(MemorySegment seg, int x) {
         libraw_output_params_t.output_color$VH.set(seg, x);
     }
     public static int output_color$get(MemorySegment seg, long index) {
@@ -219,74 +373,134 @@ public class libraw_output_params_t {
     public static VarHandle output_profile$VH() {
         return libraw_output_params_t.output_profile$VH;
     }
-    public static MemoryAddress output_profile$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.output_profile$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* output_profile;
+     * }
+     */
+    public static MemorySegment output_profile$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.output_profile$VH.get(seg);
     }
-    public static void output_profile$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* output_profile;
+     * }
+     */
+    public static void output_profile$set(MemorySegment seg, MemorySegment x) {
         libraw_output_params_t.output_profile$VH.set(seg, x);
     }
-    public static MemoryAddress output_profile$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.output_profile$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment output_profile$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.output_profile$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void output_profile$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void output_profile$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_output_params_t.output_profile$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle camera_profile$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("camera_profile"));
     public static VarHandle camera_profile$VH() {
         return libraw_output_params_t.camera_profile$VH;
     }
-    public static MemoryAddress camera_profile$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.camera_profile$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* camera_profile;
+     * }
+     */
+    public static MemorySegment camera_profile$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.camera_profile$VH.get(seg);
     }
-    public static void camera_profile$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* camera_profile;
+     * }
+     */
+    public static void camera_profile$set(MemorySegment seg, MemorySegment x) {
         libraw_output_params_t.camera_profile$VH.set(seg, x);
     }
-    public static MemoryAddress camera_profile$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.camera_profile$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment camera_profile$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.camera_profile$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void camera_profile$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void camera_profile$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_output_params_t.camera_profile$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle bad_pixels$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bad_pixels"));
     public static VarHandle bad_pixels$VH() {
         return libraw_output_params_t.bad_pixels$VH;
     }
-    public static MemoryAddress bad_pixels$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.bad_pixels$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* bad_pixels;
+     * }
+     */
+    public static MemorySegment bad_pixels$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.bad_pixels$VH.get(seg);
     }
-    public static void bad_pixels$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* bad_pixels;
+     * }
+     */
+    public static void bad_pixels$set(MemorySegment seg, MemorySegment x) {
         libraw_output_params_t.bad_pixels$VH.set(seg, x);
     }
-    public static MemoryAddress bad_pixels$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.bad_pixels$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment bad_pixels$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.bad_pixels$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void bad_pixels$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void bad_pixels$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_output_params_t.bad_pixels$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle dark_frame$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("dark_frame"));
     public static VarHandle dark_frame$VH() {
         return libraw_output_params_t.dark_frame$VH;
     }
-    public static MemoryAddress dark_frame$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.dark_frame$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* dark_frame;
+     * }
+     */
+    public static MemorySegment dark_frame$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.dark_frame$VH.get(seg);
     }
-    public static void dark_frame$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* dark_frame;
+     * }
+     */
+    public static void dark_frame$set(MemorySegment seg, MemorySegment x) {
         libraw_output_params_t.dark_frame$VH.set(seg, x);
     }
-    public static MemoryAddress dark_frame$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_output_params_t.dark_frame$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment dark_frame$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_output_params_t.dark_frame$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void dark_frame$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void dark_frame$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_output_params_t.dark_frame$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle output_bps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("output_bps"));
     public static VarHandle output_bps$VH() {
         return libraw_output_params_t.output_bps$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int output_bps;
+     * }
+     */
     public static int output_bps$get(MemorySegment seg) {
         return (int)libraw_output_params_t.output_bps$VH.get(seg);
     }
-    public static void output_bps$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int output_bps;
+     * }
+     */
+    public static void output_bps$set(MemorySegment seg, int x) {
         libraw_output_params_t.output_bps$VH.set(seg, x);
     }
     public static int output_bps$get(MemorySegment seg, long index) {
@@ -299,10 +513,22 @@ public class libraw_output_params_t {
     public static VarHandle output_tiff$VH() {
         return libraw_output_params_t.output_tiff$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int output_tiff;
+     * }
+     */
     public static int output_tiff$get(MemorySegment seg) {
         return (int)libraw_output_params_t.output_tiff$VH.get(seg);
     }
-    public static void output_tiff$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int output_tiff;
+     * }
+     */
+    public static void output_tiff$set(MemorySegment seg, int x) {
         libraw_output_params_t.output_tiff$VH.set(seg, x);
     }
     public static int output_tiff$get(MemorySegment seg, long index) {
@@ -315,10 +541,22 @@ public class libraw_output_params_t {
     public static VarHandle output_flags$VH() {
         return libraw_output_params_t.output_flags$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int output_flags;
+     * }
+     */
     public static int output_flags$get(MemorySegment seg) {
         return (int)libraw_output_params_t.output_flags$VH.get(seg);
     }
-    public static void output_flags$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int output_flags;
+     * }
+     */
+    public static void output_flags$set(MemorySegment seg, int x) {
         libraw_output_params_t.output_flags$VH.set(seg, x);
     }
     public static int output_flags$get(MemorySegment seg, long index) {
@@ -331,10 +569,22 @@ public class libraw_output_params_t {
     public static VarHandle user_flip$VH() {
         return libraw_output_params_t.user_flip$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int user_flip;
+     * }
+     */
     public static int user_flip$get(MemorySegment seg) {
         return (int)libraw_output_params_t.user_flip$VH.get(seg);
     }
-    public static void user_flip$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int user_flip;
+     * }
+     */
+    public static void user_flip$set(MemorySegment seg, int x) {
         libraw_output_params_t.user_flip$VH.set(seg, x);
     }
     public static int user_flip$get(MemorySegment seg, long index) {
@@ -347,10 +597,22 @@ public class libraw_output_params_t {
     public static VarHandle user_qual$VH() {
         return libraw_output_params_t.user_qual$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int user_qual;
+     * }
+     */
     public static int user_qual$get(MemorySegment seg) {
         return (int)libraw_output_params_t.user_qual$VH.get(seg);
     }
-    public static void user_qual$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int user_qual;
+     * }
+     */
+    public static void user_qual$set(MemorySegment seg, int x) {
         libraw_output_params_t.user_qual$VH.set(seg, x);
     }
     public static int user_qual$get(MemorySegment seg, long index) {
@@ -363,10 +625,22 @@ public class libraw_output_params_t {
     public static VarHandle user_black$VH() {
         return libraw_output_params_t.user_black$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int user_black;
+     * }
+     */
     public static int user_black$get(MemorySegment seg) {
         return (int)libraw_output_params_t.user_black$VH.get(seg);
     }
-    public static void user_black$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int user_black;
+     * }
+     */
+    public static void user_black$set(MemorySegment seg, int x) {
         libraw_output_params_t.user_black$VH.set(seg, x);
     }
     public static int user_black$get(MemorySegment seg, long index) {
@@ -382,10 +656,22 @@ public class libraw_output_params_t {
     public static VarHandle user_sat$VH() {
         return libraw_output_params_t.user_sat$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int user_sat;
+     * }
+     */
     public static int user_sat$get(MemorySegment seg) {
         return (int)libraw_output_params_t.user_sat$VH.get(seg);
     }
-    public static void user_sat$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int user_sat;
+     * }
+     */
+    public static void user_sat$set(MemorySegment seg, int x) {
         libraw_output_params_t.user_sat$VH.set(seg, x);
     }
     public static int user_sat$get(MemorySegment seg, long index) {
@@ -398,10 +684,22 @@ public class libraw_output_params_t {
     public static VarHandle med_passes$VH() {
         return libraw_output_params_t.med_passes$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int med_passes;
+     * }
+     */
     public static int med_passes$get(MemorySegment seg) {
         return (int)libraw_output_params_t.med_passes$VH.get(seg);
     }
-    public static void med_passes$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int med_passes;
+     * }
+     */
+    public static void med_passes$set(MemorySegment seg, int x) {
         libraw_output_params_t.med_passes$VH.set(seg, x);
     }
     public static int med_passes$get(MemorySegment seg, long index) {
@@ -414,10 +712,22 @@ public class libraw_output_params_t {
     public static VarHandle auto_bright_thr$VH() {
         return libraw_output_params_t.auto_bright_thr$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float auto_bright_thr;
+     * }
+     */
     public static float auto_bright_thr$get(MemorySegment seg) {
         return (float)libraw_output_params_t.auto_bright_thr$VH.get(seg);
     }
-    public static void auto_bright_thr$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float auto_bright_thr;
+     * }
+     */
+    public static void auto_bright_thr$set(MemorySegment seg, float x) {
         libraw_output_params_t.auto_bright_thr$VH.set(seg, x);
     }
     public static float auto_bright_thr$get(MemorySegment seg, long index) {
@@ -430,10 +740,22 @@ public class libraw_output_params_t {
     public static VarHandle adjust_maximum_thr$VH() {
         return libraw_output_params_t.adjust_maximum_thr$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float adjust_maximum_thr;
+     * }
+     */
     public static float adjust_maximum_thr$get(MemorySegment seg) {
         return (float)libraw_output_params_t.adjust_maximum_thr$VH.get(seg);
     }
-    public static void adjust_maximum_thr$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float adjust_maximum_thr;
+     * }
+     */
+    public static void adjust_maximum_thr$set(MemorySegment seg, float x) {
         libraw_output_params_t.adjust_maximum_thr$VH.set(seg, x);
     }
     public static float adjust_maximum_thr$get(MemorySegment seg, long index) {
@@ -446,10 +768,22 @@ public class libraw_output_params_t {
     public static VarHandle no_auto_bright$VH() {
         return libraw_output_params_t.no_auto_bright$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int no_auto_bright;
+     * }
+     */
     public static int no_auto_bright$get(MemorySegment seg) {
         return (int)libraw_output_params_t.no_auto_bright$VH.get(seg);
     }
-    public static void no_auto_bright$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int no_auto_bright;
+     * }
+     */
+    public static void no_auto_bright$set(MemorySegment seg, int x) {
         libraw_output_params_t.no_auto_bright$VH.set(seg, x);
     }
     public static int no_auto_bright$get(MemorySegment seg, long index) {
@@ -462,10 +796,22 @@ public class libraw_output_params_t {
     public static VarHandle use_fuji_rotate$VH() {
         return libraw_output_params_t.use_fuji_rotate$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int use_fuji_rotate;
+     * }
+     */
     public static int use_fuji_rotate$get(MemorySegment seg) {
         return (int)libraw_output_params_t.use_fuji_rotate$VH.get(seg);
     }
-    public static void use_fuji_rotate$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int use_fuji_rotate;
+     * }
+     */
+    public static void use_fuji_rotate$set(MemorySegment seg, int x) {
         libraw_output_params_t.use_fuji_rotate$VH.set(seg, x);
     }
     public static int use_fuji_rotate$get(MemorySegment seg, long index) {
@@ -478,10 +824,22 @@ public class libraw_output_params_t {
     public static VarHandle green_matching$VH() {
         return libraw_output_params_t.green_matching$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int green_matching;
+     * }
+     */
     public static int green_matching$get(MemorySegment seg) {
         return (int)libraw_output_params_t.green_matching$VH.get(seg);
     }
-    public static void green_matching$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int green_matching;
+     * }
+     */
+    public static void green_matching$set(MemorySegment seg, int x) {
         libraw_output_params_t.green_matching$VH.set(seg, x);
     }
     public static int green_matching$get(MemorySegment seg, long index) {
@@ -494,10 +852,22 @@ public class libraw_output_params_t {
     public static VarHandle dcb_iterations$VH() {
         return libraw_output_params_t.dcb_iterations$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int dcb_iterations;
+     * }
+     */
     public static int dcb_iterations$get(MemorySegment seg) {
         return (int)libraw_output_params_t.dcb_iterations$VH.get(seg);
     }
-    public static void dcb_iterations$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int dcb_iterations;
+     * }
+     */
+    public static void dcb_iterations$set(MemorySegment seg, int x) {
         libraw_output_params_t.dcb_iterations$VH.set(seg, x);
     }
     public static int dcb_iterations$get(MemorySegment seg, long index) {
@@ -510,10 +880,22 @@ public class libraw_output_params_t {
     public static VarHandle dcb_enhance_fl$VH() {
         return libraw_output_params_t.dcb_enhance_fl$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int dcb_enhance_fl;
+     * }
+     */
     public static int dcb_enhance_fl$get(MemorySegment seg) {
         return (int)libraw_output_params_t.dcb_enhance_fl$VH.get(seg);
     }
-    public static void dcb_enhance_fl$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int dcb_enhance_fl;
+     * }
+     */
+    public static void dcb_enhance_fl$set(MemorySegment seg, int x) {
         libraw_output_params_t.dcb_enhance_fl$VH.set(seg, x);
     }
     public static int dcb_enhance_fl$get(MemorySegment seg, long index) {
@@ -526,10 +908,22 @@ public class libraw_output_params_t {
     public static VarHandle fbdd_noiserd$VH() {
         return libraw_output_params_t.fbdd_noiserd$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fbdd_noiserd;
+     * }
+     */
     public static int fbdd_noiserd$get(MemorySegment seg) {
         return (int)libraw_output_params_t.fbdd_noiserd$VH.get(seg);
     }
-    public static void fbdd_noiserd$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fbdd_noiserd;
+     * }
+     */
+    public static void fbdd_noiserd$set(MemorySegment seg, int x) {
         libraw_output_params_t.fbdd_noiserd$VH.set(seg, x);
     }
     public static int fbdd_noiserd$get(MemorySegment seg, long index) {
@@ -542,10 +936,22 @@ public class libraw_output_params_t {
     public static VarHandle exp_correc$VH() {
         return libraw_output_params_t.exp_correc$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int exp_correc;
+     * }
+     */
     public static int exp_correc$get(MemorySegment seg) {
         return (int)libraw_output_params_t.exp_correc$VH.get(seg);
     }
-    public static void exp_correc$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int exp_correc;
+     * }
+     */
+    public static void exp_correc$set(MemorySegment seg, int x) {
         libraw_output_params_t.exp_correc$VH.set(seg, x);
     }
     public static int exp_correc$get(MemorySegment seg, long index) {
@@ -558,10 +964,22 @@ public class libraw_output_params_t {
     public static VarHandle exp_shift$VH() {
         return libraw_output_params_t.exp_shift$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exp_shift;
+     * }
+     */
     public static float exp_shift$get(MemorySegment seg) {
         return (float)libraw_output_params_t.exp_shift$VH.get(seg);
     }
-    public static void exp_shift$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exp_shift;
+     * }
+     */
+    public static void exp_shift$set(MemorySegment seg, float x) {
         libraw_output_params_t.exp_shift$VH.set(seg, x);
     }
     public static float exp_shift$get(MemorySegment seg, long index) {
@@ -574,10 +992,22 @@ public class libraw_output_params_t {
     public static VarHandle exp_preser$VH() {
         return libraw_output_params_t.exp_preser$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exp_preser;
+     * }
+     */
     public static float exp_preser$get(MemorySegment seg) {
         return (float)libraw_output_params_t.exp_preser$VH.get(seg);
     }
-    public static void exp_preser$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exp_preser;
+     * }
+     */
+    public static void exp_preser$set(MemorySegment seg, float x) {
         libraw_output_params_t.exp_preser$VH.set(seg, x);
     }
     public static float exp_preser$get(MemorySegment seg, long index) {
@@ -590,10 +1020,22 @@ public class libraw_output_params_t {
     public static VarHandle no_auto_scale$VH() {
         return libraw_output_params_t.no_auto_scale$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int no_auto_scale;
+     * }
+     */
     public static int no_auto_scale$get(MemorySegment seg) {
         return (int)libraw_output_params_t.no_auto_scale$VH.get(seg);
     }
-    public static void no_auto_scale$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int no_auto_scale;
+     * }
+     */
+    public static void no_auto_scale$set(MemorySegment seg, int x) {
         libraw_output_params_t.no_auto_scale$VH.set(seg, x);
     }
     public static int no_auto_scale$get(MemorySegment seg, long index) {
@@ -606,10 +1048,22 @@ public class libraw_output_params_t {
     public static VarHandle no_interpolation$VH() {
         return libraw_output_params_t.no_interpolation$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int no_interpolation;
+     * }
+     */
     public static int no_interpolation$get(MemorySegment seg) {
         return (int)libraw_output_params_t.no_interpolation$VH.get(seg);
     }
-    public static void no_interpolation$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int no_interpolation;
+     * }
+     */
+    public static void no_interpolation$set(MemorySegment seg, int x) {
         libraw_output_params_t.no_interpolation$VH.set(seg, x);
     }
     public static int no_interpolation$get(MemorySegment seg, long index) {
@@ -620,10 +1074,10 @@ public class libraw_output_params_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

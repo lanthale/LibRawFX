@@ -7,13 +7,21 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_decoder_info_t {
+ *     char* decoder_name;
+ *     unsigned int decoder_flags;
+ * };
+ * }
+ */
 public class libraw_decoder_info_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_POINTER$LAYOUT.withName("decoder_name"),
         Constants$root.C_LONG$LAYOUT.withName("decoder_flags"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("libraw_decoder_info_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_decoder_info_t.$struct$LAYOUT;
     }
@@ -21,26 +29,50 @@ public class libraw_decoder_info_t {
     public static VarHandle decoder_name$VH() {
         return libraw_decoder_info_t.decoder_name$VH;
     }
-    public static MemoryAddress decoder_name$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_decoder_info_t.decoder_name$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* decoder_name;
+     * }
+     */
+    public static MemorySegment decoder_name$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_decoder_info_t.decoder_name$VH.get(seg);
     }
-    public static void decoder_name$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* decoder_name;
+     * }
+     */
+    public static void decoder_name$set(MemorySegment seg, MemorySegment x) {
         libraw_decoder_info_t.decoder_name$VH.set(seg, x);
     }
-    public static MemoryAddress decoder_name$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_decoder_info_t.decoder_name$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment decoder_name$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_decoder_info_t.decoder_name$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void decoder_name$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void decoder_name$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_decoder_info_t.decoder_name$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle decoder_flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("decoder_flags"));
     public static VarHandle decoder_flags$VH() {
         return libraw_decoder_info_t.decoder_flags$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int decoder_flags;
+     * }
+     */
     public static int decoder_flags$get(MemorySegment seg) {
         return (int)libraw_decoder_info_t.decoder_flags$VH.get(seg);
     }
-    public static void decoder_flags$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int decoder_flags;
+     * }
+     */
+    public static void decoder_flags$set(MemorySegment seg, int x) {
         libraw_decoder_info_t.decoder_flags$VH.set(seg, x);
     }
     public static int decoder_flags$get(MemorySegment seg, long index) {
@@ -51,10 +83,10 @@ public class libraw_decoder_info_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

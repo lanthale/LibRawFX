@@ -7,9 +7,63 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct unpacker_data_t {
+ *     short order;
+ *     unsigned short sraw_mul[4];
+ *     unsigned short cr2_slice[3];
+ *     unsigned int kodak_cbpp;
+ *     long long strip_offset;
+ *     long long data_offset;
+ *     long long meta_offset;
+ *     long long exif_offset;
+ *     long long ifd0_offset;
+ *     unsigned int data_size;
+ *     unsigned int meta_length;
+ *     unsigned int cr3_exif_length;
+ *     unsigned int cr3_ifd0_length;
+ *     unsigned int thumb_misc;
+ *     unsigned int fuji_layout;
+ *     unsigned int tiff_samples;
+ *     unsigned int tiff_bps;
+ *     unsigned int tiff_compress;
+ *     unsigned int tiff_sampleformat;
+ *     unsigned int zero_after_ff;
+ *     unsigned int tile_width;
+ *     unsigned int tile_length;
+ *     unsigned int load_flags;
+ *     unsigned int data_error;
+ *     int hasselblad_parser_flag;
+ *     long long posRAFData;
+ *     unsigned int lenRAFData;
+ *     int fuji_total_lines;
+ *     int fuji_total_blocks;
+ *     int fuji_block_width;
+ *     int fuji_bits;
+ *     int fuji_raw_type;
+ *     int fuji_lossless;
+ *     int pana_encoding;
+ *     int pana_bpp;
+ *     struct crx_data_header_t crx_header[16];
+ *     int crx_track_selected;
+ *     short CR3_CTMDtag;
+ *     short CR3_Version;
+ *     int CM_found;
+ *     unsigned int is_NikonTransfer;
+ *     unsigned int is_Olympus;
+ *     int OlympusDNG_SubDirOffsetValid;
+ *     unsigned int is_Sony;
+ *     unsigned int is_pana_raw;
+ *     unsigned int is_PentaxRicohMakernotes;
+ *     unsigned int dng_frames[20];
+ *     unsigned short raw_stride;
+ * };
+ * }
+ */
 public class unpacker_data_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("order"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("sraw_mul"),
         MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("cr2_slice"),
@@ -65,7 +119,7 @@ public class unpacker_data_t {
             Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
             Constants$root.C_INT$LAYOUT.withName("MediaType"),
             MemoryLayout.paddingLayout(32)
-        )).withName("crx_header"),
+        ).withName("crx_data_header_t")).withName("crx_header"),
         Constants$root.C_INT$LAYOUT.withName("crx_track_selected"),
         Constants$root.C_SHORT$LAYOUT.withName("CR3_CTMDtag"),
         Constants$root.C_SHORT$LAYOUT.withName("CR3_Version"),
@@ -79,7 +133,7 @@ public class unpacker_data_t {
         MemoryLayout.sequenceLayout(20, Constants$root.C_INT$LAYOUT).withName("dng_frames"),
         Constants$root.C_SHORT$LAYOUT.withName("raw_stride"),
         MemoryLayout.paddingLayout(16)
-    );
+    ).withName("unpacker_data_t");
     public static MemoryLayout $LAYOUT() {
         return unpacker_data_t.$struct$LAYOUT;
     }
@@ -87,10 +141,22 @@ public class unpacker_data_t {
     public static VarHandle order$VH() {
         return unpacker_data_t.order$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short order;
+     * }
+     */
     public static short order$get(MemorySegment seg) {
         return (short)unpacker_data_t.order$VH.get(seg);
     }
-    public static void order$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short order;
+     * }
+     */
+    public static void order$set(MemorySegment seg, short x) {
         unpacker_data_t.order$VH.set(seg, x);
     }
     public static short order$get(MemorySegment seg, long index) {
@@ -109,10 +175,22 @@ public class unpacker_data_t {
     public static VarHandle kodak_cbpp$VH() {
         return unpacker_data_t.kodak_cbpp$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int kodak_cbpp;
+     * }
+     */
     public static int kodak_cbpp$get(MemorySegment seg) {
         return (int)unpacker_data_t.kodak_cbpp$VH.get(seg);
     }
-    public static void kodak_cbpp$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int kodak_cbpp;
+     * }
+     */
+    public static void kodak_cbpp$set(MemorySegment seg, int x) {
         unpacker_data_t.kodak_cbpp$VH.set(seg, x);
     }
     public static int kodak_cbpp$get(MemorySegment seg, long index) {
@@ -125,10 +203,22 @@ public class unpacker_data_t {
     public static VarHandle strip_offset$VH() {
         return unpacker_data_t.strip_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long strip_offset;
+     * }
+     */
     public static long strip_offset$get(MemorySegment seg) {
         return (long)unpacker_data_t.strip_offset$VH.get(seg);
     }
-    public static void strip_offset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long strip_offset;
+     * }
+     */
+    public static void strip_offset$set(MemorySegment seg, long x) {
         unpacker_data_t.strip_offset$VH.set(seg, x);
     }
     public static long strip_offset$get(MemorySegment seg, long index) {
@@ -141,10 +231,22 @@ public class unpacker_data_t {
     public static VarHandle data_offset$VH() {
         return unpacker_data_t.data_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long data_offset;
+     * }
+     */
     public static long data_offset$get(MemorySegment seg) {
         return (long)unpacker_data_t.data_offset$VH.get(seg);
     }
-    public static void data_offset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long data_offset;
+     * }
+     */
+    public static void data_offset$set(MemorySegment seg, long x) {
         unpacker_data_t.data_offset$VH.set(seg, x);
     }
     public static long data_offset$get(MemorySegment seg, long index) {
@@ -157,10 +259,22 @@ public class unpacker_data_t {
     public static VarHandle meta_offset$VH() {
         return unpacker_data_t.meta_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long meta_offset;
+     * }
+     */
     public static long meta_offset$get(MemorySegment seg) {
         return (long)unpacker_data_t.meta_offset$VH.get(seg);
     }
-    public static void meta_offset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long meta_offset;
+     * }
+     */
+    public static void meta_offset$set(MemorySegment seg, long x) {
         unpacker_data_t.meta_offset$VH.set(seg, x);
     }
     public static long meta_offset$get(MemorySegment seg, long index) {
@@ -173,10 +287,22 @@ public class unpacker_data_t {
     public static VarHandle exif_offset$VH() {
         return unpacker_data_t.exif_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long exif_offset;
+     * }
+     */
     public static long exif_offset$get(MemorySegment seg) {
         return (long)unpacker_data_t.exif_offset$VH.get(seg);
     }
-    public static void exif_offset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long exif_offset;
+     * }
+     */
+    public static void exif_offset$set(MemorySegment seg, long x) {
         unpacker_data_t.exif_offset$VH.set(seg, x);
     }
     public static long exif_offset$get(MemorySegment seg, long index) {
@@ -189,10 +315,22 @@ public class unpacker_data_t {
     public static VarHandle ifd0_offset$VH() {
         return unpacker_data_t.ifd0_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long ifd0_offset;
+     * }
+     */
     public static long ifd0_offset$get(MemorySegment seg) {
         return (long)unpacker_data_t.ifd0_offset$VH.get(seg);
     }
-    public static void ifd0_offset$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long ifd0_offset;
+     * }
+     */
+    public static void ifd0_offset$set(MemorySegment seg, long x) {
         unpacker_data_t.ifd0_offset$VH.set(seg, x);
     }
     public static long ifd0_offset$get(MemorySegment seg, long index) {
@@ -205,10 +343,22 @@ public class unpacker_data_t {
     public static VarHandle data_size$VH() {
         return unpacker_data_t.data_size$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int data_size;
+     * }
+     */
     public static int data_size$get(MemorySegment seg) {
         return (int)unpacker_data_t.data_size$VH.get(seg);
     }
-    public static void data_size$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int data_size;
+     * }
+     */
+    public static void data_size$set(MemorySegment seg, int x) {
         unpacker_data_t.data_size$VH.set(seg, x);
     }
     public static int data_size$get(MemorySegment seg, long index) {
@@ -221,10 +371,22 @@ public class unpacker_data_t {
     public static VarHandle meta_length$VH() {
         return unpacker_data_t.meta_length$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int meta_length;
+     * }
+     */
     public static int meta_length$get(MemorySegment seg) {
         return (int)unpacker_data_t.meta_length$VH.get(seg);
     }
-    public static void meta_length$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int meta_length;
+     * }
+     */
+    public static void meta_length$set(MemorySegment seg, int x) {
         unpacker_data_t.meta_length$VH.set(seg, x);
     }
     public static int meta_length$get(MemorySegment seg, long index) {
@@ -237,10 +399,22 @@ public class unpacker_data_t {
     public static VarHandle cr3_exif_length$VH() {
         return unpacker_data_t.cr3_exif_length$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int cr3_exif_length;
+     * }
+     */
     public static int cr3_exif_length$get(MemorySegment seg) {
         return (int)unpacker_data_t.cr3_exif_length$VH.get(seg);
     }
-    public static void cr3_exif_length$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int cr3_exif_length;
+     * }
+     */
+    public static void cr3_exif_length$set(MemorySegment seg, int x) {
         unpacker_data_t.cr3_exif_length$VH.set(seg, x);
     }
     public static int cr3_exif_length$get(MemorySegment seg, long index) {
@@ -253,10 +427,22 @@ public class unpacker_data_t {
     public static VarHandle cr3_ifd0_length$VH() {
         return unpacker_data_t.cr3_ifd0_length$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int cr3_ifd0_length;
+     * }
+     */
     public static int cr3_ifd0_length$get(MemorySegment seg) {
         return (int)unpacker_data_t.cr3_ifd0_length$VH.get(seg);
     }
-    public static void cr3_ifd0_length$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int cr3_ifd0_length;
+     * }
+     */
+    public static void cr3_ifd0_length$set(MemorySegment seg, int x) {
         unpacker_data_t.cr3_ifd0_length$VH.set(seg, x);
     }
     public static int cr3_ifd0_length$get(MemorySegment seg, long index) {
@@ -269,10 +455,22 @@ public class unpacker_data_t {
     public static VarHandle thumb_misc$VH() {
         return unpacker_data_t.thumb_misc$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int thumb_misc;
+     * }
+     */
     public static int thumb_misc$get(MemorySegment seg) {
         return (int)unpacker_data_t.thumb_misc$VH.get(seg);
     }
-    public static void thumb_misc$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int thumb_misc;
+     * }
+     */
+    public static void thumb_misc$set(MemorySegment seg, int x) {
         unpacker_data_t.thumb_misc$VH.set(seg, x);
     }
     public static int thumb_misc$get(MemorySegment seg, long index) {
@@ -285,10 +483,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_layout$VH() {
         return unpacker_data_t.fuji_layout$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int fuji_layout;
+     * }
+     */
     public static int fuji_layout$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_layout$VH.get(seg);
     }
-    public static void fuji_layout$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int fuji_layout;
+     * }
+     */
+    public static void fuji_layout$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_layout$VH.set(seg, x);
     }
     public static int fuji_layout$get(MemorySegment seg, long index) {
@@ -301,10 +511,22 @@ public class unpacker_data_t {
     public static VarHandle tiff_samples$VH() {
         return unpacker_data_t.tiff_samples$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tiff_samples;
+     * }
+     */
     public static int tiff_samples$get(MemorySegment seg) {
         return (int)unpacker_data_t.tiff_samples$VH.get(seg);
     }
-    public static void tiff_samples$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tiff_samples;
+     * }
+     */
+    public static void tiff_samples$set(MemorySegment seg, int x) {
         unpacker_data_t.tiff_samples$VH.set(seg, x);
     }
     public static int tiff_samples$get(MemorySegment seg, long index) {
@@ -317,10 +539,22 @@ public class unpacker_data_t {
     public static VarHandle tiff_bps$VH() {
         return unpacker_data_t.tiff_bps$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tiff_bps;
+     * }
+     */
     public static int tiff_bps$get(MemorySegment seg) {
         return (int)unpacker_data_t.tiff_bps$VH.get(seg);
     }
-    public static void tiff_bps$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tiff_bps;
+     * }
+     */
+    public static void tiff_bps$set(MemorySegment seg, int x) {
         unpacker_data_t.tiff_bps$VH.set(seg, x);
     }
     public static int tiff_bps$get(MemorySegment seg, long index) {
@@ -333,10 +567,22 @@ public class unpacker_data_t {
     public static VarHandle tiff_compress$VH() {
         return unpacker_data_t.tiff_compress$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tiff_compress;
+     * }
+     */
     public static int tiff_compress$get(MemorySegment seg) {
         return (int)unpacker_data_t.tiff_compress$VH.get(seg);
     }
-    public static void tiff_compress$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tiff_compress;
+     * }
+     */
+    public static void tiff_compress$set(MemorySegment seg, int x) {
         unpacker_data_t.tiff_compress$VH.set(seg, x);
     }
     public static int tiff_compress$get(MemorySegment seg, long index) {
@@ -349,10 +595,22 @@ public class unpacker_data_t {
     public static VarHandle tiff_sampleformat$VH() {
         return unpacker_data_t.tiff_sampleformat$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tiff_sampleformat;
+     * }
+     */
     public static int tiff_sampleformat$get(MemorySegment seg) {
         return (int)unpacker_data_t.tiff_sampleformat$VH.get(seg);
     }
-    public static void tiff_sampleformat$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tiff_sampleformat;
+     * }
+     */
+    public static void tiff_sampleformat$set(MemorySegment seg, int x) {
         unpacker_data_t.tiff_sampleformat$VH.set(seg, x);
     }
     public static int tiff_sampleformat$get(MemorySegment seg, long index) {
@@ -365,10 +623,22 @@ public class unpacker_data_t {
     public static VarHandle zero_after_ff$VH() {
         return unpacker_data_t.zero_after_ff$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int zero_after_ff;
+     * }
+     */
     public static int zero_after_ff$get(MemorySegment seg) {
         return (int)unpacker_data_t.zero_after_ff$VH.get(seg);
     }
-    public static void zero_after_ff$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int zero_after_ff;
+     * }
+     */
+    public static void zero_after_ff$set(MemorySegment seg, int x) {
         unpacker_data_t.zero_after_ff$VH.set(seg, x);
     }
     public static int zero_after_ff$get(MemorySegment seg, long index) {
@@ -381,10 +651,22 @@ public class unpacker_data_t {
     public static VarHandle tile_width$VH() {
         return unpacker_data_t.tile_width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tile_width;
+     * }
+     */
     public static int tile_width$get(MemorySegment seg) {
         return (int)unpacker_data_t.tile_width$VH.get(seg);
     }
-    public static void tile_width$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tile_width;
+     * }
+     */
+    public static void tile_width$set(MemorySegment seg, int x) {
         unpacker_data_t.tile_width$VH.set(seg, x);
     }
     public static int tile_width$get(MemorySegment seg, long index) {
@@ -397,10 +679,22 @@ public class unpacker_data_t {
     public static VarHandle tile_length$VH() {
         return unpacker_data_t.tile_length$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int tile_length;
+     * }
+     */
     public static int tile_length$get(MemorySegment seg) {
         return (int)unpacker_data_t.tile_length$VH.get(seg);
     }
-    public static void tile_length$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int tile_length;
+     * }
+     */
+    public static void tile_length$set(MemorySegment seg, int x) {
         unpacker_data_t.tile_length$VH.set(seg, x);
     }
     public static int tile_length$get(MemorySegment seg, long index) {
@@ -413,10 +707,22 @@ public class unpacker_data_t {
     public static VarHandle load_flags$VH() {
         return unpacker_data_t.load_flags$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int load_flags;
+     * }
+     */
     public static int load_flags$get(MemorySegment seg) {
         return (int)unpacker_data_t.load_flags$VH.get(seg);
     }
-    public static void load_flags$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int load_flags;
+     * }
+     */
+    public static void load_flags$set(MemorySegment seg, int x) {
         unpacker_data_t.load_flags$VH.set(seg, x);
     }
     public static int load_flags$get(MemorySegment seg, long index) {
@@ -429,10 +735,22 @@ public class unpacker_data_t {
     public static VarHandle data_error$VH() {
         return unpacker_data_t.data_error$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int data_error;
+     * }
+     */
     public static int data_error$get(MemorySegment seg) {
         return (int)unpacker_data_t.data_error$VH.get(seg);
     }
-    public static void data_error$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int data_error;
+     * }
+     */
+    public static void data_error$set(MemorySegment seg, int x) {
         unpacker_data_t.data_error$VH.set(seg, x);
     }
     public static int data_error$get(MemorySegment seg, long index) {
@@ -445,10 +763,22 @@ public class unpacker_data_t {
     public static VarHandle hasselblad_parser_flag$VH() {
         return unpacker_data_t.hasselblad_parser_flag$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int hasselblad_parser_flag;
+     * }
+     */
     public static int hasselblad_parser_flag$get(MemorySegment seg) {
         return (int)unpacker_data_t.hasselblad_parser_flag$VH.get(seg);
     }
-    public static void hasselblad_parser_flag$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int hasselblad_parser_flag;
+     * }
+     */
+    public static void hasselblad_parser_flag$set(MemorySegment seg, int x) {
         unpacker_data_t.hasselblad_parser_flag$VH.set(seg, x);
     }
     public static int hasselblad_parser_flag$get(MemorySegment seg, long index) {
@@ -461,10 +791,22 @@ public class unpacker_data_t {
     public static VarHandle posRAFData$VH() {
         return unpacker_data_t.posRAFData$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * long long posRAFData;
+     * }
+     */
     public static long posRAFData$get(MemorySegment seg) {
         return (long)unpacker_data_t.posRAFData$VH.get(seg);
     }
-    public static void posRAFData$set( MemorySegment seg, long x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * long long posRAFData;
+     * }
+     */
+    public static void posRAFData$set(MemorySegment seg, long x) {
         unpacker_data_t.posRAFData$VH.set(seg, x);
     }
     public static long posRAFData$get(MemorySegment seg, long index) {
@@ -477,10 +819,22 @@ public class unpacker_data_t {
     public static VarHandle lenRAFData$VH() {
         return unpacker_data_t.lenRAFData$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int lenRAFData;
+     * }
+     */
     public static int lenRAFData$get(MemorySegment seg) {
         return (int)unpacker_data_t.lenRAFData$VH.get(seg);
     }
-    public static void lenRAFData$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int lenRAFData;
+     * }
+     */
+    public static void lenRAFData$set(MemorySegment seg, int x) {
         unpacker_data_t.lenRAFData$VH.set(seg, x);
     }
     public static int lenRAFData$get(MemorySegment seg, long index) {
@@ -493,10 +847,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_total_lines$VH() {
         return unpacker_data_t.fuji_total_lines$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fuji_total_lines;
+     * }
+     */
     public static int fuji_total_lines$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_total_lines$VH.get(seg);
     }
-    public static void fuji_total_lines$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fuji_total_lines;
+     * }
+     */
+    public static void fuji_total_lines$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_total_lines$VH.set(seg, x);
     }
     public static int fuji_total_lines$get(MemorySegment seg, long index) {
@@ -509,10 +875,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_total_blocks$VH() {
         return unpacker_data_t.fuji_total_blocks$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fuji_total_blocks;
+     * }
+     */
     public static int fuji_total_blocks$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_total_blocks$VH.get(seg);
     }
-    public static void fuji_total_blocks$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fuji_total_blocks;
+     * }
+     */
+    public static void fuji_total_blocks$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_total_blocks$VH.set(seg, x);
     }
     public static int fuji_total_blocks$get(MemorySegment seg, long index) {
@@ -525,10 +903,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_block_width$VH() {
         return unpacker_data_t.fuji_block_width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fuji_block_width;
+     * }
+     */
     public static int fuji_block_width$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_block_width$VH.get(seg);
     }
-    public static void fuji_block_width$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fuji_block_width;
+     * }
+     */
+    public static void fuji_block_width$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_block_width$VH.set(seg, x);
     }
     public static int fuji_block_width$get(MemorySegment seg, long index) {
@@ -541,10 +931,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_bits$VH() {
         return unpacker_data_t.fuji_bits$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fuji_bits;
+     * }
+     */
     public static int fuji_bits$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_bits$VH.get(seg);
     }
-    public static void fuji_bits$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fuji_bits;
+     * }
+     */
+    public static void fuji_bits$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_bits$VH.set(seg, x);
     }
     public static int fuji_bits$get(MemorySegment seg, long index) {
@@ -557,10 +959,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_raw_type$VH() {
         return unpacker_data_t.fuji_raw_type$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fuji_raw_type;
+     * }
+     */
     public static int fuji_raw_type$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_raw_type$VH.get(seg);
     }
-    public static void fuji_raw_type$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fuji_raw_type;
+     * }
+     */
+    public static void fuji_raw_type$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_raw_type$VH.set(seg, x);
     }
     public static int fuji_raw_type$get(MemorySegment seg, long index) {
@@ -573,10 +987,22 @@ public class unpacker_data_t {
     public static VarHandle fuji_lossless$VH() {
         return unpacker_data_t.fuji_lossless$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int fuji_lossless;
+     * }
+     */
     public static int fuji_lossless$get(MemorySegment seg) {
         return (int)unpacker_data_t.fuji_lossless$VH.get(seg);
     }
-    public static void fuji_lossless$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int fuji_lossless;
+     * }
+     */
+    public static void fuji_lossless$set(MemorySegment seg, int x) {
         unpacker_data_t.fuji_lossless$VH.set(seg, x);
     }
     public static int fuji_lossless$get(MemorySegment seg, long index) {
@@ -589,10 +1015,22 @@ public class unpacker_data_t {
     public static VarHandle pana_encoding$VH() {
         return unpacker_data_t.pana_encoding$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int pana_encoding;
+     * }
+     */
     public static int pana_encoding$get(MemorySegment seg) {
         return (int)unpacker_data_t.pana_encoding$VH.get(seg);
     }
-    public static void pana_encoding$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int pana_encoding;
+     * }
+     */
+    public static void pana_encoding$set(MemorySegment seg, int x) {
         unpacker_data_t.pana_encoding$VH.set(seg, x);
     }
     public static int pana_encoding$get(MemorySegment seg, long index) {
@@ -605,10 +1043,22 @@ public class unpacker_data_t {
     public static VarHandle pana_bpp$VH() {
         return unpacker_data_t.pana_bpp$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int pana_bpp;
+     * }
+     */
     public static int pana_bpp$get(MemorySegment seg) {
         return (int)unpacker_data_t.pana_bpp$VH.get(seg);
     }
-    public static void pana_bpp$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int pana_bpp;
+     * }
+     */
+    public static void pana_bpp$set(MemorySegment seg, int x) {
         unpacker_data_t.pana_bpp$VH.set(seg, x);
     }
     public static int pana_bpp$get(MemorySegment seg, long index) {
@@ -624,10 +1074,22 @@ public class unpacker_data_t {
     public static VarHandle crx_track_selected$VH() {
         return unpacker_data_t.crx_track_selected$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int crx_track_selected;
+     * }
+     */
     public static int crx_track_selected$get(MemorySegment seg) {
         return (int)unpacker_data_t.crx_track_selected$VH.get(seg);
     }
-    public static void crx_track_selected$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int crx_track_selected;
+     * }
+     */
+    public static void crx_track_selected$set(MemorySegment seg, int x) {
         unpacker_data_t.crx_track_selected$VH.set(seg, x);
     }
     public static int crx_track_selected$get(MemorySegment seg, long index) {
@@ -640,10 +1102,22 @@ public class unpacker_data_t {
     public static VarHandle CR3_CTMDtag$VH() {
         return unpacker_data_t.CR3_CTMDtag$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short CR3_CTMDtag;
+     * }
+     */
     public static short CR3_CTMDtag$get(MemorySegment seg) {
         return (short)unpacker_data_t.CR3_CTMDtag$VH.get(seg);
     }
-    public static void CR3_CTMDtag$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short CR3_CTMDtag;
+     * }
+     */
+    public static void CR3_CTMDtag$set(MemorySegment seg, short x) {
         unpacker_data_t.CR3_CTMDtag$VH.set(seg, x);
     }
     public static short CR3_CTMDtag$get(MemorySegment seg, long index) {
@@ -656,10 +1130,22 @@ public class unpacker_data_t {
     public static VarHandle CR3_Version$VH() {
         return unpacker_data_t.CR3_Version$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short CR3_Version;
+     * }
+     */
     public static short CR3_Version$get(MemorySegment seg) {
         return (short)unpacker_data_t.CR3_Version$VH.get(seg);
     }
-    public static void CR3_Version$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short CR3_Version;
+     * }
+     */
+    public static void CR3_Version$set(MemorySegment seg, short x) {
         unpacker_data_t.CR3_Version$VH.set(seg, x);
     }
     public static short CR3_Version$get(MemorySegment seg, long index) {
@@ -672,10 +1158,22 @@ public class unpacker_data_t {
     public static VarHandle CM_found$VH() {
         return unpacker_data_t.CM_found$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int CM_found;
+     * }
+     */
     public static int CM_found$get(MemorySegment seg) {
         return (int)unpacker_data_t.CM_found$VH.get(seg);
     }
-    public static void CM_found$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int CM_found;
+     * }
+     */
+    public static void CM_found$set(MemorySegment seg, int x) {
         unpacker_data_t.CM_found$VH.set(seg, x);
     }
     public static int CM_found$get(MemorySegment seg, long index) {
@@ -688,10 +1186,22 @@ public class unpacker_data_t {
     public static VarHandle is_NikonTransfer$VH() {
         return unpacker_data_t.is_NikonTransfer$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int is_NikonTransfer;
+     * }
+     */
     public static int is_NikonTransfer$get(MemorySegment seg) {
         return (int)unpacker_data_t.is_NikonTransfer$VH.get(seg);
     }
-    public static void is_NikonTransfer$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int is_NikonTransfer;
+     * }
+     */
+    public static void is_NikonTransfer$set(MemorySegment seg, int x) {
         unpacker_data_t.is_NikonTransfer$VH.set(seg, x);
     }
     public static int is_NikonTransfer$get(MemorySegment seg, long index) {
@@ -704,10 +1214,22 @@ public class unpacker_data_t {
     public static VarHandle is_Olympus$VH() {
         return unpacker_data_t.is_Olympus$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int is_Olympus;
+     * }
+     */
     public static int is_Olympus$get(MemorySegment seg) {
         return (int)unpacker_data_t.is_Olympus$VH.get(seg);
     }
-    public static void is_Olympus$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int is_Olympus;
+     * }
+     */
+    public static void is_Olympus$set(MemorySegment seg, int x) {
         unpacker_data_t.is_Olympus$VH.set(seg, x);
     }
     public static int is_Olympus$get(MemorySegment seg, long index) {
@@ -720,10 +1242,22 @@ public class unpacker_data_t {
     public static VarHandle OlympusDNG_SubDirOffsetValid$VH() {
         return unpacker_data_t.OlympusDNG_SubDirOffsetValid$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int OlympusDNG_SubDirOffsetValid;
+     * }
+     */
     public static int OlympusDNG_SubDirOffsetValid$get(MemorySegment seg) {
         return (int)unpacker_data_t.OlympusDNG_SubDirOffsetValid$VH.get(seg);
     }
-    public static void OlympusDNG_SubDirOffsetValid$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int OlympusDNG_SubDirOffsetValid;
+     * }
+     */
+    public static void OlympusDNG_SubDirOffsetValid$set(MemorySegment seg, int x) {
         unpacker_data_t.OlympusDNG_SubDirOffsetValid$VH.set(seg, x);
     }
     public static int OlympusDNG_SubDirOffsetValid$get(MemorySegment seg, long index) {
@@ -736,10 +1270,22 @@ public class unpacker_data_t {
     public static VarHandle is_Sony$VH() {
         return unpacker_data_t.is_Sony$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int is_Sony;
+     * }
+     */
     public static int is_Sony$get(MemorySegment seg) {
         return (int)unpacker_data_t.is_Sony$VH.get(seg);
     }
-    public static void is_Sony$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int is_Sony;
+     * }
+     */
+    public static void is_Sony$set(MemorySegment seg, int x) {
         unpacker_data_t.is_Sony$VH.set(seg, x);
     }
     public static int is_Sony$get(MemorySegment seg, long index) {
@@ -752,10 +1298,22 @@ public class unpacker_data_t {
     public static VarHandle is_pana_raw$VH() {
         return unpacker_data_t.is_pana_raw$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int is_pana_raw;
+     * }
+     */
     public static int is_pana_raw$get(MemorySegment seg) {
         return (int)unpacker_data_t.is_pana_raw$VH.get(seg);
     }
-    public static void is_pana_raw$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int is_pana_raw;
+     * }
+     */
+    public static void is_pana_raw$set(MemorySegment seg, int x) {
         unpacker_data_t.is_pana_raw$VH.set(seg, x);
     }
     public static int is_pana_raw$get(MemorySegment seg, long index) {
@@ -768,10 +1326,22 @@ public class unpacker_data_t {
     public static VarHandle is_PentaxRicohMakernotes$VH() {
         return unpacker_data_t.is_PentaxRicohMakernotes$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int is_PentaxRicohMakernotes;
+     * }
+     */
     public static int is_PentaxRicohMakernotes$get(MemorySegment seg) {
         return (int)unpacker_data_t.is_PentaxRicohMakernotes$VH.get(seg);
     }
-    public static void is_PentaxRicohMakernotes$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int is_PentaxRicohMakernotes;
+     * }
+     */
+    public static void is_PentaxRicohMakernotes$set(MemorySegment seg, int x) {
         unpacker_data_t.is_PentaxRicohMakernotes$VH.set(seg, x);
     }
     public static int is_PentaxRicohMakernotes$get(MemorySegment seg, long index) {
@@ -787,10 +1357,22 @@ public class unpacker_data_t {
     public static VarHandle raw_stride$VH() {
         return unpacker_data_t.raw_stride$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short raw_stride;
+     * }
+     */
     public static short raw_stride$get(MemorySegment seg) {
         return (short)unpacker_data_t.raw_stride$VH.get(seg);
     }
-    public static void raw_stride$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short raw_stride;
+     * }
+     */
+    public static void raw_stride$set(MemorySegment seg, short x) {
         unpacker_data_t.raw_stride$VH.set(seg, x);
     }
     public static short raw_stride$get(MemorySegment seg, long index) {
@@ -801,10 +1383,10 @@ public class unpacker_data_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

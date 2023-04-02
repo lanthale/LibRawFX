@@ -7,19 +7,35 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$2 {
+final class constants$2 {
 
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$2() {}
     static final FunctionDescriptor post_identify_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle post_identify_callback$MH = RuntimeHelper.downcallHandle(
-        constants$2.post_identify_callback$FUNC
+    static final FunctionDescriptor post_identify_callback_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_identify_callback_UP$MH = RuntimeHelper.upcallHandle(post_identify_callback.class, "apply", constants$2.post_identify_callback_UP$FUNC);
+    static final FunctionDescriptor post_identify_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_identify_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$2.post_identify_callback_DOWN$FUNC
     );
     static final FunctionDescriptor process_step_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle process_step_callback$MH = RuntimeHelper.downcallHandle(
-        constants$2.process_step_callback$FUNC
+    static final FunctionDescriptor process_step_callback_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle process_step_callback_UP$MH = RuntimeHelper.upcallHandle(process_step_callback.class, "apply", constants$2.process_step_callback_UP$FUNC);
+    static final FunctionDescriptor process_step_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle process_step_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$2.process_step_callback_DOWN$FUNC
     );
     static final FunctionDescriptor libraw_strerror$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT

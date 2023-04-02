@@ -7,9 +7,36 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_metadata_common_t {
+ *     float FlashEC;
+ *     float FlashGN;
+ *     float CameraTemperature;
+ *     float SensorTemperature;
+ *     float SensorTemperature2;
+ *     float LensTemperature;
+ *     float AmbientTemperature;
+ *     float BatteryTemperature;
+ *     float exifAmbientTemperature;
+ *     float exifHumidity;
+ *     float exifPressure;
+ *     float exifWaterDepth;
+ *     float exifAcceleration;
+ *     float exifCameraElevationAngle;
+ *     float real_ISO;
+ *     float exifExposureIndex;
+ *     unsigned short ColorSpace;
+ *     char firmware[128];
+ *     float ExposureCalibrationShift;
+ *     struct libraw_afinfo_item_t afdata[4];
+ *     int afcount;
+ * };
+ * }
+ */
 public class libraw_metadata_common_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_FLOAT$LAYOUT.withName("FlashEC"),
         Constants$root.C_FLOAT$LAYOUT.withName("FlashGN"),
         Constants$root.C_FLOAT$LAYOUT.withName("CameraTemperature"),
@@ -37,10 +64,10 @@ public class libraw_metadata_common_t {
             Constants$root.C_LONG$LAYOUT.withName("AFInfoData_version"),
             Constants$root.C_LONG$LAYOUT.withName("AFInfoData_length"),
             Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
-        )).withName("afdata"),
+        ).withName("libraw_afinfo_item_t")).withName("afdata"),
         Constants$root.C_LONG$LAYOUT.withName("afcount"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("libraw_metadata_common_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_metadata_common_t.$struct$LAYOUT;
     }
@@ -48,10 +75,22 @@ public class libraw_metadata_common_t {
     public static VarHandle FlashEC$VH() {
         return libraw_metadata_common_t.FlashEC$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float FlashEC;
+     * }
+     */
     public static float FlashEC$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.FlashEC$VH.get(seg);
     }
-    public static void FlashEC$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float FlashEC;
+     * }
+     */
+    public static void FlashEC$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.FlashEC$VH.set(seg, x);
     }
     public static float FlashEC$get(MemorySegment seg, long index) {
@@ -64,10 +103,22 @@ public class libraw_metadata_common_t {
     public static VarHandle FlashGN$VH() {
         return libraw_metadata_common_t.FlashGN$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float FlashGN;
+     * }
+     */
     public static float FlashGN$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.FlashGN$VH.get(seg);
     }
-    public static void FlashGN$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float FlashGN;
+     * }
+     */
+    public static void FlashGN$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.FlashGN$VH.set(seg, x);
     }
     public static float FlashGN$get(MemorySegment seg, long index) {
@@ -80,10 +131,22 @@ public class libraw_metadata_common_t {
     public static VarHandle CameraTemperature$VH() {
         return libraw_metadata_common_t.CameraTemperature$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float CameraTemperature;
+     * }
+     */
     public static float CameraTemperature$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.CameraTemperature$VH.get(seg);
     }
-    public static void CameraTemperature$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float CameraTemperature;
+     * }
+     */
+    public static void CameraTemperature$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.CameraTemperature$VH.set(seg, x);
     }
     public static float CameraTemperature$get(MemorySegment seg, long index) {
@@ -96,10 +159,22 @@ public class libraw_metadata_common_t {
     public static VarHandle SensorTemperature$VH() {
         return libraw_metadata_common_t.SensorTemperature$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float SensorTemperature;
+     * }
+     */
     public static float SensorTemperature$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.SensorTemperature$VH.get(seg);
     }
-    public static void SensorTemperature$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float SensorTemperature;
+     * }
+     */
+    public static void SensorTemperature$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.SensorTemperature$VH.set(seg, x);
     }
     public static float SensorTemperature$get(MemorySegment seg, long index) {
@@ -112,10 +187,22 @@ public class libraw_metadata_common_t {
     public static VarHandle SensorTemperature2$VH() {
         return libraw_metadata_common_t.SensorTemperature2$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float SensorTemperature2;
+     * }
+     */
     public static float SensorTemperature2$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.SensorTemperature2$VH.get(seg);
     }
-    public static void SensorTemperature2$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float SensorTemperature2;
+     * }
+     */
+    public static void SensorTemperature2$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.SensorTemperature2$VH.set(seg, x);
     }
     public static float SensorTemperature2$get(MemorySegment seg, long index) {
@@ -128,10 +215,22 @@ public class libraw_metadata_common_t {
     public static VarHandle LensTemperature$VH() {
         return libraw_metadata_common_t.LensTemperature$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float LensTemperature;
+     * }
+     */
     public static float LensTemperature$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.LensTemperature$VH.get(seg);
     }
-    public static void LensTemperature$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float LensTemperature;
+     * }
+     */
+    public static void LensTemperature$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.LensTemperature$VH.set(seg, x);
     }
     public static float LensTemperature$get(MemorySegment seg, long index) {
@@ -144,10 +243,22 @@ public class libraw_metadata_common_t {
     public static VarHandle AmbientTemperature$VH() {
         return libraw_metadata_common_t.AmbientTemperature$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float AmbientTemperature;
+     * }
+     */
     public static float AmbientTemperature$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.AmbientTemperature$VH.get(seg);
     }
-    public static void AmbientTemperature$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float AmbientTemperature;
+     * }
+     */
+    public static void AmbientTemperature$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.AmbientTemperature$VH.set(seg, x);
     }
     public static float AmbientTemperature$get(MemorySegment seg, long index) {
@@ -160,10 +271,22 @@ public class libraw_metadata_common_t {
     public static VarHandle BatteryTemperature$VH() {
         return libraw_metadata_common_t.BatteryTemperature$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float BatteryTemperature;
+     * }
+     */
     public static float BatteryTemperature$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.BatteryTemperature$VH.get(seg);
     }
-    public static void BatteryTemperature$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float BatteryTemperature;
+     * }
+     */
+    public static void BatteryTemperature$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.BatteryTemperature$VH.set(seg, x);
     }
     public static float BatteryTemperature$get(MemorySegment seg, long index) {
@@ -176,10 +299,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifAmbientTemperature$VH() {
         return libraw_metadata_common_t.exifAmbientTemperature$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifAmbientTemperature;
+     * }
+     */
     public static float exifAmbientTemperature$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifAmbientTemperature$VH.get(seg);
     }
-    public static void exifAmbientTemperature$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifAmbientTemperature;
+     * }
+     */
+    public static void exifAmbientTemperature$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifAmbientTemperature$VH.set(seg, x);
     }
     public static float exifAmbientTemperature$get(MemorySegment seg, long index) {
@@ -192,10 +327,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifHumidity$VH() {
         return libraw_metadata_common_t.exifHumidity$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifHumidity;
+     * }
+     */
     public static float exifHumidity$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifHumidity$VH.get(seg);
     }
-    public static void exifHumidity$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifHumidity;
+     * }
+     */
+    public static void exifHumidity$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifHumidity$VH.set(seg, x);
     }
     public static float exifHumidity$get(MemorySegment seg, long index) {
@@ -208,10 +355,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifPressure$VH() {
         return libraw_metadata_common_t.exifPressure$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifPressure;
+     * }
+     */
     public static float exifPressure$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifPressure$VH.get(seg);
     }
-    public static void exifPressure$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifPressure;
+     * }
+     */
+    public static void exifPressure$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifPressure$VH.set(seg, x);
     }
     public static float exifPressure$get(MemorySegment seg, long index) {
@@ -224,10 +383,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifWaterDepth$VH() {
         return libraw_metadata_common_t.exifWaterDepth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifWaterDepth;
+     * }
+     */
     public static float exifWaterDepth$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifWaterDepth$VH.get(seg);
     }
-    public static void exifWaterDepth$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifWaterDepth;
+     * }
+     */
+    public static void exifWaterDepth$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifWaterDepth$VH.set(seg, x);
     }
     public static float exifWaterDepth$get(MemorySegment seg, long index) {
@@ -240,10 +411,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifAcceleration$VH() {
         return libraw_metadata_common_t.exifAcceleration$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifAcceleration;
+     * }
+     */
     public static float exifAcceleration$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifAcceleration$VH.get(seg);
     }
-    public static void exifAcceleration$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifAcceleration;
+     * }
+     */
+    public static void exifAcceleration$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifAcceleration$VH.set(seg, x);
     }
     public static float exifAcceleration$get(MemorySegment seg, long index) {
@@ -256,10 +439,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifCameraElevationAngle$VH() {
         return libraw_metadata_common_t.exifCameraElevationAngle$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifCameraElevationAngle;
+     * }
+     */
     public static float exifCameraElevationAngle$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifCameraElevationAngle$VH.get(seg);
     }
-    public static void exifCameraElevationAngle$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifCameraElevationAngle;
+     * }
+     */
+    public static void exifCameraElevationAngle$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifCameraElevationAngle$VH.set(seg, x);
     }
     public static float exifCameraElevationAngle$get(MemorySegment seg, long index) {
@@ -272,10 +467,22 @@ public class libraw_metadata_common_t {
     public static VarHandle real_ISO$VH() {
         return libraw_metadata_common_t.real_ISO$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float real_ISO;
+     * }
+     */
     public static float real_ISO$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.real_ISO$VH.get(seg);
     }
-    public static void real_ISO$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float real_ISO;
+     * }
+     */
+    public static void real_ISO$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.real_ISO$VH.set(seg, x);
     }
     public static float real_ISO$get(MemorySegment seg, long index) {
@@ -288,10 +495,22 @@ public class libraw_metadata_common_t {
     public static VarHandle exifExposureIndex$VH() {
         return libraw_metadata_common_t.exifExposureIndex$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float exifExposureIndex;
+     * }
+     */
     public static float exifExposureIndex$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.exifExposureIndex$VH.get(seg);
     }
-    public static void exifExposureIndex$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float exifExposureIndex;
+     * }
+     */
+    public static void exifExposureIndex$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.exifExposureIndex$VH.set(seg, x);
     }
     public static float exifExposureIndex$get(MemorySegment seg, long index) {
@@ -304,10 +523,22 @@ public class libraw_metadata_common_t {
     public static VarHandle ColorSpace$VH() {
         return libraw_metadata_common_t.ColorSpace$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ColorSpace;
+     * }
+     */
     public static short ColorSpace$get(MemorySegment seg) {
         return (short)libraw_metadata_common_t.ColorSpace$VH.get(seg);
     }
-    public static void ColorSpace$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ColorSpace;
+     * }
+     */
+    public static void ColorSpace$set(MemorySegment seg, short x) {
         libraw_metadata_common_t.ColorSpace$VH.set(seg, x);
     }
     public static short ColorSpace$get(MemorySegment seg, long index) {
@@ -323,10 +554,22 @@ public class libraw_metadata_common_t {
     public static VarHandle ExposureCalibrationShift$VH() {
         return libraw_metadata_common_t.ExposureCalibrationShift$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float ExposureCalibrationShift;
+     * }
+     */
     public static float ExposureCalibrationShift$get(MemorySegment seg) {
         return (float)libraw_metadata_common_t.ExposureCalibrationShift$VH.get(seg);
     }
-    public static void ExposureCalibrationShift$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float ExposureCalibrationShift;
+     * }
+     */
+    public static void ExposureCalibrationShift$set(MemorySegment seg, float x) {
         libraw_metadata_common_t.ExposureCalibrationShift$VH.set(seg, x);
     }
     public static float ExposureCalibrationShift$get(MemorySegment seg, long index) {
@@ -342,10 +585,22 @@ public class libraw_metadata_common_t {
     public static VarHandle afcount$VH() {
         return libraw_metadata_common_t.afcount$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int afcount;
+     * }
+     */
     public static int afcount$get(MemorySegment seg) {
         return (int)libraw_metadata_common_t.afcount$VH.get(seg);
     }
-    public static void afcount$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int afcount;
+     * }
+     */
+    public static void afcount$set(MemorySegment seg, int x) {
         libraw_metadata_common_t.afcount$VH.set(seg, x);
     }
     public static int afcount$get(MemorySegment seg, long index) {
@@ -356,10 +611,10 @@ public class libraw_metadata_common_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

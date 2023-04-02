@@ -7,9 +7,69 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_sony_info_t {
+ *     unsigned short CameraType;
+ *     unsigned char Sony0x9400_version;
+ *     unsigned char Sony0x9400_ReleaseMode2;
+ *     unsigned int Sony0x9400_SequenceImageNumber;
+ *     unsigned char Sony0x9400_SequenceLength1;
+ *     unsigned int Sony0x9400_SequenceFileNumber;
+ *     unsigned char Sony0x9400_SequenceLength2;
+ *     unsigned char AFAreaModeSetting;
+ *     unsigned short AFAreaMode;
+ *     unsigned short FlexibleSpotPosition[2];
+ *     unsigned char AFPointSelected;
+ *     unsigned char AFPointSelected_0x201e;
+ *     short nAFPointsUsed;
+ *     unsigned char AFPointsUsed[10];
+ *     unsigned char AFTracking;
+ *     unsigned char AFType;
+ *     unsigned short FocusLocation[4];
+ *     unsigned short FocusPosition;
+ *     signed char AFMicroAdjValue;
+ *     signed char AFMicroAdjOn;
+ *     unsigned char AFMicroAdjRegisteredLenses;
+ *     unsigned short VariableLowPassFilter;
+ *     unsigned int LongExposureNoiseReduction;
+ *     unsigned short HighISONoiseReduction;
+ *     unsigned short HDR[2];
+ *     unsigned short group2010;
+ *     unsigned short group9050;
+ *     unsigned short real_iso_offset;
+ *     unsigned short MeteringMode_offset;
+ *     unsigned short ExposureProgram_offset;
+ *     unsigned short ReleaseMode2_offset;
+ *     unsigned int MinoltaCamID;
+ *     float firmware;
+ *     unsigned short ImageCount3_offset;
+ *     unsigned int ImageCount3;
+ *     unsigned int ElectronicFrontCurtainShutter;
+ *     unsigned short MeteringMode2;
+ *     char SonyDateTime[20];
+ *     unsigned int ShotNumberSincePowerUp;
+ *     unsigned short PixelShiftGroupPrefix;
+ *     unsigned int PixelShiftGroupID;
+ *     char nShotsInPixelShiftGroup;
+ *     char numInPixelShiftGroup;
+ *     unsigned short prd_ImageHeight;
+ *     unsigned short prd_ImageWidth;
+ *     unsigned short prd_Total_bps;
+ *     unsigned short prd_Active_bps;
+ *     unsigned short prd_StorageMethod;
+ *     unsigned short prd_BayerPattern;
+ *     unsigned short SonyRawFileType;
+ *     unsigned short RAWFileType;
+ *     unsigned int Quality;
+ *     unsigned short FileFormat;
+ *     char MetaVersion[16];
+ * };
+ * }
+ */
 public class libraw_sony_info_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("CameraType"),
         Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_version"),
         Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_ReleaseMode2"),
@@ -72,7 +132,7 @@ public class libraw_sony_info_t {
         Constants$root.C_SHORT$LAYOUT.withName("FileFormat"),
         MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("MetaVersion"),
         MemoryLayout.paddingLayout(16)
-    );
+    ).withName("libraw_sony_info_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_sony_info_t.$struct$LAYOUT;
     }
@@ -80,10 +140,22 @@ public class libraw_sony_info_t {
     public static VarHandle CameraType$VH() {
         return libraw_sony_info_t.CameraType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short CameraType;
+     * }
+     */
     public static short CameraType$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.CameraType$VH.get(seg);
     }
-    public static void CameraType$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short CameraType;
+     * }
+     */
+    public static void CameraType$set(MemorySegment seg, short x) {
         libraw_sony_info_t.CameraType$VH.set(seg, x);
     }
     public static short CameraType$get(MemorySegment seg, long index) {
@@ -96,10 +168,22 @@ public class libraw_sony_info_t {
     public static VarHandle Sony0x9400_version$VH() {
         return libraw_sony_info_t.Sony0x9400_version$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_version;
+     * }
+     */
     public static byte Sony0x9400_version$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.Sony0x9400_version$VH.get(seg);
     }
-    public static void Sony0x9400_version$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_version;
+     * }
+     */
+    public static void Sony0x9400_version$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.Sony0x9400_version$VH.set(seg, x);
     }
     public static byte Sony0x9400_version$get(MemorySegment seg, long index) {
@@ -112,10 +196,22 @@ public class libraw_sony_info_t {
     public static VarHandle Sony0x9400_ReleaseMode2$VH() {
         return libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_ReleaseMode2;
+     * }
+     */
     public static byte Sony0x9400_ReleaseMode2$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH.get(seg);
     }
-    public static void Sony0x9400_ReleaseMode2$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_ReleaseMode2;
+     * }
+     */
+    public static void Sony0x9400_ReleaseMode2$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH.set(seg, x);
     }
     public static byte Sony0x9400_ReleaseMode2$get(MemorySegment seg, long index) {
@@ -128,10 +224,22 @@ public class libraw_sony_info_t {
     public static VarHandle Sony0x9400_SequenceImageNumber$VH() {
         return libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int Sony0x9400_SequenceImageNumber;
+     * }
+     */
     public static int Sony0x9400_SequenceImageNumber$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH.get(seg);
     }
-    public static void Sony0x9400_SequenceImageNumber$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int Sony0x9400_SequenceImageNumber;
+     * }
+     */
+    public static void Sony0x9400_SequenceImageNumber$set(MemorySegment seg, int x) {
         libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH.set(seg, x);
     }
     public static int Sony0x9400_SequenceImageNumber$get(MemorySegment seg, long index) {
@@ -144,10 +252,22 @@ public class libraw_sony_info_t {
     public static VarHandle Sony0x9400_SequenceLength1$VH() {
         return libraw_sony_info_t.Sony0x9400_SequenceLength1$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_SequenceLength1;
+     * }
+     */
     public static byte Sony0x9400_SequenceLength1$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.Sony0x9400_SequenceLength1$VH.get(seg);
     }
-    public static void Sony0x9400_SequenceLength1$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_SequenceLength1;
+     * }
+     */
+    public static void Sony0x9400_SequenceLength1$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.Sony0x9400_SequenceLength1$VH.set(seg, x);
     }
     public static byte Sony0x9400_SequenceLength1$get(MemorySegment seg, long index) {
@@ -160,10 +280,22 @@ public class libraw_sony_info_t {
     public static VarHandle Sony0x9400_SequenceFileNumber$VH() {
         return libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int Sony0x9400_SequenceFileNumber;
+     * }
+     */
     public static int Sony0x9400_SequenceFileNumber$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH.get(seg);
     }
-    public static void Sony0x9400_SequenceFileNumber$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int Sony0x9400_SequenceFileNumber;
+     * }
+     */
+    public static void Sony0x9400_SequenceFileNumber$set(MemorySegment seg, int x) {
         libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH.set(seg, x);
     }
     public static int Sony0x9400_SequenceFileNumber$get(MemorySegment seg, long index) {
@@ -176,10 +308,22 @@ public class libraw_sony_info_t {
     public static VarHandle Sony0x9400_SequenceLength2$VH() {
         return libraw_sony_info_t.Sony0x9400_SequenceLength2$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_SequenceLength2;
+     * }
+     */
     public static byte Sony0x9400_SequenceLength2$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.Sony0x9400_SequenceLength2$VH.get(seg);
     }
-    public static void Sony0x9400_SequenceLength2$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char Sony0x9400_SequenceLength2;
+     * }
+     */
+    public static void Sony0x9400_SequenceLength2$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.Sony0x9400_SequenceLength2$VH.set(seg, x);
     }
     public static byte Sony0x9400_SequenceLength2$get(MemorySegment seg, long index) {
@@ -192,10 +336,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFAreaModeSetting$VH() {
         return libraw_sony_info_t.AFAreaModeSetting$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFAreaModeSetting;
+     * }
+     */
     public static byte AFAreaModeSetting$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFAreaModeSetting$VH.get(seg);
     }
-    public static void AFAreaModeSetting$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFAreaModeSetting;
+     * }
+     */
+    public static void AFAreaModeSetting$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFAreaModeSetting$VH.set(seg, x);
     }
     public static byte AFAreaModeSetting$get(MemorySegment seg, long index) {
@@ -208,10 +364,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFAreaMode$VH() {
         return libraw_sony_info_t.AFAreaMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AFAreaMode;
+     * }
+     */
     public static short AFAreaMode$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.AFAreaMode$VH.get(seg);
     }
-    public static void AFAreaMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AFAreaMode;
+     * }
+     */
+    public static void AFAreaMode$set(MemorySegment seg, short x) {
         libraw_sony_info_t.AFAreaMode$VH.set(seg, x);
     }
     public static short AFAreaMode$get(MemorySegment seg, long index) {
@@ -227,10 +395,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFPointSelected$VH() {
         return libraw_sony_info_t.AFPointSelected$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFPointSelected;
+     * }
+     */
     public static byte AFPointSelected$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFPointSelected$VH.get(seg);
     }
-    public static void AFPointSelected$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFPointSelected;
+     * }
+     */
+    public static void AFPointSelected$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFPointSelected$VH.set(seg, x);
     }
     public static byte AFPointSelected$get(MemorySegment seg, long index) {
@@ -243,10 +423,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFPointSelected_0x201e$VH() {
         return libraw_sony_info_t.AFPointSelected_0x201e$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFPointSelected_0x201e;
+     * }
+     */
     public static byte AFPointSelected_0x201e$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFPointSelected_0x201e$VH.get(seg);
     }
-    public static void AFPointSelected_0x201e$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFPointSelected_0x201e;
+     * }
+     */
+    public static void AFPointSelected_0x201e$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFPointSelected_0x201e$VH.set(seg, x);
     }
     public static byte AFPointSelected_0x201e$get(MemorySegment seg, long index) {
@@ -259,10 +451,22 @@ public class libraw_sony_info_t {
     public static VarHandle nAFPointsUsed$VH() {
         return libraw_sony_info_t.nAFPointsUsed$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short nAFPointsUsed;
+     * }
+     */
     public static short nAFPointsUsed$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.nAFPointsUsed$VH.get(seg);
     }
-    public static void nAFPointsUsed$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short nAFPointsUsed;
+     * }
+     */
+    public static void nAFPointsUsed$set(MemorySegment seg, short x) {
         libraw_sony_info_t.nAFPointsUsed$VH.set(seg, x);
     }
     public static short nAFPointsUsed$get(MemorySegment seg, long index) {
@@ -278,10 +482,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFTracking$VH() {
         return libraw_sony_info_t.AFTracking$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFTracking;
+     * }
+     */
     public static byte AFTracking$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFTracking$VH.get(seg);
     }
-    public static void AFTracking$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFTracking;
+     * }
+     */
+    public static void AFTracking$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFTracking$VH.set(seg, x);
     }
     public static byte AFTracking$get(MemorySegment seg, long index) {
@@ -294,10 +510,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFType$VH() {
         return libraw_sony_info_t.AFType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFType;
+     * }
+     */
     public static byte AFType$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFType$VH.get(seg);
     }
-    public static void AFType$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFType;
+     * }
+     */
+    public static void AFType$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFType$VH.set(seg, x);
     }
     public static byte AFType$get(MemorySegment seg, long index) {
@@ -313,10 +541,22 @@ public class libraw_sony_info_t {
     public static VarHandle FocusPosition$VH() {
         return libraw_sony_info_t.FocusPosition$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FocusPosition;
+     * }
+     */
     public static short FocusPosition$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.FocusPosition$VH.get(seg);
     }
-    public static void FocusPosition$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FocusPosition;
+     * }
+     */
+    public static void FocusPosition$set(MemorySegment seg, short x) {
         libraw_sony_info_t.FocusPosition$VH.set(seg, x);
     }
     public static short FocusPosition$get(MemorySegment seg, long index) {
@@ -329,10 +569,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFMicroAdjValue$VH() {
         return libraw_sony_info_t.AFMicroAdjValue$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * signed char AFMicroAdjValue;
+     * }
+     */
     public static byte AFMicroAdjValue$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFMicroAdjValue$VH.get(seg);
     }
-    public static void AFMicroAdjValue$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * signed char AFMicroAdjValue;
+     * }
+     */
+    public static void AFMicroAdjValue$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFMicroAdjValue$VH.set(seg, x);
     }
     public static byte AFMicroAdjValue$get(MemorySegment seg, long index) {
@@ -345,10 +597,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFMicroAdjOn$VH() {
         return libraw_sony_info_t.AFMicroAdjOn$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * signed char AFMicroAdjOn;
+     * }
+     */
     public static byte AFMicroAdjOn$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFMicroAdjOn$VH.get(seg);
     }
-    public static void AFMicroAdjOn$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * signed char AFMicroAdjOn;
+     * }
+     */
+    public static void AFMicroAdjOn$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFMicroAdjOn$VH.set(seg, x);
     }
     public static byte AFMicroAdjOn$get(MemorySegment seg, long index) {
@@ -361,10 +625,22 @@ public class libraw_sony_info_t {
     public static VarHandle AFMicroAdjRegisteredLenses$VH() {
         return libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFMicroAdjRegisteredLenses;
+     * }
+     */
     public static byte AFMicroAdjRegisteredLenses$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH.get(seg);
     }
-    public static void AFMicroAdjRegisteredLenses$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFMicroAdjRegisteredLenses;
+     * }
+     */
+    public static void AFMicroAdjRegisteredLenses$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH.set(seg, x);
     }
     public static byte AFMicroAdjRegisteredLenses$get(MemorySegment seg, long index) {
@@ -377,10 +653,22 @@ public class libraw_sony_info_t {
     public static VarHandle VariableLowPassFilter$VH() {
         return libraw_sony_info_t.VariableLowPassFilter$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short VariableLowPassFilter;
+     * }
+     */
     public static short VariableLowPassFilter$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.VariableLowPassFilter$VH.get(seg);
     }
-    public static void VariableLowPassFilter$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short VariableLowPassFilter;
+     * }
+     */
+    public static void VariableLowPassFilter$set(MemorySegment seg, short x) {
         libraw_sony_info_t.VariableLowPassFilter$VH.set(seg, x);
     }
     public static short VariableLowPassFilter$get(MemorySegment seg, long index) {
@@ -393,10 +681,22 @@ public class libraw_sony_info_t {
     public static VarHandle LongExposureNoiseReduction$VH() {
         return libraw_sony_info_t.LongExposureNoiseReduction$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int LongExposureNoiseReduction;
+     * }
+     */
     public static int LongExposureNoiseReduction$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.LongExposureNoiseReduction$VH.get(seg);
     }
-    public static void LongExposureNoiseReduction$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int LongExposureNoiseReduction;
+     * }
+     */
+    public static void LongExposureNoiseReduction$set(MemorySegment seg, int x) {
         libraw_sony_info_t.LongExposureNoiseReduction$VH.set(seg, x);
     }
     public static int LongExposureNoiseReduction$get(MemorySegment seg, long index) {
@@ -409,10 +709,22 @@ public class libraw_sony_info_t {
     public static VarHandle HighISONoiseReduction$VH() {
         return libraw_sony_info_t.HighISONoiseReduction$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short HighISONoiseReduction;
+     * }
+     */
     public static short HighISONoiseReduction$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.HighISONoiseReduction$VH.get(seg);
     }
-    public static void HighISONoiseReduction$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short HighISONoiseReduction;
+     * }
+     */
+    public static void HighISONoiseReduction$set(MemorySegment seg, short x) {
         libraw_sony_info_t.HighISONoiseReduction$VH.set(seg, x);
     }
     public static short HighISONoiseReduction$get(MemorySegment seg, long index) {
@@ -428,10 +740,22 @@ public class libraw_sony_info_t {
     public static VarHandle group2010$VH() {
         return libraw_sony_info_t.group2010$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short group2010;
+     * }
+     */
     public static short group2010$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.group2010$VH.get(seg);
     }
-    public static void group2010$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short group2010;
+     * }
+     */
+    public static void group2010$set(MemorySegment seg, short x) {
         libraw_sony_info_t.group2010$VH.set(seg, x);
     }
     public static short group2010$get(MemorySegment seg, long index) {
@@ -444,10 +768,22 @@ public class libraw_sony_info_t {
     public static VarHandle group9050$VH() {
         return libraw_sony_info_t.group9050$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short group9050;
+     * }
+     */
     public static short group9050$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.group9050$VH.get(seg);
     }
-    public static void group9050$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short group9050;
+     * }
+     */
+    public static void group9050$set(MemorySegment seg, short x) {
         libraw_sony_info_t.group9050$VH.set(seg, x);
     }
     public static short group9050$get(MemorySegment seg, long index) {
@@ -460,10 +796,22 @@ public class libraw_sony_info_t {
     public static VarHandle real_iso_offset$VH() {
         return libraw_sony_info_t.real_iso_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short real_iso_offset;
+     * }
+     */
     public static short real_iso_offset$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.real_iso_offset$VH.get(seg);
     }
-    public static void real_iso_offset$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short real_iso_offset;
+     * }
+     */
+    public static void real_iso_offset$set(MemorySegment seg, short x) {
         libraw_sony_info_t.real_iso_offset$VH.set(seg, x);
     }
     public static short real_iso_offset$get(MemorySegment seg, long index) {
@@ -476,10 +824,22 @@ public class libraw_sony_info_t {
     public static VarHandle MeteringMode_offset$VH() {
         return libraw_sony_info_t.MeteringMode_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short MeteringMode_offset;
+     * }
+     */
     public static short MeteringMode_offset$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.MeteringMode_offset$VH.get(seg);
     }
-    public static void MeteringMode_offset$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short MeteringMode_offset;
+     * }
+     */
+    public static void MeteringMode_offset$set(MemorySegment seg, short x) {
         libraw_sony_info_t.MeteringMode_offset$VH.set(seg, x);
     }
     public static short MeteringMode_offset$get(MemorySegment seg, long index) {
@@ -492,10 +852,22 @@ public class libraw_sony_info_t {
     public static VarHandle ExposureProgram_offset$VH() {
         return libraw_sony_info_t.ExposureProgram_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ExposureProgram_offset;
+     * }
+     */
     public static short ExposureProgram_offset$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.ExposureProgram_offset$VH.get(seg);
     }
-    public static void ExposureProgram_offset$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ExposureProgram_offset;
+     * }
+     */
+    public static void ExposureProgram_offset$set(MemorySegment seg, short x) {
         libraw_sony_info_t.ExposureProgram_offset$VH.set(seg, x);
     }
     public static short ExposureProgram_offset$get(MemorySegment seg, long index) {
@@ -508,10 +880,22 @@ public class libraw_sony_info_t {
     public static VarHandle ReleaseMode2_offset$VH() {
         return libraw_sony_info_t.ReleaseMode2_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ReleaseMode2_offset;
+     * }
+     */
     public static short ReleaseMode2_offset$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.ReleaseMode2_offset$VH.get(seg);
     }
-    public static void ReleaseMode2_offset$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ReleaseMode2_offset;
+     * }
+     */
+    public static void ReleaseMode2_offset$set(MemorySegment seg, short x) {
         libraw_sony_info_t.ReleaseMode2_offset$VH.set(seg, x);
     }
     public static short ReleaseMode2_offset$get(MemorySegment seg, long index) {
@@ -524,10 +908,22 @@ public class libraw_sony_info_t {
     public static VarHandle MinoltaCamID$VH() {
         return libraw_sony_info_t.MinoltaCamID$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int MinoltaCamID;
+     * }
+     */
     public static int MinoltaCamID$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.MinoltaCamID$VH.get(seg);
     }
-    public static void MinoltaCamID$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int MinoltaCamID;
+     * }
+     */
+    public static void MinoltaCamID$set(MemorySegment seg, int x) {
         libraw_sony_info_t.MinoltaCamID$VH.set(seg, x);
     }
     public static int MinoltaCamID$get(MemorySegment seg, long index) {
@@ -540,10 +936,22 @@ public class libraw_sony_info_t {
     public static VarHandle firmware$VH() {
         return libraw_sony_info_t.firmware$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float firmware;
+     * }
+     */
     public static float firmware$get(MemorySegment seg) {
         return (float)libraw_sony_info_t.firmware$VH.get(seg);
     }
-    public static void firmware$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float firmware;
+     * }
+     */
+    public static void firmware$set(MemorySegment seg, float x) {
         libraw_sony_info_t.firmware$VH.set(seg, x);
     }
     public static float firmware$get(MemorySegment seg, long index) {
@@ -556,10 +964,22 @@ public class libraw_sony_info_t {
     public static VarHandle ImageCount3_offset$VH() {
         return libraw_sony_info_t.ImageCount3_offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ImageCount3_offset;
+     * }
+     */
     public static short ImageCount3_offset$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.ImageCount3_offset$VH.get(seg);
     }
-    public static void ImageCount3_offset$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ImageCount3_offset;
+     * }
+     */
+    public static void ImageCount3_offset$set(MemorySegment seg, short x) {
         libraw_sony_info_t.ImageCount3_offset$VH.set(seg, x);
     }
     public static short ImageCount3_offset$get(MemorySegment seg, long index) {
@@ -572,10 +992,22 @@ public class libraw_sony_info_t {
     public static VarHandle ImageCount3$VH() {
         return libraw_sony_info_t.ImageCount3$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int ImageCount3;
+     * }
+     */
     public static int ImageCount3$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.ImageCount3$VH.get(seg);
     }
-    public static void ImageCount3$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int ImageCount3;
+     * }
+     */
+    public static void ImageCount3$set(MemorySegment seg, int x) {
         libraw_sony_info_t.ImageCount3$VH.set(seg, x);
     }
     public static int ImageCount3$get(MemorySegment seg, long index) {
@@ -588,10 +1020,22 @@ public class libraw_sony_info_t {
     public static VarHandle ElectronicFrontCurtainShutter$VH() {
         return libraw_sony_info_t.ElectronicFrontCurtainShutter$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int ElectronicFrontCurtainShutter;
+     * }
+     */
     public static int ElectronicFrontCurtainShutter$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.ElectronicFrontCurtainShutter$VH.get(seg);
     }
-    public static void ElectronicFrontCurtainShutter$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int ElectronicFrontCurtainShutter;
+     * }
+     */
+    public static void ElectronicFrontCurtainShutter$set(MemorySegment seg, int x) {
         libraw_sony_info_t.ElectronicFrontCurtainShutter$VH.set(seg, x);
     }
     public static int ElectronicFrontCurtainShutter$get(MemorySegment seg, long index) {
@@ -604,10 +1048,22 @@ public class libraw_sony_info_t {
     public static VarHandle MeteringMode2$VH() {
         return libraw_sony_info_t.MeteringMode2$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short MeteringMode2;
+     * }
+     */
     public static short MeteringMode2$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.MeteringMode2$VH.get(seg);
     }
-    public static void MeteringMode2$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short MeteringMode2;
+     * }
+     */
+    public static void MeteringMode2$set(MemorySegment seg, short x) {
         libraw_sony_info_t.MeteringMode2$VH.set(seg, x);
     }
     public static short MeteringMode2$get(MemorySegment seg, long index) {
@@ -623,10 +1079,22 @@ public class libraw_sony_info_t {
     public static VarHandle ShotNumberSincePowerUp$VH() {
         return libraw_sony_info_t.ShotNumberSincePowerUp$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int ShotNumberSincePowerUp;
+     * }
+     */
     public static int ShotNumberSincePowerUp$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.ShotNumberSincePowerUp$VH.get(seg);
     }
-    public static void ShotNumberSincePowerUp$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int ShotNumberSincePowerUp;
+     * }
+     */
+    public static void ShotNumberSincePowerUp$set(MemorySegment seg, int x) {
         libraw_sony_info_t.ShotNumberSincePowerUp$VH.set(seg, x);
     }
     public static int ShotNumberSincePowerUp$get(MemorySegment seg, long index) {
@@ -639,10 +1107,22 @@ public class libraw_sony_info_t {
     public static VarHandle PixelShiftGroupPrefix$VH() {
         return libraw_sony_info_t.PixelShiftGroupPrefix$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short PixelShiftGroupPrefix;
+     * }
+     */
     public static short PixelShiftGroupPrefix$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.PixelShiftGroupPrefix$VH.get(seg);
     }
-    public static void PixelShiftGroupPrefix$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short PixelShiftGroupPrefix;
+     * }
+     */
+    public static void PixelShiftGroupPrefix$set(MemorySegment seg, short x) {
         libraw_sony_info_t.PixelShiftGroupPrefix$VH.set(seg, x);
     }
     public static short PixelShiftGroupPrefix$get(MemorySegment seg, long index) {
@@ -655,10 +1135,22 @@ public class libraw_sony_info_t {
     public static VarHandle PixelShiftGroupID$VH() {
         return libraw_sony_info_t.PixelShiftGroupID$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int PixelShiftGroupID;
+     * }
+     */
     public static int PixelShiftGroupID$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.PixelShiftGroupID$VH.get(seg);
     }
-    public static void PixelShiftGroupID$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int PixelShiftGroupID;
+     * }
+     */
+    public static void PixelShiftGroupID$set(MemorySegment seg, int x) {
         libraw_sony_info_t.PixelShiftGroupID$VH.set(seg, x);
     }
     public static int PixelShiftGroupID$get(MemorySegment seg, long index) {
@@ -671,10 +1163,22 @@ public class libraw_sony_info_t {
     public static VarHandle nShotsInPixelShiftGroup$VH() {
         return libraw_sony_info_t.nShotsInPixelShiftGroup$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char nShotsInPixelShiftGroup;
+     * }
+     */
     public static byte nShotsInPixelShiftGroup$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.nShotsInPixelShiftGroup$VH.get(seg);
     }
-    public static void nShotsInPixelShiftGroup$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char nShotsInPixelShiftGroup;
+     * }
+     */
+    public static void nShotsInPixelShiftGroup$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.nShotsInPixelShiftGroup$VH.set(seg, x);
     }
     public static byte nShotsInPixelShiftGroup$get(MemorySegment seg, long index) {
@@ -687,10 +1191,22 @@ public class libraw_sony_info_t {
     public static VarHandle numInPixelShiftGroup$VH() {
         return libraw_sony_info_t.numInPixelShiftGroup$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char numInPixelShiftGroup;
+     * }
+     */
     public static byte numInPixelShiftGroup$get(MemorySegment seg) {
         return (byte)libraw_sony_info_t.numInPixelShiftGroup$VH.get(seg);
     }
-    public static void numInPixelShiftGroup$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char numInPixelShiftGroup;
+     * }
+     */
+    public static void numInPixelShiftGroup$set(MemorySegment seg, byte x) {
         libraw_sony_info_t.numInPixelShiftGroup$VH.set(seg, x);
     }
     public static byte numInPixelShiftGroup$get(MemorySegment seg, long index) {
@@ -703,10 +1219,22 @@ public class libraw_sony_info_t {
     public static VarHandle prd_ImageHeight$VH() {
         return libraw_sony_info_t.prd_ImageHeight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short prd_ImageHeight;
+     * }
+     */
     public static short prd_ImageHeight$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.prd_ImageHeight$VH.get(seg);
     }
-    public static void prd_ImageHeight$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short prd_ImageHeight;
+     * }
+     */
+    public static void prd_ImageHeight$set(MemorySegment seg, short x) {
         libraw_sony_info_t.prd_ImageHeight$VH.set(seg, x);
     }
     public static short prd_ImageHeight$get(MemorySegment seg, long index) {
@@ -719,10 +1247,22 @@ public class libraw_sony_info_t {
     public static VarHandle prd_ImageWidth$VH() {
         return libraw_sony_info_t.prd_ImageWidth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short prd_ImageWidth;
+     * }
+     */
     public static short prd_ImageWidth$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.prd_ImageWidth$VH.get(seg);
     }
-    public static void prd_ImageWidth$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short prd_ImageWidth;
+     * }
+     */
+    public static void prd_ImageWidth$set(MemorySegment seg, short x) {
         libraw_sony_info_t.prd_ImageWidth$VH.set(seg, x);
     }
     public static short prd_ImageWidth$get(MemorySegment seg, long index) {
@@ -735,10 +1275,22 @@ public class libraw_sony_info_t {
     public static VarHandle prd_Total_bps$VH() {
         return libraw_sony_info_t.prd_Total_bps$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short prd_Total_bps;
+     * }
+     */
     public static short prd_Total_bps$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.prd_Total_bps$VH.get(seg);
     }
-    public static void prd_Total_bps$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short prd_Total_bps;
+     * }
+     */
+    public static void prd_Total_bps$set(MemorySegment seg, short x) {
         libraw_sony_info_t.prd_Total_bps$VH.set(seg, x);
     }
     public static short prd_Total_bps$get(MemorySegment seg, long index) {
@@ -751,10 +1303,22 @@ public class libraw_sony_info_t {
     public static VarHandle prd_Active_bps$VH() {
         return libraw_sony_info_t.prd_Active_bps$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short prd_Active_bps;
+     * }
+     */
     public static short prd_Active_bps$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.prd_Active_bps$VH.get(seg);
     }
-    public static void prd_Active_bps$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short prd_Active_bps;
+     * }
+     */
+    public static void prd_Active_bps$set(MemorySegment seg, short x) {
         libraw_sony_info_t.prd_Active_bps$VH.set(seg, x);
     }
     public static short prd_Active_bps$get(MemorySegment seg, long index) {
@@ -767,10 +1331,22 @@ public class libraw_sony_info_t {
     public static VarHandle prd_StorageMethod$VH() {
         return libraw_sony_info_t.prd_StorageMethod$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short prd_StorageMethod;
+     * }
+     */
     public static short prd_StorageMethod$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.prd_StorageMethod$VH.get(seg);
     }
-    public static void prd_StorageMethod$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short prd_StorageMethod;
+     * }
+     */
+    public static void prd_StorageMethod$set(MemorySegment seg, short x) {
         libraw_sony_info_t.prd_StorageMethod$VH.set(seg, x);
     }
     public static short prd_StorageMethod$get(MemorySegment seg, long index) {
@@ -783,10 +1359,22 @@ public class libraw_sony_info_t {
     public static VarHandle prd_BayerPattern$VH() {
         return libraw_sony_info_t.prd_BayerPattern$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short prd_BayerPattern;
+     * }
+     */
     public static short prd_BayerPattern$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.prd_BayerPattern$VH.get(seg);
     }
-    public static void prd_BayerPattern$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short prd_BayerPattern;
+     * }
+     */
+    public static void prd_BayerPattern$set(MemorySegment seg, short x) {
         libraw_sony_info_t.prd_BayerPattern$VH.set(seg, x);
     }
     public static short prd_BayerPattern$get(MemorySegment seg, long index) {
@@ -799,10 +1387,22 @@ public class libraw_sony_info_t {
     public static VarHandle SonyRawFileType$VH() {
         return libraw_sony_info_t.SonyRawFileType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short SonyRawFileType;
+     * }
+     */
     public static short SonyRawFileType$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.SonyRawFileType$VH.get(seg);
     }
-    public static void SonyRawFileType$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short SonyRawFileType;
+     * }
+     */
+    public static void SonyRawFileType$set(MemorySegment seg, short x) {
         libraw_sony_info_t.SonyRawFileType$VH.set(seg, x);
     }
     public static short SonyRawFileType$get(MemorySegment seg, long index) {
@@ -815,10 +1415,22 @@ public class libraw_sony_info_t {
     public static VarHandle RAWFileType$VH() {
         return libraw_sony_info_t.RAWFileType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short RAWFileType;
+     * }
+     */
     public static short RAWFileType$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.RAWFileType$VH.get(seg);
     }
-    public static void RAWFileType$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short RAWFileType;
+     * }
+     */
+    public static void RAWFileType$set(MemorySegment seg, short x) {
         libraw_sony_info_t.RAWFileType$VH.set(seg, x);
     }
     public static short RAWFileType$get(MemorySegment seg, long index) {
@@ -831,10 +1443,22 @@ public class libraw_sony_info_t {
     public static VarHandle Quality$VH() {
         return libraw_sony_info_t.Quality$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int Quality;
+     * }
+     */
     public static int Quality$get(MemorySegment seg) {
         return (int)libraw_sony_info_t.Quality$VH.get(seg);
     }
-    public static void Quality$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int Quality;
+     * }
+     */
+    public static void Quality$set(MemorySegment seg, int x) {
         libraw_sony_info_t.Quality$VH.set(seg, x);
     }
     public static int Quality$get(MemorySegment seg, long index) {
@@ -847,10 +1471,22 @@ public class libraw_sony_info_t {
     public static VarHandle FileFormat$VH() {
         return libraw_sony_info_t.FileFormat$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FileFormat;
+     * }
+     */
     public static short FileFormat$get(MemorySegment seg) {
         return (short)libraw_sony_info_t.FileFormat$VH.get(seg);
     }
-    public static void FileFormat$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FileFormat;
+     * }
+     */
+    public static void FileFormat$set(MemorySegment seg, short x) {
         libraw_sony_info_t.FileFormat$VH.set(seg, x);
     }
     public static short FileFormat$get(MemorySegment seg, long index) {
@@ -864,10 +1500,10 @@ public class libraw_sony_info_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

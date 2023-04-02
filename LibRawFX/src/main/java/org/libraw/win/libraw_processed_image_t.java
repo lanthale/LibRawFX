@@ -7,9 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_processed_image_t {
+ *     enum LibRaw_image_formats type;
+ *     unsigned short height;
+ *     unsigned short width;
+ *     unsigned short colors;
+ *     unsigned short bits;
+ *     unsigned int data_size;
+ *     unsigned char data[1];
+ * };
+ * }
+ */
 public class libraw_processed_image_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_LONG$LAYOUT.withName("type"),
         Constants$root.C_SHORT$LAYOUT.withName("height"),
         Constants$root.C_SHORT$LAYOUT.withName("width"),
@@ -18,7 +31,7 @@ public class libraw_processed_image_t {
         Constants$root.C_LONG$LAYOUT.withName("data_size"),
         MemoryLayout.sequenceLayout(1, Constants$root.C_CHAR$LAYOUT).withName("data"),
         MemoryLayout.paddingLayout(24)
-    );
+    ).withName("libraw_processed_image_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_processed_image_t.$struct$LAYOUT;
     }
@@ -26,10 +39,22 @@ public class libraw_processed_image_t {
     public static VarHandle type$VH() {
         return libraw_processed_image_t.type$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * enum LibRaw_image_formats type;
+     * }
+     */
     public static int type$get(MemorySegment seg) {
         return (int)libraw_processed_image_t.type$VH.get(seg);
     }
-    public static void type$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * enum LibRaw_image_formats type;
+     * }
+     */
+    public static void type$set(MemorySegment seg, int x) {
         libraw_processed_image_t.type$VH.set(seg, x);
     }
     public static int type$get(MemorySegment seg, long index) {
@@ -42,10 +67,22 @@ public class libraw_processed_image_t {
     public static VarHandle height$VH() {
         return libraw_processed_image_t.height$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short height;
+     * }
+     */
     public static short height$get(MemorySegment seg) {
         return (short)libraw_processed_image_t.height$VH.get(seg);
     }
-    public static void height$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short height;
+     * }
+     */
+    public static void height$set(MemorySegment seg, short x) {
         libraw_processed_image_t.height$VH.set(seg, x);
     }
     public static short height$get(MemorySegment seg, long index) {
@@ -58,10 +95,22 @@ public class libraw_processed_image_t {
     public static VarHandle width$VH() {
         return libraw_processed_image_t.width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short width;
+     * }
+     */
     public static short width$get(MemorySegment seg) {
         return (short)libraw_processed_image_t.width$VH.get(seg);
     }
-    public static void width$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short width;
+     * }
+     */
+    public static void width$set(MemorySegment seg, short x) {
         libraw_processed_image_t.width$VH.set(seg, x);
     }
     public static short width$get(MemorySegment seg, long index) {
@@ -74,10 +123,22 @@ public class libraw_processed_image_t {
     public static VarHandle colors$VH() {
         return libraw_processed_image_t.colors$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short colors;
+     * }
+     */
     public static short colors$get(MemorySegment seg) {
         return (short)libraw_processed_image_t.colors$VH.get(seg);
     }
-    public static void colors$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short colors;
+     * }
+     */
+    public static void colors$set(MemorySegment seg, short x) {
         libraw_processed_image_t.colors$VH.set(seg, x);
     }
     public static short colors$get(MemorySegment seg, long index) {
@@ -90,10 +151,22 @@ public class libraw_processed_image_t {
     public static VarHandle bits$VH() {
         return libraw_processed_image_t.bits$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short bits;
+     * }
+     */
     public static short bits$get(MemorySegment seg) {
         return (short)libraw_processed_image_t.bits$VH.get(seg);
     }
-    public static void bits$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short bits;
+     * }
+     */
+    public static void bits$set(MemorySegment seg, short x) {
         libraw_processed_image_t.bits$VH.set(seg, x);
     }
     public static short bits$get(MemorySegment seg, long index) {
@@ -106,10 +179,22 @@ public class libraw_processed_image_t {
     public static VarHandle data_size$VH() {
         return libraw_processed_image_t.data_size$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int data_size;
+     * }
+     */
     public static int data_size$get(MemorySegment seg) {
         return (int)libraw_processed_image_t.data_size$VH.get(seg);
     }
-    public static void data_size$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int data_size;
+     * }
+     */
+    public static void data_size$set(MemorySegment seg, int x) {
         libraw_processed_image_t.data_size$VH.set(seg, x);
     }
     public static int data_size$get(MemorySegment seg, long index) {
@@ -123,10 +208,10 @@ public class libraw_processed_image_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

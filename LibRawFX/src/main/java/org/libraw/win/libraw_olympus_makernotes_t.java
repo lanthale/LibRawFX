@@ -7,9 +7,40 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_olympus_makernotes_t {
+ *     char CameraType2[6];
+ *     unsigned short ValidBits;
+ *     int SensorCalibration[2];
+ *     unsigned short DriveMode[5];
+ *     unsigned short ColorSpace;
+ *     unsigned short FocusMode[2];
+ *     unsigned short AutoFocus;
+ *     unsigned short AFPoint;
+ *     unsigned int AFAreas[64];
+ *     double AFPointSelected[5];
+ *     unsigned short AFResult;
+ *     unsigned char AFFineTune;
+ *     short AFFineTuneAdj[3];
+ *     unsigned int SpecialMode[3];
+ *     unsigned short ZoomStepCount;
+ *     unsigned short FocusStepCount;
+ *     unsigned short FocusStepInfinity;
+ *     unsigned short FocusStepNear;
+ *     double FocusDistance;
+ *     unsigned short AspectFrame[4];
+ *     unsigned int StackedImage[2];
+ *     unsigned char isLiveND;
+ *     unsigned int LiveNDfactor;
+ *     unsigned short Panorama_mode;
+ *     unsigned short Panorama_frameNum;
+ * };
+ * }
+ */
 public class libraw_olympus_makernotes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT).withName("CameraType2"),
         Constants$root.C_SHORT$LAYOUT.withName("ValidBits"),
         MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("SensorCalibration"),
@@ -40,7 +71,7 @@ public class libraw_olympus_makernotes_t {
         Constants$root.C_SHORT$LAYOUT.withName("Panorama_mode"),
         Constants$root.C_SHORT$LAYOUT.withName("Panorama_frameNum"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("libraw_olympus_makernotes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_olympus_makernotes_t.$struct$LAYOUT;
     }
@@ -51,10 +82,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle ValidBits$VH() {
         return libraw_olympus_makernotes_t.ValidBits$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ValidBits;
+     * }
+     */
     public static short ValidBits$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.ValidBits$VH.get(seg);
     }
-    public static void ValidBits$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ValidBits;
+     * }
+     */
+    public static void ValidBits$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.ValidBits$VH.set(seg, x);
     }
     public static short ValidBits$get(MemorySegment seg, long index) {
@@ -73,10 +116,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle ColorSpace$VH() {
         return libraw_olympus_makernotes_t.ColorSpace$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ColorSpace;
+     * }
+     */
     public static short ColorSpace$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.ColorSpace$VH.get(seg);
     }
-    public static void ColorSpace$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ColorSpace;
+     * }
+     */
+    public static void ColorSpace$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.ColorSpace$VH.set(seg, x);
     }
     public static short ColorSpace$get(MemorySegment seg, long index) {
@@ -92,10 +147,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle AutoFocus$VH() {
         return libraw_olympus_makernotes_t.AutoFocus$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AutoFocus;
+     * }
+     */
     public static short AutoFocus$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.AutoFocus$VH.get(seg);
     }
-    public static void AutoFocus$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AutoFocus;
+     * }
+     */
+    public static void AutoFocus$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.AutoFocus$VH.set(seg, x);
     }
     public static short AutoFocus$get(MemorySegment seg, long index) {
@@ -108,10 +175,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle AFPoint$VH() {
         return libraw_olympus_makernotes_t.AFPoint$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AFPoint;
+     * }
+     */
     public static short AFPoint$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.AFPoint$VH.get(seg);
     }
-    public static void AFPoint$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AFPoint;
+     * }
+     */
+    public static void AFPoint$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.AFPoint$VH.set(seg, x);
     }
     public static short AFPoint$get(MemorySegment seg, long index) {
@@ -130,10 +209,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle AFResult$VH() {
         return libraw_olympus_makernotes_t.AFResult$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AFResult;
+     * }
+     */
     public static short AFResult$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.AFResult$VH.get(seg);
     }
-    public static void AFResult$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AFResult;
+     * }
+     */
+    public static void AFResult$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.AFResult$VH.set(seg, x);
     }
     public static short AFResult$get(MemorySegment seg, long index) {
@@ -146,10 +237,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle AFFineTune$VH() {
         return libraw_olympus_makernotes_t.AFFineTune$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFFineTune;
+     * }
+     */
     public static byte AFFineTune$get(MemorySegment seg) {
         return (byte)libraw_olympus_makernotes_t.AFFineTune$VH.get(seg);
     }
-    public static void AFFineTune$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFFineTune;
+     * }
+     */
+    public static void AFFineTune$set(MemorySegment seg, byte x) {
         libraw_olympus_makernotes_t.AFFineTune$VH.set(seg, x);
     }
     public static byte AFFineTune$get(MemorySegment seg, long index) {
@@ -168,10 +271,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle ZoomStepCount$VH() {
         return libraw_olympus_makernotes_t.ZoomStepCount$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ZoomStepCount;
+     * }
+     */
     public static short ZoomStepCount$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.ZoomStepCount$VH.get(seg);
     }
-    public static void ZoomStepCount$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ZoomStepCount;
+     * }
+     */
+    public static void ZoomStepCount$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.ZoomStepCount$VH.set(seg, x);
     }
     public static short ZoomStepCount$get(MemorySegment seg, long index) {
@@ -184,10 +299,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle FocusStepCount$VH() {
         return libraw_olympus_makernotes_t.FocusStepCount$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FocusStepCount;
+     * }
+     */
     public static short FocusStepCount$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.FocusStepCount$VH.get(seg);
     }
-    public static void FocusStepCount$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FocusStepCount;
+     * }
+     */
+    public static void FocusStepCount$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.FocusStepCount$VH.set(seg, x);
     }
     public static short FocusStepCount$get(MemorySegment seg, long index) {
@@ -200,10 +327,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle FocusStepInfinity$VH() {
         return libraw_olympus_makernotes_t.FocusStepInfinity$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FocusStepInfinity;
+     * }
+     */
     public static short FocusStepInfinity$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.FocusStepInfinity$VH.get(seg);
     }
-    public static void FocusStepInfinity$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FocusStepInfinity;
+     * }
+     */
+    public static void FocusStepInfinity$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.FocusStepInfinity$VH.set(seg, x);
     }
     public static short FocusStepInfinity$get(MemorySegment seg, long index) {
@@ -216,10 +355,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle FocusStepNear$VH() {
         return libraw_olympus_makernotes_t.FocusStepNear$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FocusStepNear;
+     * }
+     */
     public static short FocusStepNear$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.FocusStepNear$VH.get(seg);
     }
-    public static void FocusStepNear$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FocusStepNear;
+     * }
+     */
+    public static void FocusStepNear$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.FocusStepNear$VH.set(seg, x);
     }
     public static short FocusStepNear$get(MemorySegment seg, long index) {
@@ -232,10 +383,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle FocusDistance$VH() {
         return libraw_olympus_makernotes_t.FocusDistance$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * double FocusDistance;
+     * }
+     */
     public static double FocusDistance$get(MemorySegment seg) {
         return (double)libraw_olympus_makernotes_t.FocusDistance$VH.get(seg);
     }
-    public static void FocusDistance$set( MemorySegment seg, double x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * double FocusDistance;
+     * }
+     */
+    public static void FocusDistance$set(MemorySegment seg, double x) {
         libraw_olympus_makernotes_t.FocusDistance$VH.set(seg, x);
     }
     public static double FocusDistance$get(MemorySegment seg, long index) {
@@ -254,10 +417,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle isLiveND$VH() {
         return libraw_olympus_makernotes_t.isLiveND$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char isLiveND;
+     * }
+     */
     public static byte isLiveND$get(MemorySegment seg) {
         return (byte)libraw_olympus_makernotes_t.isLiveND$VH.get(seg);
     }
-    public static void isLiveND$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char isLiveND;
+     * }
+     */
+    public static void isLiveND$set(MemorySegment seg, byte x) {
         libraw_olympus_makernotes_t.isLiveND$VH.set(seg, x);
     }
     public static byte isLiveND$get(MemorySegment seg, long index) {
@@ -270,10 +445,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle LiveNDfactor$VH() {
         return libraw_olympus_makernotes_t.LiveNDfactor$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int LiveNDfactor;
+     * }
+     */
     public static int LiveNDfactor$get(MemorySegment seg) {
         return (int)libraw_olympus_makernotes_t.LiveNDfactor$VH.get(seg);
     }
-    public static void LiveNDfactor$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int LiveNDfactor;
+     * }
+     */
+    public static void LiveNDfactor$set(MemorySegment seg, int x) {
         libraw_olympus_makernotes_t.LiveNDfactor$VH.set(seg, x);
     }
     public static int LiveNDfactor$get(MemorySegment seg, long index) {
@@ -286,10 +473,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle Panorama_mode$VH() {
         return libraw_olympus_makernotes_t.Panorama_mode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short Panorama_mode;
+     * }
+     */
     public static short Panorama_mode$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.Panorama_mode$VH.get(seg);
     }
-    public static void Panorama_mode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short Panorama_mode;
+     * }
+     */
+    public static void Panorama_mode$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.Panorama_mode$VH.set(seg, x);
     }
     public static short Panorama_mode$get(MemorySegment seg, long index) {
@@ -302,10 +501,22 @@ public class libraw_olympus_makernotes_t {
     public static VarHandle Panorama_frameNum$VH() {
         return libraw_olympus_makernotes_t.Panorama_frameNum$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short Panorama_frameNum;
+     * }
+     */
     public static short Panorama_frameNum$get(MemorySegment seg) {
         return (short)libraw_olympus_makernotes_t.Panorama_frameNum$VH.get(seg);
     }
-    public static void Panorama_frameNum$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short Panorama_frameNum;
+     * }
+     */
+    public static void Panorama_frameNum$set(MemorySegment seg, short x) {
         libraw_olympus_makernotes_t.Panorama_frameNum$VH.set(seg, x);
     }
     public static short Panorama_frameNum$get(MemorySegment seg, long index) {
@@ -316,10 +527,10 @@ public class libraw_olympus_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

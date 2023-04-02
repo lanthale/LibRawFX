@@ -7,9 +7,24 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_shootinginfo_t {
+ *     short DriveMode;
+ *     short FocusMode;
+ *     short MeteringMode;
+ *     short AFPoint;
+ *     short ExposureMode;
+ *     short ExposureProgram;
+ *     short ImageStabilization;
+ *     char BodySerial[64];
+ *     char InternalBodySerial[64];
+ * };
+ * }
+ */
 public class libraw_shootinginfo_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
         Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
         Constants$root.C_SHORT$LAYOUT.withName("MeteringMode"),
@@ -19,7 +34,7 @@ public class libraw_shootinginfo_t {
         Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
         MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("BodySerial"),
         MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("InternalBodySerial")
-    );
+    ).withName("libraw_shootinginfo_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_shootinginfo_t.$struct$LAYOUT;
     }
@@ -27,10 +42,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle DriveMode$VH() {
         return libraw_shootinginfo_t.DriveMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short DriveMode;
+     * }
+     */
     public static short DriveMode$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.DriveMode$VH.get(seg);
     }
-    public static void DriveMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short DriveMode;
+     * }
+     */
+    public static void DriveMode$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.DriveMode$VH.set(seg, x);
     }
     public static short DriveMode$get(MemorySegment seg, long index) {
@@ -43,10 +70,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle FocusMode$VH() {
         return libraw_shootinginfo_t.FocusMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short FocusMode;
+     * }
+     */
     public static short FocusMode$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.FocusMode$VH.get(seg);
     }
-    public static void FocusMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short FocusMode;
+     * }
+     */
+    public static void FocusMode$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.FocusMode$VH.set(seg, x);
     }
     public static short FocusMode$get(MemorySegment seg, long index) {
@@ -59,10 +98,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle MeteringMode$VH() {
         return libraw_shootinginfo_t.MeteringMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short MeteringMode;
+     * }
+     */
     public static short MeteringMode$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.MeteringMode$VH.get(seg);
     }
-    public static void MeteringMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short MeteringMode;
+     * }
+     */
+    public static void MeteringMode$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.MeteringMode$VH.set(seg, x);
     }
     public static short MeteringMode$get(MemorySegment seg, long index) {
@@ -75,10 +126,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle AFPoint$VH() {
         return libraw_shootinginfo_t.AFPoint$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short AFPoint;
+     * }
+     */
     public static short AFPoint$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.AFPoint$VH.get(seg);
     }
-    public static void AFPoint$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short AFPoint;
+     * }
+     */
+    public static void AFPoint$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.AFPoint$VH.set(seg, x);
     }
     public static short AFPoint$get(MemorySegment seg, long index) {
@@ -91,10 +154,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle ExposureMode$VH() {
         return libraw_shootinginfo_t.ExposureMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short ExposureMode;
+     * }
+     */
     public static short ExposureMode$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.ExposureMode$VH.get(seg);
     }
-    public static void ExposureMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short ExposureMode;
+     * }
+     */
+    public static void ExposureMode$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.ExposureMode$VH.set(seg, x);
     }
     public static short ExposureMode$get(MemorySegment seg, long index) {
@@ -107,10 +182,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle ExposureProgram$VH() {
         return libraw_shootinginfo_t.ExposureProgram$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short ExposureProgram;
+     * }
+     */
     public static short ExposureProgram$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.ExposureProgram$VH.get(seg);
     }
-    public static void ExposureProgram$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short ExposureProgram;
+     * }
+     */
+    public static void ExposureProgram$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.ExposureProgram$VH.set(seg, x);
     }
     public static short ExposureProgram$get(MemorySegment seg, long index) {
@@ -123,10 +210,22 @@ public class libraw_shootinginfo_t {
     public static VarHandle ImageStabilization$VH() {
         return libraw_shootinginfo_t.ImageStabilization$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short ImageStabilization;
+     * }
+     */
     public static short ImageStabilization$get(MemorySegment seg) {
         return (short)libraw_shootinginfo_t.ImageStabilization$VH.get(seg);
     }
-    public static void ImageStabilization$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short ImageStabilization;
+     * }
+     */
+    public static void ImageStabilization$set(MemorySegment seg, short x) {
         libraw_shootinginfo_t.ImageStabilization$VH.set(seg, x);
     }
     public static short ImageStabilization$get(MemorySegment seg, long index) {
@@ -143,10 +242,10 @@ public class libraw_shootinginfo_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

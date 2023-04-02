@@ -7,9 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_samsung_makernotes_t {
+ *     unsigned int ImageSizeFull[4];
+ *     unsigned int ImageSizeCrop[4];
+ *     int ColorSpace[2];
+ *     unsigned int key[11];
+ *     double DigitalGain;
+ *     int DeviceType;
+ *     char LensFirmware[32];
+ * };
+ * }
+ */
 public class libraw_samsung_makernotes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("ImageSizeFull"),
         MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("ImageSizeCrop"),
         MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("ColorSpace"),
@@ -19,7 +32,7 @@ public class libraw_samsung_makernotes_t {
         Constants$root.C_LONG$LAYOUT.withName("DeviceType"),
         MemoryLayout.sequenceLayout(32, Constants$root.C_CHAR$LAYOUT).withName("LensFirmware"),
         MemoryLayout.paddingLayout(32)
-    );
+    ).withName("libraw_samsung_makernotes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_samsung_makernotes_t.$struct$LAYOUT;
     }
@@ -39,10 +52,22 @@ public class libraw_samsung_makernotes_t {
     public static VarHandle DigitalGain$VH() {
         return libraw_samsung_makernotes_t.DigitalGain$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * double DigitalGain;
+     * }
+     */
     public static double DigitalGain$get(MemorySegment seg) {
         return (double)libraw_samsung_makernotes_t.DigitalGain$VH.get(seg);
     }
-    public static void DigitalGain$set( MemorySegment seg, double x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * double DigitalGain;
+     * }
+     */
+    public static void DigitalGain$set(MemorySegment seg, double x) {
         libraw_samsung_makernotes_t.DigitalGain$VH.set(seg, x);
     }
     public static double DigitalGain$get(MemorySegment seg, long index) {
@@ -55,10 +80,22 @@ public class libraw_samsung_makernotes_t {
     public static VarHandle DeviceType$VH() {
         return libraw_samsung_makernotes_t.DeviceType$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int DeviceType;
+     * }
+     */
     public static int DeviceType$get(MemorySegment seg) {
         return (int)libraw_samsung_makernotes_t.DeviceType$VH.get(seg);
     }
-    public static void DeviceType$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int DeviceType;
+     * }
+     */
+    public static void DeviceType$set(MemorySegment seg, int x) {
         libraw_samsung_makernotes_t.DeviceType$VH.set(seg, x);
     }
     public static int DeviceType$get(MemorySegment seg, long index) {
@@ -72,10 +109,10 @@ public class libraw_samsung_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

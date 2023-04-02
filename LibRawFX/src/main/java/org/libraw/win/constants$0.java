@@ -7,15 +7,28 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$0 {
+final class constants$0 {
 
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$0() {}
     static final FunctionDescriptor memory_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle memory_callback$MH = RuntimeHelper.downcallHandle(
-        constants$0.memory_callback$FUNC
+    static final FunctionDescriptor memory_callback_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle memory_callback_UP$MH = RuntimeHelper.upcallHandle(memory_callback.class, "apply", constants$0.memory_callback_UP$FUNC);
+    static final FunctionDescriptor memory_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle memory_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$0.memory_callback_DOWN$FUNC
     );
     static final FunctionDescriptor exif_parser_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -26,8 +39,27 @@ class constants$0 {
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_LONG_LONG$LAYOUT
     );
-    static final MethodHandle exif_parser_callback$MH = RuntimeHelper.downcallHandle(
-        constants$0.exif_parser_callback$FUNC
+    static final FunctionDescriptor exif_parser_callback_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final MethodHandle exif_parser_callback_UP$MH = RuntimeHelper.upcallHandle(exif_parser_callback.class, "apply", constants$0.exif_parser_callback_UP$FUNC);
+    static final FunctionDescriptor exif_parser_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final MethodHandle exif_parser_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$0.exif_parser_callback_DOWN$FUNC
     );
     static final FunctionDescriptor default_memory_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -43,6 +75,12 @@ class constants$0 {
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_LONG$LAYOUT
     );
+    static final FunctionDescriptor data_callback_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle data_callback_UP$MH = RuntimeHelper.upcallHandle(data_callback.class, "apply", constants$0.data_callback_UP$FUNC);
 }
 
 

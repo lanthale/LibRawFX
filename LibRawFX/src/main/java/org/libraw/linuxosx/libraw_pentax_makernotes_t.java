@@ -7,9 +7,26 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_pentax_makernotes_t {
+ *     unsigned char DriveMode[4];
+ *     unsigned short FocusMode[2];
+ *     unsigned short AFPointSelected[2];
+ *     unsigned short AFPointSelected_Area;
+ *     int AFPointsInFocus_version;
+ *     unsigned int AFPointsInFocus;
+ *     unsigned short FocusPosition;
+ *     short AFAdjustment;
+ *     unsigned char AFPointMode;
+ *     unsigned char MultiExposure;
+ *     unsigned short Quality;
+ * };
+ * }
+ */
 public class libraw_pentax_makernotes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("DriveMode"),
         MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusMode"),
         MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("AFPointSelected"),
@@ -22,7 +39,7 @@ public class libraw_pentax_makernotes_t {
         Constants$root.C_CHAR$LAYOUT.withName("AFPointMode"),
         Constants$root.C_CHAR$LAYOUT.withName("MultiExposure"),
         Constants$root.C_SHORT$LAYOUT.withName("Quality")
-    );
+    ).withName("libraw_pentax_makernotes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_pentax_makernotes_t.$struct$LAYOUT;
     }
@@ -39,10 +56,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle AFPointSelected_Area$VH() {
         return libraw_pentax_makernotes_t.AFPointSelected_Area$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AFPointSelected_Area;
+     * }
+     */
     public static short AFPointSelected_Area$get(MemorySegment seg) {
         return (short)libraw_pentax_makernotes_t.AFPointSelected_Area$VH.get(seg);
     }
-    public static void AFPointSelected_Area$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AFPointSelected_Area;
+     * }
+     */
+    public static void AFPointSelected_Area$set(MemorySegment seg, short x) {
         libraw_pentax_makernotes_t.AFPointSelected_Area$VH.set(seg, x);
     }
     public static short AFPointSelected_Area$get(MemorySegment seg, long index) {
@@ -55,10 +84,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle AFPointsInFocus_version$VH() {
         return libraw_pentax_makernotes_t.AFPointsInFocus_version$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int AFPointsInFocus_version;
+     * }
+     */
     public static int AFPointsInFocus_version$get(MemorySegment seg) {
         return (int)libraw_pentax_makernotes_t.AFPointsInFocus_version$VH.get(seg);
     }
-    public static void AFPointsInFocus_version$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int AFPointsInFocus_version;
+     * }
+     */
+    public static void AFPointsInFocus_version$set(MemorySegment seg, int x) {
         libraw_pentax_makernotes_t.AFPointsInFocus_version$VH.set(seg, x);
     }
     public static int AFPointsInFocus_version$get(MemorySegment seg, long index) {
@@ -71,10 +112,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle AFPointsInFocus$VH() {
         return libraw_pentax_makernotes_t.AFPointsInFocus$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int AFPointsInFocus;
+     * }
+     */
     public static int AFPointsInFocus$get(MemorySegment seg) {
         return (int)libraw_pentax_makernotes_t.AFPointsInFocus$VH.get(seg);
     }
-    public static void AFPointsInFocus$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int AFPointsInFocus;
+     * }
+     */
+    public static void AFPointsInFocus$set(MemorySegment seg, int x) {
         libraw_pentax_makernotes_t.AFPointsInFocus$VH.set(seg, x);
     }
     public static int AFPointsInFocus$get(MemorySegment seg, long index) {
@@ -87,10 +140,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle FocusPosition$VH() {
         return libraw_pentax_makernotes_t.FocusPosition$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FocusPosition;
+     * }
+     */
     public static short FocusPosition$get(MemorySegment seg) {
         return (short)libraw_pentax_makernotes_t.FocusPosition$VH.get(seg);
     }
-    public static void FocusPosition$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FocusPosition;
+     * }
+     */
+    public static void FocusPosition$set(MemorySegment seg, short x) {
         libraw_pentax_makernotes_t.FocusPosition$VH.set(seg, x);
     }
     public static short FocusPosition$get(MemorySegment seg, long index) {
@@ -103,10 +168,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle AFAdjustment$VH() {
         return libraw_pentax_makernotes_t.AFAdjustment$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short AFAdjustment;
+     * }
+     */
     public static short AFAdjustment$get(MemorySegment seg) {
         return (short)libraw_pentax_makernotes_t.AFAdjustment$VH.get(seg);
     }
-    public static void AFAdjustment$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short AFAdjustment;
+     * }
+     */
+    public static void AFAdjustment$set(MemorySegment seg, short x) {
         libraw_pentax_makernotes_t.AFAdjustment$VH.set(seg, x);
     }
     public static short AFAdjustment$get(MemorySegment seg, long index) {
@@ -119,10 +196,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle AFPointMode$VH() {
         return libraw_pentax_makernotes_t.AFPointMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char AFPointMode;
+     * }
+     */
     public static byte AFPointMode$get(MemorySegment seg) {
         return (byte)libraw_pentax_makernotes_t.AFPointMode$VH.get(seg);
     }
-    public static void AFPointMode$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char AFPointMode;
+     * }
+     */
+    public static void AFPointMode$set(MemorySegment seg, byte x) {
         libraw_pentax_makernotes_t.AFPointMode$VH.set(seg, x);
     }
     public static byte AFPointMode$get(MemorySegment seg, long index) {
@@ -135,10 +224,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle MultiExposure$VH() {
         return libraw_pentax_makernotes_t.MultiExposure$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char MultiExposure;
+     * }
+     */
     public static byte MultiExposure$get(MemorySegment seg) {
         return (byte)libraw_pentax_makernotes_t.MultiExposure$VH.get(seg);
     }
-    public static void MultiExposure$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char MultiExposure;
+     * }
+     */
+    public static void MultiExposure$set(MemorySegment seg, byte x) {
         libraw_pentax_makernotes_t.MultiExposure$VH.set(seg, x);
     }
     public static byte MultiExposure$get(MemorySegment seg, long index) {
@@ -151,10 +252,22 @@ public class libraw_pentax_makernotes_t {
     public static VarHandle Quality$VH() {
         return libraw_pentax_makernotes_t.Quality$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short Quality;
+     * }
+     */
     public static short Quality$get(MemorySegment seg) {
         return (short)libraw_pentax_makernotes_t.Quality$VH.get(seg);
     }
-    public static void Quality$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short Quality;
+     * }
+     */
+    public static void Quality$set(MemorySegment seg, short x) {
         libraw_pentax_makernotes_t.Quality$VH.set(seg, x);
     }
     public static short Quality$get(MemorySegment seg, long index) {
@@ -165,10 +278,10 @@ public class libraw_pentax_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -7,9 +7,21 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct fuji_compressed_params {
+ *     struct fuji_q_table qt[4];
+ *     void* buf;
+ *     int max_bits;
+ *     int min_value;
+ *     int max_value;
+ *     unsigned short line_width;
+ * };
+ * }
+ */
 public class fuji_compressed_params {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
             Constants$root.C_POINTER$LAYOUT.withName("q_table"),
             Constants$root.C_LONG$LAYOUT.withName("raw_bits"),
@@ -36,26 +48,50 @@ public class fuji_compressed_params {
     public static VarHandle buf$VH() {
         return fuji_compressed_params.buf$VH;
     }
-    public static MemoryAddress buf$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* buf;
+     * }
+     */
+    public static MemorySegment buf$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)fuji_compressed_params.buf$VH.get(seg);
     }
-    public static void buf$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* buf;
+     * }
+     */
+    public static void buf$set(MemorySegment seg, MemorySegment x) {
         fuji_compressed_params.buf$VH.set(seg, x);
     }
-    public static MemoryAddress buf$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)fuji_compressed_params.buf$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment buf$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)fuji_compressed_params.buf$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void buf$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void buf$set(MemorySegment seg, long index, MemorySegment x) {
         fuji_compressed_params.buf$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle max_bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max_bits"));
     public static VarHandle max_bits$VH() {
         return fuji_compressed_params.max_bits$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int max_bits;
+     * }
+     */
     public static int max_bits$get(MemorySegment seg) {
         return (int)fuji_compressed_params.max_bits$VH.get(seg);
     }
-    public static void max_bits$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int max_bits;
+     * }
+     */
+    public static void max_bits$set(MemorySegment seg, int x) {
         fuji_compressed_params.max_bits$VH.set(seg, x);
     }
     public static int max_bits$get(MemorySegment seg, long index) {
@@ -68,10 +104,22 @@ public class fuji_compressed_params {
     public static VarHandle min_value$VH() {
         return fuji_compressed_params.min_value$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int min_value;
+     * }
+     */
     public static int min_value$get(MemorySegment seg) {
         return (int)fuji_compressed_params.min_value$VH.get(seg);
     }
-    public static void min_value$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int min_value;
+     * }
+     */
+    public static void min_value$set(MemorySegment seg, int x) {
         fuji_compressed_params.min_value$VH.set(seg, x);
     }
     public static int min_value$get(MemorySegment seg, long index) {
@@ -84,10 +132,22 @@ public class fuji_compressed_params {
     public static VarHandle max_value$VH() {
         return fuji_compressed_params.max_value$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int max_value;
+     * }
+     */
     public static int max_value$get(MemorySegment seg) {
         return (int)fuji_compressed_params.max_value$VH.get(seg);
     }
-    public static void max_value$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int max_value;
+     * }
+     */
+    public static void max_value$set(MemorySegment seg, int x) {
         fuji_compressed_params.max_value$VH.set(seg, x);
     }
     public static int max_value$get(MemorySegment seg, long index) {
@@ -100,10 +160,22 @@ public class fuji_compressed_params {
     public static VarHandle line_width$VH() {
         return fuji_compressed_params.line_width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short line_width;
+     * }
+     */
     public static short line_width$get(MemorySegment seg) {
         return (short)fuji_compressed_params.line_width$VH.get(seg);
     }
-    public static void line_width$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short line_width;
+     * }
+     */
+    public static void line_width$set(MemorySegment seg, short x) {
         fuji_compressed_params.line_width$VH.set(seg, x);
     }
     public static short line_width$get(MemorySegment seg, long index) {
@@ -114,10 +186,10 @@ public class fuji_compressed_params {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -7,9 +7,32 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_iparams_t {
+ *     char guard[4];
+ *     char make[64];
+ *     char model[64];
+ *     char software[64];
+ *     char normalized_make[64];
+ *     char normalized_model[64];
+ *     unsigned int maker_index;
+ *     unsigned int raw_count;
+ *     unsigned int dng_version;
+ *     unsigned int is_foveon;
+ *     int colors;
+ *     unsigned int filters;
+ *     char  xtrans[6][6];
+ *     char  xtrans_abs[6][6];
+ *     char cdesc[5];
+ *     unsigned int xmplen;
+ *     char* xmpdata;
+ * };
+ * }
+ */
 public class libraw_iparams_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("guard"),
         MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("make"),
         MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model"),
@@ -28,7 +51,7 @@ public class libraw_iparams_t {
         MemoryLayout.paddingLayout(24),
         Constants$root.C_INT$LAYOUT.withName("xmplen"),
         Constants$root.C_POINTER$LAYOUT.withName("xmpdata")
-    );
+    ).withName("libraw_iparams_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_iparams_t.$struct$LAYOUT;
     }
@@ -54,10 +77,22 @@ public class libraw_iparams_t {
     public static VarHandle maker_index$VH() {
         return libraw_iparams_t.maker_index$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int maker_index;
+     * }
+     */
     public static int maker_index$get(MemorySegment seg) {
         return (int)libraw_iparams_t.maker_index$VH.get(seg);
     }
-    public static void maker_index$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int maker_index;
+     * }
+     */
+    public static void maker_index$set(MemorySegment seg, int x) {
         libraw_iparams_t.maker_index$VH.set(seg, x);
     }
     public static int maker_index$get(MemorySegment seg, long index) {
@@ -70,10 +105,22 @@ public class libraw_iparams_t {
     public static VarHandle raw_count$VH() {
         return libraw_iparams_t.raw_count$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int raw_count;
+     * }
+     */
     public static int raw_count$get(MemorySegment seg) {
         return (int)libraw_iparams_t.raw_count$VH.get(seg);
     }
-    public static void raw_count$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int raw_count;
+     * }
+     */
+    public static void raw_count$set(MemorySegment seg, int x) {
         libraw_iparams_t.raw_count$VH.set(seg, x);
     }
     public static int raw_count$get(MemorySegment seg, long index) {
@@ -86,10 +133,22 @@ public class libraw_iparams_t {
     public static VarHandle dng_version$VH() {
         return libraw_iparams_t.dng_version$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int dng_version;
+     * }
+     */
     public static int dng_version$get(MemorySegment seg) {
         return (int)libraw_iparams_t.dng_version$VH.get(seg);
     }
-    public static void dng_version$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int dng_version;
+     * }
+     */
+    public static void dng_version$set(MemorySegment seg, int x) {
         libraw_iparams_t.dng_version$VH.set(seg, x);
     }
     public static int dng_version$get(MemorySegment seg, long index) {
@@ -102,10 +161,22 @@ public class libraw_iparams_t {
     public static VarHandle is_foveon$VH() {
         return libraw_iparams_t.is_foveon$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int is_foveon;
+     * }
+     */
     public static int is_foveon$get(MemorySegment seg) {
         return (int)libraw_iparams_t.is_foveon$VH.get(seg);
     }
-    public static void is_foveon$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int is_foveon;
+     * }
+     */
+    public static void is_foveon$set(MemorySegment seg, int x) {
         libraw_iparams_t.is_foveon$VH.set(seg, x);
     }
     public static int is_foveon$get(MemorySegment seg, long index) {
@@ -118,10 +189,22 @@ public class libraw_iparams_t {
     public static VarHandle colors$VH() {
         return libraw_iparams_t.colors$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int colors;
+     * }
+     */
     public static int colors$get(MemorySegment seg) {
         return (int)libraw_iparams_t.colors$VH.get(seg);
     }
-    public static void colors$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int colors;
+     * }
+     */
+    public static void colors$set(MemorySegment seg, int x) {
         libraw_iparams_t.colors$VH.set(seg, x);
     }
     public static int colors$get(MemorySegment seg, long index) {
@@ -134,10 +217,22 @@ public class libraw_iparams_t {
     public static VarHandle filters$VH() {
         return libraw_iparams_t.filters$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int filters;
+     * }
+     */
     public static int filters$get(MemorySegment seg) {
         return (int)libraw_iparams_t.filters$VH.get(seg);
     }
-    public static void filters$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int filters;
+     * }
+     */
+    public static void filters$set(MemorySegment seg, int x) {
         libraw_iparams_t.filters$VH.set(seg, x);
     }
     public static int filters$get(MemorySegment seg, long index) {
@@ -159,10 +254,22 @@ public class libraw_iparams_t {
     public static VarHandle xmplen$VH() {
         return libraw_iparams_t.xmplen$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int xmplen;
+     * }
+     */
     public static int xmplen$get(MemorySegment seg) {
         return (int)libraw_iparams_t.xmplen$VH.get(seg);
     }
-    public static void xmplen$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int xmplen;
+     * }
+     */
+    public static void xmplen$set(MemorySegment seg, int x) {
         libraw_iparams_t.xmplen$VH.set(seg, x);
     }
     public static int xmplen$get(MemorySegment seg, long index) {
@@ -175,24 +282,36 @@ public class libraw_iparams_t {
     public static VarHandle xmpdata$VH() {
         return libraw_iparams_t.xmpdata$VH;
     }
-    public static MemoryAddress xmpdata$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_iparams_t.xmpdata$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * char* xmpdata;
+     * }
+     */
+    public static MemorySegment xmpdata$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_iparams_t.xmpdata$VH.get(seg);
     }
-    public static void xmpdata$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * char* xmpdata;
+     * }
+     */
+    public static void xmpdata$set(MemorySegment seg, MemorySegment x) {
         libraw_iparams_t.xmpdata$VH.set(seg, x);
     }
-    public static MemoryAddress xmpdata$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_iparams_t.xmpdata$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment xmpdata$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_iparams_t.xmpdata$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void xmpdata$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void xmpdata$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_iparams_t.xmpdata$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

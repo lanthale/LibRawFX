@@ -7,9 +7,24 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct ph1_t {
+ *     int format;
+ *     int key_off;
+ *     int tag_21a;
+ *     int t_black;
+ *     int split_col;
+ *     int black_col;
+ *     int split_row;
+ *     int black_row;
+ *     float tag_210;
+ * };
+ * }
+ */
 public class ph1_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_INT$LAYOUT.withName("format"),
         Constants$root.C_INT$LAYOUT.withName("key_off"),
         Constants$root.C_INT$LAYOUT.withName("tag_21a"),
@@ -27,10 +42,22 @@ public class ph1_t {
     public static VarHandle format$VH() {
         return ph1_t.format$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int format;
+     * }
+     */
     public static int format$get(MemorySegment seg) {
         return (int)ph1_t.format$VH.get(seg);
     }
-    public static void format$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int format;
+     * }
+     */
+    public static void format$set(MemorySegment seg, int x) {
         ph1_t.format$VH.set(seg, x);
     }
     public static int format$get(MemorySegment seg, long index) {
@@ -43,10 +70,22 @@ public class ph1_t {
     public static VarHandle key_off$VH() {
         return ph1_t.key_off$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int key_off;
+     * }
+     */
     public static int key_off$get(MemorySegment seg) {
         return (int)ph1_t.key_off$VH.get(seg);
     }
-    public static void key_off$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int key_off;
+     * }
+     */
+    public static void key_off$set(MemorySegment seg, int x) {
         ph1_t.key_off$VH.set(seg, x);
     }
     public static int key_off$get(MemorySegment seg, long index) {
@@ -59,10 +98,22 @@ public class ph1_t {
     public static VarHandle tag_21a$VH() {
         return ph1_t.tag_21a$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int tag_21a;
+     * }
+     */
     public static int tag_21a$get(MemorySegment seg) {
         return (int)ph1_t.tag_21a$VH.get(seg);
     }
-    public static void tag_21a$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int tag_21a;
+     * }
+     */
+    public static void tag_21a$set(MemorySegment seg, int x) {
         ph1_t.tag_21a$VH.set(seg, x);
     }
     public static int tag_21a$get(MemorySegment seg, long index) {
@@ -75,10 +126,22 @@ public class ph1_t {
     public static VarHandle t_black$VH() {
         return ph1_t.t_black$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int t_black;
+     * }
+     */
     public static int t_black$get(MemorySegment seg) {
         return (int)ph1_t.t_black$VH.get(seg);
     }
-    public static void t_black$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int t_black;
+     * }
+     */
+    public static void t_black$set(MemorySegment seg, int x) {
         ph1_t.t_black$VH.set(seg, x);
     }
     public static int t_black$get(MemorySegment seg, long index) {
@@ -91,10 +154,22 @@ public class ph1_t {
     public static VarHandle split_col$VH() {
         return ph1_t.split_col$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int split_col;
+     * }
+     */
     public static int split_col$get(MemorySegment seg) {
         return (int)ph1_t.split_col$VH.get(seg);
     }
-    public static void split_col$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int split_col;
+     * }
+     */
+    public static void split_col$set(MemorySegment seg, int x) {
         ph1_t.split_col$VH.set(seg, x);
     }
     public static int split_col$get(MemorySegment seg, long index) {
@@ -107,10 +182,22 @@ public class ph1_t {
     public static VarHandle black_col$VH() {
         return ph1_t.black_col$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int black_col;
+     * }
+     */
     public static int black_col$get(MemorySegment seg) {
         return (int)ph1_t.black_col$VH.get(seg);
     }
-    public static void black_col$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int black_col;
+     * }
+     */
+    public static void black_col$set(MemorySegment seg, int x) {
         ph1_t.black_col$VH.set(seg, x);
     }
     public static int black_col$get(MemorySegment seg, long index) {
@@ -123,10 +210,22 @@ public class ph1_t {
     public static VarHandle split_row$VH() {
         return ph1_t.split_row$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int split_row;
+     * }
+     */
     public static int split_row$get(MemorySegment seg) {
         return (int)ph1_t.split_row$VH.get(seg);
     }
-    public static void split_row$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int split_row;
+     * }
+     */
+    public static void split_row$set(MemorySegment seg, int x) {
         ph1_t.split_row$VH.set(seg, x);
     }
     public static int split_row$get(MemorySegment seg, long index) {
@@ -139,10 +238,22 @@ public class ph1_t {
     public static VarHandle black_row$VH() {
         return ph1_t.black_row$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int black_row;
+     * }
+     */
     public static int black_row$get(MemorySegment seg) {
         return (int)ph1_t.black_row$VH.get(seg);
     }
-    public static void black_row$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int black_row;
+     * }
+     */
+    public static void black_row$set(MemorySegment seg, int x) {
         ph1_t.black_row$VH.set(seg, x);
     }
     public static int black_row$get(MemorySegment seg, long index) {
@@ -155,10 +266,22 @@ public class ph1_t {
     public static VarHandle tag_210$VH() {
         return ph1_t.tag_210$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float tag_210;
+     * }
+     */
     public static float tag_210$get(MemorySegment seg) {
         return (float)ph1_t.tag_210$VH.get(seg);
     }
-    public static void tag_210$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float tag_210;
+     * }
+     */
+    public static void tag_210$set(MemorySegment seg, float x) {
         ph1_t.tag_210$VH.set(seg, x);
     }
     public static float tag_210$get(MemorySegment seg, long index) {
@@ -169,10 +292,10 @@ public class ph1_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

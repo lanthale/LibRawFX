@@ -7,9 +7,28 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_lensinfo_t {
+ *     float MinFocal;
+ *     float MaxFocal;
+ *     float MaxAp4MinFocal;
+ *     float MaxAp4MaxFocal;
+ *     float EXIF_MaxAp;
+ *     char LensMake[128];
+ *     char Lens[128];
+ *     char LensSerial[128];
+ *     char InternalLensSerial[128];
+ *     unsigned short FocalLengthIn35mmFormat;
+ *     struct libraw_nikonlens_t nikon;
+ *     struct libraw_dnglens_t dng;
+ *     struct libraw_makernotes_lens_t makernotes;
+ * };
+ * }
+ */
 public class libraw_lensinfo_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
         Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
         Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
@@ -74,7 +93,7 @@ public class libraw_lensinfo_t {
             MemoryLayout.paddingLayout(16),
             Constants$root.C_FLOAT$LAYOUT.withName("FocalLengthIn35mmFormat")
         ).withName("makernotes")
-    );
+    ).withName("libraw_lensinfo_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_lensinfo_t.$struct$LAYOUT;
     }
@@ -82,10 +101,22 @@ public class libraw_lensinfo_t {
     public static VarHandle MinFocal$VH() {
         return libraw_lensinfo_t.MinFocal$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float MinFocal;
+     * }
+     */
     public static float MinFocal$get(MemorySegment seg) {
         return (float)libraw_lensinfo_t.MinFocal$VH.get(seg);
     }
-    public static void MinFocal$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float MinFocal;
+     * }
+     */
+    public static void MinFocal$set(MemorySegment seg, float x) {
         libraw_lensinfo_t.MinFocal$VH.set(seg, x);
     }
     public static float MinFocal$get(MemorySegment seg, long index) {
@@ -98,10 +129,22 @@ public class libraw_lensinfo_t {
     public static VarHandle MaxFocal$VH() {
         return libraw_lensinfo_t.MaxFocal$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float MaxFocal;
+     * }
+     */
     public static float MaxFocal$get(MemorySegment seg) {
         return (float)libraw_lensinfo_t.MaxFocal$VH.get(seg);
     }
-    public static void MaxFocal$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float MaxFocal;
+     * }
+     */
+    public static void MaxFocal$set(MemorySegment seg, float x) {
         libraw_lensinfo_t.MaxFocal$VH.set(seg, x);
     }
     public static float MaxFocal$get(MemorySegment seg, long index) {
@@ -114,10 +157,22 @@ public class libraw_lensinfo_t {
     public static VarHandle MaxAp4MinFocal$VH() {
         return libraw_lensinfo_t.MaxAp4MinFocal$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float MaxAp4MinFocal;
+     * }
+     */
     public static float MaxAp4MinFocal$get(MemorySegment seg) {
         return (float)libraw_lensinfo_t.MaxAp4MinFocal$VH.get(seg);
     }
-    public static void MaxAp4MinFocal$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float MaxAp4MinFocal;
+     * }
+     */
+    public static void MaxAp4MinFocal$set(MemorySegment seg, float x) {
         libraw_lensinfo_t.MaxAp4MinFocal$VH.set(seg, x);
     }
     public static float MaxAp4MinFocal$get(MemorySegment seg, long index) {
@@ -130,10 +185,22 @@ public class libraw_lensinfo_t {
     public static VarHandle MaxAp4MaxFocal$VH() {
         return libraw_lensinfo_t.MaxAp4MaxFocal$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float MaxAp4MaxFocal;
+     * }
+     */
     public static float MaxAp4MaxFocal$get(MemorySegment seg) {
         return (float)libraw_lensinfo_t.MaxAp4MaxFocal$VH.get(seg);
     }
-    public static void MaxAp4MaxFocal$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float MaxAp4MaxFocal;
+     * }
+     */
+    public static void MaxAp4MaxFocal$set(MemorySegment seg, float x) {
         libraw_lensinfo_t.MaxAp4MaxFocal$VH.set(seg, x);
     }
     public static float MaxAp4MaxFocal$get(MemorySegment seg, long index) {
@@ -146,10 +213,22 @@ public class libraw_lensinfo_t {
     public static VarHandle EXIF_MaxAp$VH() {
         return libraw_lensinfo_t.EXIF_MaxAp$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * float EXIF_MaxAp;
+     * }
+     */
     public static float EXIF_MaxAp$get(MemorySegment seg) {
         return (float)libraw_lensinfo_t.EXIF_MaxAp$VH.get(seg);
     }
-    public static void EXIF_MaxAp$set( MemorySegment seg, float x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * float EXIF_MaxAp;
+     * }
+     */
+    public static void EXIF_MaxAp$set(MemorySegment seg, float x) {
         libraw_lensinfo_t.EXIF_MaxAp$VH.set(seg, x);
     }
     public static float EXIF_MaxAp$get(MemorySegment seg, long index) {
@@ -174,10 +253,22 @@ public class libraw_lensinfo_t {
     public static VarHandle FocalLengthIn35mmFormat$VH() {
         return libraw_lensinfo_t.FocalLengthIn35mmFormat$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FocalLengthIn35mmFormat;
+     * }
+     */
     public static short FocalLengthIn35mmFormat$get(MemorySegment seg) {
         return (short)libraw_lensinfo_t.FocalLengthIn35mmFormat$VH.get(seg);
     }
-    public static void FocalLengthIn35mmFormat$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FocalLengthIn35mmFormat;
+     * }
+     */
+    public static void FocalLengthIn35mmFormat$set(MemorySegment seg, short x) {
         libraw_lensinfo_t.FocalLengthIn35mmFormat$VH.set(seg, x);
     }
     public static short FocalLengthIn35mmFormat$get(MemorySegment seg, long index) {
@@ -197,10 +288,10 @@ public class libraw_lensinfo_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

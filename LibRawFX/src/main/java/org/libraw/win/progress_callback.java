@@ -7,17 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * int (*progress_callback)(void* data,enum LibRaw_progress stage,int iteration,int expected);
+ * }
+ */
 public interface progress_callback {
 
-    int apply(java.lang.foreign.MemoryAddress data, int stage, int iteration, int expected);
-    static MemorySegment allocate(progress_callback fi, MemorySession session) {
-        return RuntimeHelper.upcallStub(progress_callback.class, fi, constants$1.progress_callback$FUNC, session);
+    int apply(java.lang.foreign.MemorySegment data, int stage, int iteration, int expected);
+    static MemorySegment allocate(progress_callback fi, SegmentScope scope) {
+        return RuntimeHelper.upcallStub(constants$1.progress_callback_UP$MH, fi, constants$1.progress_callback$FUNC, scope);
     }
-    static progress_callback ofAddress(MemoryAddress addr, MemorySession session) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
-        return (java.lang.foreign.MemoryAddress _data, int _stage, int _iteration, int _expected) -> {
+    static progress_callback ofAddress(MemorySegment addr, SegmentScope scope) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+        return (java.lang.foreign.MemorySegment _data, int _stage, int _iteration, int _expected) -> {
             try {
-                return (int)constants$1.progress_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_data, _stage, _iteration, _expected);
+                return (int)constants$1.progress_callback_DOWN$MH.invokeExact(symbol, _data, _stage, _iteration, _expected);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

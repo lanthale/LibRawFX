@@ -7,17 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * void (*data_callback)(void* data,char* file,int offset);
+ * }
+ */
 public interface data_callback {
 
-    void apply(java.lang.foreign.MemoryAddress data, java.lang.foreign.MemoryAddress file, int offset);
-    static MemorySegment allocate(data_callback fi, MemorySession session) {
-        return RuntimeHelper.upcallStub(data_callback.class, fi, constants$0.data_callback$FUNC, session);
+    void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, int offset);
+    static MemorySegment allocate(data_callback fi, SegmentScope scope) {
+        return RuntimeHelper.upcallStub(constants$0.data_callback_UP$MH, fi, constants$0.data_callback$FUNC, scope);
     }
-    static data_callback ofAddress(MemoryAddress addr, MemorySession session) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
-        return (java.lang.foreign.MemoryAddress _data, java.lang.foreign.MemoryAddress _file, int _offset) -> {
+    static data_callback ofAddress(MemorySegment addr, SegmentScope scope) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+        return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, int _offset) -> {
             try {
-                constants$1.data_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_data, (java.lang.foreign.Addressable)_file, _offset);
+                constants$1.data_callback_DOWN$MH.invokeExact(symbol, _data, _file, _offset);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

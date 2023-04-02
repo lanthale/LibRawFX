@@ -7,9 +7,37 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct tiff_hdr {
+ *     unsigned short t_order;
+ *     unsigned short magic;
+ *     int ifd;
+ *     unsigned short pad;
+ *     unsigned short ntag;
+ *     struct libraw_tiff_tag tag[23];
+ *     int nextifd;
+ *     unsigned short pad2;
+ *     unsigned short nexif;
+ *     struct libraw_tiff_tag exif[4];
+ *     unsigned short pad3;
+ *     unsigned short ngps;
+ *     struct libraw_tiff_tag gpst[10];
+ *     short bps[4];
+ *     int rat[10];
+ *     unsigned int gps[26];
+ *     char t_desc[512];
+ *     char t_make[64];
+ *     char t_model[64];
+ *     char soft[32];
+ *     char date[20];
+ *     char t_artist[64];
+ * };
+ * }
+ */
 public class tiff_hdr {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("t_order"),
         Constants$root.C_SHORT$LAYOUT.withName("magic"),
         Constants$root.C_LONG$LAYOUT.withName("ifd"),
@@ -67,10 +95,22 @@ public class tiff_hdr {
     public static VarHandle t_order$VH() {
         return tiff_hdr.t_order$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short t_order;
+     * }
+     */
     public static short t_order$get(MemorySegment seg) {
         return (short)tiff_hdr.t_order$VH.get(seg);
     }
-    public static void t_order$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short t_order;
+     * }
+     */
+    public static void t_order$set(MemorySegment seg, short x) {
         tiff_hdr.t_order$VH.set(seg, x);
     }
     public static short t_order$get(MemorySegment seg, long index) {
@@ -83,10 +123,22 @@ public class tiff_hdr {
     public static VarHandle magic$VH() {
         return tiff_hdr.magic$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short magic;
+     * }
+     */
     public static short magic$get(MemorySegment seg) {
         return (short)tiff_hdr.magic$VH.get(seg);
     }
-    public static void magic$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short magic;
+     * }
+     */
+    public static void magic$set(MemorySegment seg, short x) {
         tiff_hdr.magic$VH.set(seg, x);
     }
     public static short magic$get(MemorySegment seg, long index) {
@@ -99,10 +151,22 @@ public class tiff_hdr {
     public static VarHandle ifd$VH() {
         return tiff_hdr.ifd$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int ifd;
+     * }
+     */
     public static int ifd$get(MemorySegment seg) {
         return (int)tiff_hdr.ifd$VH.get(seg);
     }
-    public static void ifd$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int ifd;
+     * }
+     */
+    public static void ifd$set(MemorySegment seg, int x) {
         tiff_hdr.ifd$VH.set(seg, x);
     }
     public static int ifd$get(MemorySegment seg, long index) {
@@ -115,10 +179,22 @@ public class tiff_hdr {
     public static VarHandle pad$VH() {
         return tiff_hdr.pad$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short pad;
+     * }
+     */
     public static short pad$get(MemorySegment seg) {
         return (short)tiff_hdr.pad$VH.get(seg);
     }
-    public static void pad$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short pad;
+     * }
+     */
+    public static void pad$set(MemorySegment seg, short x) {
         tiff_hdr.pad$VH.set(seg, x);
     }
     public static short pad$get(MemorySegment seg, long index) {
@@ -131,10 +207,22 @@ public class tiff_hdr {
     public static VarHandle ntag$VH() {
         return tiff_hdr.ntag$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ntag;
+     * }
+     */
     public static short ntag$get(MemorySegment seg) {
         return (short)tiff_hdr.ntag$VH.get(seg);
     }
-    public static void ntag$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ntag;
+     * }
+     */
+    public static void ntag$set(MemorySegment seg, short x) {
         tiff_hdr.ntag$VH.set(seg, x);
     }
     public static short ntag$get(MemorySegment seg, long index) {
@@ -150,10 +238,22 @@ public class tiff_hdr {
     public static VarHandle nextifd$VH() {
         return tiff_hdr.nextifd$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int nextifd;
+     * }
+     */
     public static int nextifd$get(MemorySegment seg) {
         return (int)tiff_hdr.nextifd$VH.get(seg);
     }
-    public static void nextifd$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int nextifd;
+     * }
+     */
+    public static void nextifd$set(MemorySegment seg, int x) {
         tiff_hdr.nextifd$VH.set(seg, x);
     }
     public static int nextifd$get(MemorySegment seg, long index) {
@@ -166,10 +266,22 @@ public class tiff_hdr {
     public static VarHandle pad2$VH() {
         return tiff_hdr.pad2$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short pad2;
+     * }
+     */
     public static short pad2$get(MemorySegment seg) {
         return (short)tiff_hdr.pad2$VH.get(seg);
     }
-    public static void pad2$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short pad2;
+     * }
+     */
+    public static void pad2$set(MemorySegment seg, short x) {
         tiff_hdr.pad2$VH.set(seg, x);
     }
     public static short pad2$get(MemorySegment seg, long index) {
@@ -182,10 +294,22 @@ public class tiff_hdr {
     public static VarHandle nexif$VH() {
         return tiff_hdr.nexif$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short nexif;
+     * }
+     */
     public static short nexif$get(MemorySegment seg) {
         return (short)tiff_hdr.nexif$VH.get(seg);
     }
-    public static void nexif$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short nexif;
+     * }
+     */
+    public static void nexif$set(MemorySegment seg, short x) {
         tiff_hdr.nexif$VH.set(seg, x);
     }
     public static short nexif$get(MemorySegment seg, long index) {
@@ -201,10 +325,22 @@ public class tiff_hdr {
     public static VarHandle pad3$VH() {
         return tiff_hdr.pad3$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short pad3;
+     * }
+     */
     public static short pad3$get(MemorySegment seg) {
         return (short)tiff_hdr.pad3$VH.get(seg);
     }
-    public static void pad3$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short pad3;
+     * }
+     */
+    public static void pad3$set(MemorySegment seg, short x) {
         tiff_hdr.pad3$VH.set(seg, x);
     }
     public static short pad3$get(MemorySegment seg, long index) {
@@ -217,10 +353,22 @@ public class tiff_hdr {
     public static VarHandle ngps$VH() {
         return tiff_hdr.ngps$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short ngps;
+     * }
+     */
     public static short ngps$get(MemorySegment seg) {
         return (short)tiff_hdr.ngps$VH.get(seg);
     }
-    public static void ngps$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short ngps;
+     * }
+     */
+    public static void ngps$set(MemorySegment seg, short x) {
         tiff_hdr.ngps$VH.set(seg, x);
     }
     public static short ngps$get(MemorySegment seg, long index) {
@@ -261,10 +409,10 @@ public class tiff_hdr {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

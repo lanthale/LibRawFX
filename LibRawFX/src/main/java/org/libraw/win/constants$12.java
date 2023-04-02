@@ -7,9 +7,57 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$12 {
+final class constants$12 {
 
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.21.0-Snapshot202110");
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$12() {}
+    static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_get_cam_mul$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_cam_mul",
+        constants$12.libraw_get_cam_mul$FUNC
+    );
+    static final FunctionDescriptor libraw_get_pre_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_get_pre_mul$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_pre_mul",
+        constants$12.libraw_get_pre_mul$FUNC
+    );
+    static final FunctionDescriptor libraw_get_rgb_cam$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_get_rgb_cam$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_rgb_cam",
+        constants$12.libraw_get_rgb_cam$FUNC
+    );
+    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_color_maximum",
+        constants$12.libraw_get_color_maximum$FUNC
+    );
+    static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle libraw_set_output_tif$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_output_tif",
+        constants$12.libraw_set_output_tif$FUNC
+    );
+    static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_get_iparams$MH = RuntimeHelper.downcallHandle(
+        "libraw_get_iparams",
+        constants$12.libraw_get_iparams$FUNC
+    );
 }
 
 

@@ -7,17 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * int (*pre_identify_callback)(void* ctx);
+ * }
+ */
 public interface pre_identify_callback {
 
-    int apply(java.lang.foreign.MemoryAddress ctx);
-    static MemorySegment allocate(pre_identify_callback fi, MemorySession session) {
-        return RuntimeHelper.upcallStub(pre_identify_callback.class, fi, constants$1.pre_identify_callback$FUNC, session);
+    int apply(java.lang.foreign.MemorySegment ctx);
+    static MemorySegment allocate(pre_identify_callback fi, SegmentScope scope) {
+        return RuntimeHelper.upcallStub(constants$1.pre_identify_callback_UP$MH, fi, constants$1.pre_identify_callback$FUNC, scope);
     }
-    static pre_identify_callback ofAddress(MemoryAddress addr, MemorySession session) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
-        return (java.lang.foreign.MemoryAddress _ctx) -> {
+    static pre_identify_callback ofAddress(MemorySegment addr, SegmentScope scope) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+        return (java.lang.foreign.MemorySegment _ctx) -> {
             try {
-                return (int)constants$1.pre_identify_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_ctx);
+                return (int)constants$1.pre_identify_callback_DOWN$MH.invokeExact(symbol, _ctx);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

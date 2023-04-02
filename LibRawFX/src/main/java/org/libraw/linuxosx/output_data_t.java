@@ -7,12 +7,20 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct output_data_t {
+ *     int *histogram[8192];
+ *     unsigned int* oprof;
+ * };
+ * }
+ */
 public class output_data_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_POINTER$LAYOUT.withName("histogram"),
         Constants$root.C_POINTER$LAYOUT.withName("oprof")
-    );
+    ).withName("output_data_t");
     public static MemoryLayout $LAYOUT() {
         return output_data_t.$struct$LAYOUT;
     }
@@ -20,40 +28,64 @@ public class output_data_t {
     public static VarHandle histogram$VH() {
         return output_data_t.histogram$VH;
     }
-    public static MemoryAddress histogram$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)output_data_t.histogram$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int *histogram[8192];
+     * }
+     */
+    public static MemorySegment histogram$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)output_data_t.histogram$VH.get(seg);
     }
-    public static void histogram$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int *histogram[8192];
+     * }
+     */
+    public static void histogram$set(MemorySegment seg, MemorySegment x) {
         output_data_t.histogram$VH.set(seg, x);
     }
-    public static MemoryAddress histogram$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)output_data_t.histogram$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment histogram$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)output_data_t.histogram$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void histogram$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void histogram$set(MemorySegment seg, long index, MemorySegment x) {
         output_data_t.histogram$VH.set(seg.asSlice(index*sizeof()), x);
     }
     static final VarHandle oprof$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("oprof"));
     public static VarHandle oprof$VH() {
         return output_data_t.oprof$VH;
     }
-    public static MemoryAddress oprof$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)output_data_t.oprof$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int* oprof;
+     * }
+     */
+    public static MemorySegment oprof$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)output_data_t.oprof$VH.get(seg);
     }
-    public static void oprof$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int* oprof;
+     * }
+     */
+    public static void oprof$set(MemorySegment seg, MemorySegment x) {
         output_data_t.oprof$VH.set(seg, x);
     }
-    public static MemoryAddress oprof$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)output_data_t.oprof$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment oprof$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)output_data_t.oprof$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void oprof$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void oprof$set(MemorySegment seg, long index, MemorySegment x) {
         output_data_t.oprof$VH.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

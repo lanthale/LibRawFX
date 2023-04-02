@@ -7,9 +7,31 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_ricoh_makernotes_t {
+ *     unsigned short AFStatus;
+ *     unsigned int AFAreaXPosition[2];
+ *     unsigned int AFAreaYPosition[2];
+ *     unsigned short AFAreaMode;
+ *     unsigned int SensorWidth;
+ *     unsigned int SensorHeight;
+ *     unsigned int CroppedImageWidth;
+ *     unsigned int CroppedImageHeight;
+ *     unsigned short WideAdapter;
+ *     unsigned short CropMode;
+ *     unsigned short NDFilter;
+ *     unsigned short AutoBracketing;
+ *     unsigned short MacroMode;
+ *     unsigned short FlashMode;
+ *     double FlashExposureComp;
+ *     double ManualFlashOutput;
+ * };
+ * }
+ */
 public class libraw_ricoh_makernotes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("AFStatus"),
         MemoryLayout.paddingLayout(16),
         MemoryLayout.sequenceLayout(2, Constants$root.C_LONG$LAYOUT).withName("AFAreaXPosition"),
@@ -29,7 +51,7 @@ public class libraw_ricoh_makernotes_t {
         MemoryLayout.paddingLayout(32),
         Constants$root.C_DOUBLE$LAYOUT.withName("FlashExposureComp"),
         Constants$root.C_DOUBLE$LAYOUT.withName("ManualFlashOutput")
-    );
+    ).withName("libraw_ricoh_makernotes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_ricoh_makernotes_t.$struct$LAYOUT;
     }
@@ -37,10 +59,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle AFStatus$VH() {
         return libraw_ricoh_makernotes_t.AFStatus$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AFStatus;
+     * }
+     */
     public static short AFStatus$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.AFStatus$VH.get(seg);
     }
-    public static void AFStatus$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AFStatus;
+     * }
+     */
+    public static void AFStatus$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.AFStatus$VH.set(seg, x);
     }
     public static short AFStatus$get(MemorySegment seg, long index) {
@@ -59,10 +93,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle AFAreaMode$VH() {
         return libraw_ricoh_makernotes_t.AFAreaMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AFAreaMode;
+     * }
+     */
     public static short AFAreaMode$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.AFAreaMode$VH.get(seg);
     }
-    public static void AFAreaMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AFAreaMode;
+     * }
+     */
+    public static void AFAreaMode$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.AFAreaMode$VH.set(seg, x);
     }
     public static short AFAreaMode$get(MemorySegment seg, long index) {
@@ -75,10 +121,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle SensorWidth$VH() {
         return libraw_ricoh_makernotes_t.SensorWidth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int SensorWidth;
+     * }
+     */
     public static int SensorWidth$get(MemorySegment seg) {
         return (int)libraw_ricoh_makernotes_t.SensorWidth$VH.get(seg);
     }
-    public static void SensorWidth$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int SensorWidth;
+     * }
+     */
+    public static void SensorWidth$set(MemorySegment seg, int x) {
         libraw_ricoh_makernotes_t.SensorWidth$VH.set(seg, x);
     }
     public static int SensorWidth$get(MemorySegment seg, long index) {
@@ -91,10 +149,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle SensorHeight$VH() {
         return libraw_ricoh_makernotes_t.SensorHeight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int SensorHeight;
+     * }
+     */
     public static int SensorHeight$get(MemorySegment seg) {
         return (int)libraw_ricoh_makernotes_t.SensorHeight$VH.get(seg);
     }
-    public static void SensorHeight$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int SensorHeight;
+     * }
+     */
+    public static void SensorHeight$set(MemorySegment seg, int x) {
         libraw_ricoh_makernotes_t.SensorHeight$VH.set(seg, x);
     }
     public static int SensorHeight$get(MemorySegment seg, long index) {
@@ -107,10 +177,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle CroppedImageWidth$VH() {
         return libraw_ricoh_makernotes_t.CroppedImageWidth$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int CroppedImageWidth;
+     * }
+     */
     public static int CroppedImageWidth$get(MemorySegment seg) {
         return (int)libraw_ricoh_makernotes_t.CroppedImageWidth$VH.get(seg);
     }
-    public static void CroppedImageWidth$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int CroppedImageWidth;
+     * }
+     */
+    public static void CroppedImageWidth$set(MemorySegment seg, int x) {
         libraw_ricoh_makernotes_t.CroppedImageWidth$VH.set(seg, x);
     }
     public static int CroppedImageWidth$get(MemorySegment seg, long index) {
@@ -123,10 +205,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle CroppedImageHeight$VH() {
         return libraw_ricoh_makernotes_t.CroppedImageHeight$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int CroppedImageHeight;
+     * }
+     */
     public static int CroppedImageHeight$get(MemorySegment seg) {
         return (int)libraw_ricoh_makernotes_t.CroppedImageHeight$VH.get(seg);
     }
-    public static void CroppedImageHeight$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int CroppedImageHeight;
+     * }
+     */
+    public static void CroppedImageHeight$set(MemorySegment seg, int x) {
         libraw_ricoh_makernotes_t.CroppedImageHeight$VH.set(seg, x);
     }
     public static int CroppedImageHeight$get(MemorySegment seg, long index) {
@@ -139,10 +233,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle WideAdapter$VH() {
         return libraw_ricoh_makernotes_t.WideAdapter$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short WideAdapter;
+     * }
+     */
     public static short WideAdapter$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.WideAdapter$VH.get(seg);
     }
-    public static void WideAdapter$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short WideAdapter;
+     * }
+     */
+    public static void WideAdapter$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.WideAdapter$VH.set(seg, x);
     }
     public static short WideAdapter$get(MemorySegment seg, long index) {
@@ -155,10 +261,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle CropMode$VH() {
         return libraw_ricoh_makernotes_t.CropMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short CropMode;
+     * }
+     */
     public static short CropMode$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.CropMode$VH.get(seg);
     }
-    public static void CropMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short CropMode;
+     * }
+     */
+    public static void CropMode$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.CropMode$VH.set(seg, x);
     }
     public static short CropMode$get(MemorySegment seg, long index) {
@@ -171,10 +289,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle NDFilter$VH() {
         return libraw_ricoh_makernotes_t.NDFilter$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short NDFilter;
+     * }
+     */
     public static short NDFilter$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.NDFilter$VH.get(seg);
     }
-    public static void NDFilter$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short NDFilter;
+     * }
+     */
+    public static void NDFilter$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.NDFilter$VH.set(seg, x);
     }
     public static short NDFilter$get(MemorySegment seg, long index) {
@@ -187,10 +317,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle AutoBracketing$VH() {
         return libraw_ricoh_makernotes_t.AutoBracketing$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short AutoBracketing;
+     * }
+     */
     public static short AutoBracketing$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.AutoBracketing$VH.get(seg);
     }
-    public static void AutoBracketing$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short AutoBracketing;
+     * }
+     */
+    public static void AutoBracketing$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.AutoBracketing$VH.set(seg, x);
     }
     public static short AutoBracketing$get(MemorySegment seg, long index) {
@@ -203,10 +345,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle MacroMode$VH() {
         return libraw_ricoh_makernotes_t.MacroMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short MacroMode;
+     * }
+     */
     public static short MacroMode$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.MacroMode$VH.get(seg);
     }
-    public static void MacroMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short MacroMode;
+     * }
+     */
+    public static void MacroMode$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.MacroMode$VH.set(seg, x);
     }
     public static short MacroMode$get(MemorySegment seg, long index) {
@@ -219,10 +373,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle FlashMode$VH() {
         return libraw_ricoh_makernotes_t.FlashMode$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short FlashMode;
+     * }
+     */
     public static short FlashMode$get(MemorySegment seg) {
         return (short)libraw_ricoh_makernotes_t.FlashMode$VH.get(seg);
     }
-    public static void FlashMode$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short FlashMode;
+     * }
+     */
+    public static void FlashMode$set(MemorySegment seg, short x) {
         libraw_ricoh_makernotes_t.FlashMode$VH.set(seg, x);
     }
     public static short FlashMode$get(MemorySegment seg, long index) {
@@ -235,10 +401,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle FlashExposureComp$VH() {
         return libraw_ricoh_makernotes_t.FlashExposureComp$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * double FlashExposureComp;
+     * }
+     */
     public static double FlashExposureComp$get(MemorySegment seg) {
         return (double)libraw_ricoh_makernotes_t.FlashExposureComp$VH.get(seg);
     }
-    public static void FlashExposureComp$set( MemorySegment seg, double x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * double FlashExposureComp;
+     * }
+     */
+    public static void FlashExposureComp$set(MemorySegment seg, double x) {
         libraw_ricoh_makernotes_t.FlashExposureComp$VH.set(seg, x);
     }
     public static double FlashExposureComp$get(MemorySegment seg, long index) {
@@ -251,10 +429,22 @@ public class libraw_ricoh_makernotes_t {
     public static VarHandle ManualFlashOutput$VH() {
         return libraw_ricoh_makernotes_t.ManualFlashOutput$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * double ManualFlashOutput;
+     * }
+     */
     public static double ManualFlashOutput$get(MemorySegment seg) {
         return (double)libraw_ricoh_makernotes_t.ManualFlashOutput$VH.get(seg);
     }
-    public static void ManualFlashOutput$set( MemorySegment seg, double x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * double ManualFlashOutput;
+     * }
+     */
+    public static void ManualFlashOutput$set(MemorySegment seg, double x) {
         libraw_ricoh_makernotes_t.ManualFlashOutput$VH.set(seg, x);
     }
     public static double ManualFlashOutput$get(MemorySegment seg, long index) {
@@ -265,10 +455,10 @@ public class libraw_ricoh_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

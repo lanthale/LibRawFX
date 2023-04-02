@@ -7,14 +7,24 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_area_t {
+ *     short t;
+ *     short l;
+ *     short b;
+ *     short r;
+ * };
+ * }
+ */
 public class libraw_area_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_SHORT$LAYOUT.withName("t"),
         Constants$root.C_SHORT$LAYOUT.withName("l"),
         Constants$root.C_SHORT$LAYOUT.withName("b"),
         Constants$root.C_SHORT$LAYOUT.withName("r")
-    );
+    ).withName("libraw_area_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_area_t.$struct$LAYOUT;
     }
@@ -22,10 +32,22 @@ public class libraw_area_t {
     public static VarHandle t$VH() {
         return libraw_area_t.t$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short t;
+     * }
+     */
     public static short t$get(MemorySegment seg) {
         return (short)libraw_area_t.t$VH.get(seg);
     }
-    public static void t$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short t;
+     * }
+     */
+    public static void t$set(MemorySegment seg, short x) {
         libraw_area_t.t$VH.set(seg, x);
     }
     public static short t$get(MemorySegment seg, long index) {
@@ -38,10 +60,22 @@ public class libraw_area_t {
     public static VarHandle l$VH() {
         return libraw_area_t.l$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short l;
+     * }
+     */
     public static short l$get(MemorySegment seg) {
         return (short)libraw_area_t.l$VH.get(seg);
     }
-    public static void l$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short l;
+     * }
+     */
+    public static void l$set(MemorySegment seg, short x) {
         libraw_area_t.l$VH.set(seg, x);
     }
     public static short l$get(MemorySegment seg, long index) {
@@ -54,10 +88,22 @@ public class libraw_area_t {
     public static VarHandle b$VH() {
         return libraw_area_t.b$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short b;
+     * }
+     */
     public static short b$get(MemorySegment seg) {
         return (short)libraw_area_t.b$VH.get(seg);
     }
-    public static void b$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short b;
+     * }
+     */
+    public static void b$set(MemorySegment seg, short x) {
         libraw_area_t.b$VH.set(seg, x);
     }
     public static short b$get(MemorySegment seg, long index) {
@@ -70,10 +116,22 @@ public class libraw_area_t {
     public static VarHandle r$VH() {
         return libraw_area_t.r$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * short r;
+     * }
+     */
     public static short r$get(MemorySegment seg) {
         return (short)libraw_area_t.r$VH.get(seg);
     }
-    public static void r$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * short r;
+     * }
+     */
+    public static void r$set(MemorySegment seg, short x) {
         libraw_area_t.r$VH.set(seg, x);
     }
     public static short r$get(MemorySegment seg, long index) {
@@ -84,10 +142,10 @@ public class libraw_area_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

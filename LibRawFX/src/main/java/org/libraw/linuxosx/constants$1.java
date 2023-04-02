@@ -7,15 +7,17 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$1 {
+final class constants$1 {
 
-    static final FunctionDescriptor data_callback$FUNC = FunctionDescriptor.ofVoid(
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$1() {}
+    static final FunctionDescriptor data_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_INT$LAYOUT
     );
-    static final MethodHandle data_callback$MH = RuntimeHelper.downcallHandle(
-        constants$1.data_callback$FUNC
+    static final MethodHandle data_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$1.data_callback_DOWN$FUNC
     );
     static final FunctionDescriptor default_data_callback$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
@@ -32,14 +34,34 @@ class constants$1 {
         Constants$root.C_INT$LAYOUT,
         Constants$root.C_INT$LAYOUT
     );
-    static final MethodHandle progress_callback$MH = RuntimeHelper.downcallHandle(
-        constants$1.progress_callback$FUNC
+    static final FunctionDescriptor progress_callback_UP$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT
+    );
+    static final MethodHandle progress_callback_UP$MH = RuntimeHelper.upcallHandle(progress_callback.class, "apply", constants$1.progress_callback_UP$FUNC);
+    static final FunctionDescriptor progress_callback_DOWN$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT,
+        Constants$root.C_INT$LAYOUT
+    );
+    static final MethodHandle progress_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$1.progress_callback_DOWN$FUNC
     );
     static final FunctionDescriptor pre_identify_callback$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
         Constants$root.C_POINTER$LAYOUT
     );
-    static final MethodHandle pre_identify_callback$MH = RuntimeHelper.downcallHandle(
-        constants$1.pre_identify_callback$FUNC
+    static final FunctionDescriptor pre_identify_callback_UP$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_identify_callback_UP$MH = RuntimeHelper.upcallHandle(pre_identify_callback.class, "apply", constants$1.pre_identify_callback_UP$FUNC);
+    static final FunctionDescriptor pre_identify_callback_DOWN$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_identify_callback_DOWN$MH = RuntimeHelper.downcallHandle(
+        constants$1.pre_identify_callback_DOWN$FUNC
     );
 }
 

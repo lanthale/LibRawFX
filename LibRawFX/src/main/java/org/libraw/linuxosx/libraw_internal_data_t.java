@@ -7,9 +7,20 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_internal_data_t {
+ *     struct internal_data_t internal_data;
+ *     struct libraw_internal_output_params_t internal_output_params;
+ *     struct output_data_t output_data;
+ *     struct identify_data_t identify_data;
+ *     struct unpacker_data_t unpacker_data;
+ * };
+ * }
+ */
 public class libraw_internal_data_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.structLayout(
             Constants$root.C_POINTER$LAYOUT.withName("input"),
             Constants$root.C_POINTER$LAYOUT.withName("output"),
@@ -97,7 +108,7 @@ public class libraw_internal_data_t {
                 Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
                 Constants$root.C_INT$LAYOUT.withName("MediaType"),
                 MemoryLayout.paddingLayout(32)
-            )).withName("crx_header"),
+            ).withName("crx_data_header_t")).withName("crx_header"),
             Constants$root.C_INT$LAYOUT.withName("crx_track_selected"),
             Constants$root.C_SHORT$LAYOUT.withName("CR3_CTMDtag"),
             Constants$root.C_SHORT$LAYOUT.withName("CR3_Version"),
@@ -112,7 +123,7 @@ public class libraw_internal_data_t {
             Constants$root.C_SHORT$LAYOUT.withName("raw_stride"),
             MemoryLayout.paddingLayout(16)
         ).withName("unpacker_data")
-    );
+    ).withName("libraw_internal_data_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_internal_data_t.$struct$LAYOUT;
     }
@@ -133,10 +144,10 @@ public class libraw_internal_data_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

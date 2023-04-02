@@ -7,56 +7,55 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
-class constants$9 {
+final class constants$9 {
 
-    static final FunctionDescriptor libraw_set_output_bps$FUNC = FunctionDescriptor.ofVoid(
+    // Suppresses default constructor, ensuring non-instantiability.
+    private constants$9() {}
+    static final FunctionDescriptor libraw_dcraw_process$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_dcraw_process$MH = RuntimeHelper.downcallHandle(
+        "libraw_dcraw_process",
+        constants$9.libraw_dcraw_process$FUNC
+    );
+    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
+        "libraw_dcraw_make_mem_image",
+        constants$9.libraw_dcraw_make_mem_image$FUNC
+    );
+    static final FunctionDescriptor libraw_dcraw_make_mem_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_dcraw_make_mem_thumb$MH = RuntimeHelper.downcallHandle(
+        "libraw_dcraw_make_mem_thumb",
+        constants$9.libraw_dcraw_make_mem_thumb$FUNC
+    );
+    static final FunctionDescriptor libraw_dcraw_clear_mem$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle libraw_dcraw_clear_mem$MH = RuntimeHelper.downcallHandle(
+        "libraw_dcraw_clear_mem",
+        constants$9.libraw_dcraw_clear_mem$FUNC
+    );
+    static final FunctionDescriptor libraw_set_demosaic$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_LONG$LAYOUT
     );
-    static final MethodHandle libraw_set_output_bps$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_output_bps",
-        constants$9.libraw_set_output_bps$FUNC
+    static final MethodHandle libraw_set_demosaic$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_demosaic",
+        constants$9.libraw_set_demosaic$FUNC
     );
-    static final FunctionDescriptor libraw_set_gamma$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_gamma$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_gamma",
-        constants$9.libraw_set_gamma$FUNC
-    );
-    static final FunctionDescriptor libraw_set_no_auto_bright$FUNC = FunctionDescriptor.ofVoid(
+    static final FunctionDescriptor libraw_set_output_color$FUNC = FunctionDescriptor.ofVoid(
         Constants$root.C_POINTER$LAYOUT,
         Constants$root.C_LONG$LAYOUT
     );
-    static final MethodHandle libraw_set_no_auto_bright$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_no_auto_bright",
-        constants$9.libraw_set_no_auto_bright$FUNC
-    );
-    static final FunctionDescriptor libraw_set_bright$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_bright$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_bright",
-        constants$9.libraw_set_bright$FUNC
-    );
-    static final FunctionDescriptor libraw_set_highlight$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_highlight$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_highlight",
-        constants$9.libraw_set_highlight$FUNC
-    );
-    static final FunctionDescriptor libraw_set_fbdd_noiserd$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_fbdd_noiserd$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_fbdd_noiserd",
-        constants$9.libraw_set_fbdd_noiserd$FUNC
+    static final MethodHandle libraw_set_output_color$MH = RuntimeHelper.downcallHandle(
+        "libraw_set_output_color",
+        constants$9.libraw_set_output_color$FUNC
     );
 }
 

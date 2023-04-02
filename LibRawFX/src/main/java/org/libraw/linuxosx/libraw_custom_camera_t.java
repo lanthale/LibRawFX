@@ -7,9 +7,29 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_custom_camera_t {
+ *     unsigned int fsize;
+ *     unsigned short rw;
+ *     unsigned short rh;
+ *     unsigned char lm;
+ *     unsigned char tm;
+ *     unsigned char rm;
+ *     unsigned char bm;
+ *     unsigned short lf;
+ *     unsigned char cf;
+ *     unsigned char max;
+ *     unsigned char flags;
+ *     char t_make[10];
+ *     char t_model[20];
+ *     unsigned short offset;
+ * };
+ * }
+ */
 public class libraw_custom_camera_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_INT$LAYOUT.withName("fsize"),
         Constants$root.C_SHORT$LAYOUT.withName("rw"),
         Constants$root.C_SHORT$LAYOUT.withName("rh"),
@@ -26,7 +46,7 @@ public class libraw_custom_camera_t {
         MemoryLayout.paddingLayout(8),
         Constants$root.C_SHORT$LAYOUT.withName("offset"),
         MemoryLayout.paddingLayout(16)
-    );
+    ).withName("libraw_custom_camera_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_custom_camera_t.$struct$LAYOUT;
     }
@@ -34,10 +54,22 @@ public class libraw_custom_camera_t {
     public static VarHandle fsize$VH() {
         return libraw_custom_camera_t.fsize$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int fsize;
+     * }
+     */
     public static int fsize$get(MemorySegment seg) {
         return (int)libraw_custom_camera_t.fsize$VH.get(seg);
     }
-    public static void fsize$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int fsize;
+     * }
+     */
+    public static void fsize$set(MemorySegment seg, int x) {
         libraw_custom_camera_t.fsize$VH.set(seg, x);
     }
     public static int fsize$get(MemorySegment seg, long index) {
@@ -50,10 +82,22 @@ public class libraw_custom_camera_t {
     public static VarHandle rw$VH() {
         return libraw_custom_camera_t.rw$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short rw;
+     * }
+     */
     public static short rw$get(MemorySegment seg) {
         return (short)libraw_custom_camera_t.rw$VH.get(seg);
     }
-    public static void rw$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short rw;
+     * }
+     */
+    public static void rw$set(MemorySegment seg, short x) {
         libraw_custom_camera_t.rw$VH.set(seg, x);
     }
     public static short rw$get(MemorySegment seg, long index) {
@@ -66,10 +110,22 @@ public class libraw_custom_camera_t {
     public static VarHandle rh$VH() {
         return libraw_custom_camera_t.rh$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short rh;
+     * }
+     */
     public static short rh$get(MemorySegment seg) {
         return (short)libraw_custom_camera_t.rh$VH.get(seg);
     }
-    public static void rh$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short rh;
+     * }
+     */
+    public static void rh$set(MemorySegment seg, short x) {
         libraw_custom_camera_t.rh$VH.set(seg, x);
     }
     public static short rh$get(MemorySegment seg, long index) {
@@ -82,10 +138,22 @@ public class libraw_custom_camera_t {
     public static VarHandle lm$VH() {
         return libraw_custom_camera_t.lm$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char lm;
+     * }
+     */
     public static byte lm$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.lm$VH.get(seg);
     }
-    public static void lm$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char lm;
+     * }
+     */
+    public static void lm$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.lm$VH.set(seg, x);
     }
     public static byte lm$get(MemorySegment seg, long index) {
@@ -98,10 +166,22 @@ public class libraw_custom_camera_t {
     public static VarHandle tm$VH() {
         return libraw_custom_camera_t.tm$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char tm;
+     * }
+     */
     public static byte tm$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.tm$VH.get(seg);
     }
-    public static void tm$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char tm;
+     * }
+     */
+    public static void tm$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.tm$VH.set(seg, x);
     }
     public static byte tm$get(MemorySegment seg, long index) {
@@ -114,10 +194,22 @@ public class libraw_custom_camera_t {
     public static VarHandle rm$VH() {
         return libraw_custom_camera_t.rm$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char rm;
+     * }
+     */
     public static byte rm$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.rm$VH.get(seg);
     }
-    public static void rm$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char rm;
+     * }
+     */
+    public static void rm$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.rm$VH.set(seg, x);
     }
     public static byte rm$get(MemorySegment seg, long index) {
@@ -130,10 +222,22 @@ public class libraw_custom_camera_t {
     public static VarHandle bm$VH() {
         return libraw_custom_camera_t.bm$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char bm;
+     * }
+     */
     public static byte bm$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.bm$VH.get(seg);
     }
-    public static void bm$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char bm;
+     * }
+     */
+    public static void bm$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.bm$VH.set(seg, x);
     }
     public static byte bm$get(MemorySegment seg, long index) {
@@ -146,10 +250,22 @@ public class libraw_custom_camera_t {
     public static VarHandle lf$VH() {
         return libraw_custom_camera_t.lf$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short lf;
+     * }
+     */
     public static short lf$get(MemorySegment seg) {
         return (short)libraw_custom_camera_t.lf$VH.get(seg);
     }
-    public static void lf$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short lf;
+     * }
+     */
+    public static void lf$set(MemorySegment seg, short x) {
         libraw_custom_camera_t.lf$VH.set(seg, x);
     }
     public static short lf$get(MemorySegment seg, long index) {
@@ -162,10 +278,22 @@ public class libraw_custom_camera_t {
     public static VarHandle cf$VH() {
         return libraw_custom_camera_t.cf$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char cf;
+     * }
+     */
     public static byte cf$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.cf$VH.get(seg);
     }
-    public static void cf$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char cf;
+     * }
+     */
+    public static void cf$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.cf$VH.set(seg, x);
     }
     public static byte cf$get(MemorySegment seg, long index) {
@@ -178,10 +306,22 @@ public class libraw_custom_camera_t {
     public static VarHandle max$VH() {
         return libraw_custom_camera_t.max$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char max;
+     * }
+     */
     public static byte max$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.max$VH.get(seg);
     }
-    public static void max$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char max;
+     * }
+     */
+    public static void max$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.max$VH.set(seg, x);
     }
     public static byte max$get(MemorySegment seg, long index) {
@@ -194,10 +334,22 @@ public class libraw_custom_camera_t {
     public static VarHandle flags$VH() {
         return libraw_custom_camera_t.flags$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned char flags;
+     * }
+     */
     public static byte flags$get(MemorySegment seg) {
         return (byte)libraw_custom_camera_t.flags$VH.get(seg);
     }
-    public static void flags$set( MemorySegment seg, byte x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned char flags;
+     * }
+     */
+    public static void flags$set(MemorySegment seg, byte x) {
         libraw_custom_camera_t.flags$VH.set(seg, x);
     }
     public static byte flags$get(MemorySegment seg, long index) {
@@ -216,10 +368,22 @@ public class libraw_custom_camera_t {
     public static VarHandle offset$VH() {
         return libraw_custom_camera_t.offset$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short offset;
+     * }
+     */
     public static short offset$get(MemorySegment seg) {
         return (short)libraw_custom_camera_t.offset$VH.get(seg);
     }
-    public static void offset$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short offset;
+     * }
+     */
+    public static void offset$set(MemorySegment seg, short x) {
         libraw_custom_camera_t.offset$VH.set(seg, x);
     }
     public static short offset$get(MemorySegment seg, long index) {
@@ -230,10 +394,10 @@ public class libraw_custom_camera_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

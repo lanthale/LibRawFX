@@ -7,15 +7,26 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_internal_output_params_t {
+ *     unsigned int mix_green;
+ *     unsigned int raw_color;
+ *     unsigned int zero_is_bad;
+ *     unsigned short shrink;
+ *     unsigned short fuji_width;
+ * };
+ * }
+ */
 public class libraw_internal_output_params_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_INT$LAYOUT.withName("mix_green"),
         Constants$root.C_INT$LAYOUT.withName("raw_color"),
         Constants$root.C_INT$LAYOUT.withName("zero_is_bad"),
         Constants$root.C_SHORT$LAYOUT.withName("shrink"),
         Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
-    );
+    ).withName("libraw_internal_output_params_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_internal_output_params_t.$struct$LAYOUT;
     }
@@ -23,10 +34,22 @@ public class libraw_internal_output_params_t {
     public static VarHandle mix_green$VH() {
         return libraw_internal_output_params_t.mix_green$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int mix_green;
+     * }
+     */
     public static int mix_green$get(MemorySegment seg) {
         return (int)libraw_internal_output_params_t.mix_green$VH.get(seg);
     }
-    public static void mix_green$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int mix_green;
+     * }
+     */
+    public static void mix_green$set(MemorySegment seg, int x) {
         libraw_internal_output_params_t.mix_green$VH.set(seg, x);
     }
     public static int mix_green$get(MemorySegment seg, long index) {
@@ -39,10 +62,22 @@ public class libraw_internal_output_params_t {
     public static VarHandle raw_color$VH() {
         return libraw_internal_output_params_t.raw_color$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int raw_color;
+     * }
+     */
     public static int raw_color$get(MemorySegment seg) {
         return (int)libraw_internal_output_params_t.raw_color$VH.get(seg);
     }
-    public static void raw_color$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int raw_color;
+     * }
+     */
+    public static void raw_color$set(MemorySegment seg, int x) {
         libraw_internal_output_params_t.raw_color$VH.set(seg, x);
     }
     public static int raw_color$get(MemorySegment seg, long index) {
@@ -55,10 +90,22 @@ public class libraw_internal_output_params_t {
     public static VarHandle zero_is_bad$VH() {
         return libraw_internal_output_params_t.zero_is_bad$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int zero_is_bad;
+     * }
+     */
     public static int zero_is_bad$get(MemorySegment seg) {
         return (int)libraw_internal_output_params_t.zero_is_bad$VH.get(seg);
     }
-    public static void zero_is_bad$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int zero_is_bad;
+     * }
+     */
+    public static void zero_is_bad$set(MemorySegment seg, int x) {
         libraw_internal_output_params_t.zero_is_bad$VH.set(seg, x);
     }
     public static int zero_is_bad$get(MemorySegment seg, long index) {
@@ -71,10 +118,22 @@ public class libraw_internal_output_params_t {
     public static VarHandle shrink$VH() {
         return libraw_internal_output_params_t.shrink$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short shrink;
+     * }
+     */
     public static short shrink$get(MemorySegment seg) {
         return (short)libraw_internal_output_params_t.shrink$VH.get(seg);
     }
-    public static void shrink$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short shrink;
+     * }
+     */
+    public static void shrink$set(MemorySegment seg, short x) {
         libraw_internal_output_params_t.shrink$VH.set(seg, x);
     }
     public static short shrink$get(MemorySegment seg, long index) {
@@ -87,10 +146,22 @@ public class libraw_internal_output_params_t {
     public static VarHandle fuji_width$VH() {
         return libraw_internal_output_params_t.fuji_width$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short fuji_width;
+     * }
+     */
     public static short fuji_width$get(MemorySegment seg) {
         return (short)libraw_internal_output_params_t.fuji_width$VH.get(seg);
     }
-    public static void fuji_width$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short fuji_width;
+     * }
+     */
+    public static void fuji_width$set(MemorySegment seg, short x) {
         libraw_internal_output_params_t.fuji_width$VH.set(seg, x);
     }
     public static short fuji_width$get(MemorySegment seg, long index) {
@@ -101,10 +172,10 @@ public class libraw_internal_output_params_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

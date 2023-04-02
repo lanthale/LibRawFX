@@ -7,16 +7,27 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_dng_color_t {
+ *     unsigned int parsedfields;
+ *     unsigned short illuminant;
+ *     float  calibration[4][4];
+ *     float  colormatrix[4][3];
+ *     float  forwardmatrix[3][4];
+ * };
+ * }
+ */
 public class libraw_dng_color_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_LONG$LAYOUT.withName("parsedfields"),
         Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
         MemoryLayout.paddingLayout(16),
         MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
         MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
         MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-    );
+    ).withName("libraw_dng_color_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_dng_color_t.$struct$LAYOUT;
     }
@@ -24,10 +35,22 @@ public class libraw_dng_color_t {
     public static VarHandle parsedfields$VH() {
         return libraw_dng_color_t.parsedfields$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned int parsedfields;
+     * }
+     */
     public static int parsedfields$get(MemorySegment seg) {
         return (int)libraw_dng_color_t.parsedfields$VH.get(seg);
     }
-    public static void parsedfields$set( MemorySegment seg, int x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned int parsedfields;
+     * }
+     */
+    public static void parsedfields$set(MemorySegment seg, int x) {
         libraw_dng_color_t.parsedfields$VH.set(seg, x);
     }
     public static int parsedfields$get(MemorySegment seg, long index) {
@@ -40,10 +63,22 @@ public class libraw_dng_color_t {
     public static VarHandle illuminant$VH() {
         return libraw_dng_color_t.illuminant$VH;
     }
+    /**
+     * Getter for field:
+     * {@snippet :
+     * unsigned short illuminant;
+     * }
+     */
     public static short illuminant$get(MemorySegment seg) {
         return (short)libraw_dng_color_t.illuminant$VH.get(seg);
     }
-    public static void illuminant$set( MemorySegment seg, short x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * unsigned short illuminant;
+     * }
+     */
+    public static void illuminant$set(MemorySegment seg, short x) {
         libraw_dng_color_t.illuminant$VH.set(seg, x);
     }
     public static short illuminant$get(MemorySegment seg, long index) {
@@ -63,10 +98,10 @@ public class libraw_dng_color_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -7,17 +7,22 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * void (*process_step_callback)(void* ctx);
+ * }
+ */
 public interface process_step_callback {
 
-    void apply(java.lang.foreign.MemoryAddress ctx);
-    static MemorySegment allocate(process_step_callback fi, MemorySession session) {
-        return RuntimeHelper.upcallStub(process_step_callback.class, fi, constants$2.process_step_callback$FUNC, session);
+    void apply(java.lang.foreign.MemorySegment ctx);
+    static MemorySegment allocate(process_step_callback fi, SegmentScope scope) {
+        return RuntimeHelper.upcallStub(constants$2.process_step_callback_UP$MH, fi, constants$2.process_step_callback$FUNC, scope);
     }
-    static process_step_callback ofAddress(MemoryAddress addr, MemorySession session) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr, 0, session);
-        return (java.lang.foreign.MemoryAddress _ctx) -> {
+    static process_step_callback ofAddress(MemorySegment addr, SegmentScope scope) {
+        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+        return (java.lang.foreign.MemorySegment _ctx) -> {
             try {
-                constants$2.process_step_callback$MH.invokeExact((Addressable)symbol, (java.lang.foreign.Addressable)_ctx);
+                constants$2.process_step_callback_DOWN$MH.invokeExact(symbol, _ctx);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

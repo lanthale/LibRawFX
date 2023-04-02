@@ -7,9 +7,28 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_makernotes_t {
+ *     struct libraw_canon_makernotes_t canon;
+ *     struct libraw_nikon_makernotes_t nikon;
+ *     struct libraw_hasselblad_makernotes_t hasselblad;
+ *     struct libraw_fuji_info_t fuji;
+ *     struct libraw_olympus_makernotes_t olympus;
+ *     struct libraw_sony_info_t sony;
+ *     struct libraw_kodak_makernotes_t kodak;
+ *     struct libraw_panasonic_makernotes_t panasonic;
+ *     struct libraw_pentax_makernotes_t pentax;
+ *     struct libraw_p1_makernotes_t phaseone;
+ *     struct libraw_ricoh_makernotes_t ricoh;
+ *     struct libraw_samsung_makernotes_t samsung;
+ *     struct libraw_metadata_common_t common;
+ * };
+ * }
+ */
 public class libraw_makernotes_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         MemoryLayout.structLayout(
             Constants$root.C_LONG$LAYOUT.withName("ColorDataVer"),
             Constants$root.C_LONG$LAYOUT.withName("ColorDataSubVer"),
@@ -414,11 +433,11 @@ public class libraw_makernotes_t {
                 Constants$root.C_LONG$LAYOUT.withName("AFInfoData_version"),
                 Constants$root.C_LONG$LAYOUT.withName("AFInfoData_length"),
                 Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
-            )).withName("afdata"),
+            ).withName("libraw_afinfo_item_t")).withName("afdata"),
             Constants$root.C_LONG$LAYOUT.withName("afcount"),
             MemoryLayout.paddingLayout(32)
         ).withName("common")
-    );
+    ).withName("libraw_makernotes_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_makernotes_t.$struct$LAYOUT;
     }
@@ -463,10 +482,10 @@ public class libraw_makernotes_t {
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

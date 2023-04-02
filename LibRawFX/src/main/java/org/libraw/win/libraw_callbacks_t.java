@@ -7,9 +7,34 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
+/**
+ * {@snippet :
+ * struct libraw_callbacks_t {
+ *     void (*mem_cb)(void*,char*,char*);
+ *     void* memcb_data;
+ *     void (*data_cb)(void*,char*,int);
+ *     void* datacb_data;
+ *     int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+ *     void* progresscb_data;
+ *     void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+ *     void* exifparser_data;
+ *     int (*pre_identify_cb)(void*);
+ *     void (*post_identify_cb)(void*);
+ *     void (*pre_subtractblack_cb)(void*);
+ *     void (*pre_scalecolors_cb)(void*);
+ *     void (*pre_preinterpolate_cb)(void*);
+ *     void (*pre_interpolate_cb)(void*);
+ *     void (*interpolate_bayer_cb)(void*);
+ *     void (*interpolate_xtrans_cb)(void*);
+ *     void (*post_interpolate_cb)(void*);
+ *     void (*pre_converttorgb_cb)(void*);
+ *     void (*post_converttorgb_cb)(void*);
+ * };
+ * }
+ */
 public class libraw_callbacks_t {
 
-    static final  GroupLayout $struct$LAYOUT = MemoryLayout.structLayout(
+    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
         Constants$root.C_POINTER$LAYOUT.withName("mem_cb"),
         Constants$root.C_POINTER$LAYOUT.withName("memcb_data"),
         Constants$root.C_POINTER$LAYOUT.withName("data_cb"),
@@ -29,365 +54,1172 @@ public class libraw_callbacks_t {
         Constants$root.C_POINTER$LAYOUT.withName("post_interpolate_cb"),
         Constants$root.C_POINTER$LAYOUT.withName("pre_converttorgb_cb"),
         Constants$root.C_POINTER$LAYOUT.withName("post_converttorgb_cb")
-    );
+    ).withName("libraw_callbacks_t");
     public static MemoryLayout $LAYOUT() {
         return libraw_callbacks_t.$struct$LAYOUT;
     }
+    static final FunctionDescriptor mem_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor mem_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle mem_cb_UP$MH = RuntimeHelper.upcallHandle(mem_cb.class, "apply", libraw_callbacks_t.mem_cb_UP$FUNC);
+    static final FunctionDescriptor mem_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle mem_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.mem_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*mem_cb)(void*,char*,char*);
+     * }
+     */
+    public interface mem_cb {
+
+        void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, java.lang.foreign.MemorySegment where);
+        static MemorySegment allocate(mem_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.mem_cb_UP$MH, fi, libraw_callbacks_t.mem_cb$FUNC, scope);
+        }
+        static mem_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, java.lang.foreign.MemorySegment _where) -> {
+                try {
+                    libraw_callbacks_t.mem_cb_DOWN$MH.invokeExact(symbol, _data, _file, _where);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle mem_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("mem_cb"));
     public static VarHandle mem_cb$VH() {
         return libraw_callbacks_t.mem_cb$VH;
     }
-    public static MemoryAddress mem_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.mem_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*mem_cb)(void*,char*,char*);
+     * }
+     */
+    public static MemorySegment mem_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.mem_cb$VH.get(seg);
     }
-    public static void mem_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*mem_cb)(void*,char*,char*);
+     * }
+     */
+    public static void mem_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.mem_cb$VH.set(seg, x);
     }
-    public static MemoryAddress mem_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.mem_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment mem_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.mem_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void mem_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void mem_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.mem_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static memory_callback mem_cb (MemorySegment segment, MemorySession session) {
-        return memory_callback.ofAddress(mem_cb$get(segment), session);
+    public static mem_cb mem_cb(MemorySegment segment, SegmentScope scope) {
+        return mem_cb.ofAddress(mem_cb$get(segment), scope);
     }
     static final VarHandle memcb_data$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("memcb_data"));
     public static VarHandle memcb_data$VH() {
         return libraw_callbacks_t.memcb_data$VH;
     }
-    public static MemoryAddress memcb_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.memcb_data$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* memcb_data;
+     * }
+     */
+    public static MemorySegment memcb_data$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.memcb_data$VH.get(seg);
     }
-    public static void memcb_data$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* memcb_data;
+     * }
+     */
+    public static void memcb_data$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.memcb_data$VH.set(seg, x);
     }
-    public static MemoryAddress memcb_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.memcb_data$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment memcb_data$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.memcb_data$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void memcb_data$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void memcb_data$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.memcb_data$VH.set(seg.asSlice(index*sizeof()), x);
     }
+    static final FunctionDescriptor data_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final FunctionDescriptor data_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle data_cb_UP$MH = RuntimeHelper.upcallHandle(data_cb.class, "apply", libraw_callbacks_t.data_cb_UP$FUNC);
+    static final FunctionDescriptor data_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle data_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.data_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*data_cb)(void*,char*,int);
+     * }
+     */
+    public interface data_cb {
+
+        void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, int offset);
+        static MemorySegment allocate(data_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.data_cb_UP$MH, fi, libraw_callbacks_t.data_cb$FUNC, scope);
+        }
+        static data_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, int _offset) -> {
+                try {
+                    libraw_callbacks_t.data_cb_DOWN$MH.invokeExact(symbol, _data, _file, _offset);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle data_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("data_cb"));
     public static VarHandle data_cb$VH() {
         return libraw_callbacks_t.data_cb$VH;
     }
-    public static MemoryAddress data_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.data_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*data_cb)(void*,char*,int);
+     * }
+     */
+    public static MemorySegment data_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.data_cb$VH.get(seg);
     }
-    public static void data_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*data_cb)(void*,char*,int);
+     * }
+     */
+    public static void data_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.data_cb$VH.set(seg, x);
     }
-    public static MemoryAddress data_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.data_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment data_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.data_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void data_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void data_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.data_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static data_callback data_cb (MemorySegment segment, MemorySession session) {
-        return data_callback.ofAddress(data_cb$get(segment), session);
+    public static data_cb data_cb(MemorySegment segment, SegmentScope scope) {
+        return data_cb.ofAddress(data_cb$get(segment), scope);
     }
     static final VarHandle datacb_data$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("datacb_data"));
     public static VarHandle datacb_data$VH() {
         return libraw_callbacks_t.datacb_data$VH;
     }
-    public static MemoryAddress datacb_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.datacb_data$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* datacb_data;
+     * }
+     */
+    public static MemorySegment datacb_data$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.datacb_data$VH.get(seg);
     }
-    public static void datacb_data$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* datacb_data;
+     * }
+     */
+    public static void datacb_data$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.datacb_data$VH.set(seg, x);
     }
-    public static MemoryAddress datacb_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.datacb_data$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment datacb_data$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.datacb_data$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void datacb_data$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void datacb_data$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.datacb_data$VH.set(seg.asSlice(index*sizeof()), x);
     }
+    static final FunctionDescriptor progress_cb$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final FunctionDescriptor progress_cb_UP$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle progress_cb_UP$MH = RuntimeHelper.upcallHandle(progress_cb.class, "apply", libraw_callbacks_t.progress_cb_UP$FUNC);
+    static final FunctionDescriptor progress_cb_DOWN$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT
+    );
+    static final MethodHandle progress_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.progress_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+     * }
+     */
+    public interface progress_cb {
+
+        int apply(java.lang.foreign.MemorySegment data, int stage, int iteration, int expected);
+        static MemorySegment allocate(progress_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.progress_cb_UP$MH, fi, libraw_callbacks_t.progress_cb$FUNC, scope);
+        }
+        static progress_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _data, int _stage, int _iteration, int _expected) -> {
+                try {
+                    return (int)libraw_callbacks_t.progress_cb_DOWN$MH.invokeExact(symbol, _data, _stage, _iteration, _expected);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle progress_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("progress_cb"));
     public static VarHandle progress_cb$VH() {
         return libraw_callbacks_t.progress_cb$VH;
     }
-    public static MemoryAddress progress_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.progress_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+     * }
+     */
+    public static MemorySegment progress_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.progress_cb$VH.get(seg);
     }
-    public static void progress_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+     * }
+     */
+    public static void progress_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.progress_cb$VH.set(seg, x);
     }
-    public static MemoryAddress progress_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.progress_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment progress_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.progress_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void progress_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void progress_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.progress_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static progress_callback progress_cb (MemorySegment segment, MemorySession session) {
-        return progress_callback.ofAddress(progress_cb$get(segment), session);
+    public static progress_cb progress_cb(MemorySegment segment, SegmentScope scope) {
+        return progress_cb.ofAddress(progress_cb$get(segment), scope);
     }
     static final VarHandle progresscb_data$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("progresscb_data"));
     public static VarHandle progresscb_data$VH() {
         return libraw_callbacks_t.progresscb_data$VH;
     }
-    public static MemoryAddress progresscb_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.progresscb_data$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* progresscb_data;
+     * }
+     */
+    public static MemorySegment progresscb_data$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.progresscb_data$VH.get(seg);
     }
-    public static void progresscb_data$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* progresscb_data;
+     * }
+     */
+    public static void progresscb_data$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.progresscb_data$VH.set(seg, x);
     }
-    public static MemoryAddress progresscb_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.progresscb_data$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment progresscb_data$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.progresscb_data$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void progresscb_data$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void progresscb_data$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.progresscb_data$VH.set(seg.asSlice(index*sizeof()), x);
     }
+    static final FunctionDescriptor exif_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final FunctionDescriptor exif_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final MethodHandle exif_cb_UP$MH = RuntimeHelper.upcallHandle(exif_cb.class, "apply", libraw_callbacks_t.exif_cb_UP$FUNC);
+    static final FunctionDescriptor exif_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT,
+        Constants$root.C_LONG_LONG$LAYOUT
+    );
+    static final MethodHandle exif_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.exif_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+     * }
+     */
+    public interface exif_cb {
+
+        void apply(java.lang.foreign.MemorySegment context, int tag, int type, int len, int ord, java.lang.foreign.MemorySegment ifp, long base);
+        static MemorySegment allocate(exif_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.exif_cb_UP$MH, fi, libraw_callbacks_t.exif_cb$FUNC, scope);
+        }
+        static exif_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _context, int _tag, int _type, int _len, int _ord, java.lang.foreign.MemorySegment _ifp, long _base) -> {
+                try {
+                    libraw_callbacks_t.exif_cb_DOWN$MH.invokeExact(symbol, _context, _tag, _type, _len, _ord, _ifp, _base);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle exif_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exif_cb"));
     public static VarHandle exif_cb$VH() {
         return libraw_callbacks_t.exif_cb$VH;
     }
-    public static MemoryAddress exif_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.exif_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+     * }
+     */
+    public static MemorySegment exif_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.exif_cb$VH.get(seg);
     }
-    public static void exif_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+     * }
+     */
+    public static void exif_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.exif_cb$VH.set(seg, x);
     }
-    public static MemoryAddress exif_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.exif_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment exif_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.exif_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void exif_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void exif_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.exif_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static exif_parser_callback exif_cb (MemorySegment segment, MemorySession session) {
-        return exif_parser_callback.ofAddress(exif_cb$get(segment), session);
+    public static exif_cb exif_cb(MemorySegment segment, SegmentScope scope) {
+        return exif_cb.ofAddress(exif_cb$get(segment), scope);
     }
     static final VarHandle exifparser_data$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("exifparser_data"));
     public static VarHandle exifparser_data$VH() {
         return libraw_callbacks_t.exifparser_data$VH;
     }
-    public static MemoryAddress exifparser_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.exifparser_data$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void* exifparser_data;
+     * }
+     */
+    public static MemorySegment exifparser_data$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.exifparser_data$VH.get(seg);
     }
-    public static void exifparser_data$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void* exifparser_data;
+     * }
+     */
+    public static void exifparser_data$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.exifparser_data$VH.set(seg, x);
     }
-    public static MemoryAddress exifparser_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.exifparser_data$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment exifparser_data$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.exifparser_data$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void exifparser_data$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void exifparser_data$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.exifparser_data$VH.set(seg.asSlice(index*sizeof()), x);
     }
+    static final FunctionDescriptor pre_identify_cb$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor pre_identify_cb_UP$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_identify_cb_UP$MH = RuntimeHelper.upcallHandle(pre_identify_cb.class, "apply", libraw_callbacks_t.pre_identify_cb_UP$FUNC);
+    static final FunctionDescriptor pre_identify_cb_DOWN$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_identify_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.pre_identify_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * int (*pre_identify_cb)(void*);
+     * }
+     */
+    public interface pre_identify_cb {
+
+        int apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(pre_identify_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.pre_identify_cb_UP$MH, fi, libraw_callbacks_t.pre_identify_cb$FUNC, scope);
+        }
+        static pre_identify_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    return (int)libraw_callbacks_t.pre_identify_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle pre_identify_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pre_identify_cb"));
     public static VarHandle pre_identify_cb$VH() {
         return libraw_callbacks_t.pre_identify_cb$VH;
     }
-    public static MemoryAddress pre_identify_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_identify_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * int (*pre_identify_cb)(void*);
+     * }
+     */
+    public static MemorySegment pre_identify_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_identify_cb$VH.get(seg);
     }
-    public static void pre_identify_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * int (*pre_identify_cb)(void*);
+     * }
+     */
+    public static void pre_identify_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.pre_identify_cb$VH.set(seg, x);
     }
-    public static MemoryAddress pre_identify_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_identify_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment pre_identify_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_identify_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void pre_identify_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void pre_identify_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.pre_identify_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static pre_identify_callback pre_identify_cb (MemorySegment segment, MemorySession session) {
-        return pre_identify_callback.ofAddress(pre_identify_cb$get(segment), session);
+    public static pre_identify_cb pre_identify_cb(MemorySegment segment, SegmentScope scope) {
+        return pre_identify_cb.ofAddress(pre_identify_cb$get(segment), scope);
     }
+    static final FunctionDescriptor post_identify_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor post_identify_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_identify_cb_UP$MH = RuntimeHelper.upcallHandle(post_identify_cb.class, "apply", libraw_callbacks_t.post_identify_cb_UP$FUNC);
+    static final FunctionDescriptor post_identify_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_identify_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.post_identify_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*post_identify_cb)(void*);
+     * }
+     */
+    public interface post_identify_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(post_identify_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.post_identify_cb_UP$MH, fi, libraw_callbacks_t.post_identify_cb$FUNC, scope);
+        }
+        static post_identify_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.post_identify_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle post_identify_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("post_identify_cb"));
     public static VarHandle post_identify_cb$VH() {
         return libraw_callbacks_t.post_identify_cb$VH;
     }
-    public static MemoryAddress post_identify_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.post_identify_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*post_identify_cb)(void*);
+     * }
+     */
+    public static MemorySegment post_identify_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.post_identify_cb$VH.get(seg);
     }
-    public static void post_identify_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*post_identify_cb)(void*);
+     * }
+     */
+    public static void post_identify_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.post_identify_cb$VH.set(seg, x);
     }
-    public static MemoryAddress post_identify_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.post_identify_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment post_identify_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.post_identify_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void post_identify_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void post_identify_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.post_identify_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static post_identify_callback post_identify_cb (MemorySegment segment, MemorySession session) {
-        return post_identify_callback.ofAddress(post_identify_cb$get(segment), session);
+    public static post_identify_cb post_identify_cb(MemorySegment segment, SegmentScope scope) {
+        return post_identify_cb.ofAddress(post_identify_cb$get(segment), scope);
     }
+    static final FunctionDescriptor pre_subtractblack_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor pre_subtractblack_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_subtractblack_cb_UP$MH = RuntimeHelper.upcallHandle(pre_subtractblack_cb.class, "apply", libraw_callbacks_t.pre_subtractblack_cb_UP$FUNC);
+    static final FunctionDescriptor pre_subtractblack_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_subtractblack_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.pre_subtractblack_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*pre_subtractblack_cb)(void*);
+     * }
+     */
+    public interface pre_subtractblack_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(pre_subtractblack_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.pre_subtractblack_cb_UP$MH, fi, libraw_callbacks_t.pre_subtractblack_cb$FUNC, scope);
+        }
+        static pre_subtractblack_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.pre_subtractblack_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle pre_subtractblack_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pre_subtractblack_cb"));
     public static VarHandle pre_subtractblack_cb$VH() {
         return libraw_callbacks_t.pre_subtractblack_cb$VH;
     }
-    public static MemoryAddress pre_subtractblack_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_subtractblack_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*pre_subtractblack_cb)(void*);
+     * }
+     */
+    public static MemorySegment pre_subtractblack_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_subtractblack_cb$VH.get(seg);
     }
-    public static void pre_subtractblack_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*pre_subtractblack_cb)(void*);
+     * }
+     */
+    public static void pre_subtractblack_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.pre_subtractblack_cb$VH.set(seg, x);
     }
-    public static MemoryAddress pre_subtractblack_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_subtractblack_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment pre_subtractblack_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_subtractblack_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void pre_subtractblack_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void pre_subtractblack_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.pre_subtractblack_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback pre_subtractblack_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(pre_subtractblack_cb$get(segment), session);
+    public static pre_subtractblack_cb pre_subtractblack_cb(MemorySegment segment, SegmentScope scope) {
+        return pre_subtractblack_cb.ofAddress(pre_subtractblack_cb$get(segment), scope);
     }
+    static final FunctionDescriptor pre_scalecolors_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor pre_scalecolors_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_scalecolors_cb_UP$MH = RuntimeHelper.upcallHandle(pre_scalecolors_cb.class, "apply", libraw_callbacks_t.pre_scalecolors_cb_UP$FUNC);
+    static final FunctionDescriptor pre_scalecolors_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_scalecolors_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.pre_scalecolors_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*pre_scalecolors_cb)(void*);
+     * }
+     */
+    public interface pre_scalecolors_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(pre_scalecolors_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.pre_scalecolors_cb_UP$MH, fi, libraw_callbacks_t.pre_scalecolors_cb$FUNC, scope);
+        }
+        static pre_scalecolors_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.pre_scalecolors_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle pre_scalecolors_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pre_scalecolors_cb"));
     public static VarHandle pre_scalecolors_cb$VH() {
         return libraw_callbacks_t.pre_scalecolors_cb$VH;
     }
-    public static MemoryAddress pre_scalecolors_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_scalecolors_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*pre_scalecolors_cb)(void*);
+     * }
+     */
+    public static MemorySegment pre_scalecolors_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_scalecolors_cb$VH.get(seg);
     }
-    public static void pre_scalecolors_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*pre_scalecolors_cb)(void*);
+     * }
+     */
+    public static void pre_scalecolors_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.pre_scalecolors_cb$VH.set(seg, x);
     }
-    public static MemoryAddress pre_scalecolors_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_scalecolors_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment pre_scalecolors_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_scalecolors_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void pre_scalecolors_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void pre_scalecolors_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.pre_scalecolors_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback pre_scalecolors_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(pre_scalecolors_cb$get(segment), session);
+    public static pre_scalecolors_cb pre_scalecolors_cb(MemorySegment segment, SegmentScope scope) {
+        return pre_scalecolors_cb.ofAddress(pre_scalecolors_cb$get(segment), scope);
     }
+    static final FunctionDescriptor pre_preinterpolate_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor pre_preinterpolate_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_preinterpolate_cb_UP$MH = RuntimeHelper.upcallHandle(pre_preinterpolate_cb.class, "apply", libraw_callbacks_t.pre_preinterpolate_cb_UP$FUNC);
+    static final FunctionDescriptor pre_preinterpolate_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_preinterpolate_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.pre_preinterpolate_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*pre_preinterpolate_cb)(void*);
+     * }
+     */
+    public interface pre_preinterpolate_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(pre_preinterpolate_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.pre_preinterpolate_cb_UP$MH, fi, libraw_callbacks_t.pre_preinterpolate_cb$FUNC, scope);
+        }
+        static pre_preinterpolate_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.pre_preinterpolate_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle pre_preinterpolate_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pre_preinterpolate_cb"));
     public static VarHandle pre_preinterpolate_cb$VH() {
         return libraw_callbacks_t.pre_preinterpolate_cb$VH;
     }
-    public static MemoryAddress pre_preinterpolate_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_preinterpolate_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*pre_preinterpolate_cb)(void*);
+     * }
+     */
+    public static MemorySegment pre_preinterpolate_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_preinterpolate_cb$VH.get(seg);
     }
-    public static void pre_preinterpolate_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*pre_preinterpolate_cb)(void*);
+     * }
+     */
+    public static void pre_preinterpolate_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.pre_preinterpolate_cb$VH.set(seg, x);
     }
-    public static MemoryAddress pre_preinterpolate_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_preinterpolate_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment pre_preinterpolate_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_preinterpolate_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void pre_preinterpolate_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void pre_preinterpolate_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.pre_preinterpolate_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback pre_preinterpolate_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(pre_preinterpolate_cb$get(segment), session);
+    public static pre_preinterpolate_cb pre_preinterpolate_cb(MemorySegment segment, SegmentScope scope) {
+        return pre_preinterpolate_cb.ofAddress(pre_preinterpolate_cb$get(segment), scope);
     }
+    static final FunctionDescriptor pre_interpolate_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor pre_interpolate_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_interpolate_cb_UP$MH = RuntimeHelper.upcallHandle(pre_interpolate_cb.class, "apply", libraw_callbacks_t.pre_interpolate_cb_UP$FUNC);
+    static final FunctionDescriptor pre_interpolate_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_interpolate_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.pre_interpolate_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*pre_interpolate_cb)(void*);
+     * }
+     */
+    public interface pre_interpolate_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(pre_interpolate_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.pre_interpolate_cb_UP$MH, fi, libraw_callbacks_t.pre_interpolate_cb$FUNC, scope);
+        }
+        static pre_interpolate_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.pre_interpolate_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle pre_interpolate_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pre_interpolate_cb"));
     public static VarHandle pre_interpolate_cb$VH() {
         return libraw_callbacks_t.pre_interpolate_cb$VH;
     }
-    public static MemoryAddress pre_interpolate_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_interpolate_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*pre_interpolate_cb)(void*);
+     * }
+     */
+    public static MemorySegment pre_interpolate_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_interpolate_cb$VH.get(seg);
     }
-    public static void pre_interpolate_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*pre_interpolate_cb)(void*);
+     * }
+     */
+    public static void pre_interpolate_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.pre_interpolate_cb$VH.set(seg, x);
     }
-    public static MemoryAddress pre_interpolate_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_interpolate_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment pre_interpolate_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_interpolate_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void pre_interpolate_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void pre_interpolate_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.pre_interpolate_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback pre_interpolate_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(pre_interpolate_cb$get(segment), session);
+    public static pre_interpolate_cb pre_interpolate_cb(MemorySegment segment, SegmentScope scope) {
+        return pre_interpolate_cb.ofAddress(pre_interpolate_cb$get(segment), scope);
     }
+    static final FunctionDescriptor interpolate_bayer_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor interpolate_bayer_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle interpolate_bayer_cb_UP$MH = RuntimeHelper.upcallHandle(interpolate_bayer_cb.class, "apply", libraw_callbacks_t.interpolate_bayer_cb_UP$FUNC);
+    static final FunctionDescriptor interpolate_bayer_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle interpolate_bayer_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.interpolate_bayer_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*interpolate_bayer_cb)(void*);
+     * }
+     */
+    public interface interpolate_bayer_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(interpolate_bayer_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.interpolate_bayer_cb_UP$MH, fi, libraw_callbacks_t.interpolate_bayer_cb$FUNC, scope);
+        }
+        static interpolate_bayer_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.interpolate_bayer_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle interpolate_bayer_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("interpolate_bayer_cb"));
     public static VarHandle interpolate_bayer_cb$VH() {
         return libraw_callbacks_t.interpolate_bayer_cb$VH;
     }
-    public static MemoryAddress interpolate_bayer_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.interpolate_bayer_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*interpolate_bayer_cb)(void*);
+     * }
+     */
+    public static MemorySegment interpolate_bayer_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.interpolate_bayer_cb$VH.get(seg);
     }
-    public static void interpolate_bayer_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*interpolate_bayer_cb)(void*);
+     * }
+     */
+    public static void interpolate_bayer_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.interpolate_bayer_cb$VH.set(seg, x);
     }
-    public static MemoryAddress interpolate_bayer_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.interpolate_bayer_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment interpolate_bayer_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.interpolate_bayer_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void interpolate_bayer_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void interpolate_bayer_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.interpolate_bayer_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback interpolate_bayer_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(interpolate_bayer_cb$get(segment), session);
+    public static interpolate_bayer_cb interpolate_bayer_cb(MemorySegment segment, SegmentScope scope) {
+        return interpolate_bayer_cb.ofAddress(interpolate_bayer_cb$get(segment), scope);
     }
+    static final FunctionDescriptor interpolate_xtrans_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor interpolate_xtrans_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle interpolate_xtrans_cb_UP$MH = RuntimeHelper.upcallHandle(interpolate_xtrans_cb.class, "apply", libraw_callbacks_t.interpolate_xtrans_cb_UP$FUNC);
+    static final FunctionDescriptor interpolate_xtrans_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle interpolate_xtrans_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.interpolate_xtrans_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*interpolate_xtrans_cb)(void*);
+     * }
+     */
+    public interface interpolate_xtrans_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(interpolate_xtrans_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.interpolate_xtrans_cb_UP$MH, fi, libraw_callbacks_t.interpolate_xtrans_cb$FUNC, scope);
+        }
+        static interpolate_xtrans_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.interpolate_xtrans_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle interpolate_xtrans_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("interpolate_xtrans_cb"));
     public static VarHandle interpolate_xtrans_cb$VH() {
         return libraw_callbacks_t.interpolate_xtrans_cb$VH;
     }
-    public static MemoryAddress interpolate_xtrans_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.interpolate_xtrans_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*interpolate_xtrans_cb)(void*);
+     * }
+     */
+    public static MemorySegment interpolate_xtrans_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.interpolate_xtrans_cb$VH.get(seg);
     }
-    public static void interpolate_xtrans_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*interpolate_xtrans_cb)(void*);
+     * }
+     */
+    public static void interpolate_xtrans_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.interpolate_xtrans_cb$VH.set(seg, x);
     }
-    public static MemoryAddress interpolate_xtrans_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.interpolate_xtrans_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment interpolate_xtrans_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.interpolate_xtrans_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void interpolate_xtrans_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void interpolate_xtrans_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.interpolate_xtrans_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback interpolate_xtrans_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(interpolate_xtrans_cb$get(segment), session);
+    public static interpolate_xtrans_cb interpolate_xtrans_cb(MemorySegment segment, SegmentScope scope) {
+        return interpolate_xtrans_cb.ofAddress(interpolate_xtrans_cb$get(segment), scope);
     }
+    static final FunctionDescriptor post_interpolate_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor post_interpolate_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_interpolate_cb_UP$MH = RuntimeHelper.upcallHandle(post_interpolate_cb.class, "apply", libraw_callbacks_t.post_interpolate_cb_UP$FUNC);
+    static final FunctionDescriptor post_interpolate_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_interpolate_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.post_interpolate_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*post_interpolate_cb)(void*);
+     * }
+     */
+    public interface post_interpolate_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(post_interpolate_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.post_interpolate_cb_UP$MH, fi, libraw_callbacks_t.post_interpolate_cb$FUNC, scope);
+        }
+        static post_interpolate_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.post_interpolate_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle post_interpolate_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("post_interpolate_cb"));
     public static VarHandle post_interpolate_cb$VH() {
         return libraw_callbacks_t.post_interpolate_cb$VH;
     }
-    public static MemoryAddress post_interpolate_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.post_interpolate_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*post_interpolate_cb)(void*);
+     * }
+     */
+    public static MemorySegment post_interpolate_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.post_interpolate_cb$VH.get(seg);
     }
-    public static void post_interpolate_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*post_interpolate_cb)(void*);
+     * }
+     */
+    public static void post_interpolate_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.post_interpolate_cb$VH.set(seg, x);
     }
-    public static MemoryAddress post_interpolate_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.post_interpolate_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment post_interpolate_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.post_interpolate_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void post_interpolate_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void post_interpolate_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.post_interpolate_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback post_interpolate_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(post_interpolate_cb$get(segment), session);
+    public static post_interpolate_cb post_interpolate_cb(MemorySegment segment, SegmentScope scope) {
+        return post_interpolate_cb.ofAddress(post_interpolate_cb$get(segment), scope);
     }
+    static final FunctionDescriptor pre_converttorgb_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor pre_converttorgb_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_converttorgb_cb_UP$MH = RuntimeHelper.upcallHandle(pre_converttorgb_cb.class, "apply", libraw_callbacks_t.pre_converttorgb_cb_UP$FUNC);
+    static final FunctionDescriptor pre_converttorgb_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle pre_converttorgb_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.pre_converttorgb_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*pre_converttorgb_cb)(void*);
+     * }
+     */
+    public interface pre_converttorgb_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(pre_converttorgb_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.pre_converttorgb_cb_UP$MH, fi, libraw_callbacks_t.pre_converttorgb_cb$FUNC, scope);
+        }
+        static pre_converttorgb_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.pre_converttorgb_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle pre_converttorgb_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pre_converttorgb_cb"));
     public static VarHandle pre_converttorgb_cb$VH() {
         return libraw_callbacks_t.pre_converttorgb_cb$VH;
     }
-    public static MemoryAddress pre_converttorgb_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_converttorgb_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*pre_converttorgb_cb)(void*);
+     * }
+     */
+    public static MemorySegment pre_converttorgb_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_converttorgb_cb$VH.get(seg);
     }
-    public static void pre_converttorgb_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*pre_converttorgb_cb)(void*);
+     * }
+     */
+    public static void pre_converttorgb_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.pre_converttorgb_cb$VH.set(seg, x);
     }
-    public static MemoryAddress pre_converttorgb_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.pre_converttorgb_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment pre_converttorgb_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.pre_converttorgb_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void pre_converttorgb_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void pre_converttorgb_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.pre_converttorgb_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback pre_converttorgb_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(pre_converttorgb_cb$get(segment), session);
+    public static pre_converttorgb_cb pre_converttorgb_cb(MemorySegment segment, SegmentScope scope) {
+        return pre_converttorgb_cb.ofAddress(pre_converttorgb_cb$get(segment), scope);
     }
+    static final FunctionDescriptor post_converttorgb_cb$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final FunctionDescriptor post_converttorgb_cb_UP$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_converttorgb_cb_UP$MH = RuntimeHelper.upcallHandle(post_converttorgb_cb.class, "apply", libraw_callbacks_t.post_converttorgb_cb_UP$FUNC);
+    static final FunctionDescriptor post_converttorgb_cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
+        Constants$root.C_POINTER$LAYOUT
+    );
+    static final MethodHandle post_converttorgb_cb_DOWN$MH = RuntimeHelper.downcallHandle(
+        libraw_callbacks_t.post_converttorgb_cb_DOWN$FUNC
+    );
+    /**
+     * {@snippet :
+ * void (*post_converttorgb_cb)(void*);
+     * }
+     */
+    public interface post_converttorgb_cb {
+
+        void apply(java.lang.foreign.MemorySegment ctx);
+        static MemorySegment allocate(post_converttorgb_cb fi, SegmentScope scope) {
+            return RuntimeHelper.upcallStub(libraw_callbacks_t.post_converttorgb_cb_UP$MH, fi, libraw_callbacks_t.post_converttorgb_cb$FUNC, scope);
+        }
+        static post_converttorgb_cb ofAddress(MemorySegment addr, SegmentScope scope) {
+            MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+            return (java.lang.foreign.MemorySegment _ctx) -> {
+                try {
+                    libraw_callbacks_t.post_converttorgb_cb_DOWN$MH.invokeExact(symbol, _ctx);
+                } catch (Throwable ex$) {
+                    throw new AssertionError("should not reach here", ex$);
+                }
+            };
+        }
+    }
+
     static final VarHandle post_converttorgb_cb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("post_converttorgb_cb"));
     public static VarHandle post_converttorgb_cb$VH() {
         return libraw_callbacks_t.post_converttorgb_cb$VH;
     }
-    public static MemoryAddress post_converttorgb_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.post_converttorgb_cb$VH.get(seg);
+    /**
+     * Getter for field:
+     * {@snippet :
+     * void (*post_converttorgb_cb)(void*);
+     * }
+     */
+    public static MemorySegment post_converttorgb_cb$get(MemorySegment seg) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.post_converttorgb_cb$VH.get(seg);
     }
-    public static void post_converttorgb_cb$set( MemorySegment seg, MemoryAddress x) {
+    /**
+     * Setter for field:
+     * {@snippet :
+     * void (*post_converttorgb_cb)(void*);
+     * }
+     */
+    public static void post_converttorgb_cb$set(MemorySegment seg, MemorySegment x) {
         libraw_callbacks_t.post_converttorgb_cb$VH.set(seg, x);
     }
-    public static MemoryAddress post_converttorgb_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemoryAddress)libraw_callbacks_t.post_converttorgb_cb$VH.get(seg.asSlice(index*sizeof()));
+    public static MemorySegment post_converttorgb_cb$get(MemorySegment seg, long index) {
+        return (java.lang.foreign.MemorySegment)libraw_callbacks_t.post_converttorgb_cb$VH.get(seg.asSlice(index*sizeof()));
     }
-    public static void post_converttorgb_cb$set(MemorySegment seg, long index, MemoryAddress x) {
+    public static void post_converttorgb_cb$set(MemorySegment seg, long index, MemorySegment x) {
         libraw_callbacks_t.post_converttorgb_cb$VH.set(seg.asSlice(index*sizeof()), x);
     }
-    public static process_step_callback post_converttorgb_cb (MemorySegment segment, MemorySession session) {
-        return process_step_callback.ofAddress(post_converttorgb_cb$get(segment), session);
+    public static post_converttorgb_cb post_converttorgb_cb(MemorySegment segment, SegmentScope scope) {
+        return post_converttorgb_cb.ofAddress(post_converttorgb_cb$get(segment), scope);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(int len, SegmentAllocator allocator) {
+    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemoryAddress addr, MemorySession session) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, session); }
+    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 
