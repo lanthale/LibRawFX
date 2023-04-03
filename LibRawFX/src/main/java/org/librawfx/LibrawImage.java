@@ -158,8 +158,8 @@ public class LibrawImage {
                 byte[] line = new byte[stride];
                 for (var i = 0; i < imageHeight; i++) {
                     loader.updateImageProgress(i, imageHeight);
-                    MemorySegment addOffset = data$slice.getAtIndex(ValueLayout.ADDRESS, stride * i);
-                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(addOffset.address(), stride, scope.scope());
+                    long offSetAdr=data$slice.address()+stride * i;
+                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr, stride, scope.scope());                    
                     line = asSegmentRestricted.toArray(ValueLayout.JAVA_BYTE);
                     try {
                         bo.write(line);
@@ -230,11 +230,10 @@ public class LibrawImage {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Start reading image from native memory...");
                 byte[] line = new byte[stride];
                 for (var i = 0; i < imageHeight; i++) {
-                    loader.updateImageProgress(i, imageHeight);
-                    //MemorySegment addOffset = data$slice.get(ValueLayout.ADDRESS, stride * i);
-                    long offs=data$slice.address()+stride * i;
-                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offs, stride, scope.scope());
-                    line = asSegmentRestricted.toArray(ValueLayout.JAVA_BYTE);
+                    loader.updateImageProgress(i, imageHeight);                    
+                    long offSetAdr=data$slice.address()+stride * i;
+                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr, stride, scope.scope());                    
+                    line = asSegmentRestricted.toArray(ValueLayout.JAVA_BYTE);                    
                     try {
                         bo.write(line);
                     } catch (IOException ex) {
@@ -321,8 +320,8 @@ public class LibrawImage {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Reading image from native memory...");
                 byte[] line = new byte[stride];
                 for (var i = 0; i < imageHeight; i++) {
-                    MemorySegment addOffset = data$slice.getAtIndex(ValueLayout.ADDRESS, stride * i);
-                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(addOffset.address(), stride, scope.scope());
+                    long offSetAdr=data$slice.address()+stride * i;
+                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr, stride, scope.scope());                    
                     line = asSegmentRestricted.toArray(ValueLayout.JAVA_BYTE);
                     try {
                         bo.write(line);
@@ -387,8 +386,8 @@ public class LibrawImage {
                 Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Reading image from native memory...");
                 byte[] line = new byte[stride];
                 for (var i = 0; i < imageHeight; i++) {
-                    MemorySegment addOffset = data$slice.getAtIndex(ValueLayout.ADDRESS, stride * i);
-                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(addOffset.address(), stride, scope.scope());
+                    long offSetAdr=data$slice.address()+stride * i;
+                    MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr, stride, scope.scope());                    
                     line = asSegmentRestricted.toArray(ValueLayout.JAVA_BYTE);
                     try {
                         bo.write(line);

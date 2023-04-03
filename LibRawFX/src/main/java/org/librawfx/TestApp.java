@@ -13,7 +13,6 @@ import java.util.logging.SimpleFormatter;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -25,7 +24,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -57,7 +55,7 @@ public class TestApp extends Application {
     }
 
     private void loadImagesByStream(VBox stack, String file, String file2, String file3) throws MalformedURLException {
-        File initialFile = new File(file);
+        File initialFile = new File(file);        
         File initialFile2 = new File(file2);
         File initialFile3 = new File(file3);
         //ind.progressProperty().bind(img.progressProperty());
@@ -203,6 +201,7 @@ public class TestApp extends Application {
         for (int i = 0; i < 1; i++) {
             File initialFile = new File(file);
             LibrawImage libraw = new LibrawImage(initialFile.getAbsolutePath(), new RawDecoderSettings());
+            System.out.println("CameraMaker "+libraw.getCameraMaker());
             int[] raw = libraw.readPixelData();
             WritableImage img = new WritableImage(libraw.getImageWidth(), libraw.getImageHeight());
             PixelWriter pw = img.getPixelWriter();
