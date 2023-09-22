@@ -69,76 +69,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_sony_info_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("CameraType"),
-        Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_version"),
-        Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_ReleaseMode2"),
-        Constants$root.C_INT$LAYOUT.withName("Sony0x9400_SequenceImageNumber"),
-        Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_SequenceLength1"),
-        MemoryLayout.paddingLayout(24),
-        Constants$root.C_INT$LAYOUT.withName("Sony0x9400_SequenceFileNumber"),
-        Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_SequenceLength2"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFAreaModeSetting"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
-        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FlexibleSpotPosition"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFPointSelected"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFPointSelected_0x201e"),
-        Constants$root.C_SHORT$LAYOUT.withName("nAFPointsUsed"),
-        MemoryLayout.sequenceLayout(10, Constants$root.C_CHAR$LAYOUT).withName("AFPointsUsed"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFTracking"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFType"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("FocusLocation"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocusPosition"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjValue"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjOn"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjRegisteredLenses"),
-        MemoryLayout.paddingLayout(8),
-        Constants$root.C_SHORT$LAYOUT.withName("VariableLowPassFilter"),
-        Constants$root.C_INT$LAYOUT.withName("LongExposureNoiseReduction"),
-        Constants$root.C_SHORT$LAYOUT.withName("HighISONoiseReduction"),
-        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("HDR"),
-        Constants$root.C_SHORT$LAYOUT.withName("group2010"),
-        Constants$root.C_SHORT$LAYOUT.withName("group9050"),
-        Constants$root.C_SHORT$LAYOUT.withName("real_iso_offset"),
-        Constants$root.C_SHORT$LAYOUT.withName("MeteringMode_offset"),
-        Constants$root.C_SHORT$LAYOUT.withName("ExposureProgram_offset"),
-        Constants$root.C_SHORT$LAYOUT.withName("ReleaseMode2_offset"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("MinoltaCamID"),
-        Constants$root.C_FLOAT$LAYOUT.withName("firmware"),
-        Constants$root.C_SHORT$LAYOUT.withName("ImageCount3_offset"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("ImageCount3"),
-        Constants$root.C_INT$LAYOUT.withName("ElectronicFrontCurtainShutter"),
-        Constants$root.C_SHORT$LAYOUT.withName("MeteringMode2"),
-        MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("SonyDateTime"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("ShotNumberSincePowerUp"),
-        Constants$root.C_SHORT$LAYOUT.withName("PixelShiftGroupPrefix"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("PixelShiftGroupID"),
-        Constants$root.C_CHAR$LAYOUT.withName("nShotsInPixelShiftGroup"),
-        Constants$root.C_CHAR$LAYOUT.withName("numInPixelShiftGroup"),
-        Constants$root.C_SHORT$LAYOUT.withName("prd_ImageHeight"),
-        Constants$root.C_SHORT$LAYOUT.withName("prd_ImageWidth"),
-        Constants$root.C_SHORT$LAYOUT.withName("prd_Total_bps"),
-        Constants$root.C_SHORT$LAYOUT.withName("prd_Active_bps"),
-        Constants$root.C_SHORT$LAYOUT.withName("prd_StorageMethod"),
-        Constants$root.C_SHORT$LAYOUT.withName("prd_BayerPattern"),
-        Constants$root.C_SHORT$LAYOUT.withName("SonyRawFileType"),
-        Constants$root.C_SHORT$LAYOUT.withName("RAWFileType"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("Quality"),
-        Constants$root.C_SHORT$LAYOUT.withName("FileFormat"),
-        MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("MetaVersion"),
-        MemoryLayout.paddingLayout(16)
-    ).withName("libraw_sony_info_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_sony_info_t.$struct$LAYOUT;
+        return constants$50.const$5;
     }
-    static final VarHandle CameraType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CameraType"));
     public static VarHandle CameraType$VH() {
-        return libraw_sony_info_t.CameraType$VH;
+        return constants$51.const$0;
     }
     /**
      * Getter for field:
@@ -147,7 +82,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short CameraType$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.CameraType$VH.get(seg);
+        return (short)constants$51.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -156,17 +91,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void CameraType$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.CameraType$VH.set(seg, x);
+        constants$51.const$0.set(seg, x);
     }
     public static short CameraType$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.CameraType$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$51.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void CameraType$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.CameraType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$51.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Sony0x9400_version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Sony0x9400_version"));
     public static VarHandle Sony0x9400_version$VH() {
-        return libraw_sony_info_t.Sony0x9400_version$VH;
+        return constants$51.const$1;
     }
     /**
      * Getter for field:
@@ -175,7 +109,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte Sony0x9400_version$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.Sony0x9400_version$VH.get(seg);
+        return (byte)constants$51.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -184,17 +118,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Sony0x9400_version$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.Sony0x9400_version$VH.set(seg, x);
+        constants$51.const$1.set(seg, x);
     }
     public static byte Sony0x9400_version$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.Sony0x9400_version$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$51.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void Sony0x9400_version$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.Sony0x9400_version$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$51.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Sony0x9400_ReleaseMode2$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Sony0x9400_ReleaseMode2"));
     public static VarHandle Sony0x9400_ReleaseMode2$VH() {
-        return libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH;
+        return constants$51.const$2;
     }
     /**
      * Getter for field:
@@ -203,7 +136,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte Sony0x9400_ReleaseMode2$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH.get(seg);
+        return (byte)constants$51.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -212,17 +145,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Sony0x9400_ReleaseMode2$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH.set(seg, x);
+        constants$51.const$2.set(seg, x);
     }
     public static byte Sony0x9400_ReleaseMode2$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$51.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void Sony0x9400_ReleaseMode2$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.Sony0x9400_ReleaseMode2$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$51.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Sony0x9400_SequenceImageNumber$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Sony0x9400_SequenceImageNumber"));
     public static VarHandle Sony0x9400_SequenceImageNumber$VH() {
-        return libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH;
+        return constants$51.const$3;
     }
     /**
      * Getter for field:
@@ -231,7 +163,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int Sony0x9400_SequenceImageNumber$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH.get(seg);
+        return (int)constants$51.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -240,17 +172,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Sony0x9400_SequenceImageNumber$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH.set(seg, x);
+        constants$51.const$3.set(seg, x);
     }
     public static int Sony0x9400_SequenceImageNumber$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$51.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void Sony0x9400_SequenceImageNumber$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.Sony0x9400_SequenceImageNumber$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$51.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Sony0x9400_SequenceLength1$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Sony0x9400_SequenceLength1"));
     public static VarHandle Sony0x9400_SequenceLength1$VH() {
-        return libraw_sony_info_t.Sony0x9400_SequenceLength1$VH;
+        return constants$51.const$4;
     }
     /**
      * Getter for field:
@@ -259,7 +190,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte Sony0x9400_SequenceLength1$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.Sony0x9400_SequenceLength1$VH.get(seg);
+        return (byte)constants$51.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -268,17 +199,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Sony0x9400_SequenceLength1$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.Sony0x9400_SequenceLength1$VH.set(seg, x);
+        constants$51.const$4.set(seg, x);
     }
     public static byte Sony0x9400_SequenceLength1$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.Sony0x9400_SequenceLength1$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$51.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void Sony0x9400_SequenceLength1$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.Sony0x9400_SequenceLength1$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$51.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Sony0x9400_SequenceFileNumber$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Sony0x9400_SequenceFileNumber"));
     public static VarHandle Sony0x9400_SequenceFileNumber$VH() {
-        return libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH;
+        return constants$51.const$5;
     }
     /**
      * Getter for field:
@@ -287,7 +217,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int Sony0x9400_SequenceFileNumber$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH.get(seg);
+        return (int)constants$51.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -296,17 +226,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Sony0x9400_SequenceFileNumber$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH.set(seg, x);
+        constants$51.const$5.set(seg, x);
     }
     public static int Sony0x9400_SequenceFileNumber$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$51.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void Sony0x9400_SequenceFileNumber$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.Sony0x9400_SequenceFileNumber$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$51.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Sony0x9400_SequenceLength2$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Sony0x9400_SequenceLength2"));
     public static VarHandle Sony0x9400_SequenceLength2$VH() {
-        return libraw_sony_info_t.Sony0x9400_SequenceLength2$VH;
+        return constants$52.const$0;
     }
     /**
      * Getter for field:
@@ -315,7 +244,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte Sony0x9400_SequenceLength2$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.Sony0x9400_SequenceLength2$VH.get(seg);
+        return (byte)constants$52.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -324,17 +253,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Sony0x9400_SequenceLength2$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.Sony0x9400_SequenceLength2$VH.set(seg, x);
+        constants$52.const$0.set(seg, x);
     }
     public static byte Sony0x9400_SequenceLength2$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.Sony0x9400_SequenceLength2$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$52.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void Sony0x9400_SequenceLength2$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.Sony0x9400_SequenceLength2$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$52.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFAreaModeSetting$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFAreaModeSetting"));
     public static VarHandle AFAreaModeSetting$VH() {
-        return libraw_sony_info_t.AFAreaModeSetting$VH;
+        return constants$52.const$1;
     }
     /**
      * Getter for field:
@@ -343,7 +271,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFAreaModeSetting$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFAreaModeSetting$VH.get(seg);
+        return (byte)constants$52.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -352,17 +280,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFAreaModeSetting$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFAreaModeSetting$VH.set(seg, x);
+        constants$52.const$1.set(seg, x);
     }
     public static byte AFAreaModeSetting$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFAreaModeSetting$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$52.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void AFAreaModeSetting$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFAreaModeSetting$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$52.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFAreaMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFAreaMode"));
     public static VarHandle AFAreaMode$VH() {
-        return libraw_sony_info_t.AFAreaMode$VH;
+        return constants$52.const$2;
     }
     /**
      * Getter for field:
@@ -371,7 +298,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short AFAreaMode$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.AFAreaMode$VH.get(seg);
+        return (short)constants$52.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -380,20 +307,19 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFAreaMode$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.AFAreaMode$VH.set(seg, x);
+        constants$52.const$2.set(seg, x);
     }
     public static short AFAreaMode$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.AFAreaMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$52.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void AFAreaMode$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.AFAreaMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$52.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment FlexibleSpotPosition$slice(MemorySegment seg) {
         return seg.asSlice(20, 4);
     }
-    static final VarHandle AFPointSelected$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointSelected"));
     public static VarHandle AFPointSelected$VH() {
-        return libraw_sony_info_t.AFPointSelected$VH;
+        return constants$52.const$3;
     }
     /**
      * Getter for field:
@@ -402,7 +328,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFPointSelected$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFPointSelected$VH.get(seg);
+        return (byte)constants$52.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -411,17 +337,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFPointSelected$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFPointSelected$VH.set(seg, x);
+        constants$52.const$3.set(seg, x);
     }
     public static byte AFPointSelected$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFPointSelected$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$52.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void AFPointSelected$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFPointSelected$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$52.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFPointSelected_0x201e$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPointSelected_0x201e"));
     public static VarHandle AFPointSelected_0x201e$VH() {
-        return libraw_sony_info_t.AFPointSelected_0x201e$VH;
+        return constants$52.const$4;
     }
     /**
      * Getter for field:
@@ -430,7 +355,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFPointSelected_0x201e$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFPointSelected_0x201e$VH.get(seg);
+        return (byte)constants$52.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -439,17 +364,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFPointSelected_0x201e$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFPointSelected_0x201e$VH.set(seg, x);
+        constants$52.const$4.set(seg, x);
     }
     public static byte AFPointSelected_0x201e$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFPointSelected_0x201e$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$52.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AFPointSelected_0x201e$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFPointSelected_0x201e$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$52.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nAFPointsUsed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nAFPointsUsed"));
     public static VarHandle nAFPointsUsed$VH() {
-        return libraw_sony_info_t.nAFPointsUsed$VH;
+        return constants$52.const$5;
     }
     /**
      * Getter for field:
@@ -458,7 +382,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short nAFPointsUsed$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.nAFPointsUsed$VH.get(seg);
+        return (short)constants$52.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -467,20 +391,19 @@ public class libraw_sony_info_t {
      * }
      */
     public static void nAFPointsUsed$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.nAFPointsUsed$VH.set(seg, x);
+        constants$52.const$5.set(seg, x);
     }
     public static short nAFPointsUsed$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.nAFPointsUsed$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$52.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void nAFPointsUsed$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.nAFPointsUsed$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$52.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment AFPointsUsed$slice(MemorySegment seg) {
         return seg.asSlice(28, 10);
     }
-    static final VarHandle AFTracking$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFTracking"));
     public static VarHandle AFTracking$VH() {
-        return libraw_sony_info_t.AFTracking$VH;
+        return constants$53.const$0;
     }
     /**
      * Getter for field:
@@ -489,7 +412,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFTracking$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFTracking$VH.get(seg);
+        return (byte)constants$53.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -498,17 +421,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFTracking$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFTracking$VH.set(seg, x);
+        constants$53.const$0.set(seg, x);
     }
     public static byte AFTracking$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFTracking$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$53.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void AFTracking$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFTracking$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$53.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFType"));
     public static VarHandle AFType$VH() {
-        return libraw_sony_info_t.AFType$VH;
+        return constants$53.const$1;
     }
     /**
      * Getter for field:
@@ -517,7 +439,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFType$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFType$VH.get(seg);
+        return (byte)constants$53.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -526,20 +448,19 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFType$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFType$VH.set(seg, x);
+        constants$53.const$1.set(seg, x);
     }
     public static byte AFType$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFType$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$53.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void AFType$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$53.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment FocusLocation$slice(MemorySegment seg) {
         return seg.asSlice(40, 8);
     }
-    static final VarHandle FocusPosition$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusPosition"));
     public static VarHandle FocusPosition$VH() {
-        return libraw_sony_info_t.FocusPosition$VH;
+        return constants$53.const$2;
     }
     /**
      * Getter for field:
@@ -548,7 +469,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short FocusPosition$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.FocusPosition$VH.get(seg);
+        return (short)constants$53.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -557,17 +478,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void FocusPosition$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.FocusPosition$VH.set(seg, x);
+        constants$53.const$2.set(seg, x);
     }
     public static short FocusPosition$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.FocusPosition$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$53.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void FocusPosition$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.FocusPosition$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$53.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFMicroAdjValue$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMicroAdjValue"));
     public static VarHandle AFMicroAdjValue$VH() {
-        return libraw_sony_info_t.AFMicroAdjValue$VH;
+        return constants$53.const$3;
     }
     /**
      * Getter for field:
@@ -576,7 +496,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFMicroAdjValue$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFMicroAdjValue$VH.get(seg);
+        return (byte)constants$53.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -585,17 +505,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFMicroAdjValue$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFMicroAdjValue$VH.set(seg, x);
+        constants$53.const$3.set(seg, x);
     }
     public static byte AFMicroAdjValue$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFMicroAdjValue$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$53.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void AFMicroAdjValue$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFMicroAdjValue$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$53.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFMicroAdjOn$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMicroAdjOn"));
     public static VarHandle AFMicroAdjOn$VH() {
-        return libraw_sony_info_t.AFMicroAdjOn$VH;
+        return constants$53.const$4;
     }
     /**
      * Getter for field:
@@ -604,7 +523,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFMicroAdjOn$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFMicroAdjOn$VH.get(seg);
+        return (byte)constants$53.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -613,17 +532,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFMicroAdjOn$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFMicroAdjOn$VH.set(seg, x);
+        constants$53.const$4.set(seg, x);
     }
     public static byte AFMicroAdjOn$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFMicroAdjOn$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$53.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AFMicroAdjOn$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFMicroAdjOn$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$53.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFMicroAdjRegisteredLenses$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMicroAdjRegisteredLenses"));
     public static VarHandle AFMicroAdjRegisteredLenses$VH() {
-        return libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH;
+        return constants$53.const$5;
     }
     /**
      * Getter for field:
@@ -632,7 +550,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte AFMicroAdjRegisteredLenses$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH.get(seg);
+        return (byte)constants$53.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -641,17 +559,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void AFMicroAdjRegisteredLenses$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH.set(seg, x);
+        constants$53.const$5.set(seg, x);
     }
     public static byte AFMicroAdjRegisteredLenses$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$53.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void AFMicroAdjRegisteredLenses$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.AFMicroAdjRegisteredLenses$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$53.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle VariableLowPassFilter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("VariableLowPassFilter"));
     public static VarHandle VariableLowPassFilter$VH() {
-        return libraw_sony_info_t.VariableLowPassFilter$VH;
+        return constants$54.const$0;
     }
     /**
      * Getter for field:
@@ -660,7 +577,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short VariableLowPassFilter$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.VariableLowPassFilter$VH.get(seg);
+        return (short)constants$54.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -669,17 +586,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void VariableLowPassFilter$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.VariableLowPassFilter$VH.set(seg, x);
+        constants$54.const$0.set(seg, x);
     }
     public static short VariableLowPassFilter$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.VariableLowPassFilter$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$54.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void VariableLowPassFilter$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.VariableLowPassFilter$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$54.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LongExposureNoiseReduction$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LongExposureNoiseReduction"));
     public static VarHandle LongExposureNoiseReduction$VH() {
-        return libraw_sony_info_t.LongExposureNoiseReduction$VH;
+        return constants$54.const$1;
     }
     /**
      * Getter for field:
@@ -688,7 +604,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int LongExposureNoiseReduction$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.LongExposureNoiseReduction$VH.get(seg);
+        return (int)constants$54.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -697,17 +613,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void LongExposureNoiseReduction$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.LongExposureNoiseReduction$VH.set(seg, x);
+        constants$54.const$1.set(seg, x);
     }
     public static int LongExposureNoiseReduction$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.LongExposureNoiseReduction$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$54.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void LongExposureNoiseReduction$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.LongExposureNoiseReduction$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$54.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle HighISONoiseReduction$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("HighISONoiseReduction"));
     public static VarHandle HighISONoiseReduction$VH() {
-        return libraw_sony_info_t.HighISONoiseReduction$VH;
+        return constants$54.const$2;
     }
     /**
      * Getter for field:
@@ -716,7 +631,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short HighISONoiseReduction$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.HighISONoiseReduction$VH.get(seg);
+        return (short)constants$54.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -725,20 +640,19 @@ public class libraw_sony_info_t {
      * }
      */
     public static void HighISONoiseReduction$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.HighISONoiseReduction$VH.set(seg, x);
+        constants$54.const$2.set(seg, x);
     }
     public static short HighISONoiseReduction$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.HighISONoiseReduction$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$54.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void HighISONoiseReduction$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.HighISONoiseReduction$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$54.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment HDR$slice(MemorySegment seg) {
         return seg.asSlice(62, 4);
     }
-    static final VarHandle group2010$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("group2010"));
     public static VarHandle group2010$VH() {
-        return libraw_sony_info_t.group2010$VH;
+        return constants$54.const$3;
     }
     /**
      * Getter for field:
@@ -747,7 +661,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short group2010$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.group2010$VH.get(seg);
+        return (short)constants$54.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -756,17 +670,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void group2010$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.group2010$VH.set(seg, x);
+        constants$54.const$3.set(seg, x);
     }
     public static short group2010$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.group2010$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$54.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void group2010$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.group2010$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$54.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle group9050$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("group9050"));
     public static VarHandle group9050$VH() {
-        return libraw_sony_info_t.group9050$VH;
+        return constants$54.const$4;
     }
     /**
      * Getter for field:
@@ -775,7 +688,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short group9050$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.group9050$VH.get(seg);
+        return (short)constants$54.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -784,17 +697,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void group9050$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.group9050$VH.set(seg, x);
+        constants$54.const$4.set(seg, x);
     }
     public static short group9050$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.group9050$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$54.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void group9050$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.group9050$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$54.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle real_iso_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("real_iso_offset"));
     public static VarHandle real_iso_offset$VH() {
-        return libraw_sony_info_t.real_iso_offset$VH;
+        return constants$54.const$5;
     }
     /**
      * Getter for field:
@@ -803,7 +715,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short real_iso_offset$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.real_iso_offset$VH.get(seg);
+        return (short)constants$54.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -812,17 +724,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void real_iso_offset$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.real_iso_offset$VH.set(seg, x);
+        constants$54.const$5.set(seg, x);
     }
     public static short real_iso_offset$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.real_iso_offset$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$54.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void real_iso_offset$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.real_iso_offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$54.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MeteringMode_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MeteringMode_offset"));
     public static VarHandle MeteringMode_offset$VH() {
-        return libraw_sony_info_t.MeteringMode_offset$VH;
+        return constants$55.const$0;
     }
     /**
      * Getter for field:
@@ -831,7 +742,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short MeteringMode_offset$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.MeteringMode_offset$VH.get(seg);
+        return (short)constants$55.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -840,17 +751,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void MeteringMode_offset$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.MeteringMode_offset$VH.set(seg, x);
+        constants$55.const$0.set(seg, x);
     }
     public static short MeteringMode_offset$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.MeteringMode_offset$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$55.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void MeteringMode_offset$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.MeteringMode_offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$55.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureProgram_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureProgram_offset"));
     public static VarHandle ExposureProgram_offset$VH() {
-        return libraw_sony_info_t.ExposureProgram_offset$VH;
+        return constants$55.const$1;
     }
     /**
      * Getter for field:
@@ -859,7 +769,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short ExposureProgram_offset$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.ExposureProgram_offset$VH.get(seg);
+        return (short)constants$55.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -868,17 +778,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void ExposureProgram_offset$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.ExposureProgram_offset$VH.set(seg, x);
+        constants$55.const$1.set(seg, x);
     }
     public static short ExposureProgram_offset$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.ExposureProgram_offset$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$55.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureProgram_offset$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.ExposureProgram_offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$55.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ReleaseMode2_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ReleaseMode2_offset"));
     public static VarHandle ReleaseMode2_offset$VH() {
-        return libraw_sony_info_t.ReleaseMode2_offset$VH;
+        return constants$55.const$2;
     }
     /**
      * Getter for field:
@@ -887,7 +796,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short ReleaseMode2_offset$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.ReleaseMode2_offset$VH.get(seg);
+        return (short)constants$55.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -896,17 +805,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void ReleaseMode2_offset$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.ReleaseMode2_offset$VH.set(seg, x);
+        constants$55.const$2.set(seg, x);
     }
     public static short ReleaseMode2_offset$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.ReleaseMode2_offset$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$55.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void ReleaseMode2_offset$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.ReleaseMode2_offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$55.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MinoltaCamID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinoltaCamID"));
     public static VarHandle MinoltaCamID$VH() {
-        return libraw_sony_info_t.MinoltaCamID$VH;
+        return constants$55.const$3;
     }
     /**
      * Getter for field:
@@ -915,7 +823,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int MinoltaCamID$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.MinoltaCamID$VH.get(seg);
+        return (int)constants$55.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -924,17 +832,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void MinoltaCamID$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.MinoltaCamID$VH.set(seg, x);
+        constants$55.const$3.set(seg, x);
     }
     public static int MinoltaCamID$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.MinoltaCamID$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$55.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void MinoltaCamID$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.MinoltaCamID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$55.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle firmware$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("firmware"));
     public static VarHandle firmware$VH() {
-        return libraw_sony_info_t.firmware$VH;
+        return constants$55.const$4;
     }
     /**
      * Getter for field:
@@ -943,7 +850,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static float firmware$get(MemorySegment seg) {
-        return (float)libraw_sony_info_t.firmware$VH.get(seg);
+        return (float)constants$55.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -952,17 +859,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void firmware$set(MemorySegment seg, float x) {
-        libraw_sony_info_t.firmware$VH.set(seg, x);
+        constants$55.const$4.set(seg, x);
     }
     public static float firmware$get(MemorySegment seg, long index) {
-        return (float)libraw_sony_info_t.firmware$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$55.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void firmware$set(MemorySegment seg, long index, float x) {
-        libraw_sony_info_t.firmware$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$55.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ImageCount3_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageCount3_offset"));
     public static VarHandle ImageCount3_offset$VH() {
-        return libraw_sony_info_t.ImageCount3_offset$VH;
+        return constants$55.const$5;
     }
     /**
      * Getter for field:
@@ -971,7 +877,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short ImageCount3_offset$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.ImageCount3_offset$VH.get(seg);
+        return (short)constants$55.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -980,17 +886,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void ImageCount3_offset$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.ImageCount3_offset$VH.set(seg, x);
+        constants$55.const$5.set(seg, x);
     }
     public static short ImageCount3_offset$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.ImageCount3_offset$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$55.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ImageCount3_offset$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.ImageCount3_offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$55.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ImageCount3$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageCount3"));
     public static VarHandle ImageCount3$VH() {
-        return libraw_sony_info_t.ImageCount3$VH;
+        return constants$56.const$0;
     }
     /**
      * Getter for field:
@@ -999,7 +904,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int ImageCount3$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.ImageCount3$VH.get(seg);
+        return (int)constants$56.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -1008,17 +913,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void ImageCount3$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.ImageCount3$VH.set(seg, x);
+        constants$56.const$0.set(seg, x);
     }
     public static int ImageCount3$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.ImageCount3$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$56.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ImageCount3$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.ImageCount3$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$56.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ElectronicFrontCurtainShutter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ElectronicFrontCurtainShutter"));
     public static VarHandle ElectronicFrontCurtainShutter$VH() {
-        return libraw_sony_info_t.ElectronicFrontCurtainShutter$VH;
+        return constants$56.const$1;
     }
     /**
      * Getter for field:
@@ -1027,7 +931,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int ElectronicFrontCurtainShutter$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.ElectronicFrontCurtainShutter$VH.get(seg);
+        return (int)constants$56.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -1036,17 +940,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void ElectronicFrontCurtainShutter$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.ElectronicFrontCurtainShutter$VH.set(seg, x);
+        constants$56.const$1.set(seg, x);
     }
     public static int ElectronicFrontCurtainShutter$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.ElectronicFrontCurtainShutter$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$56.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void ElectronicFrontCurtainShutter$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.ElectronicFrontCurtainShutter$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$56.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MeteringMode2$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MeteringMode2"));
     public static VarHandle MeteringMode2$VH() {
-        return libraw_sony_info_t.MeteringMode2$VH;
+        return constants$56.const$2;
     }
     /**
      * Getter for field:
@@ -1055,7 +958,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short MeteringMode2$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.MeteringMode2$VH.get(seg);
+        return (short)constants$56.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -1064,20 +967,19 @@ public class libraw_sony_info_t {
      * }
      */
     public static void MeteringMode2$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.MeteringMode2$VH.set(seg, x);
+        constants$56.const$2.set(seg, x);
     }
     public static short MeteringMode2$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.MeteringMode2$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$56.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void MeteringMode2$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.MeteringMode2$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$56.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment SonyDateTime$slice(MemorySegment seg) {
         return seg.asSlice(102, 20);
     }
-    static final VarHandle ShotNumberSincePowerUp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ShotNumberSincePowerUp"));
     public static VarHandle ShotNumberSincePowerUp$VH() {
-        return libraw_sony_info_t.ShotNumberSincePowerUp$VH;
+        return constants$56.const$3;
     }
     /**
      * Getter for field:
@@ -1086,7 +988,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int ShotNumberSincePowerUp$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.ShotNumberSincePowerUp$VH.get(seg);
+        return (int)constants$56.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -1095,17 +997,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void ShotNumberSincePowerUp$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.ShotNumberSincePowerUp$VH.set(seg, x);
+        constants$56.const$3.set(seg, x);
     }
     public static int ShotNumberSincePowerUp$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.ShotNumberSincePowerUp$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$56.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void ShotNumberSincePowerUp$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.ShotNumberSincePowerUp$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$56.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle PixelShiftGroupPrefix$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("PixelShiftGroupPrefix"));
     public static VarHandle PixelShiftGroupPrefix$VH() {
-        return libraw_sony_info_t.PixelShiftGroupPrefix$VH;
+        return constants$56.const$4;
     }
     /**
      * Getter for field:
@@ -1114,7 +1015,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short PixelShiftGroupPrefix$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.PixelShiftGroupPrefix$VH.get(seg);
+        return (short)constants$56.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -1123,17 +1024,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void PixelShiftGroupPrefix$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.PixelShiftGroupPrefix$VH.set(seg, x);
+        constants$56.const$4.set(seg, x);
     }
     public static short PixelShiftGroupPrefix$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.PixelShiftGroupPrefix$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$56.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void PixelShiftGroupPrefix$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.PixelShiftGroupPrefix$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$56.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle PixelShiftGroupID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("PixelShiftGroupID"));
     public static VarHandle PixelShiftGroupID$VH() {
-        return libraw_sony_info_t.PixelShiftGroupID$VH;
+        return constants$56.const$5;
     }
     /**
      * Getter for field:
@@ -1142,7 +1042,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int PixelShiftGroupID$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.PixelShiftGroupID$VH.get(seg);
+        return (int)constants$56.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -1151,17 +1051,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void PixelShiftGroupID$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.PixelShiftGroupID$VH.set(seg, x);
+        constants$56.const$5.set(seg, x);
     }
     public static int PixelShiftGroupID$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.PixelShiftGroupID$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$56.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void PixelShiftGroupID$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.PixelShiftGroupID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$56.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nShotsInPixelShiftGroup$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nShotsInPixelShiftGroup"));
     public static VarHandle nShotsInPixelShiftGroup$VH() {
-        return libraw_sony_info_t.nShotsInPixelShiftGroup$VH;
+        return constants$57.const$0;
     }
     /**
      * Getter for field:
@@ -1170,7 +1069,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte nShotsInPixelShiftGroup$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.nShotsInPixelShiftGroup$VH.get(seg);
+        return (byte)constants$57.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -1179,17 +1078,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void nShotsInPixelShiftGroup$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.nShotsInPixelShiftGroup$VH.set(seg, x);
+        constants$57.const$0.set(seg, x);
     }
     public static byte nShotsInPixelShiftGroup$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.nShotsInPixelShiftGroup$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$57.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void nShotsInPixelShiftGroup$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.nShotsInPixelShiftGroup$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$57.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle numInPixelShiftGroup$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("numInPixelShiftGroup"));
     public static VarHandle numInPixelShiftGroup$VH() {
-        return libraw_sony_info_t.numInPixelShiftGroup$VH;
+        return constants$57.const$1;
     }
     /**
      * Getter for field:
@@ -1198,7 +1096,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static byte numInPixelShiftGroup$get(MemorySegment seg) {
-        return (byte)libraw_sony_info_t.numInPixelShiftGroup$VH.get(seg);
+        return (byte)constants$57.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -1207,17 +1105,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void numInPixelShiftGroup$set(MemorySegment seg, byte x) {
-        libraw_sony_info_t.numInPixelShiftGroup$VH.set(seg, x);
+        constants$57.const$1.set(seg, x);
     }
     public static byte numInPixelShiftGroup$get(MemorySegment seg, long index) {
-        return (byte)libraw_sony_info_t.numInPixelShiftGroup$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$57.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void numInPixelShiftGroup$set(MemorySegment seg, long index, byte x) {
-        libraw_sony_info_t.numInPixelShiftGroup$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$57.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle prd_ImageHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("prd_ImageHeight"));
     public static VarHandle prd_ImageHeight$VH() {
-        return libraw_sony_info_t.prd_ImageHeight$VH;
+        return constants$57.const$2;
     }
     /**
      * Getter for field:
@@ -1226,7 +1123,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short prd_ImageHeight$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.prd_ImageHeight$VH.get(seg);
+        return (short)constants$57.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -1235,17 +1132,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void prd_ImageHeight$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.prd_ImageHeight$VH.set(seg, x);
+        constants$57.const$2.set(seg, x);
     }
     public static short prd_ImageHeight$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.prd_ImageHeight$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$57.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void prd_ImageHeight$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.prd_ImageHeight$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$57.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle prd_ImageWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("prd_ImageWidth"));
     public static VarHandle prd_ImageWidth$VH() {
-        return libraw_sony_info_t.prd_ImageWidth$VH;
+        return constants$57.const$3;
     }
     /**
      * Getter for field:
@@ -1254,7 +1150,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short prd_ImageWidth$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.prd_ImageWidth$VH.get(seg);
+        return (short)constants$57.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -1263,17 +1159,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void prd_ImageWidth$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.prd_ImageWidth$VH.set(seg, x);
+        constants$57.const$3.set(seg, x);
     }
     public static short prd_ImageWidth$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.prd_ImageWidth$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$57.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void prd_ImageWidth$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.prd_ImageWidth$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$57.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle prd_Total_bps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("prd_Total_bps"));
     public static VarHandle prd_Total_bps$VH() {
-        return libraw_sony_info_t.prd_Total_bps$VH;
+        return constants$57.const$4;
     }
     /**
      * Getter for field:
@@ -1282,7 +1177,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short prd_Total_bps$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.prd_Total_bps$VH.get(seg);
+        return (short)constants$57.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -1291,17 +1186,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void prd_Total_bps$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.prd_Total_bps$VH.set(seg, x);
+        constants$57.const$4.set(seg, x);
     }
     public static short prd_Total_bps$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.prd_Total_bps$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$57.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void prd_Total_bps$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.prd_Total_bps$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$57.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle prd_Active_bps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("prd_Active_bps"));
     public static VarHandle prd_Active_bps$VH() {
-        return libraw_sony_info_t.prd_Active_bps$VH;
+        return constants$57.const$5;
     }
     /**
      * Getter for field:
@@ -1310,7 +1204,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short prd_Active_bps$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.prd_Active_bps$VH.get(seg);
+        return (short)constants$57.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -1319,17 +1213,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void prd_Active_bps$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.prd_Active_bps$VH.set(seg, x);
+        constants$57.const$5.set(seg, x);
     }
     public static short prd_Active_bps$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.prd_Active_bps$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$57.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void prd_Active_bps$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.prd_Active_bps$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$57.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle prd_StorageMethod$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("prd_StorageMethod"));
     public static VarHandle prd_StorageMethod$VH() {
-        return libraw_sony_info_t.prd_StorageMethod$VH;
+        return constants$58.const$0;
     }
     /**
      * Getter for field:
@@ -1338,7 +1231,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short prd_StorageMethod$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.prd_StorageMethod$VH.get(seg);
+        return (short)constants$58.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -1347,17 +1240,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void prd_StorageMethod$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.prd_StorageMethod$VH.set(seg, x);
+        constants$58.const$0.set(seg, x);
     }
     public static short prd_StorageMethod$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.prd_StorageMethod$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$58.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void prd_StorageMethod$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.prd_StorageMethod$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$58.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle prd_BayerPattern$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("prd_BayerPattern"));
     public static VarHandle prd_BayerPattern$VH() {
-        return libraw_sony_info_t.prd_BayerPattern$VH;
+        return constants$58.const$1;
     }
     /**
      * Getter for field:
@@ -1366,7 +1258,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short prd_BayerPattern$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.prd_BayerPattern$VH.get(seg);
+        return (short)constants$58.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -1375,17 +1267,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void prd_BayerPattern$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.prd_BayerPattern$VH.set(seg, x);
+        constants$58.const$1.set(seg, x);
     }
     public static short prd_BayerPattern$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.prd_BayerPattern$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$58.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void prd_BayerPattern$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.prd_BayerPattern$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$58.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SonyRawFileType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SonyRawFileType"));
     public static VarHandle SonyRawFileType$VH() {
-        return libraw_sony_info_t.SonyRawFileType$VH;
+        return constants$58.const$2;
     }
     /**
      * Getter for field:
@@ -1394,7 +1285,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short SonyRawFileType$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.SonyRawFileType$VH.get(seg);
+        return (short)constants$58.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -1403,17 +1294,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void SonyRawFileType$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.SonyRawFileType$VH.set(seg, x);
+        constants$58.const$2.set(seg, x);
     }
     public static short SonyRawFileType$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.SonyRawFileType$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$58.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void SonyRawFileType$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.SonyRawFileType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$58.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle RAWFileType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RAWFileType"));
     public static VarHandle RAWFileType$VH() {
-        return libraw_sony_info_t.RAWFileType$VH;
+        return constants$58.const$3;
     }
     /**
      * Getter for field:
@@ -1422,7 +1312,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short RAWFileType$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.RAWFileType$VH.get(seg);
+        return (short)constants$58.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -1431,17 +1321,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void RAWFileType$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.RAWFileType$VH.set(seg, x);
+        constants$58.const$3.set(seg, x);
     }
     public static short RAWFileType$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.RAWFileType$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$58.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void RAWFileType$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.RAWFileType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$58.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Quality$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Quality"));
     public static VarHandle Quality$VH() {
-        return libraw_sony_info_t.Quality$VH;
+        return constants$58.const$4;
     }
     /**
      * Getter for field:
@@ -1450,7 +1339,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static int Quality$get(MemorySegment seg) {
-        return (int)libraw_sony_info_t.Quality$VH.get(seg);
+        return (int)constants$58.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -1459,17 +1348,16 @@ public class libraw_sony_info_t {
      * }
      */
     public static void Quality$set(MemorySegment seg, int x) {
-        libraw_sony_info_t.Quality$VH.set(seg, x);
+        constants$58.const$4.set(seg, x);
     }
     public static int Quality$get(MemorySegment seg, long index) {
-        return (int)libraw_sony_info_t.Quality$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$58.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void Quality$set(MemorySegment seg, long index, int x) {
-        libraw_sony_info_t.Quality$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$58.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FileFormat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FileFormat"));
     public static VarHandle FileFormat$VH() {
-        return libraw_sony_info_t.FileFormat$VH;
+        return constants$58.const$5;
     }
     /**
      * Getter for field:
@@ -1478,7 +1366,7 @@ public class libraw_sony_info_t {
      * }
      */
     public static short FileFormat$get(MemorySegment seg) {
-        return (short)libraw_sony_info_t.FileFormat$VH.get(seg);
+        return (short)constants$58.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -1487,13 +1375,13 @@ public class libraw_sony_info_t {
      * }
      */
     public static void FileFormat$set(MemorySegment seg, short x) {
-        libraw_sony_info_t.FileFormat$VH.set(seg, x);
+        constants$58.const$5.set(seg, x);
     }
     public static short FileFormat$get(MemorySegment seg, long index) {
-        return (short)libraw_sony_info_t.FileFormat$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$58.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void FileFormat$set(MemorySegment seg, long index, short x) {
-        libraw_sony_info_t.FileFormat$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$58.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment MetaVersion$slice(MemorySegment seg) {
         return seg.asSlice(162, 16);
@@ -1503,7 +1391,7 @@ public class libraw_sony_info_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

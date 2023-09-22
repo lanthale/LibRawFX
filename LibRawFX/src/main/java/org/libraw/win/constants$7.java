@@ -11,61 +11,12 @@ final class constants$7 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$7() {}
-    static final FunctionDescriptor libraw_set_dataerror_handler$func_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_dataerror_handler$func_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$7.libraw_set_dataerror_handler$func_DOWN$FUNC
-    );
-    static final FunctionDescriptor libraw_set_dataerror_handler$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_dataerror_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_dataerror_handler",
-        constants$7.libraw_set_dataerror_handler$FUNC
-    );
-    static final FunctionDescriptor libraw_set_progress_handler$cb$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final FunctionDescriptor libraw_set_progress_handler$cb_UP$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_progress_handler$cb_UP$MH = RuntimeHelper.upcallHandle(libraw_set_progress_handler$cb.class, "apply", constants$7.libraw_set_progress_handler$cb_UP$FUNC);
-    static final FunctionDescriptor libraw_set_progress_handler$cb_DOWN$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_progress_handler$cb_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$7.libraw_set_progress_handler$cb_DOWN$FUNC
-    );
-    static final FunctionDescriptor libraw_set_progress_handler$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_progress_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_progress_handler",
-        constants$7.libraw_set_progress_handler$FUNC
-    );
-    static final FunctionDescriptor libraw_unpack_function_name$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_unpack_function_name$MH = RuntimeHelper.downcallHandle(
-        "libraw_unpack_function_name",
-        constants$7.libraw_unpack_function_name$FUNC
-    );
+    static final VarHandle const$0 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("exifparser_data"));
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(libraw_callbacks_t.pre_identify_cb.class, "apply", constants$3.const$5);
+    static final VarHandle const$2 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("pre_identify_cb"));
+    static final MethodHandle const$3 = RuntimeHelper.upcallHandle(libraw_callbacks_t.post_identify_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$4 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("post_identify_cb"));
+    static final MethodHandle const$5 = RuntimeHelper.upcallHandle(libraw_callbacks_t.pre_subtractblack_cb.class, "apply", constants$4.const$2);
 }
 
 

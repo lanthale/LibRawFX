@@ -11,76 +11,22 @@ final class constants$0 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$0() {}
-    static final FunctionDescriptor memory_callback$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final FunctionDescriptor memory_callback_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle memory_callback_UP$MH = RuntimeHelper.upcallHandle(memory_callback.class, "apply", constants$0.memory_callback_UP$FUNC);
-    static final FunctionDescriptor memory_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle memory_callback_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$0.memory_callback_DOWN$FUNC
-    );
-    static final FunctionDescriptor exif_parser_callback$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final FunctionDescriptor exif_parser_callback_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final MethodHandle exif_parser_callback_UP$MH = RuntimeHelper.upcallHandle(exif_parser_callback.class, "apply", constants$0.exif_parser_callback_UP$FUNC);
-    static final FunctionDescriptor exif_parser_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final MethodHandle exif_parser_callback_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$0.exif_parser_callback_DOWN$FUNC
-    );
-    static final FunctionDescriptor default_memory_callback$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle default_memory_callback$MH = RuntimeHelper.downcallHandle(
-        "default_memory_callback",
-        constants$0.default_memory_callback$FUNC
-    );
-    static final FunctionDescriptor data_callback$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final FunctionDescriptor data_callback_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle data_callback_UP$MH = RuntimeHelper.upcallHandle(data_callback.class, "apply", constants$0.data_callback_UP$FUNC);
+    static final StructLayout const$0 = MemoryLayout.structLayout(
+        RuntimeHelper.POINTER.withName("decoder_name"),
+        JAVA_INT.withName("decoder_flags"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("libraw_decoder_info_t");
+    static final VarHandle const$1 = constants$0.const$0.varHandle(MemoryLayout.PathElement.groupElement("decoder_name"));
+    static final VarHandle const$2 = constants$0.const$0.varHandle(MemoryLayout.PathElement.groupElement("decoder_flags"));
+    static final StructLayout const$3 = MemoryLayout.structLayout(
+        JAVA_INT.withName("mix_green"),
+        JAVA_INT.withName("raw_color"),
+        JAVA_INT.withName("zero_is_bad"),
+        JAVA_SHORT.withName("shrink"),
+        JAVA_SHORT.withName("fuji_width")
+    ).withName("libraw_internal_output_params_t");
+    static final VarHandle const$4 = constants$0.const$3.varHandle(MemoryLayout.PathElement.groupElement("mix_green"));
+    static final VarHandle const$5 = constants$0.const$3.varHandle(MemoryLayout.PathElement.groupElement("raw_color"));
 }
 
 

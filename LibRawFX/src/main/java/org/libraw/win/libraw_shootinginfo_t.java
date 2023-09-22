@@ -24,23 +24,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_shootinginfo_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("MeteringMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
-        Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("ExposureProgram"),
-        Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("BodySerial"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("InternalBodySerial")
-    ).withName("libraw_shootinginfo_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_shootinginfo_t.$struct$LAYOUT;
+        return constants$86.const$0;
     }
-    static final VarHandle DriveMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("DriveMode"));
     public static VarHandle DriveMode$VH() {
-        return libraw_shootinginfo_t.DriveMode$VH;
+        return constants$86.const$1;
     }
     /**
      * Getter for field:
@@ -49,7 +37,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short DriveMode$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.DriveMode$VH.get(seg);
+        return (short)constants$86.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -58,17 +46,16 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void DriveMode$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.DriveMode$VH.set(seg, x);
+        constants$86.const$1.set(seg, x);
     }
     public static short DriveMode$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.DriveMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$86.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void DriveMode$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.DriveMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$86.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusMode"));
     public static VarHandle FocusMode$VH() {
-        return libraw_shootinginfo_t.FocusMode$VH;
+        return constants$86.const$2;
     }
     /**
      * Getter for field:
@@ -77,7 +64,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short FocusMode$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.FocusMode$VH.get(seg);
+        return (short)constants$86.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -86,17 +73,16 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void FocusMode$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.FocusMode$VH.set(seg, x);
+        constants$86.const$2.set(seg, x);
     }
     public static short FocusMode$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.FocusMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$86.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void FocusMode$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.FocusMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$86.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MeteringMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MeteringMode"));
     public static VarHandle MeteringMode$VH() {
-        return libraw_shootinginfo_t.MeteringMode$VH;
+        return constants$86.const$3;
     }
     /**
      * Getter for field:
@@ -105,7 +91,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short MeteringMode$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.MeteringMode$VH.get(seg);
+        return (short)constants$86.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -114,17 +100,16 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void MeteringMode$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.MeteringMode$VH.set(seg, x);
+        constants$86.const$3.set(seg, x);
     }
     public static short MeteringMode$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.MeteringMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$86.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void MeteringMode$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.MeteringMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$86.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFPoint$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFPoint"));
     public static VarHandle AFPoint$VH() {
-        return libraw_shootinginfo_t.AFPoint$VH;
+        return constants$86.const$4;
     }
     /**
      * Getter for field:
@@ -133,7 +118,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short AFPoint$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.AFPoint$VH.get(seg);
+        return (short)constants$86.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -142,17 +127,16 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void AFPoint$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.AFPoint$VH.set(seg, x);
+        constants$86.const$4.set(seg, x);
     }
     public static short AFPoint$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.AFPoint$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$86.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AFPoint$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.AFPoint$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$86.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureMode"));
     public static VarHandle ExposureMode$VH() {
-        return libraw_shootinginfo_t.ExposureMode$VH;
+        return constants$86.const$5;
     }
     /**
      * Getter for field:
@@ -161,7 +145,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short ExposureMode$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.ExposureMode$VH.get(seg);
+        return (short)constants$86.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -170,17 +154,16 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void ExposureMode$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.ExposureMode$VH.set(seg, x);
+        constants$86.const$5.set(seg, x);
     }
     public static short ExposureMode$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.ExposureMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$86.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureMode$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.ExposureMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$86.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureProgram$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureProgram"));
     public static VarHandle ExposureProgram$VH() {
-        return libraw_shootinginfo_t.ExposureProgram$VH;
+        return constants$87.const$0;
     }
     /**
      * Getter for field:
@@ -189,7 +172,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short ExposureProgram$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.ExposureProgram$VH.get(seg);
+        return (short)constants$87.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -198,17 +181,16 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void ExposureProgram$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.ExposureProgram$VH.set(seg, x);
+        constants$87.const$0.set(seg, x);
     }
     public static short ExposureProgram$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.ExposureProgram$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$87.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureProgram$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.ExposureProgram$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$87.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ImageStabilization$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageStabilization"));
     public static VarHandle ImageStabilization$VH() {
-        return libraw_shootinginfo_t.ImageStabilization$VH;
+        return constants$87.const$1;
     }
     /**
      * Getter for field:
@@ -217,7 +199,7 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static short ImageStabilization$get(MemorySegment seg) {
-        return (short)libraw_shootinginfo_t.ImageStabilization$VH.get(seg);
+        return (short)constants$87.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -226,13 +208,13 @@ public class libraw_shootinginfo_t {
      * }
      */
     public static void ImageStabilization$set(MemorySegment seg, short x) {
-        libraw_shootinginfo_t.ImageStabilization$VH.set(seg, x);
+        constants$87.const$1.set(seg, x);
     }
     public static short ImageStabilization$get(MemorySegment seg, long index) {
-        return (short)libraw_shootinginfo_t.ImageStabilization$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$87.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void ImageStabilization$set(MemorySegment seg, long index, short x) {
-        libraw_shootinginfo_t.ImageStabilization$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$87.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment BodySerial$slice(MemorySegment seg) {
         return seg.asSlice(14, 64);
@@ -245,7 +227,7 @@ public class libraw_shootinginfo_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -11,48 +11,18 @@ final class constants$4 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$4() {}
-    static final FunctionDescriptor libraw_recycle_datastream$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
+    static final MethodHandle const$0 = RuntimeHelper.upcallHandle(pre_identify_callback.class, "apply", constants$3.const$5);
+    static final MethodHandle const$1 = RuntimeHelper.downcallHandle(
+        constants$3.const$5
     );
-    static final MethodHandle libraw_recycle_datastream$MH = RuntimeHelper.downcallHandle(
-        "libraw_recycle_datastream",
-        constants$4.libraw_recycle_datastream$FUNC
+    static final FunctionDescriptor const$2 = FunctionDescriptor.ofVoid(
+        RuntimeHelper.POINTER
     );
-    static final FunctionDescriptor libraw_recycle$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
+    static final MethodHandle const$3 = RuntimeHelper.upcallHandle(post_identify_callback.class, "apply", constants$4.const$2);
+    static final MethodHandle const$4 = RuntimeHelper.downcallHandle(
+        constants$4.const$2
     );
-    static final MethodHandle libraw_recycle$MH = RuntimeHelper.downcallHandle(
-        "libraw_recycle",
-        constants$4.libraw_recycle$FUNC
-    );
-    static final FunctionDescriptor libraw_close$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_close$MH = RuntimeHelper.downcallHandle(
-        "libraw_close",
-        constants$4.libraw_close$FUNC
-    );
-    static final FunctionDescriptor libraw_subtract_black$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_subtract_black$MH = RuntimeHelper.downcallHandle(
-        "libraw_subtract_black",
-        constants$4.libraw_subtract_black$FUNC
-    );
-    static final FunctionDescriptor libraw_raw2image$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_raw2image$MH = RuntimeHelper.downcallHandle(
-        "libraw_raw2image",
-        constants$4.libraw_raw2image$FUNC
-    );
-    static final FunctionDescriptor libraw_free_image$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_free_image$MH = RuntimeHelper.downcallHandle(
-        "libraw_free_image",
-        constants$4.libraw_free_image$FUNC
-    );
+    static final MethodHandle const$5 = RuntimeHelper.upcallHandle(process_step_callback.class, "apply", constants$4.const$2);
 }
 
 

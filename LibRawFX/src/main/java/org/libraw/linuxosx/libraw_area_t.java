@@ -19,18 +19,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_area_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("t"),
-        Constants$root.C_SHORT$LAYOUT.withName("l"),
-        Constants$root.C_SHORT$LAYOUT.withName("b"),
-        Constants$root.C_SHORT$LAYOUT.withName("r")
-    ).withName("libraw_area_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_area_t.$struct$LAYOUT;
+        return constants$16.const$3;
     }
-    static final VarHandle t$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t"));
     public static VarHandle t$VH() {
-        return libraw_area_t.t$VH;
+        return constants$16.const$4;
     }
     /**
      * Getter for field:
@@ -39,7 +32,7 @@ public class libraw_area_t {
      * }
      */
     public static short t$get(MemorySegment seg) {
-        return (short)libraw_area_t.t$VH.get(seg);
+        return (short)constants$16.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -48,17 +41,16 @@ public class libraw_area_t {
      * }
      */
     public static void t$set(MemorySegment seg, short x) {
-        libraw_area_t.t$VH.set(seg, x);
+        constants$16.const$4.set(seg, x);
     }
     public static short t$get(MemorySegment seg, long index) {
-        return (short)libraw_area_t.t$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$16.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void t$set(MemorySegment seg, long index, short x) {
-        libraw_area_t.t$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$16.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle l$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("l"));
     public static VarHandle l$VH() {
-        return libraw_area_t.l$VH;
+        return constants$16.const$5;
     }
     /**
      * Getter for field:
@@ -67,7 +59,7 @@ public class libraw_area_t {
      * }
      */
     public static short l$get(MemorySegment seg) {
-        return (short)libraw_area_t.l$VH.get(seg);
+        return (short)constants$16.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -76,17 +68,16 @@ public class libraw_area_t {
      * }
      */
     public static void l$set(MemorySegment seg, short x) {
-        libraw_area_t.l$VH.set(seg, x);
+        constants$16.const$5.set(seg, x);
     }
     public static short l$get(MemorySegment seg, long index) {
-        return (short)libraw_area_t.l$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$16.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void l$set(MemorySegment seg, long index, short x) {
-        libraw_area_t.l$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$16.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle b$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("b"));
     public static VarHandle b$VH() {
-        return libraw_area_t.b$VH;
+        return constants$17.const$0;
     }
     /**
      * Getter for field:
@@ -95,7 +86,7 @@ public class libraw_area_t {
      * }
      */
     public static short b$get(MemorySegment seg) {
-        return (short)libraw_area_t.b$VH.get(seg);
+        return (short)constants$17.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -104,17 +95,16 @@ public class libraw_area_t {
      * }
      */
     public static void b$set(MemorySegment seg, short x) {
-        libraw_area_t.b$VH.set(seg, x);
+        constants$17.const$0.set(seg, x);
     }
     public static short b$get(MemorySegment seg, long index) {
-        return (short)libraw_area_t.b$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$17.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void b$set(MemorySegment seg, long index, short x) {
-        libraw_area_t.b$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$17.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle r$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("r"));
     public static VarHandle r$VH() {
-        return libraw_area_t.r$VH;
+        return constants$17.const$1;
     }
     /**
      * Getter for field:
@@ -123,7 +113,7 @@ public class libraw_area_t {
      * }
      */
     public static short r$get(MemorySegment seg) {
-        return (short)libraw_area_t.r$VH.get(seg);
+        return (short)constants$17.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -132,20 +122,20 @@ public class libraw_area_t {
      * }
      */
     public static void r$set(MemorySegment seg, short x) {
-        libraw_area_t.r$VH.set(seg, x);
+        constants$17.const$1.set(seg, x);
     }
     public static short r$get(MemorySegment seg, long index) {
-        return (short)libraw_area_t.r$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$17.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void r$set(MemorySegment seg, long index, short x) {
-        libraw_area_t.r$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$17.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

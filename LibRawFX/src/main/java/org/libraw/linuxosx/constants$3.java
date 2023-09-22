@@ -11,63 +11,25 @@ final class constants$3 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$3() {}
-    static final FunctionDescriptor libraw_init$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
+    static final MethodHandle const$0 = RuntimeHelper.downcallHandle(
+        constants$2.const$4
     );
-    static final MethodHandle libraw_init$MH = RuntimeHelper.downcallHandle(
-        "libraw_init",
-        constants$3.libraw_init$FUNC
+    static final MethodHandle const$1 = RuntimeHelper.downcallHandle(
+        "default_data_callback",
+        constants$2.const$4
     );
-    static final FunctionDescriptor libraw_open_file$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
+    static final FunctionDescriptor const$2 = FunctionDescriptor.of(JAVA_INT,
+        RuntimeHelper.POINTER,
+        JAVA_INT,
+        JAVA_INT,
+        JAVA_INT
     );
-    static final MethodHandle libraw_open_file$MH = RuntimeHelper.downcallHandle(
-        "libraw_open_file",
-        constants$3.libraw_open_file$FUNC
+    static final MethodHandle const$3 = RuntimeHelper.upcallHandle(progress_callback.class, "apply", constants$3.const$2);
+    static final MethodHandle const$4 = RuntimeHelper.downcallHandle(
+        constants$3.const$2
     );
-    static final FunctionDescriptor libraw_open_buffer$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_open_buffer$MH = RuntimeHelper.downcallHandle(
-        "libraw_open_buffer",
-        constants$3.libraw_open_buffer$FUNC
-    );
-    static final FunctionDescriptor libraw_open_bayer$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_SHORT$LAYOUT,
-        Constants$root.C_SHORT$LAYOUT,
-        Constants$root.C_SHORT$LAYOUT,
-        Constants$root.C_SHORT$LAYOUT,
-        Constants$root.C_SHORT$LAYOUT,
-        Constants$root.C_SHORT$LAYOUT,
-        Constants$root.C_CHAR$LAYOUT,
-        Constants$root.C_CHAR$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_open_bayer$MH = RuntimeHelper.downcallHandle(
-        "libraw_open_bayer",
-        constants$3.libraw_open_bayer$FUNC
-    );
-    static final FunctionDescriptor libraw_unpack$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_unpack$MH = RuntimeHelper.downcallHandle(
-        "libraw_unpack",
-        constants$3.libraw_unpack$FUNC
-    );
-    static final FunctionDescriptor libraw_unpack_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_unpack_thumb$MH = RuntimeHelper.downcallHandle(
-        "libraw_unpack_thumb",
-        constants$3.libraw_unpack_thumb$FUNC
+    static final FunctionDescriptor const$5 = FunctionDescriptor.of(JAVA_INT,
+        RuntimeHelper.POINTER
     );
 }
 

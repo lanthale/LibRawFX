@@ -19,14 +19,8 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_p1_makernotes_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("Software"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SystemType"),
-        MemoryLayout.sequenceLayout(256, Constants$root.C_CHAR$LAYOUT).withName("FirmwareString"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SystemModel")
-    ).withName("libraw_p1_makernotes_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_p1_makernotes_t.$struct$LAYOUT;
+        return constants$50.const$4;
     }
     public static MemorySegment Software$slice(MemorySegment seg) {
         return seg.asSlice(0, 64);
@@ -45,7 +39,7 @@ public class libraw_p1_makernotes_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

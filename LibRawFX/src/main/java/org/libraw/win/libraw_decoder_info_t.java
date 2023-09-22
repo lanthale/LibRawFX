@@ -17,17 +17,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_decoder_info_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_POINTER$LAYOUT.withName("decoder_name"),
-        Constants$root.C_LONG$LAYOUT.withName("decoder_flags"),
-        MemoryLayout.paddingLayout(32)
-    ).withName("libraw_decoder_info_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_decoder_info_t.$struct$LAYOUT;
+        return constants$0.const$0;
     }
-    static final VarHandle decoder_name$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("decoder_name"));
     public static VarHandle decoder_name$VH() {
-        return libraw_decoder_info_t.decoder_name$VH;
+        return constants$0.const$1;
     }
     /**
      * Getter for field:
@@ -36,7 +30,7 @@ public class libraw_decoder_info_t {
      * }
      */
     public static MemorySegment decoder_name$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_decoder_info_t.decoder_name$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$0.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -45,17 +39,16 @@ public class libraw_decoder_info_t {
      * }
      */
     public static void decoder_name$set(MemorySegment seg, MemorySegment x) {
-        libraw_decoder_info_t.decoder_name$VH.set(seg, x);
+        constants$0.const$1.set(seg, x);
     }
     public static MemorySegment decoder_name$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_decoder_info_t.decoder_name$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$0.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void decoder_name$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_decoder_info_t.decoder_name$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$0.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle decoder_flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("decoder_flags"));
     public static VarHandle decoder_flags$VH() {
-        return libraw_decoder_info_t.decoder_flags$VH;
+        return constants$0.const$2;
     }
     /**
      * Getter for field:
@@ -64,7 +57,7 @@ public class libraw_decoder_info_t {
      * }
      */
     public static int decoder_flags$get(MemorySegment seg) {
-        return (int)libraw_decoder_info_t.decoder_flags$VH.get(seg);
+        return (int)constants$0.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -73,20 +66,20 @@ public class libraw_decoder_info_t {
      * }
      */
     public static void decoder_flags$set(MemorySegment seg, int x) {
-        libraw_decoder_info_t.decoder_flags$VH.set(seg, x);
+        constants$0.const$2.set(seg, x);
     }
     public static int decoder_flags$get(MemorySegment seg, long index) {
-        return (int)libraw_decoder_info_t.decoder_flags$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$0.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void decoder_flags$set(MemorySegment seg, long index, int x) {
-        libraw_decoder_info_t.decoder_flags$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$0.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

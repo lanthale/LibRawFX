@@ -15,14 +15,14 @@ import static java.lang.foreign.ValueLayout.*;
 public interface post_identify_callback {
 
     void apply(java.lang.foreign.MemorySegment ctx);
-    static MemorySegment allocate(post_identify_callback fi, SegmentScope scope) {
-        return RuntimeHelper.upcallStub(constants$2.post_identify_callback_UP$MH, fi, constants$2.post_identify_callback$FUNC, scope);
+    static MemorySegment allocate(post_identify_callback fi, Arena scope) {
+        return RuntimeHelper.upcallStub(constants$4.const$3, fi, constants$4.const$2, scope);
     }
-    static post_identify_callback ofAddress(MemorySegment addr, SegmentScope scope) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+    static post_identify_callback ofAddress(MemorySegment addr, Arena arena) {
+        MemorySegment symbol = addr.reinterpret(arena, null);
         return (java.lang.foreign.MemorySegment _ctx) -> {
             try {
-                constants$2.post_identify_callback_DOWN$MH.invokeExact(symbol, _ctx);
+                constants$4.const$4.invokeExact(symbol, _ctx);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

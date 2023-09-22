@@ -31,31 +31,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class crx_data_header_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_LONG$LAYOUT.withName("version"),
-        Constants$root.C_LONG$LAYOUT.withName("f_width"),
-        Constants$root.C_LONG$LAYOUT.withName("f_height"),
-        Constants$root.C_LONG$LAYOUT.withName("tileWidth"),
-        Constants$root.C_LONG$LAYOUT.withName("tileHeight"),
-        Constants$root.C_LONG$LAYOUT.withName("nBits"),
-        Constants$root.C_LONG$LAYOUT.withName("nPlanes"),
-        Constants$root.C_LONG$LAYOUT.withName("cfaLayout"),
-        Constants$root.C_LONG$LAYOUT.withName("encType"),
-        Constants$root.C_LONG$LAYOUT.withName("imageLevels"),
-        Constants$root.C_LONG$LAYOUT.withName("hasTileCols"),
-        Constants$root.C_LONG$LAYOUT.withName("hasTileRows"),
-        Constants$root.C_LONG$LAYOUT.withName("mdatHdrSize"),
-        Constants$root.C_LONG$LAYOUT.withName("MediaSize"),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
-        Constants$root.C_LONG$LAYOUT.withName("MediaType"),
-        MemoryLayout.paddingLayout(32)
-    ).withName("crx_data_header_t");
     public static MemoryLayout $LAYOUT() {
-        return crx_data_header_t.$struct$LAYOUT;
+        return constants$95.const$2;
     }
-    static final VarHandle version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("version"));
     public static VarHandle version$VH() {
-        return crx_data_header_t.version$VH;
+        return constants$95.const$3;
     }
     /**
      * Getter for field:
@@ -64,7 +44,7 @@ public class crx_data_header_t {
      * }
      */
     public static int version$get(MemorySegment seg) {
-        return (int)crx_data_header_t.version$VH.get(seg);
+        return (int)constants$95.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -73,17 +53,16 @@ public class crx_data_header_t {
      * }
      */
     public static void version$set(MemorySegment seg, int x) {
-        crx_data_header_t.version$VH.set(seg, x);
+        constants$95.const$3.set(seg, x);
     }
     public static int version$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.version$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$95.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void version$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.version$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$95.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle f_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("f_width"));
     public static VarHandle f_width$VH() {
-        return crx_data_header_t.f_width$VH;
+        return constants$95.const$4;
     }
     /**
      * Getter for field:
@@ -92,7 +71,7 @@ public class crx_data_header_t {
      * }
      */
     public static int f_width$get(MemorySegment seg) {
-        return (int)crx_data_header_t.f_width$VH.get(seg);
+        return (int)constants$95.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -101,17 +80,16 @@ public class crx_data_header_t {
      * }
      */
     public static void f_width$set(MemorySegment seg, int x) {
-        crx_data_header_t.f_width$VH.set(seg, x);
+        constants$95.const$4.set(seg, x);
     }
     public static int f_width$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.f_width$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$95.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void f_width$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.f_width$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$95.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle f_height$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("f_height"));
     public static VarHandle f_height$VH() {
-        return crx_data_header_t.f_height$VH;
+        return constants$95.const$5;
     }
     /**
      * Getter for field:
@@ -120,7 +98,7 @@ public class crx_data_header_t {
      * }
      */
     public static int f_height$get(MemorySegment seg) {
-        return (int)crx_data_header_t.f_height$VH.get(seg);
+        return (int)constants$95.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -129,17 +107,16 @@ public class crx_data_header_t {
      * }
      */
     public static void f_height$set(MemorySegment seg, int x) {
-        crx_data_header_t.f_height$VH.set(seg, x);
+        constants$95.const$5.set(seg, x);
     }
     public static int f_height$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.f_height$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$95.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void f_height$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.f_height$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$95.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tileWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tileWidth"));
     public static VarHandle tileWidth$VH() {
-        return crx_data_header_t.tileWidth$VH;
+        return constants$96.const$0;
     }
     /**
      * Getter for field:
@@ -148,7 +125,7 @@ public class crx_data_header_t {
      * }
      */
     public static int tileWidth$get(MemorySegment seg) {
-        return (int)crx_data_header_t.tileWidth$VH.get(seg);
+        return (int)constants$96.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -157,17 +134,16 @@ public class crx_data_header_t {
      * }
      */
     public static void tileWidth$set(MemorySegment seg, int x) {
-        crx_data_header_t.tileWidth$VH.set(seg, x);
+        constants$96.const$0.set(seg, x);
     }
     public static int tileWidth$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.tileWidth$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$96.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void tileWidth$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.tileWidth$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$96.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tileHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tileHeight"));
     public static VarHandle tileHeight$VH() {
-        return crx_data_header_t.tileHeight$VH;
+        return constants$96.const$1;
     }
     /**
      * Getter for field:
@@ -176,7 +152,7 @@ public class crx_data_header_t {
      * }
      */
     public static int tileHeight$get(MemorySegment seg) {
-        return (int)crx_data_header_t.tileHeight$VH.get(seg);
+        return (int)constants$96.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -185,17 +161,16 @@ public class crx_data_header_t {
      * }
      */
     public static void tileHeight$set(MemorySegment seg, int x) {
-        crx_data_header_t.tileHeight$VH.set(seg, x);
+        constants$96.const$1.set(seg, x);
     }
     public static int tileHeight$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.tileHeight$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$96.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void tileHeight$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.tileHeight$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$96.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nBits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nBits"));
     public static VarHandle nBits$VH() {
-        return crx_data_header_t.nBits$VH;
+        return constants$96.const$2;
     }
     /**
      * Getter for field:
@@ -204,7 +179,7 @@ public class crx_data_header_t {
      * }
      */
     public static int nBits$get(MemorySegment seg) {
-        return (int)crx_data_header_t.nBits$VH.get(seg);
+        return (int)constants$96.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -213,17 +188,16 @@ public class crx_data_header_t {
      * }
      */
     public static void nBits$set(MemorySegment seg, int x) {
-        crx_data_header_t.nBits$VH.set(seg, x);
+        constants$96.const$2.set(seg, x);
     }
     public static int nBits$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.nBits$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$96.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void nBits$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.nBits$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$96.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nPlanes$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nPlanes"));
     public static VarHandle nPlanes$VH() {
-        return crx_data_header_t.nPlanes$VH;
+        return constants$96.const$3;
     }
     /**
      * Getter for field:
@@ -232,7 +206,7 @@ public class crx_data_header_t {
      * }
      */
     public static int nPlanes$get(MemorySegment seg) {
-        return (int)crx_data_header_t.nPlanes$VH.get(seg);
+        return (int)constants$96.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -241,17 +215,16 @@ public class crx_data_header_t {
      * }
      */
     public static void nPlanes$set(MemorySegment seg, int x) {
-        crx_data_header_t.nPlanes$VH.set(seg, x);
+        constants$96.const$3.set(seg, x);
     }
     public static int nPlanes$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.nPlanes$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$96.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void nPlanes$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.nPlanes$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$96.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cfaLayout$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cfaLayout"));
     public static VarHandle cfaLayout$VH() {
-        return crx_data_header_t.cfaLayout$VH;
+        return constants$96.const$4;
     }
     /**
      * Getter for field:
@@ -260,7 +233,7 @@ public class crx_data_header_t {
      * }
      */
     public static int cfaLayout$get(MemorySegment seg) {
-        return (int)crx_data_header_t.cfaLayout$VH.get(seg);
+        return (int)constants$96.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -269,17 +242,16 @@ public class crx_data_header_t {
      * }
      */
     public static void cfaLayout$set(MemorySegment seg, int x) {
-        crx_data_header_t.cfaLayout$VH.set(seg, x);
+        constants$96.const$4.set(seg, x);
     }
     public static int cfaLayout$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.cfaLayout$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$96.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void cfaLayout$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.cfaLayout$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$96.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle encType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("encType"));
     public static VarHandle encType$VH() {
-        return crx_data_header_t.encType$VH;
+        return constants$96.const$5;
     }
     /**
      * Getter for field:
@@ -288,7 +260,7 @@ public class crx_data_header_t {
      * }
      */
     public static int encType$get(MemorySegment seg) {
-        return (int)crx_data_header_t.encType$VH.get(seg);
+        return (int)constants$96.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -297,17 +269,16 @@ public class crx_data_header_t {
      * }
      */
     public static void encType$set(MemorySegment seg, int x) {
-        crx_data_header_t.encType$VH.set(seg, x);
+        constants$96.const$5.set(seg, x);
     }
     public static int encType$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.encType$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$96.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void encType$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.encType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$96.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle imageLevels$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("imageLevels"));
     public static VarHandle imageLevels$VH() {
-        return crx_data_header_t.imageLevels$VH;
+        return constants$97.const$0;
     }
     /**
      * Getter for field:
@@ -316,7 +287,7 @@ public class crx_data_header_t {
      * }
      */
     public static int imageLevels$get(MemorySegment seg) {
-        return (int)crx_data_header_t.imageLevels$VH.get(seg);
+        return (int)constants$97.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -325,17 +296,16 @@ public class crx_data_header_t {
      * }
      */
     public static void imageLevels$set(MemorySegment seg, int x) {
-        crx_data_header_t.imageLevels$VH.set(seg, x);
+        constants$97.const$0.set(seg, x);
     }
     public static int imageLevels$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.imageLevels$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$97.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void imageLevels$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.imageLevels$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$97.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle hasTileCols$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("hasTileCols"));
     public static VarHandle hasTileCols$VH() {
-        return crx_data_header_t.hasTileCols$VH;
+        return constants$97.const$1;
     }
     /**
      * Getter for field:
@@ -344,7 +314,7 @@ public class crx_data_header_t {
      * }
      */
     public static int hasTileCols$get(MemorySegment seg) {
-        return (int)crx_data_header_t.hasTileCols$VH.get(seg);
+        return (int)constants$97.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -353,17 +323,16 @@ public class crx_data_header_t {
      * }
      */
     public static void hasTileCols$set(MemorySegment seg, int x) {
-        crx_data_header_t.hasTileCols$VH.set(seg, x);
+        constants$97.const$1.set(seg, x);
     }
     public static int hasTileCols$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.hasTileCols$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$97.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void hasTileCols$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.hasTileCols$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$97.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle hasTileRows$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("hasTileRows"));
     public static VarHandle hasTileRows$VH() {
-        return crx_data_header_t.hasTileRows$VH;
+        return constants$97.const$2;
     }
     /**
      * Getter for field:
@@ -372,7 +341,7 @@ public class crx_data_header_t {
      * }
      */
     public static int hasTileRows$get(MemorySegment seg) {
-        return (int)crx_data_header_t.hasTileRows$VH.get(seg);
+        return (int)constants$97.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -381,17 +350,16 @@ public class crx_data_header_t {
      * }
      */
     public static void hasTileRows$set(MemorySegment seg, int x) {
-        crx_data_header_t.hasTileRows$VH.set(seg, x);
+        constants$97.const$2.set(seg, x);
     }
     public static int hasTileRows$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.hasTileRows$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$97.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void hasTileRows$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.hasTileRows$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$97.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle mdatHdrSize$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("mdatHdrSize"));
     public static VarHandle mdatHdrSize$VH() {
-        return crx_data_header_t.mdatHdrSize$VH;
+        return constants$97.const$3;
     }
     /**
      * Getter for field:
@@ -400,7 +368,7 @@ public class crx_data_header_t {
      * }
      */
     public static int mdatHdrSize$get(MemorySegment seg) {
-        return (int)crx_data_header_t.mdatHdrSize$VH.get(seg);
+        return (int)constants$97.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -409,17 +377,16 @@ public class crx_data_header_t {
      * }
      */
     public static void mdatHdrSize$set(MemorySegment seg, int x) {
-        crx_data_header_t.mdatHdrSize$VH.set(seg, x);
+        constants$97.const$3.set(seg, x);
     }
     public static int mdatHdrSize$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.mdatHdrSize$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$97.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void mdatHdrSize$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.mdatHdrSize$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$97.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MediaSize$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MediaSize"));
     public static VarHandle MediaSize$VH() {
-        return crx_data_header_t.MediaSize$VH;
+        return constants$97.const$4;
     }
     /**
      * Getter for field:
@@ -428,7 +395,7 @@ public class crx_data_header_t {
      * }
      */
     public static int MediaSize$get(MemorySegment seg) {
-        return (int)crx_data_header_t.MediaSize$VH.get(seg);
+        return (int)constants$97.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -437,17 +404,16 @@ public class crx_data_header_t {
      * }
      */
     public static void MediaSize$set(MemorySegment seg, int x) {
-        crx_data_header_t.MediaSize$VH.set(seg, x);
+        constants$97.const$4.set(seg, x);
     }
     public static int MediaSize$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.MediaSize$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$97.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void MediaSize$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.MediaSize$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$97.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MediaOffset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MediaOffset"));
     public static VarHandle MediaOffset$VH() {
-        return crx_data_header_t.MediaOffset$VH;
+        return constants$97.const$5;
     }
     /**
      * Getter for field:
@@ -456,7 +422,7 @@ public class crx_data_header_t {
      * }
      */
     public static long MediaOffset$get(MemorySegment seg) {
-        return (long)crx_data_header_t.MediaOffset$VH.get(seg);
+        return (long)constants$97.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -465,17 +431,16 @@ public class crx_data_header_t {
      * }
      */
     public static void MediaOffset$set(MemorySegment seg, long x) {
-        crx_data_header_t.MediaOffset$VH.set(seg, x);
+        constants$97.const$5.set(seg, x);
     }
     public static long MediaOffset$get(MemorySegment seg, long index) {
-        return (long)crx_data_header_t.MediaOffset$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$97.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void MediaOffset$set(MemorySegment seg, long index, long x) {
-        crx_data_header_t.MediaOffset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$97.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MediaType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MediaType"));
     public static VarHandle MediaType$VH() {
-        return crx_data_header_t.MediaType$VH;
+        return constants$98.const$0;
     }
     /**
      * Getter for field:
@@ -484,7 +449,7 @@ public class crx_data_header_t {
      * }
      */
     public static int MediaType$get(MemorySegment seg) {
-        return (int)crx_data_header_t.MediaType$VH.get(seg);
+        return (int)constants$98.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -493,20 +458,20 @@ public class crx_data_header_t {
      * }
      */
     public static void MediaType$set(MemorySegment seg, int x) {
-        crx_data_header_t.MediaType$VH.set(seg, x);
+        constants$98.const$0.set(seg, x);
     }
     public static int MediaType$get(MemorySegment seg, long index) {
-        return (int)crx_data_header_t.MediaType$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$98.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void MediaType$set(MemorySegment seg, long index, int x) {
-        crx_data_header_t.MediaType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$98.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

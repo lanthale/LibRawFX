@@ -24,20 +24,8 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_gps_info_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("latitude"),
-        MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("longitude"),
-        MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("gpstimestamp"),
-        Constants$root.C_FLOAT$LAYOUT.withName("altitude"),
-        Constants$root.C_CHAR$LAYOUT.withName("altref"),
-        Constants$root.C_CHAR$LAYOUT.withName("latref"),
-        Constants$root.C_CHAR$LAYOUT.withName("longref"),
-        Constants$root.C_CHAR$LAYOUT.withName("gpsstatus"),
-        Constants$root.C_CHAR$LAYOUT.withName("gpsparsed"),
-        MemoryLayout.paddingLayout(24)
-    ).withName("libraw_gps_info_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_gps_info_t.$struct$LAYOUT;
+        return constants$62.const$2;
     }
     public static MemorySegment latitude$slice(MemorySegment seg) {
         return seg.asSlice(0, 12);
@@ -48,9 +36,8 @@ public class libraw_gps_info_t {
     public static MemorySegment gpstimestamp$slice(MemorySegment seg) {
         return seg.asSlice(24, 12);
     }
-    static final VarHandle altitude$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("altitude"));
     public static VarHandle altitude$VH() {
-        return libraw_gps_info_t.altitude$VH;
+        return constants$62.const$3;
     }
     /**
      * Getter for field:
@@ -59,7 +46,7 @@ public class libraw_gps_info_t {
      * }
      */
     public static float altitude$get(MemorySegment seg) {
-        return (float)libraw_gps_info_t.altitude$VH.get(seg);
+        return (float)constants$62.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -68,17 +55,16 @@ public class libraw_gps_info_t {
      * }
      */
     public static void altitude$set(MemorySegment seg, float x) {
-        libraw_gps_info_t.altitude$VH.set(seg, x);
+        constants$62.const$3.set(seg, x);
     }
     public static float altitude$get(MemorySegment seg, long index) {
-        return (float)libraw_gps_info_t.altitude$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$62.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void altitude$set(MemorySegment seg, long index, float x) {
-        libraw_gps_info_t.altitude$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$62.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle altref$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("altref"));
     public static VarHandle altref$VH() {
-        return libraw_gps_info_t.altref$VH;
+        return constants$62.const$4;
     }
     /**
      * Getter for field:
@@ -87,7 +73,7 @@ public class libraw_gps_info_t {
      * }
      */
     public static byte altref$get(MemorySegment seg) {
-        return (byte)libraw_gps_info_t.altref$VH.get(seg);
+        return (byte)constants$62.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -96,17 +82,16 @@ public class libraw_gps_info_t {
      * }
      */
     public static void altref$set(MemorySegment seg, byte x) {
-        libraw_gps_info_t.altref$VH.set(seg, x);
+        constants$62.const$4.set(seg, x);
     }
     public static byte altref$get(MemorySegment seg, long index) {
-        return (byte)libraw_gps_info_t.altref$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$62.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void altref$set(MemorySegment seg, long index, byte x) {
-        libraw_gps_info_t.altref$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$62.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle latref$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("latref"));
     public static VarHandle latref$VH() {
-        return libraw_gps_info_t.latref$VH;
+        return constants$62.const$5;
     }
     /**
      * Getter for field:
@@ -115,7 +100,7 @@ public class libraw_gps_info_t {
      * }
      */
     public static byte latref$get(MemorySegment seg) {
-        return (byte)libraw_gps_info_t.latref$VH.get(seg);
+        return (byte)constants$62.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -124,17 +109,16 @@ public class libraw_gps_info_t {
      * }
      */
     public static void latref$set(MemorySegment seg, byte x) {
-        libraw_gps_info_t.latref$VH.set(seg, x);
+        constants$62.const$5.set(seg, x);
     }
     public static byte latref$get(MemorySegment seg, long index) {
-        return (byte)libraw_gps_info_t.latref$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$62.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void latref$set(MemorySegment seg, long index, byte x) {
-        libraw_gps_info_t.latref$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$62.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle longref$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("longref"));
     public static VarHandle longref$VH() {
-        return libraw_gps_info_t.longref$VH;
+        return constants$63.const$0;
     }
     /**
      * Getter for field:
@@ -143,7 +127,7 @@ public class libraw_gps_info_t {
      * }
      */
     public static byte longref$get(MemorySegment seg) {
-        return (byte)libraw_gps_info_t.longref$VH.get(seg);
+        return (byte)constants$63.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -152,17 +136,16 @@ public class libraw_gps_info_t {
      * }
      */
     public static void longref$set(MemorySegment seg, byte x) {
-        libraw_gps_info_t.longref$VH.set(seg, x);
+        constants$63.const$0.set(seg, x);
     }
     public static byte longref$get(MemorySegment seg, long index) {
-        return (byte)libraw_gps_info_t.longref$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$63.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void longref$set(MemorySegment seg, long index, byte x) {
-        libraw_gps_info_t.longref$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$63.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle gpsstatus$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("gpsstatus"));
     public static VarHandle gpsstatus$VH() {
-        return libraw_gps_info_t.gpsstatus$VH;
+        return constants$63.const$1;
     }
     /**
      * Getter for field:
@@ -171,7 +154,7 @@ public class libraw_gps_info_t {
      * }
      */
     public static byte gpsstatus$get(MemorySegment seg) {
-        return (byte)libraw_gps_info_t.gpsstatus$VH.get(seg);
+        return (byte)constants$63.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -180,17 +163,16 @@ public class libraw_gps_info_t {
      * }
      */
     public static void gpsstatus$set(MemorySegment seg, byte x) {
-        libraw_gps_info_t.gpsstatus$VH.set(seg, x);
+        constants$63.const$1.set(seg, x);
     }
     public static byte gpsstatus$get(MemorySegment seg, long index) {
-        return (byte)libraw_gps_info_t.gpsstatus$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$63.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void gpsstatus$set(MemorySegment seg, long index, byte x) {
-        libraw_gps_info_t.gpsstatus$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$63.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle gpsparsed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("gpsparsed"));
     public static VarHandle gpsparsed$VH() {
-        return libraw_gps_info_t.gpsparsed$VH;
+        return constants$63.const$2;
     }
     /**
      * Getter for field:
@@ -199,7 +181,7 @@ public class libraw_gps_info_t {
      * }
      */
     public static byte gpsparsed$get(MemorySegment seg) {
-        return (byte)libraw_gps_info_t.gpsparsed$VH.get(seg);
+        return (byte)constants$63.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -208,20 +190,20 @@ public class libraw_gps_info_t {
      * }
      */
     public static void gpsparsed$set(MemorySegment seg, byte x) {
-        libraw_gps_info_t.gpsparsed$VH.set(seg, x);
+        constants$63.const$2.set(seg, x);
     }
     public static byte gpsparsed$get(MemorySegment seg, long index) {
-        return (byte)libraw_gps_info_t.gpsparsed$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$63.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void gpsparsed$set(MemorySegment seg, long index, byte x) {
-        libraw_gps_info_t.gpsparsed$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$63.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -15,14 +15,14 @@ import static java.lang.foreign.ValueLayout.*;
 public interface libraw_set_progress_handler$cb {
 
     int apply(java.lang.foreign.MemorySegment data, int stage, int iteration, int expected);
-    static MemorySegment allocate(libraw_set_progress_handler$cb fi, SegmentScope scope) {
-        return RuntimeHelper.upcallStub(constants$7.libraw_set_progress_handler$cb_UP$MH, fi, constants$7.libraw_set_progress_handler$cb$FUNC, scope);
+    static MemorySegment allocate(libraw_set_progress_handler$cb fi, Arena scope) {
+        return RuntimeHelper.upcallStub(constants$120.const$4, fi, constants$3.const$2, scope);
     }
-    static libraw_set_progress_handler$cb ofAddress(MemorySegment addr, SegmentScope scope) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+    static libraw_set_progress_handler$cb ofAddress(MemorySegment addr, Arena arena) {
+        MemorySegment symbol = addr.reinterpret(arena, null);
         return (java.lang.foreign.MemorySegment _data, int _stage, int _iteration, int _expected) -> {
             try {
-                return (int)constants$7.libraw_set_progress_handler$cb_DOWN$MH.invokeExact(symbol, _data, _stage, _iteration, _expected);
+                return (int)constants$3.const$4.invokeExact(symbol, _data, _stage, _iteration, _expected);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

@@ -28,144 +28,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_rawdata_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_POINTER$LAYOUT.withName("raw_alloc"),
-        Constants$root.C_POINTER$LAYOUT.withName("raw_image"),
-        Constants$root.C_POINTER$LAYOUT.withName("color4_image"),
-        Constants$root.C_POINTER$LAYOUT.withName("color3_image"),
-        Constants$root.C_POINTER$LAYOUT.withName("float_image"),
-        Constants$root.C_POINTER$LAYOUT.withName("float3_image"),
-        Constants$root.C_POINTER$LAYOUT.withName("float4_image"),
-        Constants$root.C_POINTER$LAYOUT.withName("ph1_cblack"),
-        Constants$root.C_POINTER$LAYOUT.withName("ph1_rblack"),
-        MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("guard"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("make"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("software"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_make"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_model"),
-            Constants$root.C_LONG$LAYOUT.withName("maker_index"),
-            Constants$root.C_LONG$LAYOUT.withName("raw_count"),
-            Constants$root.C_LONG$LAYOUT.withName("dng_version"),
-            Constants$root.C_LONG$LAYOUT.withName("is_foveon"),
-            Constants$root.C_LONG$LAYOUT.withName("colors"),
-            Constants$root.C_LONG$LAYOUT.withName("filters"),
-            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans"),
-            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans_abs"),
-            MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("cdesc"),
-            MemoryLayout.paddingLayout(24),
-            Constants$root.C_LONG$LAYOUT.withName("xmplen"),
-            Constants$root.C_POINTER$LAYOUT.withName("xmpdata")
-        ).withName("iparams"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("raw_height"),
-            Constants$root.C_SHORT$LAYOUT.withName("raw_width"),
-            Constants$root.C_SHORT$LAYOUT.withName("height"),
-            Constants$root.C_SHORT$LAYOUT.withName("width"),
-            Constants$root.C_SHORT$LAYOUT.withName("top_margin"),
-            Constants$root.C_SHORT$LAYOUT.withName("left_margin"),
-            Constants$root.C_SHORT$LAYOUT.withName("iheight"),
-            Constants$root.C_SHORT$LAYOUT.withName("iwidth"),
-            Constants$root.C_LONG$LAYOUT.withName("raw_pitch"),
-            MemoryLayout.paddingLayout(32),
-            Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
-            Constants$root.C_LONG$LAYOUT.withName("flip"),
-            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT)).withName("mask"),
-            Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
-            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("cleft"),
-                Constants$root.C_SHORT$LAYOUT.withName("ctop"),
-                Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("cheight")
-            ).withName("libraw_raw_inset_crop_t")).withName("raw_inset_crops"),
-            MemoryLayout.paddingLayout(16)
-        ).withName("sizes"),
-        MemoryLayout.structLayout(
-            Constants$root.C_LONG$LAYOUT.withName("mix_green"),
-            Constants$root.C_LONG$LAYOUT.withName("raw_color"),
-            Constants$root.C_LONG$LAYOUT.withName("zero_is_bad"),
-            Constants$root.C_SHORT$LAYOUT.withName("shrink"),
-            Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
-        ).withName("ioparams"),
-        MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(65536, Constants$root.C_SHORT$LAYOUT).withName("curve"),
-            MemoryLayout.sequenceLayout(4104, Constants$root.C_LONG$LAYOUT).withName("cblack"),
-            Constants$root.C_LONG$LAYOUT.withName("black"),
-            Constants$root.C_LONG$LAYOUT.withName("data_maximum"),
-            Constants$root.C_LONG$LAYOUT.withName("maximum"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("linear_max"),
-            Constants$root.C_FLOAT$LAYOUT.withName("fmaximum"),
-            Constants$root.C_FLOAT$LAYOUT.withName("fnorm"),
-            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, Constants$root.C_SHORT$LAYOUT)).withName("white"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("cam_mul"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("pre_mul"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("cmatrix"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("ccm"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("rgb_cam"),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("cam_xyz"),
-            MemoryLayout.structLayout(
-                Constants$root.C_LONG$LAYOUT.withName("format"),
-                Constants$root.C_LONG$LAYOUT.withName("key_off"),
-                Constants$root.C_LONG$LAYOUT.withName("tag_21a"),
-                Constants$root.C_LONG$LAYOUT.withName("t_black"),
-                Constants$root.C_LONG$LAYOUT.withName("split_col"),
-                Constants$root.C_LONG$LAYOUT.withName("black_col"),
-                Constants$root.C_LONG$LAYOUT.withName("split_row"),
-                Constants$root.C_LONG$LAYOUT.withName("black_row"),
-                Constants$root.C_FLOAT$LAYOUT.withName("tag_210")
-            ).withName("phase_one_data"),
-            Constants$root.C_FLOAT$LAYOUT.withName("flash_used"),
-            Constants$root.C_FLOAT$LAYOUT.withName("canon_ev"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model2"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("UniqueCameraModel"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("LocalizedCameraModel"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("ImageUniqueID"),
-            MemoryLayout.sequenceLayout(17, Constants$root.C_CHAR$LAYOUT).withName("RawDataUniqueID"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("OriginalRawFileName"),
-            MemoryLayout.paddingLayout(56),
-            Constants$root.C_POINTER$LAYOUT.withName("profile"),
-            Constants$root.C_LONG$LAYOUT.withName("profile_length"),
-            MemoryLayout.sequenceLayout(8, Constants$root.C_LONG$LAYOUT).withName("black_stat"),
-            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                Constants$root.C_LONG$LAYOUT.withName("parsedfields"),
-                Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
-                MemoryLayout.paddingLayout(16),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-            ).withName("libraw_dng_color_t")).withName("dng_color"),
-            MemoryLayout.structLayout(
-                Constants$root.C_LONG$LAYOUT.withName("parsedfields"),
-                MemoryLayout.sequenceLayout(4104, Constants$root.C_LONG$LAYOUT).withName("dng_cblack"),
-                Constants$root.C_LONG$LAYOUT.withName("dng_black"),
-                MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
-                Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("dng_whitelevel"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
-                Constants$root.C_LONG$LAYOUT.withName("preview_colorspace"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
-                Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
-                Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
-            ).withName("dng_levels"),
-            MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT)).withName("WB_Coeffs"),
-            MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, Constants$root.C_FLOAT$LAYOUT)).withName("WBCT_Coeffs"),
-            Constants$root.C_LONG$LAYOUT.withName("as_shot_wb_applied"),
-            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
-            ).withName("libraw_P1_color_t")).withName("P1_color"),
-            Constants$root.C_LONG$LAYOUT.withName("raw_bps"),
-            Constants$root.C_LONG$LAYOUT.withName("ExifColorSpace")
-        ).withName("color")
-    ).withName("libraw_rawdata_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_rawdata_t.$struct$LAYOUT;
+        return constants$76.const$3;
     }
-    static final VarHandle raw_alloc$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_alloc"));
     public static VarHandle raw_alloc$VH() {
-        return libraw_rawdata_t.raw_alloc$VH;
+        return constants$76.const$4;
     }
     /**
      * Getter for field:
@@ -174,7 +41,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment raw_alloc$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_alloc$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$76.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -183,17 +50,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void raw_alloc$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.raw_alloc$VH.set(seg, x);
+        constants$76.const$4.set(seg, x);
     }
     public static MemorySegment raw_alloc$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_alloc$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$76.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_alloc$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.raw_alloc$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$76.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_image"));
     public static VarHandle raw_image$VH() {
-        return libraw_rawdata_t.raw_image$VH;
+        return constants$76.const$5;
     }
     /**
      * Getter for field:
@@ -202,7 +68,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment raw_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$76.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -211,17 +77,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void raw_image$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.raw_image$VH.set(seg, x);
+        constants$76.const$5.set(seg, x);
     }
     public static MemorySegment raw_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.raw_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$76.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.raw_image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$76.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle color4_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("color4_image"));
     public static VarHandle color4_image$VH() {
-        return libraw_rawdata_t.color4_image$VH;
+        return constants$77.const$0;
     }
     /**
      * Getter for field:
@@ -230,7 +95,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment color4_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color4_image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$77.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -239,17 +104,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void color4_image$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.color4_image$VH.set(seg, x);
+        constants$77.const$0.set(seg, x);
     }
     public static MemorySegment color4_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color4_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$77.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void color4_image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.color4_image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$77.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle color3_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("color3_image"));
     public static VarHandle color3_image$VH() {
-        return libraw_rawdata_t.color3_image$VH;
+        return constants$77.const$1;
     }
     /**
      * Getter for field:
@@ -258,7 +122,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment color3_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color3_image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$77.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -267,17 +131,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void color3_image$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.color3_image$VH.set(seg, x);
+        constants$77.const$1.set(seg, x);
     }
     public static MemorySegment color3_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.color3_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$77.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void color3_image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.color3_image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$77.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle float_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float_image"));
     public static VarHandle float_image$VH() {
-        return libraw_rawdata_t.float_image$VH;
+        return constants$77.const$2;
     }
     /**
      * Getter for field:
@@ -286,7 +149,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment float_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float_image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$77.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -295,17 +158,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void float_image$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.float_image$VH.set(seg, x);
+        constants$77.const$2.set(seg, x);
     }
     public static MemorySegment float_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$77.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void float_image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.float_image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$77.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle float3_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float3_image"));
     public static VarHandle float3_image$VH() {
-        return libraw_rawdata_t.float3_image$VH;
+        return constants$77.const$3;
     }
     /**
      * Getter for field:
@@ -314,7 +176,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment float3_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float3_image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$77.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -323,17 +185,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void float3_image$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.float3_image$VH.set(seg, x);
+        constants$77.const$3.set(seg, x);
     }
     public static MemorySegment float3_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float3_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$77.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void float3_image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.float3_image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$77.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle float4_image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("float4_image"));
     public static VarHandle float4_image$VH() {
-        return libraw_rawdata_t.float4_image$VH;
+        return constants$77.const$4;
     }
     /**
      * Getter for field:
@@ -342,7 +203,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment float4_image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float4_image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$77.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -351,17 +212,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void float4_image$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.float4_image$VH.set(seg, x);
+        constants$77.const$4.set(seg, x);
     }
     public static MemorySegment float4_image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.float4_image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$77.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void float4_image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.float4_image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$77.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ph1_cblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ph1_cblack"));
     public static VarHandle ph1_cblack$VH() {
-        return libraw_rawdata_t.ph1_cblack$VH;
+        return constants$77.const$5;
     }
     /**
      * Getter for field:
@@ -370,7 +230,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment ph1_cblack$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_cblack$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$77.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -379,17 +239,16 @@ public class libraw_rawdata_t {
      * }
      */
     public static void ph1_cblack$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.ph1_cblack$VH.set(seg, x);
+        constants$77.const$5.set(seg, x);
     }
     public static MemorySegment ph1_cblack$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_cblack$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$77.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ph1_cblack$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.ph1_cblack$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$77.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ph1_rblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ph1_rblack"));
     public static VarHandle ph1_rblack$VH() {
-        return libraw_rawdata_t.ph1_rblack$VH;
+        return constants$78.const$0;
     }
     /**
      * Getter for field:
@@ -398,7 +257,7 @@ public class libraw_rawdata_t {
      * }
      */
     public static MemorySegment ph1_rblack$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_rblack$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$78.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -407,13 +266,13 @@ public class libraw_rawdata_t {
      * }
      */
     public static void ph1_rblack$set(MemorySegment seg, MemorySegment x) {
-        libraw_rawdata_t.ph1_rblack$VH.set(seg, x);
+        constants$78.const$0.set(seg, x);
     }
     public static MemorySegment ph1_rblack$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_rawdata_t.ph1_rblack$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$78.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ph1_rblack$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_rawdata_t.ph1_rblack$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$78.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment iparams$slice(MemorySegment seg) {
         return seg.asSlice(72, 440);
@@ -432,7 +291,7 @@ public class libraw_rawdata_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

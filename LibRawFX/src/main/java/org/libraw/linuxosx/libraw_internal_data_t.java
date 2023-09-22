@@ -20,112 +20,8 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_internal_data_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.structLayout(
-            Constants$root.C_POINTER$LAYOUT.withName("input"),
-            Constants$root.C_POINTER$LAYOUT.withName("output"),
-            Constants$root.C_INT$LAYOUT.withName("input_internal"),
-            MemoryLayout.paddingLayout(32),
-            Constants$root.C_POINTER$LAYOUT.withName("meta_data"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("profile_offset"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("toffset"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("pana_black")
-        ).withName("internal_data"),
-        MemoryLayout.structLayout(
-            Constants$root.C_INT$LAYOUT.withName("mix_green"),
-            Constants$root.C_INT$LAYOUT.withName("raw_color"),
-            Constants$root.C_INT$LAYOUT.withName("zero_is_bad"),
-            Constants$root.C_SHORT$LAYOUT.withName("shrink"),
-            Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
-        ).withName("internal_output_params"),
-        MemoryLayout.structLayout(
-            Constants$root.C_POINTER$LAYOUT.withName("histogram"),
-            Constants$root.C_POINTER$LAYOUT.withName("oprof")
-        ).withName("output_data"),
-        MemoryLayout.structLayout(
-            Constants$root.C_INT$LAYOUT.withName("olympus_exif_cfa"),
-            MemoryLayout.paddingLayout(32),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("unique_id"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("OlyID"),
-            Constants$root.C_INT$LAYOUT.withName("tiff_nifds"),
-            Constants$root.C_INT$LAYOUT.withName("tiff_flip"),
-            Constants$root.C_INT$LAYOUT.withName("metadata_blocks"),
-            MemoryLayout.paddingLayout(32)
-        ).withName("identify_data"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("order"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("sraw_mul"),
-            MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("cr2_slice"),
-            Constants$root.C_INT$LAYOUT.withName("kodak_cbpp"),
-            MemoryLayout.paddingLayout(32),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("strip_offset"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("data_offset"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("meta_offset"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("exif_offset"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("ifd0_offset"),
-            Constants$root.C_INT$LAYOUT.withName("data_size"),
-            Constants$root.C_INT$LAYOUT.withName("meta_length"),
-            Constants$root.C_INT$LAYOUT.withName("cr3_exif_length"),
-            Constants$root.C_INT$LAYOUT.withName("cr3_ifd0_length"),
-            Constants$root.C_INT$LAYOUT.withName("thumb_misc"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_layout"),
-            Constants$root.C_INT$LAYOUT.withName("tiff_samples"),
-            Constants$root.C_INT$LAYOUT.withName("tiff_bps"),
-            Constants$root.C_INT$LAYOUT.withName("tiff_compress"),
-            Constants$root.C_INT$LAYOUT.withName("tiff_sampleformat"),
-            Constants$root.C_INT$LAYOUT.withName("zero_after_ff"),
-            Constants$root.C_INT$LAYOUT.withName("tile_width"),
-            Constants$root.C_INT$LAYOUT.withName("tile_length"),
-            Constants$root.C_INT$LAYOUT.withName("load_flags"),
-            Constants$root.C_INT$LAYOUT.withName("data_error"),
-            Constants$root.C_INT$LAYOUT.withName("hasselblad_parser_flag"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("posRAFData"),
-            Constants$root.C_INT$LAYOUT.withName("lenRAFData"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_total_lines"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_total_blocks"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_block_width"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_bits"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_raw_type"),
-            Constants$root.C_INT$LAYOUT.withName("fuji_lossless"),
-            Constants$root.C_INT$LAYOUT.withName("pana_encoding"),
-            Constants$root.C_INT$LAYOUT.withName("pana_bpp"),
-            MemoryLayout.paddingLayout(32),
-            MemoryLayout.sequenceLayout(16, MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("version"),
-                Constants$root.C_INT$LAYOUT.withName("f_width"),
-                Constants$root.C_INT$LAYOUT.withName("f_height"),
-                Constants$root.C_INT$LAYOUT.withName("tileWidth"),
-                Constants$root.C_INT$LAYOUT.withName("tileHeight"),
-                Constants$root.C_INT$LAYOUT.withName("nBits"),
-                Constants$root.C_INT$LAYOUT.withName("nPlanes"),
-                Constants$root.C_INT$LAYOUT.withName("cfaLayout"),
-                Constants$root.C_INT$LAYOUT.withName("encType"),
-                Constants$root.C_INT$LAYOUT.withName("imageLevels"),
-                Constants$root.C_INT$LAYOUT.withName("hasTileCols"),
-                Constants$root.C_INT$LAYOUT.withName("hasTileRows"),
-                Constants$root.C_INT$LAYOUT.withName("mdatHdrSize"),
-                Constants$root.C_INT$LAYOUT.withName("MediaSize"),
-                Constants$root.C_LONG_LONG$LAYOUT.withName("MediaOffset"),
-                Constants$root.C_INT$LAYOUT.withName("MediaType"),
-                MemoryLayout.paddingLayout(32)
-            ).withName("crx_data_header_t")).withName("crx_header"),
-            Constants$root.C_INT$LAYOUT.withName("crx_track_selected"),
-            Constants$root.C_SHORT$LAYOUT.withName("CR3_CTMDtag"),
-            Constants$root.C_SHORT$LAYOUT.withName("CR3_Version"),
-            Constants$root.C_INT$LAYOUT.withName("CM_found"),
-            Constants$root.C_INT$LAYOUT.withName("is_NikonTransfer"),
-            Constants$root.C_INT$LAYOUT.withName("is_Olympus"),
-            Constants$root.C_INT$LAYOUT.withName("OlympusDNG_SubDirOffsetValid"),
-            Constants$root.C_INT$LAYOUT.withName("is_Sony"),
-            Constants$root.C_INT$LAYOUT.withName("is_pana_raw"),
-            Constants$root.C_INT$LAYOUT.withName("is_PentaxRicohMakernotes"),
-            MemoryLayout.sequenceLayout(20, Constants$root.C_INT$LAYOUT).withName("dng_frames"),
-            Constants$root.C_SHORT$LAYOUT.withName("raw_stride"),
-            MemoryLayout.paddingLayout(16)
-        ).withName("unpacker_data")
-    ).withName("libraw_internal_data_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_internal_data_t.$struct$LAYOUT;
+        return constants$105.const$4;
     }
     public static MemorySegment internal_data$slice(MemorySegment seg) {
         return seg.asSlice(0, 64);
@@ -147,7 +43,7 @@ public class libraw_internal_data_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

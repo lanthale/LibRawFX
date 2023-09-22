@@ -15,14 +15,14 @@ import static java.lang.foreign.ValueLayout.*;
 public interface libraw_set_memerror_handler$cb {
 
     void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, java.lang.foreign.MemorySegment where);
-    static MemorySegment allocate(libraw_set_memerror_handler$cb fi, SegmentScope scope) {
-        return RuntimeHelper.upcallStub(constants$5.libraw_set_memerror_handler$cb_UP$MH, fi, constants$5.libraw_set_memerror_handler$cb$FUNC, scope);
+    static MemorySegment allocate(libraw_set_memerror_handler$cb fi, Arena scope) {
+        return RuntimeHelper.upcallStub(constants$119.const$4, fi, constants$1.const$3, scope);
     }
-    static libraw_set_memerror_handler$cb ofAddress(MemorySegment addr, SegmentScope scope) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+    static libraw_set_memerror_handler$cb ofAddress(MemorySegment addr, Arena arena) {
+        MemorySegment symbol = addr.reinterpret(arena, null);
         return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, java.lang.foreign.MemorySegment _where) -> {
             try {
-                constants$6.libraw_set_memerror_handler$cb_DOWN$MH.invokeExact(symbol, _data, _file, _where);
+                constants$1.const$5.invokeExact(symbol, _data, _file, _where);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

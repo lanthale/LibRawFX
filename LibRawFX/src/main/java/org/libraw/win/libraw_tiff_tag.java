@@ -13,28 +13,17 @@ import static java.lang.foreign.ValueLayout.*;
  *     unsigned short tag;
  *     unsigned short type;
  *     int count;
- *     union union (unnamed at ./libraw_internal.h:225:3) val;
+ *     union  val;
  * };
  * }
  */
 public class libraw_tiff_tag {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("tag"),
-        Constants$root.C_SHORT$LAYOUT.withName("type"),
-        Constants$root.C_LONG$LAYOUT.withName("count"),
-        MemoryLayout.unionLayout(
-            MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("c"),
-            MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("s"),
-            Constants$root.C_LONG$LAYOUT.withName("i")
-        ).withName("val")
-    ).withName("libraw_tiff_tag");
     public static MemoryLayout $LAYOUT() {
-        return libraw_tiff_tag.$struct$LAYOUT;
+        return constants$113.const$0;
     }
-    static final VarHandle tag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tag"));
     public static VarHandle tag$VH() {
-        return libraw_tiff_tag.tag$VH;
+        return constants$113.const$1;
     }
     /**
      * Getter for field:
@@ -43,7 +32,7 @@ public class libraw_tiff_tag {
      * }
      */
     public static short tag$get(MemorySegment seg) {
-        return (short)libraw_tiff_tag.tag$VH.get(seg);
+        return (short)constants$113.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -52,17 +41,16 @@ public class libraw_tiff_tag {
      * }
      */
     public static void tag$set(MemorySegment seg, short x) {
-        libraw_tiff_tag.tag$VH.set(seg, x);
+        constants$113.const$1.set(seg, x);
     }
     public static short tag$get(MemorySegment seg, long index) {
-        return (short)libraw_tiff_tag.tag$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$113.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void tag$set(MemorySegment seg, long index, short x) {
-        libraw_tiff_tag.tag$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$113.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle type$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("type"));
     public static VarHandle type$VH() {
-        return libraw_tiff_tag.type$VH;
+        return constants$113.const$2;
     }
     /**
      * Getter for field:
@@ -71,7 +59,7 @@ public class libraw_tiff_tag {
      * }
      */
     public static short type$get(MemorySegment seg) {
-        return (short)libraw_tiff_tag.type$VH.get(seg);
+        return (short)constants$113.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -80,17 +68,16 @@ public class libraw_tiff_tag {
      * }
      */
     public static void type$set(MemorySegment seg, short x) {
-        libraw_tiff_tag.type$VH.set(seg, x);
+        constants$113.const$2.set(seg, x);
     }
     public static short type$get(MemorySegment seg, long index) {
-        return (short)libraw_tiff_tag.type$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$113.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void type$set(MemorySegment seg, long index, short x) {
-        libraw_tiff_tag.type$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$113.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle count$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("count"));
     public static VarHandle count$VH() {
-        return libraw_tiff_tag.count$VH;
+        return constants$113.const$3;
     }
     /**
      * Getter for field:
@@ -99,7 +86,7 @@ public class libraw_tiff_tag {
      * }
      */
     public static int count$get(MemorySegment seg) {
-        return (int)libraw_tiff_tag.count$VH.get(seg);
+        return (int)constants$113.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -108,20 +95,80 @@ public class libraw_tiff_tag {
      * }
      */
     public static void count$set(MemorySegment seg, int x) {
-        libraw_tiff_tag.count$VH.set(seg, x);
+        constants$113.const$3.set(seg, x);
     }
     public static int count$get(MemorySegment seg, long index) {
-        return (int)libraw_tiff_tag.count$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$113.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void count$set(MemorySegment seg, long index, int x) {
-        libraw_tiff_tag.count$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$113.const$3.set(seg.asSlice(index*sizeof()), x);
+    }
+    /**
+     * {@snippet :
+     * union {
+     *     char c[4];
+     *     short s[2];
+     *     int i;
+     * };
+     * }
+     */
+    public static final class val {
+
+        // Suppresses default constructor, ensuring non-instantiability.
+        private val() {}
+        public static MemoryLayout $LAYOUT() {
+            return constants$113.const$4;
+        }
+        public static MemorySegment c$slice(MemorySegment seg) {
+            return seg.asSlice(0, 4);
+        }
+        public static MemorySegment s$slice(MemorySegment seg) {
+            return seg.asSlice(0, 4);
+        }
+        public static VarHandle i$VH() {
+            return constants$113.const$5;
+        }
+        /**
+         * Getter for field:
+         * {@snippet :
+         * int i;
+         * }
+         */
+        public static int i$get(MemorySegment seg) {
+            return (int)constants$113.const$5.get(seg);
+        }
+        /**
+         * Setter for field:
+         * {@snippet :
+         * int i;
+         * }
+         */
+        public static void i$set(MemorySegment seg, int x) {
+            constants$113.const$5.set(seg, x);
+        }
+        public static int i$get(MemorySegment seg, long index) {
+            return (int)constants$113.const$5.get(seg.asSlice(index*sizeof()));
+        }
+        public static void i$set(MemorySegment seg, long index, int x) {
+            constants$113.const$5.set(seg.asSlice(index*sizeof()), x);
+        }
+        public static long sizeof() { return $LAYOUT().byteSize(); }
+        public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
+        public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
+            return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
+        }
+        public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    }
+
+    public static MemorySegment val$slice(MemorySegment seg) {
+        return seg.asSlice(8, 4);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

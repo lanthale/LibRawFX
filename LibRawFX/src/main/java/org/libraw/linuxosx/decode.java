@@ -17,20 +17,14 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class decode {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(2, Constants$root.C_POINTER$LAYOUT).withName("branch"),
-        Constants$root.C_INT$LAYOUT.withName("leaf"),
-        MemoryLayout.paddingLayout(32)
-    ).withName("decode");
     public static MemoryLayout $LAYOUT() {
-        return decode.$struct$LAYOUT;
+        return constants$105.const$5;
     }
     public static MemorySegment branch$slice(MemorySegment seg) {
         return seg.asSlice(0, 16);
     }
-    static final VarHandle leaf$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("leaf"));
     public static VarHandle leaf$VH() {
-        return decode.leaf$VH;
+        return constants$106.const$0;
     }
     /**
      * Getter for field:
@@ -39,7 +33,7 @@ public class decode {
      * }
      */
     public static int leaf$get(MemorySegment seg) {
-        return (int)decode.leaf$VH.get(seg);
+        return (int)constants$106.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -48,20 +42,20 @@ public class decode {
      * }
      */
     public static void leaf$set(MemorySegment seg, int x) {
-        decode.leaf$VH.set(seg, x);
+        constants$106.const$0.set(seg, x);
     }
     public static int leaf$get(MemorySegment seg, long index) {
-        return (int)decode.leaf$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$106.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void leaf$set(MemorySegment seg, long index, int x) {
-        decode.leaf$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$106.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

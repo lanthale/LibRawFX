@@ -25,25 +25,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_raw_unpack_params_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_INT$LAYOUT.withName("use_rawspeed"),
-        Constants$root.C_INT$LAYOUT.withName("use_dngsdk"),
-        Constants$root.C_INT$LAYOUT.withName("options"),
-        Constants$root.C_INT$LAYOUT.withName("shot_select"),
-        Constants$root.C_INT$LAYOUT.withName("specials"),
-        Constants$root.C_INT$LAYOUT.withName("max_raw_memory_mb"),
-        Constants$root.C_INT$LAYOUT.withName("sony_arw2_posterization_thr"),
-        Constants$root.C_FLOAT$LAYOUT.withName("coolscan_nef_gamma"),
-        MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("p4shot_order"),
-        MemoryLayout.paddingLayout(24),
-        Constants$root.C_POINTER$LAYOUT.withName("custom_camera_strings")
-    ).withName("libraw_raw_unpack_params_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_raw_unpack_params_t.$struct$LAYOUT;
+        return constants$74.const$5;
     }
-    static final VarHandle use_rawspeed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("use_rawspeed"));
     public static VarHandle use_rawspeed$VH() {
-        return libraw_raw_unpack_params_t.use_rawspeed$VH;
+        return constants$75.const$0;
     }
     /**
      * Getter for field:
@@ -52,7 +38,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int use_rawspeed$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.use_rawspeed$VH.get(seg);
+        return (int)constants$75.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -61,17 +47,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void use_rawspeed$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.use_rawspeed$VH.set(seg, x);
+        constants$75.const$0.set(seg, x);
     }
     public static int use_rawspeed$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.use_rawspeed$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$75.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void use_rawspeed$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.use_rawspeed$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$75.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle use_dngsdk$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("use_dngsdk"));
     public static VarHandle use_dngsdk$VH() {
-        return libraw_raw_unpack_params_t.use_dngsdk$VH;
+        return constants$75.const$1;
     }
     /**
      * Getter for field:
@@ -80,7 +65,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int use_dngsdk$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.use_dngsdk$VH.get(seg);
+        return (int)constants$75.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -89,17 +74,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void use_dngsdk$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.use_dngsdk$VH.set(seg, x);
+        constants$75.const$1.set(seg, x);
     }
     public static int use_dngsdk$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.use_dngsdk$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$75.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void use_dngsdk$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.use_dngsdk$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$75.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle options$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("options"));
     public static VarHandle options$VH() {
-        return libraw_raw_unpack_params_t.options$VH;
+        return constants$75.const$2;
     }
     /**
      * Getter for field:
@@ -108,7 +92,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int options$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.options$VH.get(seg);
+        return (int)constants$75.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -117,17 +101,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void options$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.options$VH.set(seg, x);
+        constants$75.const$2.set(seg, x);
     }
     public static int options$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.options$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$75.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void options$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.options$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$75.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shot_select$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shot_select"));
     public static VarHandle shot_select$VH() {
-        return libraw_raw_unpack_params_t.shot_select$VH;
+        return constants$75.const$3;
     }
     /**
      * Getter for field:
@@ -136,7 +119,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int shot_select$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.shot_select$VH.get(seg);
+        return (int)constants$75.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -145,17 +128,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void shot_select$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.shot_select$VH.set(seg, x);
+        constants$75.const$3.set(seg, x);
     }
     public static int shot_select$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.shot_select$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$75.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void shot_select$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.shot_select$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$75.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle specials$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("specials"));
     public static VarHandle specials$VH() {
-        return libraw_raw_unpack_params_t.specials$VH;
+        return constants$75.const$4;
     }
     /**
      * Getter for field:
@@ -164,7 +146,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int specials$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.specials$VH.get(seg);
+        return (int)constants$75.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -173,17 +155,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void specials$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.specials$VH.set(seg, x);
+        constants$75.const$4.set(seg, x);
     }
     public static int specials$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.specials$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$75.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void specials$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.specials$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$75.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max_raw_memory_mb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max_raw_memory_mb"));
     public static VarHandle max_raw_memory_mb$VH() {
-        return libraw_raw_unpack_params_t.max_raw_memory_mb$VH;
+        return constants$75.const$5;
     }
     /**
      * Getter for field:
@@ -192,7 +173,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int max_raw_memory_mb$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.max_raw_memory_mb$VH.get(seg);
+        return (int)constants$75.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -201,17 +182,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void max_raw_memory_mb$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.max_raw_memory_mb$VH.set(seg, x);
+        constants$75.const$5.set(seg, x);
     }
     public static int max_raw_memory_mb$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.max_raw_memory_mb$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$75.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void max_raw_memory_mb$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.max_raw_memory_mb$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$75.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle sony_arw2_posterization_thr$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sony_arw2_posterization_thr"));
     public static VarHandle sony_arw2_posterization_thr$VH() {
-        return libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH;
+        return constants$76.const$0;
     }
     /**
      * Getter for field:
@@ -220,7 +200,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static int sony_arw2_posterization_thr$get(MemorySegment seg) {
-        return (int)libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH.get(seg);
+        return (int)constants$76.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -229,17 +209,16 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void sony_arw2_posterization_thr$set(MemorySegment seg, int x) {
-        libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH.set(seg, x);
+        constants$76.const$0.set(seg, x);
     }
     public static int sony_arw2_posterization_thr$get(MemorySegment seg, long index) {
-        return (int)libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$76.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void sony_arw2_posterization_thr$set(MemorySegment seg, long index, int x) {
-        libraw_raw_unpack_params_t.sony_arw2_posterization_thr$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$76.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle coolscan_nef_gamma$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("coolscan_nef_gamma"));
     public static VarHandle coolscan_nef_gamma$VH() {
-        return libraw_raw_unpack_params_t.coolscan_nef_gamma$VH;
+        return constants$76.const$1;
     }
     /**
      * Getter for field:
@@ -248,7 +227,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static float coolscan_nef_gamma$get(MemorySegment seg) {
-        return (float)libraw_raw_unpack_params_t.coolscan_nef_gamma$VH.get(seg);
+        return (float)constants$76.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -257,20 +236,19 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void coolscan_nef_gamma$set(MemorySegment seg, float x) {
-        libraw_raw_unpack_params_t.coolscan_nef_gamma$VH.set(seg, x);
+        constants$76.const$1.set(seg, x);
     }
     public static float coolscan_nef_gamma$get(MemorySegment seg, long index) {
-        return (float)libraw_raw_unpack_params_t.coolscan_nef_gamma$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$76.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void coolscan_nef_gamma$set(MemorySegment seg, long index, float x) {
-        libraw_raw_unpack_params_t.coolscan_nef_gamma$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$76.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment p4shot_order$slice(MemorySegment seg) {
         return seg.asSlice(32, 5);
     }
-    static final VarHandle custom_camera_strings$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("custom_camera_strings"));
     public static VarHandle custom_camera_strings$VH() {
-        return libraw_raw_unpack_params_t.custom_camera_strings$VH;
+        return constants$76.const$2;
     }
     /**
      * Getter for field:
@@ -279,7 +257,7 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static MemorySegment custom_camera_strings$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_raw_unpack_params_t.custom_camera_strings$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$76.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -288,20 +266,20 @@ public class libraw_raw_unpack_params_t {
      * }
      */
     public static void custom_camera_strings$set(MemorySegment seg, MemorySegment x) {
-        libraw_raw_unpack_params_t.custom_camera_strings$VH.set(seg, x);
+        constants$76.const$2.set(seg, x);
     }
     public static MemorySegment custom_camera_strings$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_raw_unpack_params_t.custom_camera_strings$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$76.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void custom_camera_strings$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_raw_unpack_params_t.custom_camera_strings$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$76.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

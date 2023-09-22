@@ -11,51 +11,12 @@ final class constants$8 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$8() {}
-    static final FunctionDescriptor libraw_get_decoder_info$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_decoder_info$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_decoder_info",
-        constants$8.libraw_get_decoder_info$FUNC
-    );
-    static final FunctionDescriptor libraw_COLOR$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_COLOR$MH = RuntimeHelper.downcallHandle(
-        "libraw_COLOR",
-        constants$8.libraw_COLOR$FUNC
-    );
-    static final FunctionDescriptor libraw_capabilities$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
-    static final MethodHandle libraw_capabilities$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_capabilities",
-        constants$8.libraw_capabilities$FUNC
-    );
-    static final FunctionDescriptor libraw_adjust_sizes_info_only$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_adjust_sizes_info_only$MH = RuntimeHelper.downcallHandle(
-        "libraw_adjust_sizes_info_only",
-        constants$8.libraw_adjust_sizes_info_only$FUNC
-    );
-    static final FunctionDescriptor libraw_dcraw_ppm_tiff_writer$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_ppm_tiff_writer$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_ppm_tiff_writer",
-        constants$8.libraw_dcraw_ppm_tiff_writer$FUNC
-    );
-    static final FunctionDescriptor libraw_dcraw_thumb_writer$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_thumb_writer$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_thumb_writer",
-        constants$8.libraw_dcraw_thumb_writer$FUNC
-    );
+    static final VarHandle const$0 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("pre_subtractblack_cb"));
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(libraw_callbacks_t.pre_scalecolors_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$2 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("pre_scalecolors_cb"));
+    static final MethodHandle const$3 = RuntimeHelper.upcallHandle(libraw_callbacks_t.pre_preinterpolate_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$4 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("pre_preinterpolate_cb"));
+    static final MethodHandle const$5 = RuntimeHelper.upcallHandle(libraw_callbacks_t.pre_interpolate_cb.class, "apply", constants$4.const$2);
 }
 
 

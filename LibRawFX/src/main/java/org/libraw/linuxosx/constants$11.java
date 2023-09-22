@@ -11,50 +11,12 @@ final class constants$11 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$11() {}
-    static final FunctionDescriptor libraw_set_fbdd_noiserd$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_set_fbdd_noiserd$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_fbdd_noiserd",
-        constants$11.libraw_set_fbdd_noiserd$FUNC
-    );
-    static final FunctionDescriptor libraw_get_raw_height$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_raw_height$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_raw_height",
-        constants$11.libraw_get_raw_height$FUNC
-    );
-    static final FunctionDescriptor libraw_get_raw_width$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_raw_width$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_raw_width",
-        constants$11.libraw_get_raw_width$FUNC
-    );
-    static final FunctionDescriptor libraw_get_iheight$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_iheight$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_iheight",
-        constants$11.libraw_get_iheight$FUNC
-    );
-    static final FunctionDescriptor libraw_get_iwidth$FUNC = FunctionDescriptor.of(Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_iwidth$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_iwidth",
-        constants$11.libraw_get_iwidth$FUNC
-    );
-    static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_get_cam_mul$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_cam_mul",
-        constants$11.libraw_get_cam_mul$FUNC
-    );
+    static final VarHandle const$0 = constants$10.const$5.varHandle(MemoryLayout.PathElement.groupElement("type"));
+    static final VarHandle const$1 = constants$10.const$5.varHandle(MemoryLayout.PathElement.groupElement("height"));
+    static final VarHandle const$2 = constants$10.const$5.varHandle(MemoryLayout.PathElement.groupElement("width"));
+    static final VarHandle const$3 = constants$10.const$5.varHandle(MemoryLayout.PathElement.groupElement("colors"));
+    static final VarHandle const$4 = constants$10.const$5.varHandle(MemoryLayout.PathElement.groupElement("bits"));
+    static final VarHandle const$5 = constants$10.const$5.varHandle(MemoryLayout.PathElement.groupElement("data_size"));
 }
 
 

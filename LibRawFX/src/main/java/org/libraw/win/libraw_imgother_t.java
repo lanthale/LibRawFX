@@ -26,37 +26,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_imgother_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_FLOAT$LAYOUT.withName("iso_speed"),
-        Constants$root.C_FLOAT$LAYOUT.withName("shutter"),
-        Constants$root.C_FLOAT$LAYOUT.withName("aperture"),
-        Constants$root.C_FLOAT$LAYOUT.withName("focal_len"),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("timestamp"),
-        Constants$root.C_LONG$LAYOUT.withName("shot_order"),
-        MemoryLayout.sequenceLayout(32, Constants$root.C_LONG$LAYOUT).withName("gpsdata"),
-        MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("latitude"),
-            MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("longitude"),
-            MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("gpstimestamp"),
-            Constants$root.C_FLOAT$LAYOUT.withName("altitude"),
-            Constants$root.C_CHAR$LAYOUT.withName("altref"),
-            Constants$root.C_CHAR$LAYOUT.withName("latref"),
-            Constants$root.C_CHAR$LAYOUT.withName("longref"),
-            Constants$root.C_CHAR$LAYOUT.withName("gpsstatus"),
-            Constants$root.C_CHAR$LAYOUT.withName("gpsparsed"),
-            MemoryLayout.paddingLayout(24)
-        ).withName("parsed_gps"),
-        MemoryLayout.sequenceLayout(512, Constants$root.C_CHAR$LAYOUT).withName("desc"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("artist"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
-        MemoryLayout.paddingLayout(32)
-    ).withName("libraw_imgother_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_imgother_t.$struct$LAYOUT;
+        return constants$63.const$3;
     }
-    static final VarHandle iso_speed$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("iso_speed"));
     public static VarHandle iso_speed$VH() {
-        return libraw_imgother_t.iso_speed$VH;
+        return constants$63.const$4;
     }
     /**
      * Getter for field:
@@ -65,7 +39,7 @@ public class libraw_imgother_t {
      * }
      */
     public static float iso_speed$get(MemorySegment seg) {
-        return (float)libraw_imgother_t.iso_speed$VH.get(seg);
+        return (float)constants$63.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -74,17 +48,16 @@ public class libraw_imgother_t {
      * }
      */
     public static void iso_speed$set(MemorySegment seg, float x) {
-        libraw_imgother_t.iso_speed$VH.set(seg, x);
+        constants$63.const$4.set(seg, x);
     }
     public static float iso_speed$get(MemorySegment seg, long index) {
-        return (float)libraw_imgother_t.iso_speed$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$63.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void iso_speed$set(MemorySegment seg, long index, float x) {
-        libraw_imgother_t.iso_speed$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$63.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shutter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shutter"));
     public static VarHandle shutter$VH() {
-        return libraw_imgother_t.shutter$VH;
+        return constants$63.const$5;
     }
     /**
      * Getter for field:
@@ -93,7 +66,7 @@ public class libraw_imgother_t {
      * }
      */
     public static float shutter$get(MemorySegment seg) {
-        return (float)libraw_imgother_t.shutter$VH.get(seg);
+        return (float)constants$63.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -102,17 +75,16 @@ public class libraw_imgother_t {
      * }
      */
     public static void shutter$set(MemorySegment seg, float x) {
-        libraw_imgother_t.shutter$VH.set(seg, x);
+        constants$63.const$5.set(seg, x);
     }
     public static float shutter$get(MemorySegment seg, long index) {
-        return (float)libraw_imgother_t.shutter$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$63.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void shutter$set(MemorySegment seg, long index, float x) {
-        libraw_imgother_t.shutter$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$63.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle aperture$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("aperture"));
     public static VarHandle aperture$VH() {
-        return libraw_imgother_t.aperture$VH;
+        return constants$64.const$0;
     }
     /**
      * Getter for field:
@@ -121,7 +93,7 @@ public class libraw_imgother_t {
      * }
      */
     public static float aperture$get(MemorySegment seg) {
-        return (float)libraw_imgother_t.aperture$VH.get(seg);
+        return (float)constants$64.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -130,17 +102,16 @@ public class libraw_imgother_t {
      * }
      */
     public static void aperture$set(MemorySegment seg, float x) {
-        libraw_imgother_t.aperture$VH.set(seg, x);
+        constants$64.const$0.set(seg, x);
     }
     public static float aperture$get(MemorySegment seg, long index) {
-        return (float)libraw_imgother_t.aperture$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$64.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void aperture$set(MemorySegment seg, long index, float x) {
-        libraw_imgother_t.aperture$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$64.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle focal_len$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("focal_len"));
     public static VarHandle focal_len$VH() {
-        return libraw_imgother_t.focal_len$VH;
+        return constants$64.const$1;
     }
     /**
      * Getter for field:
@@ -149,7 +120,7 @@ public class libraw_imgother_t {
      * }
      */
     public static float focal_len$get(MemorySegment seg) {
-        return (float)libraw_imgother_t.focal_len$VH.get(seg);
+        return (float)constants$64.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -158,17 +129,16 @@ public class libraw_imgother_t {
      * }
      */
     public static void focal_len$set(MemorySegment seg, float x) {
-        libraw_imgother_t.focal_len$VH.set(seg, x);
+        constants$64.const$1.set(seg, x);
     }
     public static float focal_len$get(MemorySegment seg, long index) {
-        return (float)libraw_imgother_t.focal_len$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$64.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void focal_len$set(MemorySegment seg, long index, float x) {
-        libraw_imgother_t.focal_len$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$64.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle timestamp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("timestamp"));
     public static VarHandle timestamp$VH() {
-        return libraw_imgother_t.timestamp$VH;
+        return constants$64.const$2;
     }
     /**
      * Getter for field:
@@ -177,7 +147,7 @@ public class libraw_imgother_t {
      * }
      */
     public static long timestamp$get(MemorySegment seg) {
-        return (long)libraw_imgother_t.timestamp$VH.get(seg);
+        return (long)constants$64.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -186,17 +156,16 @@ public class libraw_imgother_t {
      * }
      */
     public static void timestamp$set(MemorySegment seg, long x) {
-        libraw_imgother_t.timestamp$VH.set(seg, x);
+        constants$64.const$2.set(seg, x);
     }
     public static long timestamp$get(MemorySegment seg, long index) {
-        return (long)libraw_imgother_t.timestamp$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$64.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void timestamp$set(MemorySegment seg, long index, long x) {
-        libraw_imgother_t.timestamp$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$64.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shot_order$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shot_order"));
     public static VarHandle shot_order$VH() {
-        return libraw_imgother_t.shot_order$VH;
+        return constants$64.const$3;
     }
     /**
      * Getter for field:
@@ -205,7 +174,7 @@ public class libraw_imgother_t {
      * }
      */
     public static int shot_order$get(MemorySegment seg) {
-        return (int)libraw_imgother_t.shot_order$VH.get(seg);
+        return (int)constants$64.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -214,13 +183,13 @@ public class libraw_imgother_t {
      * }
      */
     public static void shot_order$set(MemorySegment seg, int x) {
-        libraw_imgother_t.shot_order$VH.set(seg, x);
+        constants$64.const$3.set(seg, x);
     }
     public static int shot_order$get(MemorySegment seg, long index) {
-        return (int)libraw_imgother_t.shot_order$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$64.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void shot_order$set(MemorySegment seg, long index, int x) {
-        libraw_imgother_t.shot_order$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$64.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment gpsdata$slice(MemorySegment seg) {
         return seg.asSlice(28, 128);
@@ -242,7 +211,7 @@ public class libraw_imgother_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

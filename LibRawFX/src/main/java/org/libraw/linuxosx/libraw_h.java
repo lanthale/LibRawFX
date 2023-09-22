@@ -9,14 +9,14 @@ import java.lang.foreign.*;
 import static java.lang.foreign.ValueLayout.*;
 public class libraw_h  {
 
-    public static final OfByte C_CHAR = Constants$root.C_CHAR$LAYOUT;
-    public static final OfShort C_SHORT = Constants$root.C_SHORT$LAYOUT;
-    public static final OfInt C_INT = Constants$root.C_INT$LAYOUT;
-    public static final OfLong C_LONG = Constants$root.C_LONG_LONG$LAYOUT;
-    public static final OfLong C_LONG_LONG = Constants$root.C_LONG_LONG$LAYOUT;
-    public static final OfFloat C_FLOAT = Constants$root.C_FLOAT$LAYOUT;
-    public static final OfDouble C_DOUBLE = Constants$root.C_DOUBLE$LAYOUT;
-    public static final OfAddress C_POINTER = Constants$root.C_POINTER$LAYOUT;
+    public static final OfByte C_CHAR = JAVA_BYTE;
+    public static final OfShort C_SHORT = JAVA_SHORT;
+    public static final OfInt C_INT = JAVA_INT;
+    public static final OfInt C_LONG = JAVA_INT;
+    public static final OfLong C_LONG_LONG = JAVA_LONG;
+    public static final OfFloat C_FLOAT = JAVA_FLOAT;
+    public static final OfDouble C_DOUBLE = JAVA_DOUBLE;
+    public static final AddressLayout C_POINTER = RuntimeHelper.POINTER;
     /**
      * {@snippet :
      * #define LIBRAW_MAX_METADATA_BLOCKS 1024
@@ -4158,21 +4158,27 @@ public class libraw_h  {
      * typedef long long INT64;
      * }
      */
-    public static final OfLong INT64 = Constants$root.C_LONG_LONG$LAYOUT;
+    public static final OfLong INT64 = JAVA_LONG;
     /**
      * {@snippet :
      * typedef unsigned long long UINT64;
      * }
      */
-    public static final OfLong UINT64 = Constants$root.C_LONG_LONG$LAYOUT;
+    public static final OfLong UINT64 = JAVA_LONG;
     /**
      * {@snippet :
      * typedef unsigned char uchar;
      * }
      */
-    public static final OfByte uchar = Constants$root.C_CHAR$LAYOUT;
+    public static final OfByte uchar = JAVA_BYTE;
+    /**
+     * {@snippet :
+     * typedef unsigned short ushort;
+     * }
+     */
+    public static final OfShort ushort = JAVA_SHORT;
     public static MethodHandle default_memory_callback$MH() {
-        return RuntimeHelper.requireNonNull(constants$0.default_memory_callback$MH,"default_memory_callback");
+        return RuntimeHelper.requireNonNull(constants$2.const$3,"default_memory_callback");
     }
     /**
      * {@snippet :
@@ -4188,7 +4194,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle default_data_callback$MH() {
-        return RuntimeHelper.requireNonNull(constants$1.default_data_callback$MH,"default_data_callback");
+        return RuntimeHelper.requireNonNull(constants$3.const$1,"default_data_callback");
     }
     /**
      * {@snippet :
@@ -4204,7 +4210,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_strerror$MH() {
-        return RuntimeHelper.requireNonNull(constants$2.libraw_strerror$MH,"libraw_strerror");
+        return RuntimeHelper.requireNonNull(constants$115.const$6,"libraw_strerror");
     }
     /**
      * {@snippet :
@@ -4220,7 +4226,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_strprogress$MH() {
-        return RuntimeHelper.requireNonNull(constants$2.libraw_strprogress$MH,"libraw_strprogress");
+        return RuntimeHelper.requireNonNull(constants$116.const$0,"libraw_strprogress");
     }
     /**
      * {@snippet :
@@ -4236,7 +4242,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_init$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_init$MH,"libraw_init");
+        return RuntimeHelper.requireNonNull(constants$116.const$1,"libraw_init");
     }
     /**
      * {@snippet :
@@ -4252,7 +4258,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_open_file$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_open_file$MH,"libraw_open_file");
+        return RuntimeHelper.requireNonNull(constants$116.const$3,"libraw_open_file");
     }
     /**
      * {@snippet :
@@ -4267,12 +4273,28 @@ public class libraw_h  {
             throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_open_buffer$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_open_buffer$MH,"libraw_open_buffer");
+    public static MethodHandle libraw_open_wfile$MH() {
+        return RuntimeHelper.requireNonNull(constants$116.const$4,"libraw_open_wfile");
     }
     /**
      * {@snippet :
-     * int libraw_open_buffer(struct libraw_data_t*, void* buffer, unsigned long size);
+     * int libraw_open_wfile(struct libraw_data_t*, unsigned short*);
+     * }
+     */
+    public static int libraw_open_wfile(MemorySegment x0, MemorySegment x1) {
+        var mh$ = libraw_open_wfile$MH();
+        try {
+            return (int)mh$.invokeExact(x0, x1);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
+    }
+    public static MethodHandle libraw_open_buffer$MH() {
+        return RuntimeHelper.requireNonNull(constants$116.const$6,"libraw_open_buffer");
+    }
+    /**
+     * {@snippet :
+     * int libraw_open_buffer(struct libraw_data_t*, void* buffer, unsigned long long size);
      * }
      */
     public static int libraw_open_buffer(MemorySegment x0, MemorySegment buffer, long size) {
@@ -4284,7 +4306,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_open_bayer$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_open_bayer$MH,"libraw_open_bayer");
+        return RuntimeHelper.requireNonNull(constants$117.const$1,"libraw_open_bayer");
     }
     /**
      * {@snippet :
@@ -4300,7 +4322,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_unpack$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_unpack$MH,"libraw_unpack");
+        return RuntimeHelper.requireNonNull(constants$117.const$2,"libraw_unpack");
     }
     /**
      * {@snippet :
@@ -4316,7 +4338,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_unpack_thumb$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.libraw_unpack_thumb$MH,"libraw_unpack_thumb");
+        return RuntimeHelper.requireNonNull(constants$117.const$3,"libraw_unpack_thumb");
     }
     /**
      * {@snippet :
@@ -4332,7 +4354,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_recycle_datastream$MH() {
-        return RuntimeHelper.requireNonNull(constants$4.libraw_recycle_datastream$MH,"libraw_recycle_datastream");
+        return RuntimeHelper.requireNonNull(constants$117.const$4,"libraw_recycle_datastream");
     }
     /**
      * {@snippet :
@@ -4348,7 +4370,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_recycle$MH() {
-        return RuntimeHelper.requireNonNull(constants$4.libraw_recycle$MH,"libraw_recycle");
+        return RuntimeHelper.requireNonNull(constants$117.const$5,"libraw_recycle");
     }
     /**
      * {@snippet :
@@ -4364,7 +4386,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_close$MH() {
-        return RuntimeHelper.requireNonNull(constants$4.libraw_close$MH,"libraw_close");
+        return RuntimeHelper.requireNonNull(constants$118.const$0,"libraw_close");
     }
     /**
      * {@snippet :
@@ -4380,7 +4402,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_subtract_black$MH() {
-        return RuntimeHelper.requireNonNull(constants$4.libraw_subtract_black$MH,"libraw_subtract_black");
+        return RuntimeHelper.requireNonNull(constants$118.const$1,"libraw_subtract_black");
     }
     /**
      * {@snippet :
@@ -4396,7 +4418,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_raw2image$MH() {
-        return RuntimeHelper.requireNonNull(constants$4.libraw_raw2image$MH,"libraw_raw2image");
+        return RuntimeHelper.requireNonNull(constants$118.const$2,"libraw_raw2image");
     }
     /**
      * {@snippet :
@@ -4412,7 +4434,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_free_image$MH() {
-        return RuntimeHelper.requireNonNull(constants$4.libraw_free_image$MH,"libraw_free_image");
+        return RuntimeHelper.requireNonNull(constants$118.const$3,"libraw_free_image");
     }
     /**
      * {@snippet :
@@ -4428,7 +4450,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_version$MH() {
-        return RuntimeHelper.requireNonNull(constants$5.libraw_version$MH,"libraw_version");
+        return RuntimeHelper.requireNonNull(constants$118.const$5,"libraw_version");
     }
     /**
      * {@snippet :
@@ -4444,7 +4466,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_versionNumber$MH() {
-        return RuntimeHelper.requireNonNull(constants$5.libraw_versionNumber$MH,"libraw_versionNumber");
+        return RuntimeHelper.requireNonNull(constants$119.const$1,"libraw_versionNumber");
     }
     /**
      * {@snippet :
@@ -4460,7 +4482,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_cameraList$MH() {
-        return RuntimeHelper.requireNonNull(constants$5.libraw_cameraList$MH,"libraw_cameraList");
+        return RuntimeHelper.requireNonNull(constants$119.const$2,"libraw_cameraList");
     }
     /**
      * {@snippet :
@@ -4476,7 +4498,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_cameraCount$MH() {
-        return RuntimeHelper.requireNonNull(constants$5.libraw_cameraCount$MH,"libraw_cameraCount");
+        return RuntimeHelper.requireNonNull(constants$119.const$3,"libraw_cameraCount");
     }
     /**
      * {@snippet :
@@ -4492,7 +4514,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_memerror_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$6.libraw_set_memerror_handler$MH,"libraw_set_memerror_handler");
+        return RuntimeHelper.requireNonNull(constants$119.const$5,"libraw_set_memerror_handler");
     }
     /**
      * {@snippet :
@@ -4508,7 +4530,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_exifparser_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$6.libraw_set_exifparser_handler$MH,"libraw_set_exifparser_handler");
+        return RuntimeHelper.requireNonNull(constants$120.const$1,"libraw_set_exifparser_handler");
     }
     /**
      * {@snippet :
@@ -4524,7 +4546,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_dataerror_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$7.libraw_set_dataerror_handler$MH,"libraw_set_dataerror_handler");
+        return RuntimeHelper.requireNonNull(constants$120.const$3,"libraw_set_dataerror_handler");
     }
     /**
      * {@snippet :
@@ -4540,7 +4562,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_progress_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$7.libraw_set_progress_handler$MH,"libraw_set_progress_handler");
+        return RuntimeHelper.requireNonNull(constants$120.const$5,"libraw_set_progress_handler");
     }
     /**
      * {@snippet :
@@ -4556,7 +4578,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_unpack_function_name$MH() {
-        return RuntimeHelper.requireNonNull(constants$7.libraw_unpack_function_name$MH,"libraw_unpack_function_name");
+        return RuntimeHelper.requireNonNull(constants$121.const$1,"libraw_unpack_function_name");
     }
     /**
      * {@snippet :
@@ -4572,7 +4594,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_decoder_info$MH() {
-        return RuntimeHelper.requireNonNull(constants$7.libraw_get_decoder_info$MH,"libraw_get_decoder_info");
+        return RuntimeHelper.requireNonNull(constants$121.const$2,"libraw_get_decoder_info");
     }
     /**
      * {@snippet :
@@ -4588,7 +4610,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_COLOR$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_COLOR$MH,"libraw_COLOR");
+        return RuntimeHelper.requireNonNull(constants$121.const$4,"libraw_COLOR");
     }
     /**
      * {@snippet :
@@ -4604,7 +4626,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_capabilities$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_capabilities$MH,"libraw_capabilities");
+        return RuntimeHelper.requireNonNull(constants$121.const$5,"libraw_capabilities");
     }
     /**
      * {@snippet :
@@ -4620,7 +4642,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_adjust_sizes_info_only$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_adjust_sizes_info_only$MH,"libraw_adjust_sizes_info_only");
+        return RuntimeHelper.requireNonNull(constants$122.const$0,"libraw_adjust_sizes_info_only");
     }
     /**
      * {@snippet :
@@ -4636,7 +4658,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_dcraw_ppm_tiff_writer$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_dcraw_ppm_tiff_writer$MH,"libraw_dcraw_ppm_tiff_writer");
+        return RuntimeHelper.requireNonNull(constants$122.const$1,"libraw_dcraw_ppm_tiff_writer");
     }
     /**
      * {@snippet :
@@ -4652,7 +4674,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_dcraw_thumb_writer$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_dcraw_thumb_writer$MH,"libraw_dcraw_thumb_writer");
+        return RuntimeHelper.requireNonNull(constants$122.const$2,"libraw_dcraw_thumb_writer");
     }
     /**
      * {@snippet :
@@ -4668,7 +4690,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_dcraw_process$MH() {
-        return RuntimeHelper.requireNonNull(constants$8.libraw_dcraw_process$MH,"libraw_dcraw_process");
+        return RuntimeHelper.requireNonNull(constants$122.const$3,"libraw_dcraw_process");
     }
     /**
      * {@snippet :
@@ -4684,7 +4706,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_dcraw_make_mem_image$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_dcraw_make_mem_image$MH,"libraw_dcraw_make_mem_image");
+        return RuntimeHelper.requireNonNull(constants$122.const$5,"libraw_dcraw_make_mem_image");
     }
     /**
      * {@snippet :
@@ -4700,7 +4722,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_dcraw_make_mem_thumb$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_dcraw_make_mem_thumb$MH,"libraw_dcraw_make_mem_thumb");
+        return RuntimeHelper.requireNonNull(constants$123.const$0,"libraw_dcraw_make_mem_thumb");
     }
     /**
      * {@snippet :
@@ -4716,7 +4738,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_dcraw_clear_mem$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_dcraw_clear_mem$MH,"libraw_dcraw_clear_mem");
+        return RuntimeHelper.requireNonNull(constants$123.const$1,"libraw_dcraw_clear_mem");
     }
     /**
      * {@snippet :
@@ -4732,7 +4754,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_demosaic$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_set_demosaic$MH,"libraw_set_demosaic");
+        return RuntimeHelper.requireNonNull(constants$123.const$3,"libraw_set_demosaic");
     }
     /**
      * {@snippet :
@@ -4748,7 +4770,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_output_color$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_set_output_color$MH,"libraw_set_output_color");
+        return RuntimeHelper.requireNonNull(constants$123.const$4,"libraw_set_output_color");
     }
     /**
      * {@snippet :
@@ -4764,7 +4786,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_adjust_maximum_thr$MH() {
-        return RuntimeHelper.requireNonNull(constants$9.libraw_set_adjust_maximum_thr$MH,"libraw_set_adjust_maximum_thr");
+        return RuntimeHelper.requireNonNull(constants$123.const$6,"libraw_set_adjust_maximum_thr");
     }
     /**
      * {@snippet :
@@ -4780,7 +4802,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_user_mul$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_set_user_mul$MH,"libraw_set_user_mul");
+        return RuntimeHelper.requireNonNull(constants$124.const$1,"libraw_set_user_mul");
     }
     /**
      * {@snippet :
@@ -4796,7 +4818,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_output_bps$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_set_output_bps$MH,"libraw_set_output_bps");
+        return RuntimeHelper.requireNonNull(constants$124.const$2,"libraw_set_output_bps");
     }
     /**
      * {@snippet :
@@ -4812,7 +4834,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_gamma$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_set_gamma$MH,"libraw_set_gamma");
+        return RuntimeHelper.requireNonNull(constants$124.const$3,"libraw_set_gamma");
     }
     /**
      * {@snippet :
@@ -4828,7 +4850,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_no_auto_bright$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_set_no_auto_bright$MH,"libraw_set_no_auto_bright");
+        return RuntimeHelper.requireNonNull(constants$124.const$4,"libraw_set_no_auto_bright");
     }
     /**
      * {@snippet :
@@ -4844,7 +4866,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_bright$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_set_bright$MH,"libraw_set_bright");
+        return RuntimeHelper.requireNonNull(constants$124.const$5,"libraw_set_bright");
     }
     /**
      * {@snippet :
@@ -4860,7 +4882,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_highlight$MH() {
-        return RuntimeHelper.requireNonNull(constants$10.libraw_set_highlight$MH,"libraw_set_highlight");
+        return RuntimeHelper.requireNonNull(constants$125.const$0,"libraw_set_highlight");
     }
     /**
      * {@snippet :
@@ -4876,7 +4898,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_fbdd_noiserd$MH() {
-        return RuntimeHelper.requireNonNull(constants$11.libraw_set_fbdd_noiserd$MH,"libraw_set_fbdd_noiserd");
+        return RuntimeHelper.requireNonNull(constants$125.const$1,"libraw_set_fbdd_noiserd");
     }
     /**
      * {@snippet :
@@ -4892,7 +4914,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_raw_height$MH() {
-        return RuntimeHelper.requireNonNull(constants$11.libraw_get_raw_height$MH,"libraw_get_raw_height");
+        return RuntimeHelper.requireNonNull(constants$125.const$2,"libraw_get_raw_height");
     }
     /**
      * {@snippet :
@@ -4908,7 +4930,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_raw_width$MH() {
-        return RuntimeHelper.requireNonNull(constants$11.libraw_get_raw_width$MH,"libraw_get_raw_width");
+        return RuntimeHelper.requireNonNull(constants$125.const$3,"libraw_get_raw_width");
     }
     /**
      * {@snippet :
@@ -4924,7 +4946,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_iheight$MH() {
-        return RuntimeHelper.requireNonNull(constants$11.libraw_get_iheight$MH,"libraw_get_iheight");
+        return RuntimeHelper.requireNonNull(constants$125.const$4,"libraw_get_iheight");
     }
     /**
      * {@snippet :
@@ -4940,7 +4962,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_iwidth$MH() {
-        return RuntimeHelper.requireNonNull(constants$11.libraw_get_iwidth$MH,"libraw_get_iwidth");
+        return RuntimeHelper.requireNonNull(constants$125.const$5,"libraw_get_iwidth");
     }
     /**
      * {@snippet :
@@ -4956,7 +4978,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_cam_mul$MH() {
-        return RuntimeHelper.requireNonNull(constants$11.libraw_get_cam_mul$MH,"libraw_get_cam_mul");
+        return RuntimeHelper.requireNonNull(constants$126.const$1,"libraw_get_cam_mul");
     }
     /**
      * {@snippet :
@@ -4972,7 +4994,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_pre_mul$MH() {
-        return RuntimeHelper.requireNonNull(constants$12.libraw_get_pre_mul$MH,"libraw_get_pre_mul");
+        return RuntimeHelper.requireNonNull(constants$126.const$2,"libraw_get_pre_mul");
     }
     /**
      * {@snippet :
@@ -4988,7 +5010,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_rgb_cam$MH() {
-        return RuntimeHelper.requireNonNull(constants$12.libraw_get_rgb_cam$MH,"libraw_get_rgb_cam");
+        return RuntimeHelper.requireNonNull(constants$126.const$4,"libraw_get_rgb_cam");
     }
     /**
      * {@snippet :
@@ -5004,7 +5026,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_color_maximum$MH() {
-        return RuntimeHelper.requireNonNull(constants$12.libraw_get_color_maximum$MH,"libraw_get_color_maximum");
+        return RuntimeHelper.requireNonNull(constants$126.const$5,"libraw_get_color_maximum");
     }
     /**
      * {@snippet :
@@ -5020,7 +5042,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_set_output_tif$MH() {
-        return RuntimeHelper.requireNonNull(constants$12.libraw_set_output_tif$MH,"libraw_set_output_tif");
+        return RuntimeHelper.requireNonNull(constants$127.const$0,"libraw_set_output_tif");
     }
     /**
      * {@snippet :
@@ -5036,7 +5058,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_iparams$MH() {
-        return RuntimeHelper.requireNonNull(constants$12.libraw_get_iparams$MH,"libraw_get_iparams");
+        return RuntimeHelper.requireNonNull(constants$127.const$1,"libraw_get_iparams");
     }
     /**
      * {@snippet :
@@ -5052,7 +5074,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_lensinfo$MH() {
-        return RuntimeHelper.requireNonNull(constants$12.libraw_get_lensinfo$MH,"libraw_get_lensinfo");
+        return RuntimeHelper.requireNonNull(constants$127.const$2,"libraw_get_lensinfo");
     }
     /**
      * {@snippet :
@@ -5068,7 +5090,7 @@ public class libraw_h  {
         }
     }
     public static MethodHandle libraw_get_imgother$MH() {
-        return RuntimeHelper.requireNonNull(constants$13.libraw_get_imgother$MH,"libraw_get_imgother");
+        return RuntimeHelper.requireNonNull(constants$127.const$3,"libraw_get_imgother");
     }
     /**
      * {@snippet :
@@ -5082,6 +5104,126 @@ public class libraw_h  {
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
+    }
+    /**
+     * {@snippet :
+     * #define SCHAR_MIN -128
+     * }
+     */
+    public static int SCHAR_MIN() {
+        return (int)-128L;
+    }
+    /**
+     * {@snippet :
+     * #define CHAR_MIN -128
+     * }
+     */
+    public static int CHAR_MIN() {
+        return (int)-128L;
+    }
+    /**
+     * {@snippet :
+     * #define CHAR_MAX 127
+     * }
+     */
+    public static int CHAR_MAX() {
+        return (int)127L;
+    }
+    /**
+     * {@snippet :
+     * #define SHRT_MIN -32768
+     * }
+     */
+    public static int SHRT_MIN() {
+        return (int)-32768L;
+    }
+    /**
+     * {@snippet :
+     * #define INT_MIN -2147483648
+     * }
+     */
+    public static int INT_MIN() {
+        return (int)-2147483648L;
+    }
+    /**
+     * {@snippet :
+     * #define UINT_MAX 4294967295
+     * }
+     */
+    public static int UINT_MAX() {
+        return (int)4294967295L;
+    }
+    /**
+     * {@snippet :
+     * #define LONG_MIN -2147483648
+     * }
+     */
+    public static int LONG_MIN() {
+        return (int)-2147483648L;
+    }
+    /**
+     * {@snippet :
+     * #define LONG_MAX 2147483647
+     * }
+     */
+    public static int LONG_MAX() {
+        return (int)2147483647L;
+    }
+    /**
+     * {@snippet :
+     * #define ULONG_MAX 4294967295
+     * }
+     */
+    public static int ULONG_MAX() {
+        return (int)4294967295L;
+    }
+    /**
+     * {@snippet :
+     * #define LLONG_MAX 9223372036854775807
+     * }
+     */
+    public static long LLONG_MAX() {
+        return 9223372036854775807L;
+    }
+    /**
+     * {@snippet :
+     * #define LLONG_MIN -9223372036854775808
+     * }
+     */
+    public static long LLONG_MIN() {
+        return -9223372036854775808L;
+    }
+    /**
+     * {@snippet :
+     * #define ULLONG_MAX -1
+     * }
+     */
+    public static long ULLONG_MAX() {
+        return -1L;
+    }
+    /**
+     * {@snippet :
+     * #define LONG_LONG_MAX 9223372036854775807
+     * }
+     */
+    public static long LONG_LONG_MAX() {
+        return 9223372036854775807L;
+    }
+    /**
+     * {@snippet :
+     * #define LONG_LONG_MIN -9223372036854775808
+     * }
+     */
+    public static long LONG_LONG_MIN() {
+        return -9223372036854775808L;
+    }
+    /**
+     * {@snippet :
+     * #define ULONG_LONG_MAX -1
+     * }
+     */
+    public static long ULONG_LONG_MAX() {
+        return -1L;
     }
     /**
      * {@snippet :
@@ -5104,8 +5246,8 @@ public class libraw_h  {
      * #define LIBRAW_MAX_ALLOC_MB_DEFAULT 2048
      * }
      */
-    public static long LIBRAW_MAX_ALLOC_MB_DEFAULT() {
-        return 2048L;
+    public static int LIBRAW_MAX_ALLOC_MB_DEFAULT() {
+        return (int)2048L;
     }
     /**
      * {@snippet :
@@ -5128,8 +5270,8 @@ public class libraw_h  {
      * #define LIBRAW_MAX_THUMBNAIL_MB 512
      * }
      */
-    public static long LIBRAW_MAX_THUMBNAIL_MB() {
-        return 512L;
+    public static int LIBRAW_MAX_THUMBNAIL_MB() {
+        return (int)512L;
     }
     /**
      * {@snippet :
@@ -5297,7 +5439,7 @@ public class libraw_h  {
      * }
      */
     public static MemorySegment LIBRAW_VERSION_STR() {
-        return constants$13.LIBRAW_VERSION_STR$SEGMENT;
+        return constants$127.const$4;
     }
     /**
      * {@snippet :

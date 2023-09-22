@@ -11,44 +11,32 @@ final class constants$5 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$5() {}
-    static final FunctionDescriptor libraw_free_image$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_free_image$MH = RuntimeHelper.downcallHandle(
-        "libraw_free_image",
-        constants$5.libraw_free_image$FUNC
-    );
-    static final FunctionDescriptor libraw_version$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
-    static final MethodHandle libraw_version$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_version",
-        constants$5.libraw_version$FUNC
-    );
-    static final FunctionDescriptor libraw_versionNumber$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
-    static final MethodHandle libraw_versionNumber$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_versionNumber",
-        constants$5.libraw_versionNumber$FUNC
-    );
-    static final FunctionDescriptor libraw_cameraList$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT);
-    static final MethodHandle libraw_cameraList$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_cameraList",
-        constants$5.libraw_cameraList$FUNC
-    );
-    static final FunctionDescriptor libraw_cameraCount$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT);
-    static final MethodHandle libraw_cameraCount$MH = RuntimeHelper.downcallHandleVariadic(
-        "libraw_cameraCount",
-        constants$5.libraw_cameraCount$FUNC
-    );
-    static final FunctionDescriptor libraw_set_memerror_handler$cb$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final FunctionDescriptor libraw_set_memerror_handler$cb_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_memerror_handler$cb_UP$MH = RuntimeHelper.upcallHandle(libraw_set_memerror_handler$cb.class, "apply", constants$5.libraw_set_memerror_handler$cb_UP$FUNC);
+    static final StructLayout const$0 = MemoryLayout.structLayout(
+        RuntimeHelper.POINTER.withName("mem_cb"),
+        RuntimeHelper.POINTER.withName("memcb_data"),
+        RuntimeHelper.POINTER.withName("data_cb"),
+        RuntimeHelper.POINTER.withName("datacb_data"),
+        RuntimeHelper.POINTER.withName("progress_cb"),
+        RuntimeHelper.POINTER.withName("progresscb_data"),
+        RuntimeHelper.POINTER.withName("exif_cb"),
+        RuntimeHelper.POINTER.withName("exifparser_data"),
+        RuntimeHelper.POINTER.withName("pre_identify_cb"),
+        RuntimeHelper.POINTER.withName("post_identify_cb"),
+        RuntimeHelper.POINTER.withName("pre_subtractblack_cb"),
+        RuntimeHelper.POINTER.withName("pre_scalecolors_cb"),
+        RuntimeHelper.POINTER.withName("pre_preinterpolate_cb"),
+        RuntimeHelper.POINTER.withName("pre_interpolate_cb"),
+        RuntimeHelper.POINTER.withName("interpolate_bayer_cb"),
+        RuntimeHelper.POINTER.withName("interpolate_xtrans_cb"),
+        RuntimeHelper.POINTER.withName("post_interpolate_cb"),
+        RuntimeHelper.POINTER.withName("pre_converttorgb_cb"),
+        RuntimeHelper.POINTER.withName("post_converttorgb_cb")
+    ).withName("libraw_callbacks_t");
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(libraw_callbacks_t.mem_cb.class, "apply", constants$1.const$3);
+    static final VarHandle const$2 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("mem_cb"));
+    static final VarHandle const$3 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("memcb_data"));
+    static final MethodHandle const$4 = RuntimeHelper.upcallHandle(libraw_callbacks_t.data_cb.class, "apply", constants$2.const$4);
+    static final VarHandle const$5 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("data_cb"));
 }
 
 

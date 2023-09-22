@@ -37,63 +37,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class tiff_hdr {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("t_order"),
-        Constants$root.C_SHORT$LAYOUT.withName("magic"),
-        Constants$root.C_LONG$LAYOUT.withName("ifd"),
-        Constants$root.C_SHORT$LAYOUT.withName("pad"),
-        Constants$root.C_SHORT$LAYOUT.withName("ntag"),
-        MemoryLayout.sequenceLayout(23, MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("tag"),
-            Constants$root.C_SHORT$LAYOUT.withName("type"),
-            Constants$root.C_LONG$LAYOUT.withName("count"),
-            MemoryLayout.unionLayout(
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("c"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("s"),
-                Constants$root.C_LONG$LAYOUT.withName("i")
-            ).withName("val")
-        ).withName("libraw_tiff_tag")).withName("tag"),
-        Constants$root.C_LONG$LAYOUT.withName("nextifd"),
-        Constants$root.C_SHORT$LAYOUT.withName("pad2"),
-        Constants$root.C_SHORT$LAYOUT.withName("nexif"),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("tag"),
-            Constants$root.C_SHORT$LAYOUT.withName("type"),
-            Constants$root.C_LONG$LAYOUT.withName("count"),
-            MemoryLayout.unionLayout(
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("c"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("s"),
-                Constants$root.C_LONG$LAYOUT.withName("i")
-            ).withName("val")
-        ).withName("libraw_tiff_tag")).withName("exif"),
-        Constants$root.C_SHORT$LAYOUT.withName("pad3"),
-        Constants$root.C_SHORT$LAYOUT.withName("ngps"),
-        MemoryLayout.sequenceLayout(10, MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("tag"),
-            Constants$root.C_SHORT$LAYOUT.withName("type"),
-            Constants$root.C_LONG$LAYOUT.withName("count"),
-            MemoryLayout.unionLayout(
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("c"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("s"),
-                Constants$root.C_LONG$LAYOUT.withName("i")
-            ).withName("val")
-        ).withName("libraw_tiff_tag")).withName("gpst"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("bps"),
-        MemoryLayout.sequenceLayout(10, Constants$root.C_LONG$LAYOUT).withName("rat"),
-        MemoryLayout.sequenceLayout(26, Constants$root.C_LONG$LAYOUT).withName("gps"),
-        MemoryLayout.sequenceLayout(512, Constants$root.C_CHAR$LAYOUT).withName("t_desc"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("t_make"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("t_model"),
-        MemoryLayout.sequenceLayout(32, Constants$root.C_CHAR$LAYOUT).withName("soft"),
-        MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("date"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("t_artist")
-    ).withName("tiff_hdr");
     public static MemoryLayout $LAYOUT() {
-        return tiff_hdr.$struct$LAYOUT;
+        return constants$114.const$0;
     }
-    static final VarHandle t_order$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("t_order"));
     public static VarHandle t_order$VH() {
-        return tiff_hdr.t_order$VH;
+        return constants$114.const$1;
     }
     /**
      * Getter for field:
@@ -102,7 +50,7 @@ public class tiff_hdr {
      * }
      */
     public static short t_order$get(MemorySegment seg) {
-        return (short)tiff_hdr.t_order$VH.get(seg);
+        return (short)constants$114.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -111,17 +59,16 @@ public class tiff_hdr {
      * }
      */
     public static void t_order$set(MemorySegment seg, short x) {
-        tiff_hdr.t_order$VH.set(seg, x);
+        constants$114.const$1.set(seg, x);
     }
     public static short t_order$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.t_order$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$114.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void t_order$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.t_order$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$114.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle magic$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("magic"));
     public static VarHandle magic$VH() {
-        return tiff_hdr.magic$VH;
+        return constants$114.const$2;
     }
     /**
      * Getter for field:
@@ -130,7 +77,7 @@ public class tiff_hdr {
      * }
      */
     public static short magic$get(MemorySegment seg) {
-        return (short)tiff_hdr.magic$VH.get(seg);
+        return (short)constants$114.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -139,17 +86,16 @@ public class tiff_hdr {
      * }
      */
     public static void magic$set(MemorySegment seg, short x) {
-        tiff_hdr.magic$VH.set(seg, x);
+        constants$114.const$2.set(seg, x);
     }
     public static short magic$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.magic$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$114.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void magic$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.magic$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$114.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ifd$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ifd"));
     public static VarHandle ifd$VH() {
-        return tiff_hdr.ifd$VH;
+        return constants$114.const$3;
     }
     /**
      * Getter for field:
@@ -158,7 +104,7 @@ public class tiff_hdr {
      * }
      */
     public static int ifd$get(MemorySegment seg) {
-        return (int)tiff_hdr.ifd$VH.get(seg);
+        return (int)constants$114.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -167,17 +113,16 @@ public class tiff_hdr {
      * }
      */
     public static void ifd$set(MemorySegment seg, int x) {
-        tiff_hdr.ifd$VH.set(seg, x);
+        constants$114.const$3.set(seg, x);
     }
     public static int ifd$get(MemorySegment seg, long index) {
-        return (int)tiff_hdr.ifd$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$114.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void ifd$set(MemorySegment seg, long index, int x) {
-        tiff_hdr.ifd$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$114.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle pad$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pad"));
     public static VarHandle pad$VH() {
-        return tiff_hdr.pad$VH;
+        return constants$114.const$4;
     }
     /**
      * Getter for field:
@@ -186,7 +131,7 @@ public class tiff_hdr {
      * }
      */
     public static short pad$get(MemorySegment seg) {
-        return (short)tiff_hdr.pad$VH.get(seg);
+        return (short)constants$114.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -195,17 +140,16 @@ public class tiff_hdr {
      * }
      */
     public static void pad$set(MemorySegment seg, short x) {
-        tiff_hdr.pad$VH.set(seg, x);
+        constants$114.const$4.set(seg, x);
     }
     public static short pad$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.pad$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$114.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void pad$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.pad$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$114.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ntag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ntag"));
     public static VarHandle ntag$VH() {
-        return tiff_hdr.ntag$VH;
+        return constants$114.const$5;
     }
     /**
      * Getter for field:
@@ -214,7 +158,7 @@ public class tiff_hdr {
      * }
      */
     public static short ntag$get(MemorySegment seg) {
-        return (short)tiff_hdr.ntag$VH.get(seg);
+        return (short)constants$114.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -223,20 +167,19 @@ public class tiff_hdr {
      * }
      */
     public static void ntag$set(MemorySegment seg, short x) {
-        tiff_hdr.ntag$VH.set(seg, x);
+        constants$114.const$5.set(seg, x);
     }
     public static short ntag$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.ntag$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$114.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ntag$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.ntag$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$114.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment tag$slice(MemorySegment seg) {
         return seg.asSlice(12, 276);
     }
-    static final VarHandle nextifd$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nextifd"));
     public static VarHandle nextifd$VH() {
-        return tiff_hdr.nextifd$VH;
+        return constants$115.const$0;
     }
     /**
      * Getter for field:
@@ -245,7 +188,7 @@ public class tiff_hdr {
      * }
      */
     public static int nextifd$get(MemorySegment seg) {
-        return (int)tiff_hdr.nextifd$VH.get(seg);
+        return (int)constants$115.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -254,17 +197,16 @@ public class tiff_hdr {
      * }
      */
     public static void nextifd$set(MemorySegment seg, int x) {
-        tiff_hdr.nextifd$VH.set(seg, x);
+        constants$115.const$0.set(seg, x);
     }
     public static int nextifd$get(MemorySegment seg, long index) {
-        return (int)tiff_hdr.nextifd$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$115.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void nextifd$set(MemorySegment seg, long index, int x) {
-        tiff_hdr.nextifd$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$115.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle pad2$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pad2"));
     public static VarHandle pad2$VH() {
-        return tiff_hdr.pad2$VH;
+        return constants$115.const$1;
     }
     /**
      * Getter for field:
@@ -273,7 +215,7 @@ public class tiff_hdr {
      * }
      */
     public static short pad2$get(MemorySegment seg) {
-        return (short)tiff_hdr.pad2$VH.get(seg);
+        return (short)constants$115.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -282,17 +224,16 @@ public class tiff_hdr {
      * }
      */
     public static void pad2$set(MemorySegment seg, short x) {
-        tiff_hdr.pad2$VH.set(seg, x);
+        constants$115.const$1.set(seg, x);
     }
     public static short pad2$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.pad2$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$115.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void pad2$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.pad2$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$115.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nexif$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nexif"));
     public static VarHandle nexif$VH() {
-        return tiff_hdr.nexif$VH;
+        return constants$115.const$2;
     }
     /**
      * Getter for field:
@@ -301,7 +242,7 @@ public class tiff_hdr {
      * }
      */
     public static short nexif$get(MemorySegment seg) {
-        return (short)tiff_hdr.nexif$VH.get(seg);
+        return (short)constants$115.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -310,20 +251,19 @@ public class tiff_hdr {
      * }
      */
     public static void nexif$set(MemorySegment seg, short x) {
-        tiff_hdr.nexif$VH.set(seg, x);
+        constants$115.const$2.set(seg, x);
     }
     public static short nexif$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.nexif$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$115.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void nexif$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.nexif$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$115.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment exif$slice(MemorySegment seg) {
         return seg.asSlice(296, 48);
     }
-    static final VarHandle pad3$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("pad3"));
     public static VarHandle pad3$VH() {
-        return tiff_hdr.pad3$VH;
+        return constants$115.const$3;
     }
     /**
      * Getter for field:
@@ -332,7 +272,7 @@ public class tiff_hdr {
      * }
      */
     public static short pad3$get(MemorySegment seg) {
-        return (short)tiff_hdr.pad3$VH.get(seg);
+        return (short)constants$115.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -341,17 +281,16 @@ public class tiff_hdr {
      * }
      */
     public static void pad3$set(MemorySegment seg, short x) {
-        tiff_hdr.pad3$VH.set(seg, x);
+        constants$115.const$3.set(seg, x);
     }
     public static short pad3$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.pad3$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$115.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void pad3$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.pad3$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$115.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ngps$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ngps"));
     public static VarHandle ngps$VH() {
-        return tiff_hdr.ngps$VH;
+        return constants$115.const$4;
     }
     /**
      * Getter for field:
@@ -360,7 +299,7 @@ public class tiff_hdr {
      * }
      */
     public static short ngps$get(MemorySegment seg) {
-        return (short)tiff_hdr.ngps$VH.get(seg);
+        return (short)constants$115.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -369,13 +308,13 @@ public class tiff_hdr {
      * }
      */
     public static void ngps$set(MemorySegment seg, short x) {
-        tiff_hdr.ngps$VH.set(seg, x);
+        constants$115.const$4.set(seg, x);
     }
     public static short ngps$get(MemorySegment seg, long index) {
-        return (short)tiff_hdr.ngps$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$115.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void ngps$set(MemorySegment seg, long index, short x) {
-        tiff_hdr.ngps$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$115.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment gpst$slice(MemorySegment seg) {
         return seg.asSlice(348, 120);
@@ -412,7 +351,7 @@ public class tiff_hdr {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

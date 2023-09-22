@@ -29,30 +29,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_custom_camera_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_LONG$LAYOUT.withName("fsize"),
-        Constants$root.C_SHORT$LAYOUT.withName("rw"),
-        Constants$root.C_SHORT$LAYOUT.withName("rh"),
-        Constants$root.C_CHAR$LAYOUT.withName("lm"),
-        Constants$root.C_CHAR$LAYOUT.withName("tm"),
-        Constants$root.C_CHAR$LAYOUT.withName("rm"),
-        Constants$root.C_CHAR$LAYOUT.withName("bm"),
-        Constants$root.C_SHORT$LAYOUT.withName("lf"),
-        Constants$root.C_CHAR$LAYOUT.withName("cf"),
-        Constants$root.C_CHAR$LAYOUT.withName("max"),
-        Constants$root.C_CHAR$LAYOUT.withName("flags"),
-        MemoryLayout.sequenceLayout(10, Constants$root.C_CHAR$LAYOUT).withName("t_make"),
-        MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("t_model"),
-        MemoryLayout.paddingLayout(8),
-        Constants$root.C_SHORT$LAYOUT.withName("offset"),
-        MemoryLayout.paddingLayout(16)
-    ).withName("libraw_custom_camera_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_custom_camera_t.$struct$LAYOUT;
+        return constants$87.const$2;
     }
-    static final VarHandle fsize$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fsize"));
     public static VarHandle fsize$VH() {
-        return libraw_custom_camera_t.fsize$VH;
+        return constants$87.const$3;
     }
     /**
      * Getter for field:
@@ -61,7 +42,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static int fsize$get(MemorySegment seg) {
-        return (int)libraw_custom_camera_t.fsize$VH.get(seg);
+        return (int)constants$87.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -70,17 +51,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void fsize$set(MemorySegment seg, int x) {
-        libraw_custom_camera_t.fsize$VH.set(seg, x);
+        constants$87.const$3.set(seg, x);
     }
     public static int fsize$get(MemorySegment seg, long index) {
-        return (int)libraw_custom_camera_t.fsize$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$87.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void fsize$set(MemorySegment seg, long index, int x) {
-        libraw_custom_camera_t.fsize$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$87.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rw$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rw"));
     public static VarHandle rw$VH() {
-        return libraw_custom_camera_t.rw$VH;
+        return constants$87.const$4;
     }
     /**
      * Getter for field:
@@ -89,7 +69,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static short rw$get(MemorySegment seg) {
-        return (short)libraw_custom_camera_t.rw$VH.get(seg);
+        return (short)constants$87.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -98,17 +78,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void rw$set(MemorySegment seg, short x) {
-        libraw_custom_camera_t.rw$VH.set(seg, x);
+        constants$87.const$4.set(seg, x);
     }
     public static short rw$get(MemorySegment seg, long index) {
-        return (short)libraw_custom_camera_t.rw$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$87.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void rw$set(MemorySegment seg, long index, short x) {
-        libraw_custom_camera_t.rw$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$87.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rh$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rh"));
     public static VarHandle rh$VH() {
-        return libraw_custom_camera_t.rh$VH;
+        return constants$87.const$5;
     }
     /**
      * Getter for field:
@@ -117,7 +96,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static short rh$get(MemorySegment seg) {
-        return (short)libraw_custom_camera_t.rh$VH.get(seg);
+        return (short)constants$87.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -126,17 +105,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void rh$set(MemorySegment seg, short x) {
-        libraw_custom_camera_t.rh$VH.set(seg, x);
+        constants$87.const$5.set(seg, x);
     }
     public static short rh$get(MemorySegment seg, long index) {
-        return (short)libraw_custom_camera_t.rh$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$87.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void rh$set(MemorySegment seg, long index, short x) {
-        libraw_custom_camera_t.rh$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$87.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lm"));
     public static VarHandle lm$VH() {
-        return libraw_custom_camera_t.lm$VH;
+        return constants$88.const$0;
     }
     /**
      * Getter for field:
@@ -145,7 +123,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte lm$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.lm$VH.get(seg);
+        return (byte)constants$88.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -154,17 +132,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void lm$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.lm$VH.set(seg, x);
+        constants$88.const$0.set(seg, x);
     }
     public static byte lm$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.lm$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$88.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void lm$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.lm$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$88.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tm"));
     public static VarHandle tm$VH() {
-        return libraw_custom_camera_t.tm$VH;
+        return constants$88.const$1;
     }
     /**
      * Getter for field:
@@ -173,7 +150,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte tm$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.tm$VH.get(seg);
+        return (byte)constants$88.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -182,17 +159,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void tm$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.tm$VH.set(seg, x);
+        constants$88.const$1.set(seg, x);
     }
     public static byte tm$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.tm$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$88.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void tm$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.tm$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$88.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle rm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("rm"));
     public static VarHandle rm$VH() {
-        return libraw_custom_camera_t.rm$VH;
+        return constants$88.const$2;
     }
     /**
      * Getter for field:
@@ -201,7 +177,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte rm$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.rm$VH.get(seg);
+        return (byte)constants$88.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -210,17 +186,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void rm$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.rm$VH.set(seg, x);
+        constants$88.const$2.set(seg, x);
     }
     public static byte rm$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.rm$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$88.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void rm$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.rm$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$88.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bm$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bm"));
     public static VarHandle bm$VH() {
-        return libraw_custom_camera_t.bm$VH;
+        return constants$88.const$3;
     }
     /**
      * Getter for field:
@@ -229,7 +204,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte bm$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.bm$VH.get(seg);
+        return (byte)constants$88.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -238,17 +213,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void bm$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.bm$VH.set(seg, x);
+        constants$88.const$3.set(seg, x);
     }
     public static byte bm$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.bm$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$88.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void bm$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.bm$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$88.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle lf$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("lf"));
     public static VarHandle lf$VH() {
-        return libraw_custom_camera_t.lf$VH;
+        return constants$88.const$4;
     }
     /**
      * Getter for field:
@@ -257,7 +231,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static short lf$get(MemorySegment seg) {
-        return (short)libraw_custom_camera_t.lf$VH.get(seg);
+        return (short)constants$88.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -266,17 +240,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void lf$set(MemorySegment seg, short x) {
-        libraw_custom_camera_t.lf$VH.set(seg, x);
+        constants$88.const$4.set(seg, x);
     }
     public static short lf$get(MemorySegment seg, long index) {
-        return (short)libraw_custom_camera_t.lf$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$88.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void lf$set(MemorySegment seg, long index, short x) {
-        libraw_custom_camera_t.lf$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$88.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cf$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cf"));
     public static VarHandle cf$VH() {
-        return libraw_custom_camera_t.cf$VH;
+        return constants$88.const$5;
     }
     /**
      * Getter for field:
@@ -285,7 +258,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte cf$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.cf$VH.get(seg);
+        return (byte)constants$88.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -294,17 +267,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void cf$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.cf$VH.set(seg, x);
+        constants$88.const$5.set(seg, x);
     }
     public static byte cf$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.cf$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$88.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void cf$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.cf$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$88.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max"));
     public static VarHandle max$VH() {
-        return libraw_custom_camera_t.max$VH;
+        return constants$89.const$0;
     }
     /**
      * Getter for field:
@@ -313,7 +285,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte max$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.max$VH.get(seg);
+        return (byte)constants$89.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -322,17 +294,16 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void max$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.max$VH.set(seg, x);
+        constants$89.const$0.set(seg, x);
     }
     public static byte max$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.max$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$89.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void max$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.max$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$89.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("flags"));
     public static VarHandle flags$VH() {
-        return libraw_custom_camera_t.flags$VH;
+        return constants$89.const$1;
     }
     /**
      * Getter for field:
@@ -341,7 +312,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static byte flags$get(MemorySegment seg) {
-        return (byte)libraw_custom_camera_t.flags$VH.get(seg);
+        return (byte)constants$89.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -350,13 +321,13 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void flags$set(MemorySegment seg, byte x) {
-        libraw_custom_camera_t.flags$VH.set(seg, x);
+        constants$89.const$1.set(seg, x);
     }
     public static byte flags$get(MemorySegment seg, long index) {
-        return (byte)libraw_custom_camera_t.flags$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$89.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void flags$set(MemorySegment seg, long index, byte x) {
-        libraw_custom_camera_t.flags$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$89.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment t_make$slice(MemorySegment seg) {
         return seg.asSlice(17, 10);
@@ -364,9 +335,8 @@ public class libraw_custom_camera_t {
     public static MemorySegment t_model$slice(MemorySegment seg) {
         return seg.asSlice(27, 20);
     }
-    static final VarHandle offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset"));
     public static VarHandle offset$VH() {
-        return libraw_custom_camera_t.offset$VH;
+        return constants$89.const$2;
     }
     /**
      * Getter for field:
@@ -375,7 +345,7 @@ public class libraw_custom_camera_t {
      * }
      */
     public static short offset$get(MemorySegment seg) {
-        return (short)libraw_custom_camera_t.offset$VH.get(seg);
+        return (short)constants$89.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -384,20 +354,20 @@ public class libraw_custom_camera_t {
      * }
      */
     public static void offset$set(MemorySegment seg, short x) {
-        libraw_custom_camera_t.offset$VH.set(seg, x);
+        constants$89.const$2.set(seg, x);
     }
     public static short offset$get(MemorySegment seg, long index) {
-        return (short)libraw_custom_camera_t.offset$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$89.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void offset$set(MemorySegment seg, long index, short x) {
-        libraw_custom_camera_t.offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$89.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

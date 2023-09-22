@@ -11,46 +11,29 @@ final class constants$2 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$2() {}
-    static final FunctionDescriptor post_identify_callback$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
+    static final FunctionDescriptor const$0 = FunctionDescriptor.ofVoid(
+        RuntimeHelper.POINTER,
+        JAVA_INT,
+        JAVA_INT,
+        JAVA_INT,
+        JAVA_INT,
+        RuntimeHelper.POINTER,
+        JAVA_LONG
     );
-    static final FunctionDescriptor post_identify_callback_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(exif_parser_callback.class, "apply", constants$2.const$0);
+    static final MethodHandle const$2 = RuntimeHelper.downcallHandle(
+        constants$2.const$0
     );
-    static final MethodHandle post_identify_callback_UP$MH = RuntimeHelper.upcallHandle(post_identify_callback.class, "apply", constants$2.post_identify_callback_UP$FUNC);
-    static final FunctionDescriptor post_identify_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
+    static final MethodHandle const$3 = RuntimeHelper.downcallHandle(
+        "default_memory_callback",
+        constants$1.const$3
     );
-    static final MethodHandle post_identify_callback_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$2.post_identify_callback_DOWN$FUNC
+    static final FunctionDescriptor const$4 = FunctionDescriptor.ofVoid(
+        RuntimeHelper.POINTER,
+        RuntimeHelper.POINTER,
+        JAVA_INT
     );
-    static final FunctionDescriptor process_step_callback$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final FunctionDescriptor process_step_callback_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle process_step_callback_UP$MH = RuntimeHelper.upcallHandle(process_step_callback.class, "apply", constants$2.process_step_callback_UP$FUNC);
-    static final FunctionDescriptor process_step_callback_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle process_step_callback_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$2.process_step_callback_DOWN$FUNC
-    );
-    static final FunctionDescriptor libraw_strerror$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_strerror$MH = RuntimeHelper.downcallHandle(
-        "libraw_strerror",
-        constants$2.libraw_strerror$FUNC
-    );
-    static final FunctionDescriptor libraw_strprogress$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_strprogress$MH = RuntimeHelper.downcallHandle(
-        "libraw_strprogress",
-        constants$2.libraw_strprogress$FUNC
-    );
+    static final MethodHandle const$5 = RuntimeHelper.upcallHandle(data_callback.class, "apply", constants$2.const$4);
 }
 
 

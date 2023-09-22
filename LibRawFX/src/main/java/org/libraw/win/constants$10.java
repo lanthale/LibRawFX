@@ -11,56 +11,21 @@ final class constants$10 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$10() {}
-    static final FunctionDescriptor libraw_set_adjust_maximum_thr$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_adjust_maximum_thr$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_adjust_maximum_thr",
-        constants$10.libraw_set_adjust_maximum_thr$FUNC
-    );
-    static final FunctionDescriptor libraw_set_user_mul$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_user_mul$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_user_mul",
-        constants$10.libraw_set_user_mul$FUNC
-    );
-    static final FunctionDescriptor libraw_set_output_bps$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_output_bps$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_output_bps",
-        constants$10.libraw_set_output_bps$FUNC
-    );
-    static final FunctionDescriptor libraw_set_gamma$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_gamma$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_gamma",
-        constants$10.libraw_set_gamma$FUNC
-    );
-    static final FunctionDescriptor libraw_set_no_auto_bright$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_no_auto_bright$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_no_auto_bright",
-        constants$10.libraw_set_no_auto_bright$FUNC
-    );
-    static final FunctionDescriptor libraw_set_bright$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_bright$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_bright",
-        constants$10.libraw_set_bright$FUNC
-    );
+    static final VarHandle const$0 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("post_interpolate_cb"));
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(libraw_callbacks_t.pre_converttorgb_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$2 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("pre_converttorgb_cb"));
+    static final MethodHandle const$3 = RuntimeHelper.upcallHandle(libraw_callbacks_t.post_converttorgb_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$4 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("post_converttorgb_cb"));
+    static final StructLayout const$5 = MemoryLayout.structLayout(
+        JAVA_INT.withName("type"),
+        JAVA_SHORT.withName("height"),
+        JAVA_SHORT.withName("width"),
+        JAVA_SHORT.withName("colors"),
+        JAVA_SHORT.withName("bits"),
+        JAVA_INT.withName("data_size"),
+        MemoryLayout.sequenceLayout(1, JAVA_BYTE).withName("data"),
+        MemoryLayout.paddingLayout(3)
+    ).withName("libraw_processed_image_t");
 }
 
 

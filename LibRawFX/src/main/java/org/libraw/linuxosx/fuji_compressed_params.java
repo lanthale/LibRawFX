@@ -21,32 +21,14 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class fuji_compressed_params {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
-            Constants$root.C_POINTER$LAYOUT.withName("q_table"),
-            Constants$root.C_INT$LAYOUT.withName("raw_bits"),
-            Constants$root.C_INT$LAYOUT.withName("total_values"),
-            Constants$root.C_INT$LAYOUT.withName("max_grad"),
-            Constants$root.C_INT$LAYOUT.withName("q_grad_mult"),
-            Constants$root.C_INT$LAYOUT.withName("q_base"),
-            MemoryLayout.paddingLayout(32)
-        ).withName("fuji_q_table")).withName("qt"),
-        Constants$root.C_POINTER$LAYOUT.withName("buf"),
-        Constants$root.C_INT$LAYOUT.withName("max_bits"),
-        Constants$root.C_INT$LAYOUT.withName("min_value"),
-        Constants$root.C_INT$LAYOUT.withName("max_value"),
-        Constants$root.C_SHORT$LAYOUT.withName("line_width"),
-        MemoryLayout.paddingLayout(16)
-    ).withName("fuji_compressed_params");
     public static MemoryLayout $LAYOUT() {
-        return fuji_compressed_params.$struct$LAYOUT;
+        return constants$91.const$3;
     }
     public static MemorySegment qt$slice(MemorySegment seg) {
         return seg.asSlice(0, 128);
     }
-    static final VarHandle buf$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("buf"));
     public static VarHandle buf$VH() {
-        return fuji_compressed_params.buf$VH;
+        return constants$91.const$4;
     }
     /**
      * Getter for field:
@@ -55,7 +37,7 @@ public class fuji_compressed_params {
      * }
      */
     public static MemorySegment buf$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)fuji_compressed_params.buf$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$91.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -64,17 +46,16 @@ public class fuji_compressed_params {
      * }
      */
     public static void buf$set(MemorySegment seg, MemorySegment x) {
-        fuji_compressed_params.buf$VH.set(seg, x);
+        constants$91.const$4.set(seg, x);
     }
     public static MemorySegment buf$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)fuji_compressed_params.buf$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$91.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void buf$set(MemorySegment seg, long index, MemorySegment x) {
-        fuji_compressed_params.buf$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$91.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max_bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max_bits"));
     public static VarHandle max_bits$VH() {
-        return fuji_compressed_params.max_bits$VH;
+        return constants$91.const$5;
     }
     /**
      * Getter for field:
@@ -83,7 +64,7 @@ public class fuji_compressed_params {
      * }
      */
     public static int max_bits$get(MemorySegment seg) {
-        return (int)fuji_compressed_params.max_bits$VH.get(seg);
+        return (int)constants$91.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -92,17 +73,16 @@ public class fuji_compressed_params {
      * }
      */
     public static void max_bits$set(MemorySegment seg, int x) {
-        fuji_compressed_params.max_bits$VH.set(seg, x);
+        constants$91.const$5.set(seg, x);
     }
     public static int max_bits$get(MemorySegment seg, long index) {
-        return (int)fuji_compressed_params.max_bits$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$91.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void max_bits$set(MemorySegment seg, long index, int x) {
-        fuji_compressed_params.max_bits$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$91.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle min_value$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("min_value"));
     public static VarHandle min_value$VH() {
-        return fuji_compressed_params.min_value$VH;
+        return constants$92.const$0;
     }
     /**
      * Getter for field:
@@ -111,7 +91,7 @@ public class fuji_compressed_params {
      * }
      */
     public static int min_value$get(MemorySegment seg) {
-        return (int)fuji_compressed_params.min_value$VH.get(seg);
+        return (int)constants$92.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -120,17 +100,16 @@ public class fuji_compressed_params {
      * }
      */
     public static void min_value$set(MemorySegment seg, int x) {
-        fuji_compressed_params.min_value$VH.set(seg, x);
+        constants$92.const$0.set(seg, x);
     }
     public static int min_value$get(MemorySegment seg, long index) {
-        return (int)fuji_compressed_params.min_value$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$92.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void min_value$set(MemorySegment seg, long index, int x) {
-        fuji_compressed_params.min_value$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$92.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max_value$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max_value"));
     public static VarHandle max_value$VH() {
-        return fuji_compressed_params.max_value$VH;
+        return constants$92.const$1;
     }
     /**
      * Getter for field:
@@ -139,7 +118,7 @@ public class fuji_compressed_params {
      * }
      */
     public static int max_value$get(MemorySegment seg) {
-        return (int)fuji_compressed_params.max_value$VH.get(seg);
+        return (int)constants$92.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -148,17 +127,16 @@ public class fuji_compressed_params {
      * }
      */
     public static void max_value$set(MemorySegment seg, int x) {
-        fuji_compressed_params.max_value$VH.set(seg, x);
+        constants$92.const$1.set(seg, x);
     }
     public static int max_value$get(MemorySegment seg, long index) {
-        return (int)fuji_compressed_params.max_value$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$92.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void max_value$set(MemorySegment seg, long index, int x) {
-        fuji_compressed_params.max_value$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$92.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle line_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("line_width"));
     public static VarHandle line_width$VH() {
-        return fuji_compressed_params.line_width$VH;
+        return constants$92.const$2;
     }
     /**
      * Getter for field:
@@ -167,7 +145,7 @@ public class fuji_compressed_params {
      * }
      */
     public static short line_width$get(MemorySegment seg) {
-        return (short)fuji_compressed_params.line_width$VH.get(seg);
+        return (short)constants$92.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -176,20 +154,20 @@ public class fuji_compressed_params {
      * }
      */
     public static void line_width$set(MemorySegment seg, short x) {
-        fuji_compressed_params.line_width$VH.set(seg, x);
+        constants$92.const$2.set(seg, x);
     }
     public static short line_width$get(MemorySegment seg, long index) {
-        return (short)fuji_compressed_params.line_width$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$92.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void line_width$set(MemorySegment seg, long index, short x) {
-        fuji_compressed_params.line_width$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$92.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

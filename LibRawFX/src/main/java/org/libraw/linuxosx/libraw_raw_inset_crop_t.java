@@ -19,18 +19,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_raw_inset_crop_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("cleft"),
-        Constants$root.C_SHORT$LAYOUT.withName("ctop"),
-        Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-        Constants$root.C_SHORT$LAYOUT.withName("cheight")
-    ).withName("libraw_raw_inset_crop_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_raw_inset_crop_t.$struct$LAYOUT;
+        return constants$13.const$3;
     }
-    static final VarHandle cleft$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cleft"));
     public static VarHandle cleft$VH() {
-        return libraw_raw_inset_crop_t.cleft$VH;
+        return constants$13.const$4;
     }
     /**
      * Getter for field:
@@ -39,7 +32,7 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static short cleft$get(MemorySegment seg) {
-        return (short)libraw_raw_inset_crop_t.cleft$VH.get(seg);
+        return (short)constants$13.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -48,17 +41,16 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static void cleft$set(MemorySegment seg, short x) {
-        libraw_raw_inset_crop_t.cleft$VH.set(seg, x);
+        constants$13.const$4.set(seg, x);
     }
     public static short cleft$get(MemorySegment seg, long index) {
-        return (short)libraw_raw_inset_crop_t.cleft$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$13.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void cleft$set(MemorySegment seg, long index, short x) {
-        libraw_raw_inset_crop_t.cleft$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$13.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ctop$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ctop"));
     public static VarHandle ctop$VH() {
-        return libraw_raw_inset_crop_t.ctop$VH;
+        return constants$13.const$5;
     }
     /**
      * Getter for field:
@@ -67,7 +59,7 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static short ctop$get(MemorySegment seg) {
-        return (short)libraw_raw_inset_crop_t.ctop$VH.get(seg);
+        return (short)constants$13.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -76,17 +68,16 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static void ctop$set(MemorySegment seg, short x) {
-        libraw_raw_inset_crop_t.ctop$VH.set(seg, x);
+        constants$13.const$5.set(seg, x);
     }
     public static short ctop$get(MemorySegment seg, long index) {
-        return (short)libraw_raw_inset_crop_t.ctop$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$13.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ctop$set(MemorySegment seg, long index, short x) {
-        libraw_raw_inset_crop_t.ctop$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$13.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cwidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cwidth"));
     public static VarHandle cwidth$VH() {
-        return libraw_raw_inset_crop_t.cwidth$VH;
+        return constants$14.const$0;
     }
     /**
      * Getter for field:
@@ -95,7 +86,7 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static short cwidth$get(MemorySegment seg) {
-        return (short)libraw_raw_inset_crop_t.cwidth$VH.get(seg);
+        return (short)constants$14.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -104,17 +95,16 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static void cwidth$set(MemorySegment seg, short x) {
-        libraw_raw_inset_crop_t.cwidth$VH.set(seg, x);
+        constants$14.const$0.set(seg, x);
     }
     public static short cwidth$get(MemorySegment seg, long index) {
-        return (short)libraw_raw_inset_crop_t.cwidth$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$14.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void cwidth$set(MemorySegment seg, long index, short x) {
-        libraw_raw_inset_crop_t.cwidth$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$14.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle cheight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("cheight"));
     public static VarHandle cheight$VH() {
-        return libraw_raw_inset_crop_t.cheight$VH;
+        return constants$14.const$1;
     }
     /**
      * Getter for field:
@@ -123,7 +113,7 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static short cheight$get(MemorySegment seg) {
-        return (short)libraw_raw_inset_crop_t.cheight$VH.get(seg);
+        return (short)constants$14.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -132,20 +122,20 @@ public class libraw_raw_inset_crop_t {
      * }
      */
     public static void cheight$set(MemorySegment seg, short x) {
-        libraw_raw_inset_crop_t.cheight$VH.set(seg, x);
+        constants$14.const$1.set(seg, x);
     }
     public static short cheight$get(MemorySegment seg, long index) {
-        return (short)libraw_raw_inset_crop_t.cheight$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$14.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void cheight$set(MemorySegment seg, long index, short x) {
-        libraw_raw_inset_crop_t.cheight$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$14.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -53,80 +53,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_canon_makernotes_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_INT$LAYOUT.withName("ColorDataVer"),
-        Constants$root.C_INT$LAYOUT.withName("ColorDataSubVer"),
-        Constants$root.C_INT$LAYOUT.withName("SpecularWhiteLevel"),
-        Constants$root.C_INT$LAYOUT.withName("NormalWhiteLevel"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("ChannelBlackLevel"),
-        Constants$root.C_INT$LAYOUT.withName("AverageBlackLevel"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("multishot"),
-        Constants$root.C_SHORT$LAYOUT.withName("MeteringMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("SpotMeteringMode"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashMeteringMode"),
-        MemoryLayout.paddingLayout(8),
-        Constants$root.C_SHORT$LAYOUT.withName("FlashExposureLock"),
-        Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("AESetting"),
-        Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
-        Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("FlashActivity"),
-        Constants$root.C_SHORT$LAYOUT.withName("FlashBits"),
-        Constants$root.C_SHORT$LAYOUT.withName("ManualFlashOutput"),
-        Constants$root.C_SHORT$LAYOUT.withName("FlashOutput"),
-        Constants$root.C_SHORT$LAYOUT.withName("FlashGuideNumber"),
-        Constants$root.C_SHORT$LAYOUT.withName("ContinuousDrive"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
-        Constants$root.C_INT$LAYOUT.withName("AFMicroAdjMode"),
-        Constants$root.C_FLOAT$LAYOUT.withName("AFMicroAdjValue"),
-        Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
-        Constants$root.C_SHORT$LAYOUT.withName("RecordMode"),
-        Constants$root.C_SHORT$LAYOUT.withName("SRAWQuality"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("wbi"),
-        Constants$root.C_SHORT$LAYOUT.withName("RF_lensID"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("AutoLightingOptimizer"),
-        Constants$root.C_INT$LAYOUT.withName("HighlightTonePriority"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("t"),
-            Constants$root.C_SHORT$LAYOUT.withName("l"),
-            Constants$root.C_SHORT$LAYOUT.withName("b"),
-            Constants$root.C_SHORT$LAYOUT.withName("r")
-        ).withName("DefaultCropAbsolute"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("t"),
-            Constants$root.C_SHORT$LAYOUT.withName("l"),
-            Constants$root.C_SHORT$LAYOUT.withName("b"),
-            Constants$root.C_SHORT$LAYOUT.withName("r")
-        ).withName("RecommendedImageArea"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("t"),
-            Constants$root.C_SHORT$LAYOUT.withName("l"),
-            Constants$root.C_SHORT$LAYOUT.withName("b"),
-            Constants$root.C_SHORT$LAYOUT.withName("r")
-        ).withName("LeftOpticalBlack"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("t"),
-            Constants$root.C_SHORT$LAYOUT.withName("l"),
-            Constants$root.C_SHORT$LAYOUT.withName("b"),
-            Constants$root.C_SHORT$LAYOUT.withName("r")
-        ).withName("UpperOpticalBlack"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("t"),
-            Constants$root.C_SHORT$LAYOUT.withName("l"),
-            Constants$root.C_SHORT$LAYOUT.withName("b"),
-            Constants$root.C_SHORT$LAYOUT.withName("r")
-        ).withName("ActiveArea"),
-        MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("ISOgain")
-    ).withName("libraw_canon_makernotes_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_canon_makernotes_t.$struct$LAYOUT;
+        return constants$20.const$5;
     }
-    static final VarHandle ColorDataVer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ColorDataVer"));
     public static VarHandle ColorDataVer$VH() {
-        return libraw_canon_makernotes_t.ColorDataVer$VH;
+        return constants$21.const$0;
     }
     /**
      * Getter for field:
@@ -135,7 +66,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int ColorDataVer$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.ColorDataVer$VH.get(seg);
+        return (int)constants$21.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -144,17 +75,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void ColorDataVer$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.ColorDataVer$VH.set(seg, x);
+        constants$21.const$0.set(seg, x);
     }
     public static int ColorDataVer$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.ColorDataVer$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$21.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ColorDataVer$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.ColorDataVer$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$21.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ColorDataSubVer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ColorDataSubVer"));
     public static VarHandle ColorDataSubVer$VH() {
-        return libraw_canon_makernotes_t.ColorDataSubVer$VH;
+        return constants$21.const$1;
     }
     /**
      * Getter for field:
@@ -163,7 +93,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int ColorDataSubVer$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.ColorDataSubVer$VH.get(seg);
+        return (int)constants$21.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -172,17 +102,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void ColorDataSubVer$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.ColorDataSubVer$VH.set(seg, x);
+        constants$21.const$1.set(seg, x);
     }
     public static int ColorDataSubVer$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.ColorDataSubVer$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$21.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void ColorDataSubVer$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.ColorDataSubVer$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$21.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SpecularWhiteLevel$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SpecularWhiteLevel"));
     public static VarHandle SpecularWhiteLevel$VH() {
-        return libraw_canon_makernotes_t.SpecularWhiteLevel$VH;
+        return constants$21.const$2;
     }
     /**
      * Getter for field:
@@ -191,7 +120,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int SpecularWhiteLevel$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.SpecularWhiteLevel$VH.get(seg);
+        return (int)constants$21.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -200,17 +129,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void SpecularWhiteLevel$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.SpecularWhiteLevel$VH.set(seg, x);
+        constants$21.const$2.set(seg, x);
     }
     public static int SpecularWhiteLevel$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.SpecularWhiteLevel$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$21.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void SpecularWhiteLevel$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.SpecularWhiteLevel$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$21.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle NormalWhiteLevel$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("NormalWhiteLevel"));
     public static VarHandle NormalWhiteLevel$VH() {
-        return libraw_canon_makernotes_t.NormalWhiteLevel$VH;
+        return constants$21.const$3;
     }
     /**
      * Getter for field:
@@ -219,7 +147,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int NormalWhiteLevel$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.NormalWhiteLevel$VH.get(seg);
+        return (int)constants$21.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -228,20 +156,19 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void NormalWhiteLevel$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.NormalWhiteLevel$VH.set(seg, x);
+        constants$21.const$3.set(seg, x);
     }
     public static int NormalWhiteLevel$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.NormalWhiteLevel$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$21.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void NormalWhiteLevel$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.NormalWhiteLevel$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$21.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment ChannelBlackLevel$slice(MemorySegment seg) {
         return seg.asSlice(16, 16);
     }
-    static final VarHandle AverageBlackLevel$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AverageBlackLevel"));
     public static VarHandle AverageBlackLevel$VH() {
-        return libraw_canon_makernotes_t.AverageBlackLevel$VH;
+        return constants$21.const$4;
     }
     /**
      * Getter for field:
@@ -250,7 +177,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int AverageBlackLevel$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.AverageBlackLevel$VH.get(seg);
+        return (int)constants$21.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -259,20 +186,19 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void AverageBlackLevel$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.AverageBlackLevel$VH.set(seg, x);
+        constants$21.const$4.set(seg, x);
     }
     public static int AverageBlackLevel$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.AverageBlackLevel$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$21.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AverageBlackLevel$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.AverageBlackLevel$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$21.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment multishot$slice(MemorySegment seg) {
         return seg.asSlice(36, 16);
     }
-    static final VarHandle MeteringMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MeteringMode"));
     public static VarHandle MeteringMode$VH() {
-        return libraw_canon_makernotes_t.MeteringMode$VH;
+        return constants$21.const$5;
     }
     /**
      * Getter for field:
@@ -281,7 +207,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short MeteringMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.MeteringMode$VH.get(seg);
+        return (short)constants$21.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -290,17 +216,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void MeteringMode$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.MeteringMode$VH.set(seg, x);
+        constants$21.const$5.set(seg, x);
     }
     public static short MeteringMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.MeteringMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$21.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void MeteringMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.MeteringMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$21.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SpotMeteringMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SpotMeteringMode"));
     public static VarHandle SpotMeteringMode$VH() {
-        return libraw_canon_makernotes_t.SpotMeteringMode$VH;
+        return constants$22.const$0;
     }
     /**
      * Getter for field:
@@ -309,7 +234,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short SpotMeteringMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SpotMeteringMode$VH.get(seg);
+        return (short)constants$22.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -318,17 +243,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void SpotMeteringMode$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SpotMeteringMode$VH.set(seg, x);
+        constants$22.const$0.set(seg, x);
     }
     public static short SpotMeteringMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SpotMeteringMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$22.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void SpotMeteringMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SpotMeteringMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$22.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashMeteringMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashMeteringMode"));
     public static VarHandle FlashMeteringMode$VH() {
-        return libraw_canon_makernotes_t.FlashMeteringMode$VH;
+        return constants$22.const$1;
     }
     /**
      * Getter for field:
@@ -337,7 +261,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static byte FlashMeteringMode$get(MemorySegment seg) {
-        return (byte)libraw_canon_makernotes_t.FlashMeteringMode$VH.get(seg);
+        return (byte)constants$22.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -346,17 +270,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashMeteringMode$set(MemorySegment seg, byte x) {
-        libraw_canon_makernotes_t.FlashMeteringMode$VH.set(seg, x);
+        constants$22.const$1.set(seg, x);
     }
     public static byte FlashMeteringMode$get(MemorySegment seg, long index) {
-        return (byte)libraw_canon_makernotes_t.FlashMeteringMode$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$22.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashMeteringMode$set(MemorySegment seg, long index, byte x) {
-        libraw_canon_makernotes_t.FlashMeteringMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$22.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashExposureLock$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashExposureLock"));
     public static VarHandle FlashExposureLock$VH() {
-        return libraw_canon_makernotes_t.FlashExposureLock$VH;
+        return constants$22.const$2;
     }
     /**
      * Getter for field:
@@ -365,7 +288,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short FlashExposureLock$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FlashExposureLock$VH.get(seg);
+        return (short)constants$22.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -374,17 +297,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashExposureLock$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FlashExposureLock$VH.set(seg, x);
+        constants$22.const$2.set(seg, x);
     }
     public static short FlashExposureLock$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FlashExposureLock$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$22.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashExposureLock$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FlashExposureLock$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$22.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureMode"));
     public static VarHandle ExposureMode$VH() {
-        return libraw_canon_makernotes_t.ExposureMode$VH;
+        return constants$22.const$3;
     }
     /**
      * Getter for field:
@@ -393,7 +315,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short ExposureMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.ExposureMode$VH.get(seg);
+        return (short)constants$22.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -402,17 +324,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void ExposureMode$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.ExposureMode$VH.set(seg, x);
+        constants$22.const$3.set(seg, x);
     }
     public static short ExposureMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.ExposureMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$22.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.ExposureMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$22.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AESetting$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AESetting"));
     public static VarHandle AESetting$VH() {
-        return libraw_canon_makernotes_t.AESetting$VH;
+        return constants$22.const$4;
     }
     /**
      * Getter for field:
@@ -421,7 +342,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short AESetting$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.AESetting$VH.get(seg);
+        return (short)constants$22.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -430,17 +351,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void AESetting$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.AESetting$VH.set(seg, x);
+        constants$22.const$4.set(seg, x);
     }
     public static short AESetting$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.AESetting$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$22.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AESetting$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.AESetting$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$22.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ImageStabilization$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ImageStabilization"));
     public static VarHandle ImageStabilization$VH() {
-        return libraw_canon_makernotes_t.ImageStabilization$VH;
+        return constants$22.const$5;
     }
     /**
      * Getter for field:
@@ -449,7 +369,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short ImageStabilization$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.ImageStabilization$VH.get(seg);
+        return (short)constants$22.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -458,17 +378,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void ImageStabilization$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.ImageStabilization$VH.set(seg, x);
+        constants$22.const$5.set(seg, x);
     }
     public static short ImageStabilization$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.ImageStabilization$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$22.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ImageStabilization$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.ImageStabilization$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$22.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashMode"));
     public static VarHandle FlashMode$VH() {
-        return libraw_canon_makernotes_t.FlashMode$VH;
+        return constants$23.const$0;
     }
     /**
      * Getter for field:
@@ -477,7 +396,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short FlashMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FlashMode$VH.get(seg);
+        return (short)constants$23.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -486,17 +405,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashMode$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FlashMode$VH.set(seg, x);
+        constants$23.const$0.set(seg, x);
     }
     public static short FlashMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FlashMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$23.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FlashMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$23.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashActivity$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashActivity"));
     public static VarHandle FlashActivity$VH() {
-        return libraw_canon_makernotes_t.FlashActivity$VH;
+        return constants$23.const$1;
     }
     /**
      * Getter for field:
@@ -505,7 +423,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short FlashActivity$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FlashActivity$VH.get(seg);
+        return (short)constants$23.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -514,17 +432,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashActivity$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FlashActivity$VH.set(seg, x);
+        constants$23.const$1.set(seg, x);
     }
     public static short FlashActivity$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FlashActivity$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$23.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashActivity$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FlashActivity$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$23.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashBits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashBits"));
     public static VarHandle FlashBits$VH() {
-        return libraw_canon_makernotes_t.FlashBits$VH;
+        return constants$23.const$2;
     }
     /**
      * Getter for field:
@@ -533,7 +450,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short FlashBits$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FlashBits$VH.get(seg);
+        return (short)constants$23.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -542,17 +459,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashBits$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FlashBits$VH.set(seg, x);
+        constants$23.const$2.set(seg, x);
     }
     public static short FlashBits$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FlashBits$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$23.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashBits$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FlashBits$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$23.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ManualFlashOutput$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ManualFlashOutput"));
     public static VarHandle ManualFlashOutput$VH() {
-        return libraw_canon_makernotes_t.ManualFlashOutput$VH;
+        return constants$23.const$3;
     }
     /**
      * Getter for field:
@@ -561,7 +477,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short ManualFlashOutput$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.ManualFlashOutput$VH.get(seg);
+        return (short)constants$23.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -570,17 +486,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void ManualFlashOutput$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.ManualFlashOutput$VH.set(seg, x);
+        constants$23.const$3.set(seg, x);
     }
     public static short ManualFlashOutput$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.ManualFlashOutput$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$23.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void ManualFlashOutput$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.ManualFlashOutput$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$23.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashOutput$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashOutput"));
     public static VarHandle FlashOutput$VH() {
-        return libraw_canon_makernotes_t.FlashOutput$VH;
+        return constants$23.const$4;
     }
     /**
      * Getter for field:
@@ -589,7 +504,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short FlashOutput$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FlashOutput$VH.get(seg);
+        return (short)constants$23.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -598,17 +513,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashOutput$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FlashOutput$VH.set(seg, x);
+        constants$23.const$4.set(seg, x);
     }
     public static short FlashOutput$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FlashOutput$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$23.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashOutput$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FlashOutput$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$23.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashGuideNumber$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashGuideNumber"));
     public static VarHandle FlashGuideNumber$VH() {
-        return libraw_canon_makernotes_t.FlashGuideNumber$VH;
+        return constants$23.const$5;
     }
     /**
      * Getter for field:
@@ -617,7 +531,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short FlashGuideNumber$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.FlashGuideNumber$VH.get(seg);
+        return (short)constants$23.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -626,17 +540,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void FlashGuideNumber$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.FlashGuideNumber$VH.set(seg, x);
+        constants$23.const$5.set(seg, x);
     }
     public static short FlashGuideNumber$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.FlashGuideNumber$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$23.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashGuideNumber$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.FlashGuideNumber$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$23.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ContinuousDrive$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ContinuousDrive"));
     public static VarHandle ContinuousDrive$VH() {
-        return libraw_canon_makernotes_t.ContinuousDrive$VH;
+        return constants$24.const$0;
     }
     /**
      * Getter for field:
@@ -645,7 +558,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short ContinuousDrive$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.ContinuousDrive$VH.get(seg);
+        return (short)constants$24.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -654,17 +567,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void ContinuousDrive$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.ContinuousDrive$VH.set(seg, x);
+        constants$24.const$0.set(seg, x);
     }
     public static short ContinuousDrive$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.ContinuousDrive$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$24.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ContinuousDrive$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.ContinuousDrive$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$24.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorWidth"));
     public static VarHandle SensorWidth$VH() {
-        return libraw_canon_makernotes_t.SensorWidth$VH;
+        return constants$24.const$1;
     }
     /**
      * Getter for field:
@@ -673,7 +585,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short SensorWidth$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SensorWidth$VH.get(seg);
+        return (short)constants$24.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -682,17 +594,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void SensorWidth$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SensorWidth$VH.set(seg, x);
+        constants$24.const$1.set(seg, x);
     }
     public static short SensorWidth$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SensorWidth$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$24.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void SensorWidth$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SensorWidth$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$24.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorHeight"));
     public static VarHandle SensorHeight$VH() {
-        return libraw_canon_makernotes_t.SensorHeight$VH;
+        return constants$24.const$2;
     }
     /**
      * Getter for field:
@@ -701,7 +612,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short SensorHeight$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SensorHeight$VH.get(seg);
+        return (short)constants$24.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -710,17 +621,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void SensorHeight$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SensorHeight$VH.set(seg, x);
+        constants$24.const$2.set(seg, x);
     }
     public static short SensorHeight$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SensorHeight$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$24.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void SensorHeight$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SensorHeight$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$24.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFMicroAdjMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMicroAdjMode"));
     public static VarHandle AFMicroAdjMode$VH() {
-        return libraw_canon_makernotes_t.AFMicroAdjMode$VH;
+        return constants$24.const$3;
     }
     /**
      * Getter for field:
@@ -729,7 +639,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int AFMicroAdjMode$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.AFMicroAdjMode$VH.get(seg);
+        return (int)constants$24.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -738,17 +648,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void AFMicroAdjMode$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.AFMicroAdjMode$VH.set(seg, x);
+        constants$24.const$3.set(seg, x);
     }
     public static int AFMicroAdjMode$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.AFMicroAdjMode$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$24.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void AFMicroAdjMode$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.AFMicroAdjMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$24.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFMicroAdjValue$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFMicroAdjValue"));
     public static VarHandle AFMicroAdjValue$VH() {
-        return libraw_canon_makernotes_t.AFMicroAdjValue$VH;
+        return constants$24.const$4;
     }
     /**
      * Getter for field:
@@ -757,7 +666,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static float AFMicroAdjValue$get(MemorySegment seg) {
-        return (float)libraw_canon_makernotes_t.AFMicroAdjValue$VH.get(seg);
+        return (float)constants$24.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -766,17 +675,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void AFMicroAdjValue$set(MemorySegment seg, float x) {
-        libraw_canon_makernotes_t.AFMicroAdjValue$VH.set(seg, x);
+        constants$24.const$4.set(seg, x);
     }
     public static float AFMicroAdjValue$get(MemorySegment seg, long index) {
-        return (float)libraw_canon_makernotes_t.AFMicroAdjValue$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$24.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AFMicroAdjValue$set(MemorySegment seg, long index, float x) {
-        libraw_canon_makernotes_t.AFMicroAdjValue$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$24.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MakernotesFlip$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MakernotesFlip"));
     public static VarHandle MakernotesFlip$VH() {
-        return libraw_canon_makernotes_t.MakernotesFlip$VH;
+        return constants$24.const$5;
     }
     /**
      * Getter for field:
@@ -785,7 +693,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short MakernotesFlip$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.MakernotesFlip$VH.get(seg);
+        return (short)constants$24.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -794,17 +702,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void MakernotesFlip$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.MakernotesFlip$VH.set(seg, x);
+        constants$24.const$5.set(seg, x);
     }
     public static short MakernotesFlip$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.MakernotesFlip$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$24.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void MakernotesFlip$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.MakernotesFlip$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$24.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle RecordMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RecordMode"));
     public static VarHandle RecordMode$VH() {
-        return libraw_canon_makernotes_t.RecordMode$VH;
+        return constants$25.const$0;
     }
     /**
      * Getter for field:
@@ -813,7 +720,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short RecordMode$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.RecordMode$VH.get(seg);
+        return (short)constants$25.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -822,17 +729,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void RecordMode$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.RecordMode$VH.set(seg, x);
+        constants$25.const$0.set(seg, x);
     }
     public static short RecordMode$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.RecordMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$25.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void RecordMode$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.RecordMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$25.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SRAWQuality$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SRAWQuality"));
     public static VarHandle SRAWQuality$VH() {
-        return libraw_canon_makernotes_t.SRAWQuality$VH;
+        return constants$25.const$1;
     }
     /**
      * Getter for field:
@@ -841,7 +747,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short SRAWQuality$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.SRAWQuality$VH.get(seg);
+        return (short)constants$25.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -850,17 +756,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void SRAWQuality$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.SRAWQuality$VH.set(seg, x);
+        constants$25.const$1.set(seg, x);
     }
     public static short SRAWQuality$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.SRAWQuality$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$25.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void SRAWQuality$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.SRAWQuality$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$25.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle wbi$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("wbi"));
     public static VarHandle wbi$VH() {
-        return libraw_canon_makernotes_t.wbi$VH;
+        return constants$25.const$2;
     }
     /**
      * Getter for field:
@@ -869,7 +774,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int wbi$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.wbi$VH.get(seg);
+        return (int)constants$25.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -878,17 +783,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void wbi$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.wbi$VH.set(seg, x);
+        constants$25.const$2.set(seg, x);
     }
     public static int wbi$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.wbi$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$25.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void wbi$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.wbi$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$25.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle RF_lensID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RF_lensID"));
     public static VarHandle RF_lensID$VH() {
-        return libraw_canon_makernotes_t.RF_lensID$VH;
+        return constants$25.const$3;
     }
     /**
      * Getter for field:
@@ -897,7 +801,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static short RF_lensID$get(MemorySegment seg) {
-        return (short)libraw_canon_makernotes_t.RF_lensID$VH.get(seg);
+        return (short)constants$25.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -906,17 +810,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void RF_lensID$set(MemorySegment seg, short x) {
-        libraw_canon_makernotes_t.RF_lensID$VH.set(seg, x);
+        constants$25.const$3.set(seg, x);
     }
     public static short RF_lensID$get(MemorySegment seg, long index) {
-        return (short)libraw_canon_makernotes_t.RF_lensID$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$25.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void RF_lensID$set(MemorySegment seg, long index, short x) {
-        libraw_canon_makernotes_t.RF_lensID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$25.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AutoLightingOptimizer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AutoLightingOptimizer"));
     public static VarHandle AutoLightingOptimizer$VH() {
-        return libraw_canon_makernotes_t.AutoLightingOptimizer$VH;
+        return constants$25.const$4;
     }
     /**
      * Getter for field:
@@ -925,7 +828,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int AutoLightingOptimizer$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.AutoLightingOptimizer$VH.get(seg);
+        return (int)constants$25.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -934,17 +837,16 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void AutoLightingOptimizer$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.AutoLightingOptimizer$VH.set(seg, x);
+        constants$25.const$4.set(seg, x);
     }
     public static int AutoLightingOptimizer$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.AutoLightingOptimizer$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$25.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void AutoLightingOptimizer$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.AutoLightingOptimizer$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$25.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle HighlightTonePriority$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("HighlightTonePriority"));
     public static VarHandle HighlightTonePriority$VH() {
-        return libraw_canon_makernotes_t.HighlightTonePriority$VH;
+        return constants$25.const$5;
     }
     /**
      * Getter for field:
@@ -953,7 +855,7 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static int HighlightTonePriority$get(MemorySegment seg) {
-        return (int)libraw_canon_makernotes_t.HighlightTonePriority$VH.get(seg);
+        return (int)constants$25.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -962,13 +864,13 @@ public class libraw_canon_makernotes_t {
      * }
      */
     public static void HighlightTonePriority$set(MemorySegment seg, int x) {
-        libraw_canon_makernotes_t.HighlightTonePriority$VH.set(seg, x);
+        constants$25.const$5.set(seg, x);
     }
     public static int HighlightTonePriority$get(MemorySegment seg, long index) {
-        return (int)libraw_canon_makernotes_t.HighlightTonePriority$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$25.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void HighlightTonePriority$set(MemorySegment seg, long index, int x) {
-        libraw_canon_makernotes_t.HighlightTonePriority$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$25.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment DefaultCropAbsolute$slice(MemorySegment seg) {
         return seg.asSlice(116, 8);
@@ -993,7 +895,7 @@ public class libraw_canon_makernotes_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

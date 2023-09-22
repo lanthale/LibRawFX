@@ -20,19 +20,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_internal_output_params_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_LONG$LAYOUT.withName("mix_green"),
-        Constants$root.C_LONG$LAYOUT.withName("raw_color"),
-        Constants$root.C_LONG$LAYOUT.withName("zero_is_bad"),
-        Constants$root.C_SHORT$LAYOUT.withName("shrink"),
-        Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
-    ).withName("libraw_internal_output_params_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_internal_output_params_t.$struct$LAYOUT;
+        return constants$0.const$3;
     }
-    static final VarHandle mix_green$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("mix_green"));
     public static VarHandle mix_green$VH() {
-        return libraw_internal_output_params_t.mix_green$VH;
+        return constants$0.const$4;
     }
     /**
      * Getter for field:
@@ -41,7 +33,7 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static int mix_green$get(MemorySegment seg) {
-        return (int)libraw_internal_output_params_t.mix_green$VH.get(seg);
+        return (int)constants$0.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -50,17 +42,16 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static void mix_green$set(MemorySegment seg, int x) {
-        libraw_internal_output_params_t.mix_green$VH.set(seg, x);
+        constants$0.const$4.set(seg, x);
     }
     public static int mix_green$get(MemorySegment seg, long index) {
-        return (int)libraw_internal_output_params_t.mix_green$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$0.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void mix_green$set(MemorySegment seg, long index, int x) {
-        libraw_internal_output_params_t.mix_green$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$0.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_color$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_color"));
     public static VarHandle raw_color$VH() {
-        return libraw_internal_output_params_t.raw_color$VH;
+        return constants$0.const$5;
     }
     /**
      * Getter for field:
@@ -69,7 +60,7 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static int raw_color$get(MemorySegment seg) {
-        return (int)libraw_internal_output_params_t.raw_color$VH.get(seg);
+        return (int)constants$0.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -78,17 +69,16 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static void raw_color$set(MemorySegment seg, int x) {
-        libraw_internal_output_params_t.raw_color$VH.set(seg, x);
+        constants$0.const$5.set(seg, x);
     }
     public static int raw_color$get(MemorySegment seg, long index) {
-        return (int)libraw_internal_output_params_t.raw_color$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$0.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_color$set(MemorySegment seg, long index, int x) {
-        libraw_internal_output_params_t.raw_color$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$0.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle zero_is_bad$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("zero_is_bad"));
     public static VarHandle zero_is_bad$VH() {
-        return libraw_internal_output_params_t.zero_is_bad$VH;
+        return constants$1.const$0;
     }
     /**
      * Getter for field:
@@ -97,7 +87,7 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static int zero_is_bad$get(MemorySegment seg) {
-        return (int)libraw_internal_output_params_t.zero_is_bad$VH.get(seg);
+        return (int)constants$1.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -106,17 +96,16 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static void zero_is_bad$set(MemorySegment seg, int x) {
-        libraw_internal_output_params_t.zero_is_bad$VH.set(seg, x);
+        constants$1.const$0.set(seg, x);
     }
     public static int zero_is_bad$get(MemorySegment seg, long index) {
-        return (int)libraw_internal_output_params_t.zero_is_bad$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$1.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void zero_is_bad$set(MemorySegment seg, long index, int x) {
-        libraw_internal_output_params_t.zero_is_bad$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$1.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle shrink$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("shrink"));
     public static VarHandle shrink$VH() {
-        return libraw_internal_output_params_t.shrink$VH;
+        return constants$1.const$1;
     }
     /**
      * Getter for field:
@@ -125,7 +114,7 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static short shrink$get(MemorySegment seg) {
-        return (short)libraw_internal_output_params_t.shrink$VH.get(seg);
+        return (short)constants$1.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -134,17 +123,16 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static void shrink$set(MemorySegment seg, short x) {
-        libraw_internal_output_params_t.shrink$VH.set(seg, x);
+        constants$1.const$1.set(seg, x);
     }
     public static short shrink$get(MemorySegment seg, long index) {
-        return (short)libraw_internal_output_params_t.shrink$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$1.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void shrink$set(MemorySegment seg, long index, short x) {
-        libraw_internal_output_params_t.shrink$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$1.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle fuji_width$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("fuji_width"));
     public static VarHandle fuji_width$VH() {
-        return libraw_internal_output_params_t.fuji_width$VH;
+        return constants$1.const$2;
     }
     /**
      * Getter for field:
@@ -153,7 +141,7 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static short fuji_width$get(MemorySegment seg) {
-        return (short)libraw_internal_output_params_t.fuji_width$VH.get(seg);
+        return (short)constants$1.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -162,20 +150,20 @@ public class libraw_internal_output_params_t {
      * }
      */
     public static void fuji_width$set(MemorySegment seg, short x) {
-        libraw_internal_output_params_t.fuji_width$VH.set(seg, x);
+        constants$1.const$2.set(seg, x);
     }
     public static short fuji_width$get(MemorySegment seg, long index) {
-        return (short)libraw_internal_output_params_t.fuji_width$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$1.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void fuji_width$set(MemorySegment seg, long index, short x) {
-        libraw_internal_output_params_t.fuji_width$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$1.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

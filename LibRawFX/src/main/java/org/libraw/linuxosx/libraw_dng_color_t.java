@@ -20,20 +20,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_dng_color_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_INT$LAYOUT.withName("parsedfields"),
-        Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
-        MemoryLayout.paddingLayout(16),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
-        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-    ).withName("libraw_dng_color_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_dng_color_t.$struct$LAYOUT;
+        return constants$19.const$0;
     }
-    static final VarHandle parsedfields$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("parsedfields"));
     public static VarHandle parsedfields$VH() {
-        return libraw_dng_color_t.parsedfields$VH;
+        return constants$19.const$1;
     }
     /**
      * Getter for field:
@@ -42,7 +33,7 @@ public class libraw_dng_color_t {
      * }
      */
     public static int parsedfields$get(MemorySegment seg) {
-        return (int)libraw_dng_color_t.parsedfields$VH.get(seg);
+        return (int)constants$19.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -51,17 +42,16 @@ public class libraw_dng_color_t {
      * }
      */
     public static void parsedfields$set(MemorySegment seg, int x) {
-        libraw_dng_color_t.parsedfields$VH.set(seg, x);
+        constants$19.const$1.set(seg, x);
     }
     public static int parsedfields$get(MemorySegment seg, long index) {
-        return (int)libraw_dng_color_t.parsedfields$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$19.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void parsedfields$set(MemorySegment seg, long index, int x) {
-        libraw_dng_color_t.parsedfields$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$19.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle illuminant$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("illuminant"));
     public static VarHandle illuminant$VH() {
-        return libraw_dng_color_t.illuminant$VH;
+        return constants$19.const$2;
     }
     /**
      * Getter for field:
@@ -70,7 +60,7 @@ public class libraw_dng_color_t {
      * }
      */
     public static short illuminant$get(MemorySegment seg) {
-        return (short)libraw_dng_color_t.illuminant$VH.get(seg);
+        return (short)constants$19.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -79,13 +69,13 @@ public class libraw_dng_color_t {
      * }
      */
     public static void illuminant$set(MemorySegment seg, short x) {
-        libraw_dng_color_t.illuminant$VH.set(seg, x);
+        constants$19.const$2.set(seg, x);
     }
     public static short illuminant$get(MemorySegment seg, long index) {
-        return (short)libraw_dng_color_t.illuminant$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$19.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void illuminant$set(MemorySegment seg, long index, short x) {
-        libraw_dng_color_t.illuminant$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$19.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment calibration$slice(MemorySegment seg) {
         return seg.asSlice(8, 64);
@@ -101,7 +91,7 @@ public class libraw_dng_color_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

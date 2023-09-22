@@ -25,24 +25,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_panasonic_makernotes_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("Compression"),
-        Constants$root.C_SHORT$LAYOUT.withName("BlackLevelDim"),
-        MemoryLayout.sequenceLayout(8, Constants$root.C_FLOAT$LAYOUT).withName("BlackLevel"),
-        Constants$root.C_INT$LAYOUT.withName("Multishot"),
-        Constants$root.C_FLOAT$LAYOUT.withName("gamma"),
-        MemoryLayout.sequenceLayout(3, Constants$root.C_INT$LAYOUT).withName("HighISOMultiplier"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocusStepNear"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocusStepCount"),
-        Constants$root.C_INT$LAYOUT.withName("ZoomPosition"),
-        Constants$root.C_INT$LAYOUT.withName("LensManufacturer")
-    ).withName("libraw_panasonic_makernotes_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_panasonic_makernotes_t.$struct$LAYOUT;
+        return constants$42.const$3;
     }
-    static final VarHandle Compression$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Compression"));
     public static VarHandle Compression$VH() {
-        return libraw_panasonic_makernotes_t.Compression$VH;
+        return constants$42.const$4;
     }
     /**
      * Getter for field:
@@ -51,7 +38,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static short Compression$get(MemorySegment seg) {
-        return (short)libraw_panasonic_makernotes_t.Compression$VH.get(seg);
+        return (short)constants$42.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -60,17 +47,16 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void Compression$set(MemorySegment seg, short x) {
-        libraw_panasonic_makernotes_t.Compression$VH.set(seg, x);
+        constants$42.const$4.set(seg, x);
     }
     public static short Compression$get(MemorySegment seg, long index) {
-        return (short)libraw_panasonic_makernotes_t.Compression$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$42.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void Compression$set(MemorySegment seg, long index, short x) {
-        libraw_panasonic_makernotes_t.Compression$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$42.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle BlackLevelDim$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackLevelDim"));
     public static VarHandle BlackLevelDim$VH() {
-        return libraw_panasonic_makernotes_t.BlackLevelDim$VH;
+        return constants$42.const$5;
     }
     /**
      * Getter for field:
@@ -79,7 +65,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static short BlackLevelDim$get(MemorySegment seg) {
-        return (short)libraw_panasonic_makernotes_t.BlackLevelDim$VH.get(seg);
+        return (short)constants$42.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -88,20 +74,19 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void BlackLevelDim$set(MemorySegment seg, short x) {
-        libraw_panasonic_makernotes_t.BlackLevelDim$VH.set(seg, x);
+        constants$42.const$5.set(seg, x);
     }
     public static short BlackLevelDim$get(MemorySegment seg, long index) {
-        return (short)libraw_panasonic_makernotes_t.BlackLevelDim$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$42.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void BlackLevelDim$set(MemorySegment seg, long index, short x) {
-        libraw_panasonic_makernotes_t.BlackLevelDim$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$42.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment BlackLevel$slice(MemorySegment seg) {
         return seg.asSlice(4, 32);
     }
-    static final VarHandle Multishot$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Multishot"));
     public static VarHandle Multishot$VH() {
-        return libraw_panasonic_makernotes_t.Multishot$VH;
+        return constants$43.const$0;
     }
     /**
      * Getter for field:
@@ -110,7 +95,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static int Multishot$get(MemorySegment seg) {
-        return (int)libraw_panasonic_makernotes_t.Multishot$VH.get(seg);
+        return (int)constants$43.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -119,17 +104,16 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void Multishot$set(MemorySegment seg, int x) {
-        libraw_panasonic_makernotes_t.Multishot$VH.set(seg, x);
+        constants$43.const$0.set(seg, x);
     }
     public static int Multishot$get(MemorySegment seg, long index) {
-        return (int)libraw_panasonic_makernotes_t.Multishot$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$43.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void Multishot$set(MemorySegment seg, long index, int x) {
-        libraw_panasonic_makernotes_t.Multishot$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$43.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle gamma$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("gamma"));
     public static VarHandle gamma$VH() {
-        return libraw_panasonic_makernotes_t.gamma$VH;
+        return constants$43.const$1;
     }
     /**
      * Getter for field:
@@ -138,7 +122,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static float gamma$get(MemorySegment seg) {
-        return (float)libraw_panasonic_makernotes_t.gamma$VH.get(seg);
+        return (float)constants$43.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -147,20 +131,19 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void gamma$set(MemorySegment seg, float x) {
-        libraw_panasonic_makernotes_t.gamma$VH.set(seg, x);
+        constants$43.const$1.set(seg, x);
     }
     public static float gamma$get(MemorySegment seg, long index) {
-        return (float)libraw_panasonic_makernotes_t.gamma$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$43.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void gamma$set(MemorySegment seg, long index, float x) {
-        libraw_panasonic_makernotes_t.gamma$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$43.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment HighISOMultiplier$slice(MemorySegment seg) {
         return seg.asSlice(44, 12);
     }
-    static final VarHandle FocusStepNear$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusStepNear"));
     public static VarHandle FocusStepNear$VH() {
-        return libraw_panasonic_makernotes_t.FocusStepNear$VH;
+        return constants$43.const$2;
     }
     /**
      * Getter for field:
@@ -169,7 +152,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static short FocusStepNear$get(MemorySegment seg) {
-        return (short)libraw_panasonic_makernotes_t.FocusStepNear$VH.get(seg);
+        return (short)constants$43.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -178,17 +161,16 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void FocusStepNear$set(MemorySegment seg, short x) {
-        libraw_panasonic_makernotes_t.FocusStepNear$VH.set(seg, x);
+        constants$43.const$2.set(seg, x);
     }
     public static short FocusStepNear$get(MemorySegment seg, long index) {
-        return (short)libraw_panasonic_makernotes_t.FocusStepNear$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$43.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void FocusStepNear$set(MemorySegment seg, long index, short x) {
-        libraw_panasonic_makernotes_t.FocusStepNear$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$43.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusStepCount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusStepCount"));
     public static VarHandle FocusStepCount$VH() {
-        return libraw_panasonic_makernotes_t.FocusStepCount$VH;
+        return constants$43.const$3;
     }
     /**
      * Getter for field:
@@ -197,7 +179,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static short FocusStepCount$get(MemorySegment seg) {
-        return (short)libraw_panasonic_makernotes_t.FocusStepCount$VH.get(seg);
+        return (short)constants$43.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -206,17 +188,16 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void FocusStepCount$set(MemorySegment seg, short x) {
-        libraw_panasonic_makernotes_t.FocusStepCount$VH.set(seg, x);
+        constants$43.const$3.set(seg, x);
     }
     public static short FocusStepCount$get(MemorySegment seg, long index) {
-        return (short)libraw_panasonic_makernotes_t.FocusStepCount$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$43.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void FocusStepCount$set(MemorySegment seg, long index, short x) {
-        libraw_panasonic_makernotes_t.FocusStepCount$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$43.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ZoomPosition$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ZoomPosition"));
     public static VarHandle ZoomPosition$VH() {
-        return libraw_panasonic_makernotes_t.ZoomPosition$VH;
+        return constants$43.const$4;
     }
     /**
      * Getter for field:
@@ -225,7 +206,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static int ZoomPosition$get(MemorySegment seg) {
-        return (int)libraw_panasonic_makernotes_t.ZoomPosition$VH.get(seg);
+        return (int)constants$43.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -234,17 +215,16 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void ZoomPosition$set(MemorySegment seg, int x) {
-        libraw_panasonic_makernotes_t.ZoomPosition$VH.set(seg, x);
+        constants$43.const$4.set(seg, x);
     }
     public static int ZoomPosition$get(MemorySegment seg, long index) {
-        return (int)libraw_panasonic_makernotes_t.ZoomPosition$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$43.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void ZoomPosition$set(MemorySegment seg, long index, int x) {
-        libraw_panasonic_makernotes_t.ZoomPosition$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$43.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensManufacturer$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensManufacturer"));
     public static VarHandle LensManufacturer$VH() {
-        return libraw_panasonic_makernotes_t.LensManufacturer$VH;
+        return constants$43.const$5;
     }
     /**
      * Getter for field:
@@ -253,7 +233,7 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static int LensManufacturer$get(MemorySegment seg) {
-        return (int)libraw_panasonic_makernotes_t.LensManufacturer$VH.get(seg);
+        return (int)constants$43.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -262,20 +242,20 @@ public class libraw_panasonic_makernotes_t {
      * }
      */
     public static void LensManufacturer$set(MemorySegment seg, int x) {
-        libraw_panasonic_makernotes_t.LensManufacturer$VH.set(seg, x);
+        constants$43.const$5.set(seg, x);
     }
     public static int LensManufacturer$get(MemorySegment seg, long index) {
-        return (int)libraw_panasonic_makernotes_t.LensManufacturer$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$43.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void LensManufacturer$set(MemorySegment seg, long index, int x) {
-        libraw_panasonic_makernotes_t.LensManufacturer$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$43.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

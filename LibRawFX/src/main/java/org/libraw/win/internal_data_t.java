@@ -22,22 +22,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class internal_data_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_POINTER$LAYOUT.withName("input"),
-        Constants$root.C_POINTER$LAYOUT.withName("output"),
-        Constants$root.C_LONG$LAYOUT.withName("input_internal"),
-        MemoryLayout.paddingLayout(32),
-        Constants$root.C_POINTER$LAYOUT.withName("meta_data"),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("profile_offset"),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("toffset"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("pana_black")
-    ).withName("internal_data_t");
     public static MemoryLayout $LAYOUT() {
-        return internal_data_t.$struct$LAYOUT;
+        return constants$92.const$3;
     }
-    static final VarHandle input$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("input"));
     public static VarHandle input$VH() {
-        return internal_data_t.input$VH;
+        return constants$92.const$4;
     }
     /**
      * Getter for field:
@@ -46,7 +35,7 @@ public class internal_data_t {
      * }
      */
     public static MemorySegment input$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)internal_data_t.input$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$92.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -55,17 +44,16 @@ public class internal_data_t {
      * }
      */
     public static void input$set(MemorySegment seg, MemorySegment x) {
-        internal_data_t.input$VH.set(seg, x);
+        constants$92.const$4.set(seg, x);
     }
     public static MemorySegment input$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)internal_data_t.input$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$92.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void input$set(MemorySegment seg, long index, MemorySegment x) {
-        internal_data_t.input$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$92.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle output$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("output"));
     public static VarHandle output$VH() {
-        return internal_data_t.output$VH;
+        return constants$92.const$5;
     }
     /**
      * Getter for field:
@@ -74,7 +62,7 @@ public class internal_data_t {
      * }
      */
     public static MemorySegment output$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)internal_data_t.output$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$92.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -83,17 +71,16 @@ public class internal_data_t {
      * }
      */
     public static void output$set(MemorySegment seg, MemorySegment x) {
-        internal_data_t.output$VH.set(seg, x);
+        constants$92.const$5.set(seg, x);
     }
     public static MemorySegment output$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)internal_data_t.output$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$92.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void output$set(MemorySegment seg, long index, MemorySegment x) {
-        internal_data_t.output$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$92.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle input_internal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("input_internal"));
     public static VarHandle input_internal$VH() {
-        return internal_data_t.input_internal$VH;
+        return constants$93.const$0;
     }
     /**
      * Getter for field:
@@ -102,7 +89,7 @@ public class internal_data_t {
      * }
      */
     public static int input_internal$get(MemorySegment seg) {
-        return (int)internal_data_t.input_internal$VH.get(seg);
+        return (int)constants$93.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -111,17 +98,16 @@ public class internal_data_t {
      * }
      */
     public static void input_internal$set(MemorySegment seg, int x) {
-        internal_data_t.input_internal$VH.set(seg, x);
+        constants$93.const$0.set(seg, x);
     }
     public static int input_internal$get(MemorySegment seg, long index) {
-        return (int)internal_data_t.input_internal$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$93.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void input_internal$set(MemorySegment seg, long index, int x) {
-        internal_data_t.input_internal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$93.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle meta_data$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("meta_data"));
     public static VarHandle meta_data$VH() {
-        return internal_data_t.meta_data$VH;
+        return constants$93.const$1;
     }
     /**
      * Getter for field:
@@ -130,7 +116,7 @@ public class internal_data_t {
      * }
      */
     public static MemorySegment meta_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)internal_data_t.meta_data$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$93.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -139,17 +125,16 @@ public class internal_data_t {
      * }
      */
     public static void meta_data$set(MemorySegment seg, MemorySegment x) {
-        internal_data_t.meta_data$VH.set(seg, x);
+        constants$93.const$1.set(seg, x);
     }
     public static MemorySegment meta_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)internal_data_t.meta_data$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$93.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void meta_data$set(MemorySegment seg, long index, MemorySegment x) {
-        internal_data_t.meta_data$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$93.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle profile_offset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("profile_offset"));
     public static VarHandle profile_offset$VH() {
-        return internal_data_t.profile_offset$VH;
+        return constants$93.const$2;
     }
     /**
      * Getter for field:
@@ -158,7 +143,7 @@ public class internal_data_t {
      * }
      */
     public static long profile_offset$get(MemorySegment seg) {
-        return (long)internal_data_t.profile_offset$VH.get(seg);
+        return (long)constants$93.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -167,17 +152,16 @@ public class internal_data_t {
      * }
      */
     public static void profile_offset$set(MemorySegment seg, long x) {
-        internal_data_t.profile_offset$VH.set(seg, x);
+        constants$93.const$2.set(seg, x);
     }
     public static long profile_offset$get(MemorySegment seg, long index) {
-        return (long)internal_data_t.profile_offset$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$93.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void profile_offset$set(MemorySegment seg, long index, long x) {
-        internal_data_t.profile_offset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$93.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle toffset$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("toffset"));
     public static VarHandle toffset$VH() {
-        return internal_data_t.toffset$VH;
+        return constants$93.const$3;
     }
     /**
      * Getter for field:
@@ -186,7 +170,7 @@ public class internal_data_t {
      * }
      */
     public static long toffset$get(MemorySegment seg) {
-        return (long)internal_data_t.toffset$VH.get(seg);
+        return (long)constants$93.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -195,13 +179,13 @@ public class internal_data_t {
      * }
      */
     public static void toffset$set(MemorySegment seg, long x) {
-        internal_data_t.toffset$VH.set(seg, x);
+        constants$93.const$3.set(seg, x);
     }
     public static long toffset$get(MemorySegment seg, long index) {
-        return (long)internal_data_t.toffset$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$93.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void toffset$set(MemorySegment seg, long index, long x) {
-        internal_data_t.toffset$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$93.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment pana_black$slice(MemorySegment seg) {
         return seg.asSlice(48, 16);
@@ -211,7 +195,7 @@ public class internal_data_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

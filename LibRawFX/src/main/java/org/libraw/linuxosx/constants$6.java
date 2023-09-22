@@ -11,74 +11,12 @@ final class constants$6 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$6() {}
-    static final FunctionDescriptor libraw_set_memerror_handler$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_memerror_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_memerror_handler",
-        constants$6.libraw_set_memerror_handler$FUNC
-    );
-    static final FunctionDescriptor libraw_set_exifparser_handler$cb$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final FunctionDescriptor libraw_set_exifparser_handler$cb_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_exifparser_handler$cb_UP$MH = RuntimeHelper.upcallHandle(libraw_set_exifparser_handler$cb.class, "apply", constants$6.libraw_set_exifparser_handler$cb_UP$FUNC);
-    static final FunctionDescriptor libraw_set_exifparser_handler$cb_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_INT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_exifparser_handler$cb_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$6.libraw_set_exifparser_handler$cb_DOWN$FUNC
-    );
-    static final FunctionDescriptor libraw_set_exifparser_handler$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_set_exifparser_handler$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_exifparser_handler",
-        constants$6.libraw_set_exifparser_handler$FUNC
-    );
-    static final FunctionDescriptor libraw_set_dataerror_handler$func$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final FunctionDescriptor libraw_set_dataerror_handler$func_UP$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_set_dataerror_handler$func_UP$MH = RuntimeHelper.upcallHandle(libraw_set_dataerror_handler$func.class, "apply", constants$6.libraw_set_dataerror_handler$func_UP$FUNC);
-    static final FunctionDescriptor libraw_set_dataerror_handler$func_DOWN$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_set_dataerror_handler$func_DOWN$MH = RuntimeHelper.downcallHandle(
-        constants$6.libraw_set_dataerror_handler$func_DOWN$FUNC
-    );
+    static final VarHandle const$0 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("datacb_data"));
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(libraw_callbacks_t.progress_cb.class, "apply", constants$3.const$2);
+    static final VarHandle const$2 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("progress_cb"));
+    static final VarHandle const$3 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("progresscb_data"));
+    static final MethodHandle const$4 = RuntimeHelper.upcallHandle(libraw_callbacks_t.exif_cb.class, "apply", constants$2.const$0);
+    static final VarHandle const$5 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("exif_cb"));
 }
 
 

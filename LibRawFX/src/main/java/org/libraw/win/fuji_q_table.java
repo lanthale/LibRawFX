@@ -21,21 +21,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class fuji_q_table {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_POINTER$LAYOUT.withName("q_table"),
-        Constants$root.C_LONG$LAYOUT.withName("raw_bits"),
-        Constants$root.C_LONG$LAYOUT.withName("total_values"),
-        Constants$root.C_LONG$LAYOUT.withName("max_grad"),
-        Constants$root.C_LONG$LAYOUT.withName("q_grad_mult"),
-        Constants$root.C_LONG$LAYOUT.withName("q_base"),
-        MemoryLayout.paddingLayout(32)
-    ).withName("fuji_q_table");
     public static MemoryLayout $LAYOUT() {
-        return fuji_q_table.$struct$LAYOUT;
+        return constants$90.const$2;
     }
-    static final VarHandle q_table$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("q_table"));
     public static VarHandle q_table$VH() {
-        return fuji_q_table.q_table$VH;
+        return constants$90.const$3;
     }
     /**
      * Getter for field:
@@ -44,7 +34,7 @@ public class fuji_q_table {
      * }
      */
     public static MemorySegment q_table$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)fuji_q_table.q_table$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$90.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -53,17 +43,16 @@ public class fuji_q_table {
      * }
      */
     public static void q_table$set(MemorySegment seg, MemorySegment x) {
-        fuji_q_table.q_table$VH.set(seg, x);
+        constants$90.const$3.set(seg, x);
     }
     public static MemorySegment q_table$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)fuji_q_table.q_table$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$90.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void q_table$set(MemorySegment seg, long index, MemorySegment x) {
-        fuji_q_table.q_table$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$90.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_bits"));
     public static VarHandle raw_bits$VH() {
-        return fuji_q_table.raw_bits$VH;
+        return constants$90.const$4;
     }
     /**
      * Getter for field:
@@ -72,7 +61,7 @@ public class fuji_q_table {
      * }
      */
     public static int raw_bits$get(MemorySegment seg) {
-        return (int)fuji_q_table.raw_bits$VH.get(seg);
+        return (int)constants$90.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -81,17 +70,16 @@ public class fuji_q_table {
      * }
      */
     public static void raw_bits$set(MemorySegment seg, int x) {
-        fuji_q_table.raw_bits$VH.set(seg, x);
+        constants$90.const$4.set(seg, x);
     }
     public static int raw_bits$get(MemorySegment seg, long index) {
-        return (int)fuji_q_table.raw_bits$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$90.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_bits$set(MemorySegment seg, long index, int x) {
-        fuji_q_table.raw_bits$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$90.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle total_values$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("total_values"));
     public static VarHandle total_values$VH() {
-        return fuji_q_table.total_values$VH;
+        return constants$90.const$5;
     }
     /**
      * Getter for field:
@@ -100,7 +88,7 @@ public class fuji_q_table {
      * }
      */
     public static int total_values$get(MemorySegment seg) {
-        return (int)fuji_q_table.total_values$VH.get(seg);
+        return (int)constants$90.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -109,17 +97,16 @@ public class fuji_q_table {
      * }
      */
     public static void total_values$set(MemorySegment seg, int x) {
-        fuji_q_table.total_values$VH.set(seg, x);
+        constants$90.const$5.set(seg, x);
     }
     public static int total_values$get(MemorySegment seg, long index) {
-        return (int)fuji_q_table.total_values$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$90.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void total_values$set(MemorySegment seg, long index, int x) {
-        fuji_q_table.total_values$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$90.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle max_grad$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("max_grad"));
     public static VarHandle max_grad$VH() {
-        return fuji_q_table.max_grad$VH;
+        return constants$91.const$0;
     }
     /**
      * Getter for field:
@@ -128,7 +115,7 @@ public class fuji_q_table {
      * }
      */
     public static int max_grad$get(MemorySegment seg) {
-        return (int)fuji_q_table.max_grad$VH.get(seg);
+        return (int)constants$91.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -137,17 +124,16 @@ public class fuji_q_table {
      * }
      */
     public static void max_grad$set(MemorySegment seg, int x) {
-        fuji_q_table.max_grad$VH.set(seg, x);
+        constants$91.const$0.set(seg, x);
     }
     public static int max_grad$get(MemorySegment seg, long index) {
-        return (int)fuji_q_table.max_grad$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$91.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void max_grad$set(MemorySegment seg, long index, int x) {
-        fuji_q_table.max_grad$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$91.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle q_grad_mult$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("q_grad_mult"));
     public static VarHandle q_grad_mult$VH() {
-        return fuji_q_table.q_grad_mult$VH;
+        return constants$91.const$1;
     }
     /**
      * Getter for field:
@@ -156,7 +142,7 @@ public class fuji_q_table {
      * }
      */
     public static int q_grad_mult$get(MemorySegment seg) {
-        return (int)fuji_q_table.q_grad_mult$VH.get(seg);
+        return (int)constants$91.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -165,17 +151,16 @@ public class fuji_q_table {
      * }
      */
     public static void q_grad_mult$set(MemorySegment seg, int x) {
-        fuji_q_table.q_grad_mult$VH.set(seg, x);
+        constants$91.const$1.set(seg, x);
     }
     public static int q_grad_mult$get(MemorySegment seg, long index) {
-        return (int)fuji_q_table.q_grad_mult$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$91.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void q_grad_mult$set(MemorySegment seg, long index, int x) {
-        fuji_q_table.q_grad_mult$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$91.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle q_base$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("q_base"));
     public static VarHandle q_base$VH() {
-        return fuji_q_table.q_base$VH;
+        return constants$91.const$2;
     }
     /**
      * Getter for field:
@@ -184,7 +169,7 @@ public class fuji_q_table {
      * }
      */
     public static int q_base$get(MemorySegment seg) {
-        return (int)fuji_q_table.q_base$VH.get(seg);
+        return (int)constants$91.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -193,20 +178,20 @@ public class fuji_q_table {
      * }
      */
     public static void q_base$set(MemorySegment seg, int x) {
-        fuji_q_table.q_base$VH.set(seg, x);
+        constants$91.const$2.set(seg, x);
     }
     public static int q_base$get(MemorySegment seg, long index) {
-        return (int)fuji_q_table.q_base$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$91.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void q_base$set(MemorySegment seg, long index, int x) {
-        fuji_q_table.q_base$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$91.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

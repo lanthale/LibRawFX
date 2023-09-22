@@ -33,32 +33,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_kodak_makernotes_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_SHORT$LAYOUT.withName("BlackLevelTop"),
-        Constants$root.C_SHORT$LAYOUT.withName("BlackLevelBottom"),
-        Constants$root.C_SHORT$LAYOUT.withName("offset_left"),
-        Constants$root.C_SHORT$LAYOUT.withName("offset_top"),
-        Constants$root.C_SHORT$LAYOUT.withName("clipBlack"),
-        Constants$root.C_SHORT$LAYOUT.withName("clipWhite"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camDaylight"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camTungsten"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camFluorescent"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camFlash"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camCustom"),
-        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camAuto"),
-        Constants$root.C_SHORT$LAYOUT.withName("val018percent"),
-        Constants$root.C_SHORT$LAYOUT.withName("val100percent"),
-        Constants$root.C_SHORT$LAYOUT.withName("val170percent"),
-        Constants$root.C_SHORT$LAYOUT.withName("MakerNoteKodak8a"),
-        Constants$root.C_FLOAT$LAYOUT.withName("ISOCalibrationGain"),
-        Constants$root.C_FLOAT$LAYOUT.withName("AnalogISO")
-    ).withName("libraw_kodak_makernotes_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_kodak_makernotes_t.$struct$LAYOUT;
+        return constants$48.const$3;
     }
-    static final VarHandle BlackLevelTop$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackLevelTop"));
     public static VarHandle BlackLevelTop$VH() {
-        return libraw_kodak_makernotes_t.BlackLevelTop$VH;
+        return constants$48.const$4;
     }
     /**
      * Getter for field:
@@ -67,7 +46,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short BlackLevelTop$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.BlackLevelTop$VH.get(seg);
+        return (short)constants$48.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -76,17 +55,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void BlackLevelTop$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.BlackLevelTop$VH.set(seg, x);
+        constants$48.const$4.set(seg, x);
     }
     public static short BlackLevelTop$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.BlackLevelTop$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$48.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void BlackLevelTop$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.BlackLevelTop$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$48.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle BlackLevelBottom$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("BlackLevelBottom"));
     public static VarHandle BlackLevelBottom$VH() {
-        return libraw_kodak_makernotes_t.BlackLevelBottom$VH;
+        return constants$48.const$5;
     }
     /**
      * Getter for field:
@@ -95,7 +73,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short BlackLevelBottom$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.BlackLevelBottom$VH.get(seg);
+        return (short)constants$48.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -104,17 +82,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void BlackLevelBottom$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.BlackLevelBottom$VH.set(seg, x);
+        constants$48.const$5.set(seg, x);
     }
     public static short BlackLevelBottom$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.BlackLevelBottom$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$48.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void BlackLevelBottom$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.BlackLevelBottom$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$48.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle offset_left$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset_left"));
     public static VarHandle offset_left$VH() {
-        return libraw_kodak_makernotes_t.offset_left$VH;
+        return constants$49.const$0;
     }
     /**
      * Getter for field:
@@ -123,7 +100,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short offset_left$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.offset_left$VH.get(seg);
+        return (short)constants$49.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -132,17 +109,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void offset_left$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.offset_left$VH.set(seg, x);
+        constants$49.const$0.set(seg, x);
     }
     public static short offset_left$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.offset_left$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$49.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void offset_left$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.offset_left$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$49.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle offset_top$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("offset_top"));
     public static VarHandle offset_top$VH() {
-        return libraw_kodak_makernotes_t.offset_top$VH;
+        return constants$49.const$1;
     }
     /**
      * Getter for field:
@@ -151,7 +127,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short offset_top$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.offset_top$VH.get(seg);
+        return (short)constants$49.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -160,17 +136,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void offset_top$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.offset_top$VH.set(seg, x);
+        constants$49.const$1.set(seg, x);
     }
     public static short offset_top$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.offset_top$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$49.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void offset_top$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.offset_top$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$49.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle clipBlack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("clipBlack"));
     public static VarHandle clipBlack$VH() {
-        return libraw_kodak_makernotes_t.clipBlack$VH;
+        return constants$49.const$2;
     }
     /**
      * Getter for field:
@@ -179,7 +154,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short clipBlack$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.clipBlack$VH.get(seg);
+        return (short)constants$49.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -188,17 +163,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void clipBlack$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.clipBlack$VH.set(seg, x);
+        constants$49.const$2.set(seg, x);
     }
     public static short clipBlack$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.clipBlack$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$49.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void clipBlack$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.clipBlack$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$49.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle clipWhite$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("clipWhite"));
     public static VarHandle clipWhite$VH() {
-        return libraw_kodak_makernotes_t.clipWhite$VH;
+        return constants$49.const$3;
     }
     /**
      * Getter for field:
@@ -207,7 +181,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short clipWhite$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.clipWhite$VH.get(seg);
+        return (short)constants$49.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -216,13 +190,13 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void clipWhite$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.clipWhite$VH.set(seg, x);
+        constants$49.const$3.set(seg, x);
     }
     public static short clipWhite$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.clipWhite$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$49.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void clipWhite$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.clipWhite$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$49.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment romm_camDaylight$slice(MemorySegment seg) {
         return seg.asSlice(12, 36);
@@ -242,9 +216,8 @@ public class libraw_kodak_makernotes_t {
     public static MemorySegment romm_camAuto$slice(MemorySegment seg) {
         return seg.asSlice(192, 36);
     }
-    static final VarHandle val018percent$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("val018percent"));
     public static VarHandle val018percent$VH() {
-        return libraw_kodak_makernotes_t.val018percent$VH;
+        return constants$49.const$4;
     }
     /**
      * Getter for field:
@@ -253,7 +226,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short val018percent$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.val018percent$VH.get(seg);
+        return (short)constants$49.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -262,17 +235,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void val018percent$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.val018percent$VH.set(seg, x);
+        constants$49.const$4.set(seg, x);
     }
     public static short val018percent$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.val018percent$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$49.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void val018percent$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.val018percent$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$49.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle val100percent$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("val100percent"));
     public static VarHandle val100percent$VH() {
-        return libraw_kodak_makernotes_t.val100percent$VH;
+        return constants$49.const$5;
     }
     /**
      * Getter for field:
@@ -281,7 +253,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short val100percent$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.val100percent$VH.get(seg);
+        return (short)constants$49.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -290,17 +262,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void val100percent$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.val100percent$VH.set(seg, x);
+        constants$49.const$5.set(seg, x);
     }
     public static short val100percent$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.val100percent$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$49.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void val100percent$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.val100percent$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$49.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle val170percent$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("val170percent"));
     public static VarHandle val170percent$VH() {
-        return libraw_kodak_makernotes_t.val170percent$VH;
+        return constants$50.const$0;
     }
     /**
      * Getter for field:
@@ -309,7 +280,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short val170percent$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.val170percent$VH.get(seg);
+        return (short)constants$50.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -318,17 +289,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void val170percent$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.val170percent$VH.set(seg, x);
+        constants$50.const$0.set(seg, x);
     }
     public static short val170percent$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.val170percent$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$50.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void val170percent$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.val170percent$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$50.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MakerNoteKodak8a$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MakerNoteKodak8a"));
     public static VarHandle MakerNoteKodak8a$VH() {
-        return libraw_kodak_makernotes_t.MakerNoteKodak8a$VH;
+        return constants$50.const$1;
     }
     /**
      * Getter for field:
@@ -337,7 +307,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static short MakerNoteKodak8a$get(MemorySegment seg) {
-        return (short)libraw_kodak_makernotes_t.MakerNoteKodak8a$VH.get(seg);
+        return (short)constants$50.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -346,17 +316,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void MakerNoteKodak8a$set(MemorySegment seg, short x) {
-        libraw_kodak_makernotes_t.MakerNoteKodak8a$VH.set(seg, x);
+        constants$50.const$1.set(seg, x);
     }
     public static short MakerNoteKodak8a$get(MemorySegment seg, long index) {
-        return (short)libraw_kodak_makernotes_t.MakerNoteKodak8a$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$50.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void MakerNoteKodak8a$set(MemorySegment seg, long index, short x) {
-        libraw_kodak_makernotes_t.MakerNoteKodak8a$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$50.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ISOCalibrationGain$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ISOCalibrationGain"));
     public static VarHandle ISOCalibrationGain$VH() {
-        return libraw_kodak_makernotes_t.ISOCalibrationGain$VH;
+        return constants$50.const$2;
     }
     /**
      * Getter for field:
@@ -365,7 +334,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static float ISOCalibrationGain$get(MemorySegment seg) {
-        return (float)libraw_kodak_makernotes_t.ISOCalibrationGain$VH.get(seg);
+        return (float)constants$50.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -374,17 +343,16 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void ISOCalibrationGain$set(MemorySegment seg, float x) {
-        libraw_kodak_makernotes_t.ISOCalibrationGain$VH.set(seg, x);
+        constants$50.const$2.set(seg, x);
     }
     public static float ISOCalibrationGain$get(MemorySegment seg, long index) {
-        return (float)libraw_kodak_makernotes_t.ISOCalibrationGain$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$50.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void ISOCalibrationGain$set(MemorySegment seg, long index, float x) {
-        libraw_kodak_makernotes_t.ISOCalibrationGain$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$50.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AnalogISO$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AnalogISO"));
     public static VarHandle AnalogISO$VH() {
-        return libraw_kodak_makernotes_t.AnalogISO$VH;
+        return constants$50.const$3;
     }
     /**
      * Getter for field:
@@ -393,7 +361,7 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static float AnalogISO$get(MemorySegment seg) {
-        return (float)libraw_kodak_makernotes_t.AnalogISO$VH.get(seg);
+        return (float)constants$50.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -402,20 +370,20 @@ public class libraw_kodak_makernotes_t {
      * }
      */
     public static void AnalogISO$set(MemorySegment seg, float x) {
-        libraw_kodak_makernotes_t.AnalogISO$VH.set(seg, x);
+        constants$50.const$3.set(seg, x);
     }
     public static float AnalogISO$get(MemorySegment seg, long index) {
-        return (float)libraw_kodak_makernotes_t.AnalogISO$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$50.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void AnalogISO$set(MemorySegment seg, long index, float x) {
-        libraw_kodak_makernotes_t.AnalogISO$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$50.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

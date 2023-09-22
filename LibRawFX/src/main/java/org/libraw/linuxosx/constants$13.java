@@ -11,14 +11,17 @@ final class constants$13 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$13() {}
-    static final FunctionDescriptor libraw_get_imgother$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_imgother$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_imgother",
-        constants$13.libraw_get_imgother$FUNC
-    );
-    static final MemorySegment LIBRAW_VERSION_STR$SEGMENT = RuntimeHelper.CONSTANT_ALLOCATOR.allocateUtf8String("0.21.0-Snapshot202110");
+    static final VarHandle const$0 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("filters"));
+    static final VarHandle const$1 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("xmplen"));
+    static final VarHandle const$2 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("xmpdata"));
+    static final StructLayout const$3 = MemoryLayout.structLayout(
+        JAVA_SHORT.withName("cleft"),
+        JAVA_SHORT.withName("ctop"),
+        JAVA_SHORT.withName("cwidth"),
+        JAVA_SHORT.withName("cheight")
+    ).withName("libraw_raw_inset_crop_t");
+    static final VarHandle const$4 = constants$13.const$3.varHandle(MemoryLayout.PathElement.groupElement("cleft"));
+    static final VarHandle const$5 = constants$13.const$3.varHandle(MemoryLayout.PathElement.groupElement("ctop"));
 }
 
 

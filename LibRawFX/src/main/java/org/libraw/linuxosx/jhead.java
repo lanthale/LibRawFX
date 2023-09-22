@@ -29,28 +29,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class jhead {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_INT$LAYOUT.withName("algo"),
-        Constants$root.C_INT$LAYOUT.withName("bits"),
-        Constants$root.C_INT$LAYOUT.withName("high"),
-        Constants$root.C_INT$LAYOUT.withName("wide"),
-        Constants$root.C_INT$LAYOUT.withName("clrs"),
-        Constants$root.C_INT$LAYOUT.withName("sraw"),
-        Constants$root.C_INT$LAYOUT.withName("psv"),
-        Constants$root.C_INT$LAYOUT.withName("restart"),
-        MemoryLayout.sequenceLayout(6, Constants$root.C_INT$LAYOUT).withName("vpred"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_SHORT$LAYOUT).withName("quant"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_SHORT$LAYOUT).withName("idct"),
-        MemoryLayout.sequenceLayout(20, Constants$root.C_POINTER$LAYOUT).withName("huff"),
-        MemoryLayout.sequenceLayout(20, Constants$root.C_POINTER$LAYOUT).withName("free"),
-        Constants$root.C_POINTER$LAYOUT.withName("row")
-    ).withName("jhead");
     public static MemoryLayout $LAYOUT() {
-        return jhead.$struct$LAYOUT;
+        return constants$111.const$2;
     }
-    static final VarHandle algo$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("algo"));
     public static VarHandle algo$VH() {
-        return jhead.algo$VH;
+        return constants$111.const$3;
     }
     /**
      * Getter for field:
@@ -59,7 +42,7 @@ public class jhead {
      * }
      */
     public static int algo$get(MemorySegment seg) {
-        return (int)jhead.algo$VH.get(seg);
+        return (int)constants$111.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -68,17 +51,16 @@ public class jhead {
      * }
      */
     public static void algo$set(MemorySegment seg, int x) {
-        jhead.algo$VH.set(seg, x);
+        constants$111.const$3.set(seg, x);
     }
     public static int algo$get(MemorySegment seg, long index) {
-        return (int)jhead.algo$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$111.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void algo$set(MemorySegment seg, long index, int x) {
-        jhead.algo$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$111.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle bits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("bits"));
     public static VarHandle bits$VH() {
-        return jhead.bits$VH;
+        return constants$111.const$4;
     }
     /**
      * Getter for field:
@@ -87,7 +69,7 @@ public class jhead {
      * }
      */
     public static int bits$get(MemorySegment seg) {
-        return (int)jhead.bits$VH.get(seg);
+        return (int)constants$111.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -96,17 +78,16 @@ public class jhead {
      * }
      */
     public static void bits$set(MemorySegment seg, int x) {
-        jhead.bits$VH.set(seg, x);
+        constants$111.const$4.set(seg, x);
     }
     public static int bits$get(MemorySegment seg, long index) {
-        return (int)jhead.bits$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$111.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void bits$set(MemorySegment seg, long index, int x) {
-        jhead.bits$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$111.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle high$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("high"));
     public static VarHandle high$VH() {
-        return jhead.high$VH;
+        return constants$111.const$5;
     }
     /**
      * Getter for field:
@@ -115,7 +96,7 @@ public class jhead {
      * }
      */
     public static int high$get(MemorySegment seg) {
-        return (int)jhead.high$VH.get(seg);
+        return (int)constants$111.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -124,17 +105,16 @@ public class jhead {
      * }
      */
     public static void high$set(MemorySegment seg, int x) {
-        jhead.high$VH.set(seg, x);
+        constants$111.const$5.set(seg, x);
     }
     public static int high$get(MemorySegment seg, long index) {
-        return (int)jhead.high$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$111.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void high$set(MemorySegment seg, long index, int x) {
-        jhead.high$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$111.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle wide$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("wide"));
     public static VarHandle wide$VH() {
-        return jhead.wide$VH;
+        return constants$112.const$0;
     }
     /**
      * Getter for field:
@@ -143,7 +123,7 @@ public class jhead {
      * }
      */
     public static int wide$get(MemorySegment seg) {
-        return (int)jhead.wide$VH.get(seg);
+        return (int)constants$112.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -152,17 +132,16 @@ public class jhead {
      * }
      */
     public static void wide$set(MemorySegment seg, int x) {
-        jhead.wide$VH.set(seg, x);
+        constants$112.const$0.set(seg, x);
     }
     public static int wide$get(MemorySegment seg, long index) {
-        return (int)jhead.wide$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$112.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void wide$set(MemorySegment seg, long index, int x) {
-        jhead.wide$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$112.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle clrs$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("clrs"));
     public static VarHandle clrs$VH() {
-        return jhead.clrs$VH;
+        return constants$112.const$1;
     }
     /**
      * Getter for field:
@@ -171,7 +150,7 @@ public class jhead {
      * }
      */
     public static int clrs$get(MemorySegment seg) {
-        return (int)jhead.clrs$VH.get(seg);
+        return (int)constants$112.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -180,17 +159,16 @@ public class jhead {
      * }
      */
     public static void clrs$set(MemorySegment seg, int x) {
-        jhead.clrs$VH.set(seg, x);
+        constants$112.const$1.set(seg, x);
     }
     public static int clrs$get(MemorySegment seg, long index) {
-        return (int)jhead.clrs$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$112.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void clrs$set(MemorySegment seg, long index, int x) {
-        jhead.clrs$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$112.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle sraw$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("sraw"));
     public static VarHandle sraw$VH() {
-        return jhead.sraw$VH;
+        return constants$112.const$2;
     }
     /**
      * Getter for field:
@@ -199,7 +177,7 @@ public class jhead {
      * }
      */
     public static int sraw$get(MemorySegment seg) {
-        return (int)jhead.sraw$VH.get(seg);
+        return (int)constants$112.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -208,17 +186,16 @@ public class jhead {
      * }
      */
     public static void sraw$set(MemorySegment seg, int x) {
-        jhead.sraw$VH.set(seg, x);
+        constants$112.const$2.set(seg, x);
     }
     public static int sraw$get(MemorySegment seg, long index) {
-        return (int)jhead.sraw$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$112.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void sraw$set(MemorySegment seg, long index, int x) {
-        jhead.sraw$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$112.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle psv$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("psv"));
     public static VarHandle psv$VH() {
-        return jhead.psv$VH;
+        return constants$112.const$3;
     }
     /**
      * Getter for field:
@@ -227,7 +204,7 @@ public class jhead {
      * }
      */
     public static int psv$get(MemorySegment seg) {
-        return (int)jhead.psv$VH.get(seg);
+        return (int)constants$112.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -236,17 +213,16 @@ public class jhead {
      * }
      */
     public static void psv$set(MemorySegment seg, int x) {
-        jhead.psv$VH.set(seg, x);
+        constants$112.const$3.set(seg, x);
     }
     public static int psv$get(MemorySegment seg, long index) {
-        return (int)jhead.psv$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$112.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void psv$set(MemorySegment seg, long index, int x) {
-        jhead.psv$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$112.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle restart$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("restart"));
     public static VarHandle restart$VH() {
-        return jhead.restart$VH;
+        return constants$112.const$4;
     }
     /**
      * Getter for field:
@@ -255,7 +231,7 @@ public class jhead {
      * }
      */
     public static int restart$get(MemorySegment seg) {
-        return (int)jhead.restart$VH.get(seg);
+        return (int)constants$112.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -264,13 +240,13 @@ public class jhead {
      * }
      */
     public static void restart$set(MemorySegment seg, int x) {
-        jhead.restart$VH.set(seg, x);
+        constants$112.const$4.set(seg, x);
     }
     public static int restart$get(MemorySegment seg, long index) {
-        return (int)jhead.restart$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$112.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void restart$set(MemorySegment seg, long index, int x) {
-        jhead.restart$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$112.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment vpred$slice(MemorySegment seg) {
         return seg.asSlice(32, 24);
@@ -287,9 +263,8 @@ public class jhead {
     public static MemorySegment free$slice(MemorySegment seg) {
         return seg.asSlice(472, 160);
     }
-    static final VarHandle row$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("row"));
     public static VarHandle row$VH() {
-        return jhead.row$VH;
+        return constants$112.const$5;
     }
     /**
      * Getter for field:
@@ -298,7 +273,7 @@ public class jhead {
      * }
      */
     public static MemorySegment row$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)jhead.row$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$112.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -307,20 +282,20 @@ public class jhead {
      * }
      */
     public static void row$set(MemorySegment seg, MemorySegment x) {
-        jhead.row$VH.set(seg, x);
+        constants$112.const$5.set(seg, x);
     }
     public static MemorySegment row$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)jhead.row$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$112.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void row$set(MemorySegment seg, long index, MemorySegment x) {
-        jhead.row$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$112.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

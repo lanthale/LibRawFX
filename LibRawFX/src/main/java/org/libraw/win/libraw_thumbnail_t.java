@@ -21,20 +21,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_thumbnail_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_LONG$LAYOUT.withName("tformat"),
-        Constants$root.C_SHORT$LAYOUT.withName("twidth"),
-        Constants$root.C_SHORT$LAYOUT.withName("theight"),
-        Constants$root.C_LONG$LAYOUT.withName("tlength"),
-        Constants$root.C_LONG$LAYOUT.withName("tcolors"),
-        Constants$root.C_POINTER$LAYOUT.withName("thumb")
-    ).withName("libraw_thumbnail_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_thumbnail_t.$struct$LAYOUT;
+        return constants$61.const$1;
     }
-    static final VarHandle tformat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tformat"));
     public static VarHandle tformat$VH() {
-        return libraw_thumbnail_t.tformat$VH;
+        return constants$61.const$2;
     }
     /**
      * Getter for field:
@@ -43,7 +34,7 @@ public class libraw_thumbnail_t {
      * }
      */
     public static int tformat$get(MemorySegment seg) {
-        return (int)libraw_thumbnail_t.tformat$VH.get(seg);
+        return (int)constants$61.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -52,17 +43,16 @@ public class libraw_thumbnail_t {
      * }
      */
     public static void tformat$set(MemorySegment seg, int x) {
-        libraw_thumbnail_t.tformat$VH.set(seg, x);
+        constants$61.const$2.set(seg, x);
     }
     public static int tformat$get(MemorySegment seg, long index) {
-        return (int)libraw_thumbnail_t.tformat$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$61.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void tformat$set(MemorySegment seg, long index, int x) {
-        libraw_thumbnail_t.tformat$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$61.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle twidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("twidth"));
     public static VarHandle twidth$VH() {
-        return libraw_thumbnail_t.twidth$VH;
+        return constants$61.const$3;
     }
     /**
      * Getter for field:
@@ -71,7 +61,7 @@ public class libraw_thumbnail_t {
      * }
      */
     public static short twidth$get(MemorySegment seg) {
-        return (short)libraw_thumbnail_t.twidth$VH.get(seg);
+        return (short)constants$61.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -80,17 +70,16 @@ public class libraw_thumbnail_t {
      * }
      */
     public static void twidth$set(MemorySegment seg, short x) {
-        libraw_thumbnail_t.twidth$VH.set(seg, x);
+        constants$61.const$3.set(seg, x);
     }
     public static short twidth$get(MemorySegment seg, long index) {
-        return (short)libraw_thumbnail_t.twidth$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$61.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void twidth$set(MemorySegment seg, long index, short x) {
-        libraw_thumbnail_t.twidth$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$61.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle theight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("theight"));
     public static VarHandle theight$VH() {
-        return libraw_thumbnail_t.theight$VH;
+        return constants$61.const$4;
     }
     /**
      * Getter for field:
@@ -99,7 +88,7 @@ public class libraw_thumbnail_t {
      * }
      */
     public static short theight$get(MemorySegment seg) {
-        return (short)libraw_thumbnail_t.theight$VH.get(seg);
+        return (short)constants$61.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -108,17 +97,16 @@ public class libraw_thumbnail_t {
      * }
      */
     public static void theight$set(MemorySegment seg, short x) {
-        libraw_thumbnail_t.theight$VH.set(seg, x);
+        constants$61.const$4.set(seg, x);
     }
     public static short theight$get(MemorySegment seg, long index) {
-        return (short)libraw_thumbnail_t.theight$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$61.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void theight$set(MemorySegment seg, long index, short x) {
-        libraw_thumbnail_t.theight$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$61.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tlength$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tlength"));
     public static VarHandle tlength$VH() {
-        return libraw_thumbnail_t.tlength$VH;
+        return constants$61.const$5;
     }
     /**
      * Getter for field:
@@ -127,7 +115,7 @@ public class libraw_thumbnail_t {
      * }
      */
     public static int tlength$get(MemorySegment seg) {
-        return (int)libraw_thumbnail_t.tlength$VH.get(seg);
+        return (int)constants$61.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -136,17 +124,16 @@ public class libraw_thumbnail_t {
      * }
      */
     public static void tlength$set(MemorySegment seg, int x) {
-        libraw_thumbnail_t.tlength$VH.set(seg, x);
+        constants$61.const$5.set(seg, x);
     }
     public static int tlength$get(MemorySegment seg, long index) {
-        return (int)libraw_thumbnail_t.tlength$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$61.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void tlength$set(MemorySegment seg, long index, int x) {
-        libraw_thumbnail_t.tlength$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$61.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle tcolors$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("tcolors"));
     public static VarHandle tcolors$VH() {
-        return libraw_thumbnail_t.tcolors$VH;
+        return constants$62.const$0;
     }
     /**
      * Getter for field:
@@ -155,7 +142,7 @@ public class libraw_thumbnail_t {
      * }
      */
     public static int tcolors$get(MemorySegment seg) {
-        return (int)libraw_thumbnail_t.tcolors$VH.get(seg);
+        return (int)constants$62.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -164,17 +151,16 @@ public class libraw_thumbnail_t {
      * }
      */
     public static void tcolors$set(MemorySegment seg, int x) {
-        libraw_thumbnail_t.tcolors$VH.set(seg, x);
+        constants$62.const$0.set(seg, x);
     }
     public static int tcolors$get(MemorySegment seg, long index) {
-        return (int)libraw_thumbnail_t.tcolors$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$62.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void tcolors$set(MemorySegment seg, long index, int x) {
-        libraw_thumbnail_t.tcolors$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$62.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle thumb$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("thumb"));
     public static VarHandle thumb$VH() {
-        return libraw_thumbnail_t.thumb$VH;
+        return constants$62.const$1;
     }
     /**
      * Getter for field:
@@ -183,7 +169,7 @@ public class libraw_thumbnail_t {
      * }
      */
     public static MemorySegment thumb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_thumbnail_t.thumb$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$62.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -192,20 +178,20 @@ public class libraw_thumbnail_t {
      * }
      */
     public static void thumb$set(MemorySegment seg, MemorySegment x) {
-        libraw_thumbnail_t.thumb$VH.set(seg, x);
+        constants$62.const$1.set(seg, x);
     }
     public static MemorySegment thumb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_thumbnail_t.thumb$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$62.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void thumb$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_thumbnail_t.thumb$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$62.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

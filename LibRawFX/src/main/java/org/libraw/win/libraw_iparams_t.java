@@ -32,28 +32,8 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_iparams_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("guard"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("make"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("software"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_make"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_model"),
-        Constants$root.C_LONG$LAYOUT.withName("maker_index"),
-        Constants$root.C_LONG$LAYOUT.withName("raw_count"),
-        Constants$root.C_LONG$LAYOUT.withName("dng_version"),
-        Constants$root.C_LONG$LAYOUT.withName("is_foveon"),
-        Constants$root.C_LONG$LAYOUT.withName("colors"),
-        Constants$root.C_LONG$LAYOUT.withName("filters"),
-        MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans"),
-        MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans_abs"),
-        MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("cdesc"),
-        MemoryLayout.paddingLayout(24),
-        Constants$root.C_LONG$LAYOUT.withName("xmplen"),
-        Constants$root.C_POINTER$LAYOUT.withName("xmpdata")
-    ).withName("libraw_iparams_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_iparams_t.$struct$LAYOUT;
+        return constants$12.const$0;
     }
     public static MemorySegment guard$slice(MemorySegment seg) {
         return seg.asSlice(0, 4);
@@ -73,9 +53,8 @@ public class libraw_iparams_t {
     public static MemorySegment normalized_model$slice(MemorySegment seg) {
         return seg.asSlice(260, 64);
     }
-    static final VarHandle maker_index$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("maker_index"));
     public static VarHandle maker_index$VH() {
-        return libraw_iparams_t.maker_index$VH;
+        return constants$12.const$1;
     }
     /**
      * Getter for field:
@@ -84,7 +63,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int maker_index$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.maker_index$VH.get(seg);
+        return (int)constants$12.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -93,17 +72,16 @@ public class libraw_iparams_t {
      * }
      */
     public static void maker_index$set(MemorySegment seg, int x) {
-        libraw_iparams_t.maker_index$VH.set(seg, x);
+        constants$12.const$1.set(seg, x);
     }
     public static int maker_index$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.maker_index$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$12.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void maker_index$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.maker_index$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$12.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle raw_count$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("raw_count"));
     public static VarHandle raw_count$VH() {
-        return libraw_iparams_t.raw_count$VH;
+        return constants$12.const$2;
     }
     /**
      * Getter for field:
@@ -112,7 +90,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int raw_count$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.raw_count$VH.get(seg);
+        return (int)constants$12.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -121,17 +99,16 @@ public class libraw_iparams_t {
      * }
      */
     public static void raw_count$set(MemorySegment seg, int x) {
-        libraw_iparams_t.raw_count$VH.set(seg, x);
+        constants$12.const$2.set(seg, x);
     }
     public static int raw_count$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.raw_count$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$12.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void raw_count$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.raw_count$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$12.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle dng_version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("dng_version"));
     public static VarHandle dng_version$VH() {
-        return libraw_iparams_t.dng_version$VH;
+        return constants$12.const$3;
     }
     /**
      * Getter for field:
@@ -140,7 +117,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int dng_version$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.dng_version$VH.get(seg);
+        return (int)constants$12.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -149,17 +126,16 @@ public class libraw_iparams_t {
      * }
      */
     public static void dng_version$set(MemorySegment seg, int x) {
-        libraw_iparams_t.dng_version$VH.set(seg, x);
+        constants$12.const$3.set(seg, x);
     }
     public static int dng_version$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.dng_version$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$12.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void dng_version$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.dng_version$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$12.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle is_foveon$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("is_foveon"));
     public static VarHandle is_foveon$VH() {
-        return libraw_iparams_t.is_foveon$VH;
+        return constants$12.const$4;
     }
     /**
      * Getter for field:
@@ -168,7 +144,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int is_foveon$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.is_foveon$VH.get(seg);
+        return (int)constants$12.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -177,17 +153,16 @@ public class libraw_iparams_t {
      * }
      */
     public static void is_foveon$set(MemorySegment seg, int x) {
-        libraw_iparams_t.is_foveon$VH.set(seg, x);
+        constants$12.const$4.set(seg, x);
     }
     public static int is_foveon$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.is_foveon$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$12.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void is_foveon$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.is_foveon$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$12.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle colors$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("colors"));
     public static VarHandle colors$VH() {
-        return libraw_iparams_t.colors$VH;
+        return constants$12.const$5;
     }
     /**
      * Getter for field:
@@ -196,7 +171,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int colors$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.colors$VH.get(seg);
+        return (int)constants$12.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -205,17 +180,16 @@ public class libraw_iparams_t {
      * }
      */
     public static void colors$set(MemorySegment seg, int x) {
-        libraw_iparams_t.colors$VH.set(seg, x);
+        constants$12.const$5.set(seg, x);
     }
     public static int colors$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.colors$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$12.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void colors$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.colors$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$12.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle filters$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("filters"));
     public static VarHandle filters$VH() {
-        return libraw_iparams_t.filters$VH;
+        return constants$13.const$0;
     }
     /**
      * Getter for field:
@@ -224,7 +198,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int filters$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.filters$VH.get(seg);
+        return (int)constants$13.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -233,13 +207,13 @@ public class libraw_iparams_t {
      * }
      */
     public static void filters$set(MemorySegment seg, int x) {
-        libraw_iparams_t.filters$VH.set(seg, x);
+        constants$13.const$0.set(seg, x);
     }
     public static int filters$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.filters$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$13.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void filters$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.filters$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$13.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment xtrans$slice(MemorySegment seg) {
         return seg.asSlice(348, 36);
@@ -250,9 +224,8 @@ public class libraw_iparams_t {
     public static MemorySegment cdesc$slice(MemorySegment seg) {
         return seg.asSlice(420, 5);
     }
-    static final VarHandle xmplen$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("xmplen"));
     public static VarHandle xmplen$VH() {
-        return libraw_iparams_t.xmplen$VH;
+        return constants$13.const$1;
     }
     /**
      * Getter for field:
@@ -261,7 +234,7 @@ public class libraw_iparams_t {
      * }
      */
     public static int xmplen$get(MemorySegment seg) {
-        return (int)libraw_iparams_t.xmplen$VH.get(seg);
+        return (int)constants$13.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -270,17 +243,16 @@ public class libraw_iparams_t {
      * }
      */
     public static void xmplen$set(MemorySegment seg, int x) {
-        libraw_iparams_t.xmplen$VH.set(seg, x);
+        constants$13.const$1.set(seg, x);
     }
     public static int xmplen$get(MemorySegment seg, long index) {
-        return (int)libraw_iparams_t.xmplen$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$13.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void xmplen$set(MemorySegment seg, long index, int x) {
-        libraw_iparams_t.xmplen$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$13.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle xmpdata$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("xmpdata"));
     public static VarHandle xmpdata$VH() {
-        return libraw_iparams_t.xmpdata$VH;
+        return constants$13.const$2;
     }
     /**
      * Getter for field:
@@ -289,7 +261,7 @@ public class libraw_iparams_t {
      * }
      */
     public static MemorySegment xmpdata$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_iparams_t.xmpdata$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$13.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -298,20 +270,20 @@ public class libraw_iparams_t {
      * }
      */
     public static void xmpdata$set(MemorySegment seg, MemorySegment x) {
-        libraw_iparams_t.xmpdata$VH.set(seg, x);
+        constants$13.const$2.set(seg, x);
     }
     public static MemorySegment xmpdata$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_iparams_t.xmpdata$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$13.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void xmpdata$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_iparams_t.xmpdata$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$13.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

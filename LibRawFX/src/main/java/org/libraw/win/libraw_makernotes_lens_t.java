@@ -49,52 +49,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_makernotes_lens_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_LONG_LONG$LAYOUT.withName("LensID"),
-        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Lens"),
-        Constants$root.C_SHORT$LAYOUT.withName("LensFormat"),
-        Constants$root.C_SHORT$LAYOUT.withName("LensMount"),
-        MemoryLayout.paddingLayout(32),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("CamID"),
-        Constants$root.C_SHORT$LAYOUT.withName("CameraFormat"),
-        Constants$root.C_SHORT$LAYOUT.withName("CameraMount"),
-        MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("body"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocalType"),
-        MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("LensFeatures_pre"),
-        MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("LensFeatures_suf"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MinAp4MinFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MinAp4MaxFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MinAp"),
-        Constants$root.C_FLOAT$LAYOUT.withName("CurFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("CurAp"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4CurFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MinAp4CurFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MinFocusDistance"),
-        Constants$root.C_FLOAT$LAYOUT.withName("FocusRangeIndex"),
-        Constants$root.C_FLOAT$LAYOUT.withName("LensFStops"),
-        MemoryLayout.paddingLayout(32),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("TeleconverterID"),
-        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Teleconverter"),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("AdapterID"),
-        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Adapter"),
-        Constants$root.C_LONG_LONG$LAYOUT.withName("AttachmentID"),
-        MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Attachment"),
-        Constants$root.C_SHORT$LAYOUT.withName("FocalUnits"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_FLOAT$LAYOUT.withName("FocalLengthIn35mmFormat")
-    ).withName("libraw_makernotes_lens_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_makernotes_lens_t.$struct$LAYOUT;
+        return constants$78.const$1;
     }
-    static final VarHandle LensID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensID"));
     public static VarHandle LensID$VH() {
-        return libraw_makernotes_lens_t.LensID$VH;
+        return constants$78.const$2;
     }
     /**
      * Getter for field:
@@ -103,7 +62,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static long LensID$get(MemorySegment seg) {
-        return (long)libraw_makernotes_lens_t.LensID$VH.get(seg);
+        return (long)constants$78.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -112,20 +71,19 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void LensID$set(MemorySegment seg, long x) {
-        libraw_makernotes_lens_t.LensID$VH.set(seg, x);
+        constants$78.const$2.set(seg, x);
     }
     public static long LensID$get(MemorySegment seg, long index) {
-        return (long)libraw_makernotes_lens_t.LensID$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$78.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void LensID$set(MemorySegment seg, long index, long x) {
-        libraw_makernotes_lens_t.LensID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$78.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment Lens$slice(MemorySegment seg) {
         return seg.asSlice(8, 128);
     }
-    static final VarHandle LensFormat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensFormat"));
     public static VarHandle LensFormat$VH() {
-        return libraw_makernotes_lens_t.LensFormat$VH;
+        return constants$78.const$3;
     }
     /**
      * Getter for field:
@@ -134,7 +92,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static short LensFormat$get(MemorySegment seg) {
-        return (short)libraw_makernotes_lens_t.LensFormat$VH.get(seg);
+        return (short)constants$78.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -143,17 +101,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void LensFormat$set(MemorySegment seg, short x) {
-        libraw_makernotes_lens_t.LensFormat$VH.set(seg, x);
+        constants$78.const$3.set(seg, x);
     }
     public static short LensFormat$get(MemorySegment seg, long index) {
-        return (short)libraw_makernotes_lens_t.LensFormat$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$78.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void LensFormat$set(MemorySegment seg, long index, short x) {
-        libraw_makernotes_lens_t.LensFormat$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$78.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensMount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensMount"));
     public static VarHandle LensMount$VH() {
-        return libraw_makernotes_lens_t.LensMount$VH;
+        return constants$78.const$4;
     }
     /**
      * Getter for field:
@@ -162,7 +119,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static short LensMount$get(MemorySegment seg) {
-        return (short)libraw_makernotes_lens_t.LensMount$VH.get(seg);
+        return (short)constants$78.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -171,17 +128,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void LensMount$set(MemorySegment seg, short x) {
-        libraw_makernotes_lens_t.LensMount$VH.set(seg, x);
+        constants$78.const$4.set(seg, x);
     }
     public static short LensMount$get(MemorySegment seg, long index) {
-        return (short)libraw_makernotes_lens_t.LensMount$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$78.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void LensMount$set(MemorySegment seg, long index, short x) {
-        libraw_makernotes_lens_t.LensMount$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$78.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CamID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CamID"));
     public static VarHandle CamID$VH() {
-        return libraw_makernotes_lens_t.CamID$VH;
+        return constants$78.const$5;
     }
     /**
      * Getter for field:
@@ -190,7 +146,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static long CamID$get(MemorySegment seg) {
-        return (long)libraw_makernotes_lens_t.CamID$VH.get(seg);
+        return (long)constants$78.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -199,17 +155,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void CamID$set(MemorySegment seg, long x) {
-        libraw_makernotes_lens_t.CamID$VH.set(seg, x);
+        constants$78.const$5.set(seg, x);
     }
     public static long CamID$get(MemorySegment seg, long index) {
-        return (long)libraw_makernotes_lens_t.CamID$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$78.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void CamID$set(MemorySegment seg, long index, long x) {
-        libraw_makernotes_lens_t.CamID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$78.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CameraFormat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CameraFormat"));
     public static VarHandle CameraFormat$VH() {
-        return libraw_makernotes_lens_t.CameraFormat$VH;
+        return constants$79.const$0;
     }
     /**
      * Getter for field:
@@ -218,7 +173,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static short CameraFormat$get(MemorySegment seg) {
-        return (short)libraw_makernotes_lens_t.CameraFormat$VH.get(seg);
+        return (short)constants$79.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -227,17 +182,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void CameraFormat$set(MemorySegment seg, short x) {
-        libraw_makernotes_lens_t.CameraFormat$VH.set(seg, x);
+        constants$79.const$0.set(seg, x);
     }
     public static short CameraFormat$get(MemorySegment seg, long index) {
-        return (short)libraw_makernotes_lens_t.CameraFormat$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$79.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void CameraFormat$set(MemorySegment seg, long index, short x) {
-        libraw_makernotes_lens_t.CameraFormat$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$79.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CameraMount$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CameraMount"));
     public static VarHandle CameraMount$VH() {
-        return libraw_makernotes_lens_t.CameraMount$VH;
+        return constants$79.const$1;
     }
     /**
      * Getter for field:
@@ -246,7 +200,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static short CameraMount$get(MemorySegment seg) {
-        return (short)libraw_makernotes_lens_t.CameraMount$VH.get(seg);
+        return (short)constants$79.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -255,20 +209,19 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void CameraMount$set(MemorySegment seg, short x) {
-        libraw_makernotes_lens_t.CameraMount$VH.set(seg, x);
+        constants$79.const$1.set(seg, x);
     }
     public static short CameraMount$get(MemorySegment seg, long index) {
-        return (short)libraw_makernotes_lens_t.CameraMount$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$79.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void CameraMount$set(MemorySegment seg, long index, short x) {
-        libraw_makernotes_lens_t.CameraMount$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$79.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment body$slice(MemorySegment seg) {
         return seg.asSlice(156, 64);
     }
-    static final VarHandle FocalType$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocalType"));
     public static VarHandle FocalType$VH() {
-        return libraw_makernotes_lens_t.FocalType$VH;
+        return constants$79.const$2;
     }
     /**
      * Getter for field:
@@ -277,7 +230,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static short FocalType$get(MemorySegment seg) {
-        return (short)libraw_makernotes_lens_t.FocalType$VH.get(seg);
+        return (short)constants$79.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -286,13 +239,13 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void FocalType$set(MemorySegment seg, short x) {
-        libraw_makernotes_lens_t.FocalType$VH.set(seg, x);
+        constants$79.const$2.set(seg, x);
     }
     public static short FocalType$get(MemorySegment seg, long index) {
-        return (short)libraw_makernotes_lens_t.FocalType$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$79.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void FocalType$set(MemorySegment seg, long index, short x) {
-        libraw_makernotes_lens_t.FocalType$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$79.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment LensFeatures_pre$slice(MemorySegment seg) {
         return seg.asSlice(222, 16);
@@ -300,9 +253,8 @@ public class libraw_makernotes_lens_t {
     public static MemorySegment LensFeatures_suf$slice(MemorySegment seg) {
         return seg.asSlice(238, 16);
     }
-    static final VarHandle MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinFocal"));
     public static VarHandle MinFocal$VH() {
-        return libraw_makernotes_lens_t.MinFocal$VH;
+        return constants$79.const$3;
     }
     /**
      * Getter for field:
@@ -311,7 +263,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MinFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MinFocal$VH.get(seg);
+        return (float)constants$79.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -320,17 +272,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MinFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MinFocal$VH.set(seg, x);
+        constants$79.const$3.set(seg, x);
     }
     public static float MinFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MinFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$79.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void MinFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$79.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxFocal"));
     public static VarHandle MaxFocal$VH() {
-        return libraw_makernotes_lens_t.MaxFocal$VH;
+        return constants$79.const$4;
     }
     /**
      * Getter for field:
@@ -339,7 +290,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MaxFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MaxFocal$VH.get(seg);
+        return (float)constants$79.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -348,17 +299,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MaxFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MaxFocal$VH.set(seg, x);
+        constants$79.const$4.set(seg, x);
     }
     public static float MaxFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MaxFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$79.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$79.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4MinFocal"));
     public static VarHandle MaxAp4MinFocal$VH() {
-        return libraw_makernotes_lens_t.MaxAp4MinFocal$VH;
+        return constants$79.const$5;
     }
     /**
      * Getter for field:
@@ -367,7 +317,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MaxAp4MinFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MaxAp4MinFocal$VH.get(seg);
+        return (float)constants$79.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -376,17 +326,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MaxAp4MinFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MaxAp4MinFocal$VH.set(seg, x);
+        constants$79.const$5.set(seg, x);
     }
     public static float MaxAp4MinFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MaxAp4MinFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$79.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxAp4MinFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MaxAp4MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$79.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4MaxFocal"));
     public static VarHandle MaxAp4MaxFocal$VH() {
-        return libraw_makernotes_lens_t.MaxAp4MaxFocal$VH;
+        return constants$80.const$0;
     }
     /**
      * Getter for field:
@@ -395,7 +344,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MaxAp4MaxFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MaxAp4MaxFocal$VH.get(seg);
+        return (float)constants$80.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -404,17 +353,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MaxAp4MaxFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MaxAp4MaxFocal$VH.set(seg, x);
+        constants$80.const$0.set(seg, x);
     }
     public static float MaxAp4MaxFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MaxAp4MaxFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$80.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxAp4MaxFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MaxAp4MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$80.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MinAp4MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinAp4MinFocal"));
     public static VarHandle MinAp4MinFocal$VH() {
-        return libraw_makernotes_lens_t.MinAp4MinFocal$VH;
+        return constants$80.const$1;
     }
     /**
      * Getter for field:
@@ -423,7 +371,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MinAp4MinFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MinAp4MinFocal$VH.get(seg);
+        return (float)constants$80.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -432,17 +380,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MinAp4MinFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MinAp4MinFocal$VH.set(seg, x);
+        constants$80.const$1.set(seg, x);
     }
     public static float MinAp4MinFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MinAp4MinFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$80.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void MinAp4MinFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MinAp4MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$80.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MinAp4MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinAp4MaxFocal"));
     public static VarHandle MinAp4MaxFocal$VH() {
-        return libraw_makernotes_lens_t.MinAp4MaxFocal$VH;
+        return constants$80.const$2;
     }
     /**
      * Getter for field:
@@ -451,7 +398,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MinAp4MaxFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MinAp4MaxFocal$VH.get(seg);
+        return (float)constants$80.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -460,17 +407,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MinAp4MaxFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MinAp4MaxFocal$VH.set(seg, x);
+        constants$80.const$2.set(seg, x);
     }
     public static float MinAp4MaxFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MinAp4MaxFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$80.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void MinAp4MaxFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MinAp4MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$80.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp"));
     public static VarHandle MaxAp$VH() {
-        return libraw_makernotes_lens_t.MaxAp$VH;
+        return constants$80.const$3;
     }
     /**
      * Getter for field:
@@ -479,7 +425,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MaxAp$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MaxAp$VH.get(seg);
+        return (float)constants$80.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -488,17 +434,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MaxAp$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MaxAp$VH.set(seg, x);
+        constants$80.const$3.set(seg, x);
     }
     public static float MaxAp$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MaxAp$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$80.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxAp$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MaxAp$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$80.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MinAp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinAp"));
     public static VarHandle MinAp$VH() {
-        return libraw_makernotes_lens_t.MinAp$VH;
+        return constants$80.const$4;
     }
     /**
      * Getter for field:
@@ -507,7 +452,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MinAp$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MinAp$VH.get(seg);
+        return (float)constants$80.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -516,17 +461,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MinAp$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MinAp$VH.set(seg, x);
+        constants$80.const$4.set(seg, x);
     }
     public static float MinAp$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MinAp$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$80.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void MinAp$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MinAp$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$80.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CurFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CurFocal"));
     public static VarHandle CurFocal$VH() {
-        return libraw_makernotes_lens_t.CurFocal$VH;
+        return constants$80.const$5;
     }
     /**
      * Getter for field:
@@ -535,7 +479,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float CurFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.CurFocal$VH.get(seg);
+        return (float)constants$80.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -544,17 +488,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void CurFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.CurFocal$VH.set(seg, x);
+        constants$80.const$5.set(seg, x);
     }
     public static float CurFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.CurFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$80.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void CurFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.CurFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$80.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle CurAp$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("CurAp"));
     public static VarHandle CurAp$VH() {
-        return libraw_makernotes_lens_t.CurAp$VH;
+        return constants$81.const$0;
     }
     /**
      * Getter for field:
@@ -563,7 +506,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float CurAp$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.CurAp$VH.get(seg);
+        return (float)constants$81.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -572,17 +515,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void CurAp$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.CurAp$VH.set(seg, x);
+        constants$81.const$0.set(seg, x);
     }
     public static float CurAp$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.CurAp$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$81.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void CurAp$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.CurAp$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$81.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4CurFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4CurFocal"));
     public static VarHandle MaxAp4CurFocal$VH() {
-        return libraw_makernotes_lens_t.MaxAp4CurFocal$VH;
+        return constants$81.const$1;
     }
     /**
      * Getter for field:
@@ -591,7 +533,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MaxAp4CurFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MaxAp4CurFocal$VH.get(seg);
+        return (float)constants$81.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -600,17 +542,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MaxAp4CurFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MaxAp4CurFocal$VH.set(seg, x);
+        constants$81.const$1.set(seg, x);
     }
     public static float MaxAp4CurFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MaxAp4CurFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$81.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxAp4CurFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MaxAp4CurFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$81.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MinAp4CurFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinAp4CurFocal"));
     public static VarHandle MinAp4CurFocal$VH() {
-        return libraw_makernotes_lens_t.MinAp4CurFocal$VH;
+        return constants$81.const$2;
     }
     /**
      * Getter for field:
@@ -619,7 +560,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MinAp4CurFocal$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MinAp4CurFocal$VH.get(seg);
+        return (float)constants$81.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -628,17 +569,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MinAp4CurFocal$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MinAp4CurFocal$VH.set(seg, x);
+        constants$81.const$2.set(seg, x);
     }
     public static float MinAp4CurFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MinAp4CurFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$81.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void MinAp4CurFocal$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MinAp4CurFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$81.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MinFocusDistance$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinFocusDistance"));
     public static VarHandle MinFocusDistance$VH() {
-        return libraw_makernotes_lens_t.MinFocusDistance$VH;
+        return constants$81.const$3;
     }
     /**
      * Getter for field:
@@ -647,7 +587,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float MinFocusDistance$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.MinFocusDistance$VH.get(seg);
+        return (float)constants$81.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -656,17 +596,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void MinFocusDistance$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.MinFocusDistance$VH.set(seg, x);
+        constants$81.const$3.set(seg, x);
     }
     public static float MinFocusDistance$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.MinFocusDistance$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$81.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void MinFocusDistance$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.MinFocusDistance$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$81.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocusRangeIndex$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocusRangeIndex"));
     public static VarHandle FocusRangeIndex$VH() {
-        return libraw_makernotes_lens_t.FocusRangeIndex$VH;
+        return constants$81.const$4;
     }
     /**
      * Getter for field:
@@ -675,7 +614,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float FocusRangeIndex$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.FocusRangeIndex$VH.get(seg);
+        return (float)constants$81.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -684,17 +623,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void FocusRangeIndex$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.FocusRangeIndex$VH.set(seg, x);
+        constants$81.const$4.set(seg, x);
     }
     public static float FocusRangeIndex$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.FocusRangeIndex$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$81.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void FocusRangeIndex$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.FocusRangeIndex$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$81.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensFStops$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensFStops"));
     public static VarHandle LensFStops$VH() {
-        return libraw_makernotes_lens_t.LensFStops$VH;
+        return constants$81.const$5;
     }
     /**
      * Getter for field:
@@ -703,7 +641,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float LensFStops$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.LensFStops$VH.get(seg);
+        return (float)constants$81.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -712,17 +650,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void LensFStops$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.LensFStops$VH.set(seg, x);
+        constants$81.const$5.set(seg, x);
     }
     public static float LensFStops$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.LensFStops$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$81.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void LensFStops$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.LensFStops$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$81.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle TeleconverterID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("TeleconverterID"));
     public static VarHandle TeleconverterID$VH() {
-        return libraw_makernotes_lens_t.TeleconverterID$VH;
+        return constants$82.const$0;
     }
     /**
      * Getter for field:
@@ -731,7 +668,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static long TeleconverterID$get(MemorySegment seg) {
-        return (long)libraw_makernotes_lens_t.TeleconverterID$VH.get(seg);
+        return (long)constants$82.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -740,20 +677,19 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void TeleconverterID$set(MemorySegment seg, long x) {
-        libraw_makernotes_lens_t.TeleconverterID$VH.set(seg, x);
+        constants$82.const$0.set(seg, x);
     }
     public static long TeleconverterID$get(MemorySegment seg, long index) {
-        return (long)libraw_makernotes_lens_t.TeleconverterID$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$82.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void TeleconverterID$set(MemorySegment seg, long index, long x) {
-        libraw_makernotes_lens_t.TeleconverterID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$82.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment Teleconverter$slice(MemorySegment seg) {
         return seg.asSlice(328, 128);
     }
-    static final VarHandle AdapterID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AdapterID"));
     public static VarHandle AdapterID$VH() {
-        return libraw_makernotes_lens_t.AdapterID$VH;
+        return constants$82.const$1;
     }
     /**
      * Getter for field:
@@ -762,7 +698,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static long AdapterID$get(MemorySegment seg) {
-        return (long)libraw_makernotes_lens_t.AdapterID$VH.get(seg);
+        return (long)constants$82.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -771,20 +707,19 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void AdapterID$set(MemorySegment seg, long x) {
-        libraw_makernotes_lens_t.AdapterID$VH.set(seg, x);
+        constants$82.const$1.set(seg, x);
     }
     public static long AdapterID$get(MemorySegment seg, long index) {
-        return (long)libraw_makernotes_lens_t.AdapterID$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$82.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void AdapterID$set(MemorySegment seg, long index, long x) {
-        libraw_makernotes_lens_t.AdapterID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$82.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment Adapter$slice(MemorySegment seg) {
         return seg.asSlice(464, 128);
     }
-    static final VarHandle AttachmentID$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AttachmentID"));
     public static VarHandle AttachmentID$VH() {
-        return libraw_makernotes_lens_t.AttachmentID$VH;
+        return constants$82.const$2;
     }
     /**
      * Getter for field:
@@ -793,7 +728,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static long AttachmentID$get(MemorySegment seg) {
-        return (long)libraw_makernotes_lens_t.AttachmentID$VH.get(seg);
+        return (long)constants$82.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -802,20 +737,19 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void AttachmentID$set(MemorySegment seg, long x) {
-        libraw_makernotes_lens_t.AttachmentID$VH.set(seg, x);
+        constants$82.const$2.set(seg, x);
     }
     public static long AttachmentID$get(MemorySegment seg, long index) {
-        return (long)libraw_makernotes_lens_t.AttachmentID$VH.get(seg.asSlice(index*sizeof()));
+        return (long)constants$82.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void AttachmentID$set(MemorySegment seg, long index, long x) {
-        libraw_makernotes_lens_t.AttachmentID$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$82.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment Attachment$slice(MemorySegment seg) {
         return seg.asSlice(600, 128);
     }
-    static final VarHandle FocalUnits$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocalUnits"));
     public static VarHandle FocalUnits$VH() {
-        return libraw_makernotes_lens_t.FocalUnits$VH;
+        return constants$82.const$3;
     }
     /**
      * Getter for field:
@@ -824,7 +758,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static short FocalUnits$get(MemorySegment seg) {
-        return (short)libraw_makernotes_lens_t.FocalUnits$VH.get(seg);
+        return (short)constants$82.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -833,17 +767,16 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void FocalUnits$set(MemorySegment seg, short x) {
-        libraw_makernotes_lens_t.FocalUnits$VH.set(seg, x);
+        constants$82.const$3.set(seg, x);
     }
     public static short FocalUnits$get(MemorySegment seg, long index) {
-        return (short)libraw_makernotes_lens_t.FocalUnits$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$82.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void FocalUnits$set(MemorySegment seg, long index, short x) {
-        libraw_makernotes_lens_t.FocalUnits$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$82.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FocalLengthIn35mmFormat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FocalLengthIn35mmFormat"));
     public static VarHandle FocalLengthIn35mmFormat$VH() {
-        return libraw_makernotes_lens_t.FocalLengthIn35mmFormat$VH;
+        return constants$82.const$4;
     }
     /**
      * Getter for field:
@@ -852,7 +785,7 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static float FocalLengthIn35mmFormat$get(MemorySegment seg) {
-        return (float)libraw_makernotes_lens_t.FocalLengthIn35mmFormat$VH.get(seg);
+        return (float)constants$82.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -861,20 +794,20 @@ public class libraw_makernotes_lens_t {
      * }
      */
     public static void FocalLengthIn35mmFormat$set(MemorySegment seg, float x) {
-        libraw_makernotes_lens_t.FocalLengthIn35mmFormat$VH.set(seg, x);
+        constants$82.const$4.set(seg, x);
     }
     public static float FocalLengthIn35mmFormat$get(MemorySegment seg, long index) {
-        return (float)libraw_makernotes_lens_t.FocalLengthIn35mmFormat$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$82.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void FocalLengthIn35mmFormat$set(MemorySegment seg, long index, float x) {
-        libraw_makernotes_lens_t.FocalLengthIn35mmFormat$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$82.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

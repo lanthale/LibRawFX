@@ -11,53 +11,31 @@ final class constants$12 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$12() {}
-    static final FunctionDescriptor libraw_get_cam_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_get_cam_mul$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_cam_mul",
-        constants$12.libraw_get_cam_mul$FUNC
-    );
-    static final FunctionDescriptor libraw_get_pre_mul$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_get_pre_mul$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_pre_mul",
-        constants$12.libraw_get_pre_mul$FUNC
-    );
-    static final FunctionDescriptor libraw_get_rgb_cam$FUNC = FunctionDescriptor.of(Constants$root.C_FLOAT$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_get_rgb_cam$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_rgb_cam",
-        constants$12.libraw_get_rgb_cam$FUNC
-    );
-    static final FunctionDescriptor libraw_get_color_maximum$FUNC = FunctionDescriptor.of(Constants$root.C_LONG$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_color_maximum$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_color_maximum",
-        constants$12.libraw_get_color_maximum$FUNC
-    );
-    static final FunctionDescriptor libraw_set_output_tif$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_LONG$LAYOUT
-    );
-    static final MethodHandle libraw_set_output_tif$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_output_tif",
-        constants$12.libraw_set_output_tif$FUNC
-    );
-    static final FunctionDescriptor libraw_get_iparams$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_get_iparams$MH = RuntimeHelper.downcallHandle(
-        "libraw_get_iparams",
-        constants$12.libraw_get_iparams$FUNC
-    );
+    static final StructLayout const$0 = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(4, JAVA_BYTE).withName("guard"),
+        MemoryLayout.sequenceLayout(64, JAVA_BYTE).withName("make"),
+        MemoryLayout.sequenceLayout(64, JAVA_BYTE).withName("model"),
+        MemoryLayout.sequenceLayout(64, JAVA_BYTE).withName("software"),
+        MemoryLayout.sequenceLayout(64, JAVA_BYTE).withName("normalized_make"),
+        MemoryLayout.sequenceLayout(64, JAVA_BYTE).withName("normalized_model"),
+        JAVA_INT.withName("maker_index"),
+        JAVA_INT.withName("raw_count"),
+        JAVA_INT.withName("dng_version"),
+        JAVA_INT.withName("is_foveon"),
+        JAVA_INT.withName("colors"),
+        JAVA_INT.withName("filters"),
+        MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, JAVA_BYTE)).withName("xtrans"),
+        MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, JAVA_BYTE)).withName("xtrans_abs"),
+        MemoryLayout.sequenceLayout(5, JAVA_BYTE).withName("cdesc"),
+        MemoryLayout.paddingLayout(3),
+        JAVA_INT.withName("xmplen"),
+        RuntimeHelper.POINTER.withName("xmpdata")
+    ).withName("libraw_iparams_t");
+    static final VarHandle const$1 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("maker_index"));
+    static final VarHandle const$2 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("raw_count"));
+    static final VarHandle const$3 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("dng_version"));
+    static final VarHandle const$4 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("is_foveon"));
+    static final VarHandle const$5 = constants$12.const$0.varHandle(MemoryLayout.PathElement.groupElement("colors"));
 }
 
 

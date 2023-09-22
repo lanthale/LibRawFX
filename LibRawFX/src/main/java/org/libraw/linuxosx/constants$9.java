@@ -11,53 +11,12 @@ final class constants$9 {
 
     // Suppresses default constructor, ensuring non-instantiability.
     private constants$9() {}
-    static final FunctionDescriptor libraw_dcraw_make_mem_image$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_make_mem_image$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_make_mem_image",
-        constants$9.libraw_dcraw_make_mem_image$FUNC
-    );
-    static final FunctionDescriptor libraw_dcraw_make_mem_thumb$FUNC = FunctionDescriptor.of(Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_make_mem_thumb$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_make_mem_thumb",
-        constants$9.libraw_dcraw_make_mem_thumb$FUNC
-    );
-    static final FunctionDescriptor libraw_dcraw_clear_mem$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT
-    );
-    static final MethodHandle libraw_dcraw_clear_mem$MH = RuntimeHelper.downcallHandle(
-        "libraw_dcraw_clear_mem",
-        constants$9.libraw_dcraw_clear_mem$FUNC
-    );
-    static final FunctionDescriptor libraw_set_demosaic$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_set_demosaic$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_demosaic",
-        constants$9.libraw_set_demosaic$FUNC
-    );
-    static final FunctionDescriptor libraw_set_output_color$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_INT$LAYOUT
-    );
-    static final MethodHandle libraw_set_output_color$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_output_color",
-        constants$9.libraw_set_output_color$FUNC
-    );
-    static final FunctionDescriptor libraw_set_adjust_maximum_thr$FUNC = FunctionDescriptor.ofVoid(
-        Constants$root.C_POINTER$LAYOUT,
-        Constants$root.C_FLOAT$LAYOUT
-    );
-    static final MethodHandle libraw_set_adjust_maximum_thr$MH = RuntimeHelper.downcallHandle(
-        "libraw_set_adjust_maximum_thr",
-        constants$9.libraw_set_adjust_maximum_thr$FUNC
-    );
+    static final VarHandle const$0 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("pre_interpolate_cb"));
+    static final MethodHandle const$1 = RuntimeHelper.upcallHandle(libraw_callbacks_t.interpolate_bayer_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$2 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("interpolate_bayer_cb"));
+    static final MethodHandle const$3 = RuntimeHelper.upcallHandle(libraw_callbacks_t.interpolate_xtrans_cb.class, "apply", constants$4.const$2);
+    static final VarHandle const$4 = constants$5.const$0.varHandle(MemoryLayout.PathElement.groupElement("interpolate_xtrans_cb"));
+    static final MethodHandle const$5 = RuntimeHelper.upcallHandle(libraw_callbacks_t.post_interpolate_cb.class, "apply", constants$4.const$2);
 }
 
 

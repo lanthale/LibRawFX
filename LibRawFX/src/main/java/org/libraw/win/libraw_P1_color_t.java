@@ -16,11 +16,8 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_P1_color_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
-    ).withName("libraw_P1_color_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_P1_color_t.$struct$LAYOUT;
+        return constants$20.const$4;
     }
     public static MemorySegment romm_cam$slice(MemorySegment seg) {
         return seg.asSlice(0, 36);
@@ -30,7 +27,7 @@ public class libraw_P1_color_t {
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

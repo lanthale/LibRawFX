@@ -17,16 +17,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class output_data_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_POINTER$LAYOUT.withName("histogram"),
-        Constants$root.C_POINTER$LAYOUT.withName("oprof")
-    ).withName("output_data_t");
     public static MemoryLayout $LAYOUT() {
-        return output_data_t.$struct$LAYOUT;
+        return constants$93.const$4;
     }
-    static final VarHandle histogram$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("histogram"));
     public static VarHandle histogram$VH() {
-        return output_data_t.histogram$VH;
+        return constants$93.const$5;
     }
     /**
      * Getter for field:
@@ -35,7 +30,7 @@ public class output_data_t {
      * }
      */
     public static MemorySegment histogram$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)output_data_t.histogram$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$93.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -44,17 +39,16 @@ public class output_data_t {
      * }
      */
     public static void histogram$set(MemorySegment seg, MemorySegment x) {
-        output_data_t.histogram$VH.set(seg, x);
+        constants$93.const$5.set(seg, x);
     }
     public static MemorySegment histogram$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)output_data_t.histogram$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$93.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void histogram$set(MemorySegment seg, long index, MemorySegment x) {
-        output_data_t.histogram$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$93.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle oprof$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("oprof"));
     public static VarHandle oprof$VH() {
-        return output_data_t.oprof$VH;
+        return constants$94.const$0;
     }
     /**
      * Getter for field:
@@ -63,7 +57,7 @@ public class output_data_t {
      * }
      */
     public static MemorySegment oprof$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)output_data_t.oprof$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$94.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -72,20 +66,20 @@ public class output_data_t {
      * }
      */
     public static void oprof$set(MemorySegment seg, MemorySegment x) {
-        output_data_t.oprof$VH.set(seg, x);
+        constants$94.const$0.set(seg, x);
     }
     public static MemorySegment oprof$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)output_data_t.oprof$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$94.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void oprof$set(MemorySegment seg, long index, MemorySegment x) {
-        output_data_t.oprof$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$94.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

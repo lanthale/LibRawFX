@@ -11,6 +11,9 @@
             <properties>
                 <exec.args>-classpath %classpath org.librawfx.TestApp</exec.args>
                 <exec.executable>java</exec.executable>
+                <exec.vmArgs>--enable-preview</exec.vmArgs>
+                
+                
             </properties>
         </action>
         <action>

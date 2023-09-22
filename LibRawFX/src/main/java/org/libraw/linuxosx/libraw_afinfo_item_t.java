@@ -20,20 +20,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_afinfo_item_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_INT$LAYOUT.withName("AFInfoData_tag"),
-        Constants$root.C_SHORT$LAYOUT.withName("AFInfoData_order"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_INT$LAYOUT.withName("AFInfoData_version"),
-        Constants$root.C_INT$LAYOUT.withName("AFInfoData_length"),
-        Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
-    ).withName("libraw_afinfo_item_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_afinfo_item_t.$struct$LAYOUT;
+        return constants$64.const$4;
     }
-    static final VarHandle AFInfoData_tag$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_tag"));
     public static VarHandle AFInfoData_tag$VH() {
-        return libraw_afinfo_item_t.AFInfoData_tag$VH;
+        return constants$64.const$5;
     }
     /**
      * Getter for field:
@@ -42,7 +33,7 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static int AFInfoData_tag$get(MemorySegment seg) {
-        return (int)libraw_afinfo_item_t.AFInfoData_tag$VH.get(seg);
+        return (int)constants$64.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -51,17 +42,16 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static void AFInfoData_tag$set(MemorySegment seg, int x) {
-        libraw_afinfo_item_t.AFInfoData_tag$VH.set(seg, x);
+        constants$64.const$5.set(seg, x);
     }
     public static int AFInfoData_tag$get(MemorySegment seg, long index) {
-        return (int)libraw_afinfo_item_t.AFInfoData_tag$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$64.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void AFInfoData_tag$set(MemorySegment seg, long index, int x) {
-        libraw_afinfo_item_t.AFInfoData_tag$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$64.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData_order$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_order"));
     public static VarHandle AFInfoData_order$VH() {
-        return libraw_afinfo_item_t.AFInfoData_order$VH;
+        return constants$65.const$0;
     }
     /**
      * Getter for field:
@@ -70,7 +60,7 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static short AFInfoData_order$get(MemorySegment seg) {
-        return (short)libraw_afinfo_item_t.AFInfoData_order$VH.get(seg);
+        return (short)constants$65.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -79,17 +69,16 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static void AFInfoData_order$set(MemorySegment seg, short x) {
-        libraw_afinfo_item_t.AFInfoData_order$VH.set(seg, x);
+        constants$65.const$0.set(seg, x);
     }
     public static short AFInfoData_order$get(MemorySegment seg, long index) {
-        return (short)libraw_afinfo_item_t.AFInfoData_order$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$65.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void AFInfoData_order$set(MemorySegment seg, long index, short x) {
-        libraw_afinfo_item_t.AFInfoData_order$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$65.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData_version$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_version"));
     public static VarHandle AFInfoData_version$VH() {
-        return libraw_afinfo_item_t.AFInfoData_version$VH;
+        return constants$65.const$1;
     }
     /**
      * Getter for field:
@@ -98,7 +87,7 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static int AFInfoData_version$get(MemorySegment seg) {
-        return (int)libraw_afinfo_item_t.AFInfoData_version$VH.get(seg);
+        return (int)constants$65.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -107,17 +96,16 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static void AFInfoData_version$set(MemorySegment seg, int x) {
-        libraw_afinfo_item_t.AFInfoData_version$VH.set(seg, x);
+        constants$65.const$1.set(seg, x);
     }
     public static int AFInfoData_version$get(MemorySegment seg, long index) {
-        return (int)libraw_afinfo_item_t.AFInfoData_version$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$65.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void AFInfoData_version$set(MemorySegment seg, long index, int x) {
-        libraw_afinfo_item_t.AFInfoData_version$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$65.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData_length$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData_length"));
     public static VarHandle AFInfoData_length$VH() {
-        return libraw_afinfo_item_t.AFInfoData_length$VH;
+        return constants$65.const$2;
     }
     /**
      * Getter for field:
@@ -126,7 +114,7 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static int AFInfoData_length$get(MemorySegment seg) {
-        return (int)libraw_afinfo_item_t.AFInfoData_length$VH.get(seg);
+        return (int)constants$65.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -135,17 +123,16 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static void AFInfoData_length$set(MemorySegment seg, int x) {
-        libraw_afinfo_item_t.AFInfoData_length$VH.set(seg, x);
+        constants$65.const$2.set(seg, x);
     }
     public static int AFInfoData_length$get(MemorySegment seg, long index) {
-        return (int)libraw_afinfo_item_t.AFInfoData_length$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$65.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void AFInfoData_length$set(MemorySegment seg, long index, int x) {
-        libraw_afinfo_item_t.AFInfoData_length$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$65.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFInfoData$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFInfoData"));
     public static VarHandle AFInfoData$VH() {
-        return libraw_afinfo_item_t.AFInfoData$VH;
+        return constants$65.const$3;
     }
     /**
      * Getter for field:
@@ -154,7 +141,7 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static MemorySegment AFInfoData$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_afinfo_item_t.AFInfoData$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$65.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -163,20 +150,20 @@ public class libraw_afinfo_item_t {
      * }
      */
     public static void AFInfoData$set(MemorySegment seg, MemorySegment x) {
-        libraw_afinfo_item_t.AFInfoData$VH.set(seg, x);
+        constants$65.const$3.set(seg, x);
     }
     public static MemorySegment AFInfoData$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_afinfo_item_t.AFInfoData$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$65.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void AFInfoData$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_afinfo_item_t.AFInfoData$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$65.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

@@ -30,844 +30,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_data_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_POINTER$LAYOUT.withName("image"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("raw_height"),
-            Constants$root.C_SHORT$LAYOUT.withName("raw_width"),
-            Constants$root.C_SHORT$LAYOUT.withName("height"),
-            Constants$root.C_SHORT$LAYOUT.withName("width"),
-            Constants$root.C_SHORT$LAYOUT.withName("top_margin"),
-            Constants$root.C_SHORT$LAYOUT.withName("left_margin"),
-            Constants$root.C_SHORT$LAYOUT.withName("iheight"),
-            Constants$root.C_SHORT$LAYOUT.withName("iwidth"),
-            Constants$root.C_INT$LAYOUT.withName("raw_pitch"),
-            MemoryLayout.paddingLayout(32),
-            Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
-            Constants$root.C_INT$LAYOUT.withName("flip"),
-            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("mask"),
-            Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
-            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("cleft"),
-                Constants$root.C_SHORT$LAYOUT.withName("ctop"),
-                Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("cheight")
-            ).withName("libraw_raw_inset_crop_t")).withName("raw_inset_crops"),
-            MemoryLayout.paddingLayout(16)
-        ).withName("sizes"),
-        MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("guard"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("make"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("software"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_make"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_model"),
-            Constants$root.C_INT$LAYOUT.withName("maker_index"),
-            Constants$root.C_INT$LAYOUT.withName("raw_count"),
-            Constants$root.C_INT$LAYOUT.withName("dng_version"),
-            Constants$root.C_INT$LAYOUT.withName("is_foveon"),
-            Constants$root.C_INT$LAYOUT.withName("colors"),
-            Constants$root.C_INT$LAYOUT.withName("filters"),
-            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans"),
-            MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans_abs"),
-            MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("cdesc"),
-            MemoryLayout.paddingLayout(24),
-            Constants$root.C_INT$LAYOUT.withName("xmplen"),
-            Constants$root.C_POINTER$LAYOUT.withName("xmpdata")
-        ).withName("idata"),
-        MemoryLayout.structLayout(
-            Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
-            Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
-            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
-            Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal"),
-            Constants$root.C_FLOAT$LAYOUT.withName("EXIF_MaxAp"),
-            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("LensMake"),
-            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Lens"),
-            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("LensSerial"),
-            MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("InternalLensSerial"),
-            Constants$root.C_SHORT$LAYOUT.withName("FocalLengthIn35mmFormat"),
-            MemoryLayout.paddingLayout(16),
-            MemoryLayout.structLayout(
-                Constants$root.C_FLOAT$LAYOUT.withName("EffectiveMaxAp"),
-                Constants$root.C_CHAR$LAYOUT.withName("LensIDNumber"),
-                Constants$root.C_CHAR$LAYOUT.withName("LensFStops"),
-                Constants$root.C_CHAR$LAYOUT.withName("MCUVersion"),
-                Constants$root.C_CHAR$LAYOUT.withName("LensType")
-            ).withName("nikon"),
-            MemoryLayout.structLayout(
-                Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal")
-            ).withName("dng"),
-            MemoryLayout.structLayout(
-                Constants$root.C_LONG_LONG$LAYOUT.withName("LensID"),
-                MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Lens"),
-                Constants$root.C_SHORT$LAYOUT.withName("LensFormat"),
-                Constants$root.C_SHORT$LAYOUT.withName("LensMount"),
-                MemoryLayout.paddingLayout(32),
-                Constants$root.C_LONG_LONG$LAYOUT.withName("CamID"),
-                Constants$root.C_SHORT$LAYOUT.withName("CameraFormat"),
-                Constants$root.C_SHORT$LAYOUT.withName("CameraMount"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("body"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocalType"),
-                MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("LensFeatures_pre"),
-                MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("LensFeatures_suf"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MinAp4MinFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MinAp4MaxFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxAp"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MinAp"),
-                Constants$root.C_FLOAT$LAYOUT.withName("CurFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("CurAp"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4CurFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MinAp4CurFocal"),
-                Constants$root.C_FLOAT$LAYOUT.withName("MinFocusDistance"),
-                Constants$root.C_FLOAT$LAYOUT.withName("FocusRangeIndex"),
-                Constants$root.C_FLOAT$LAYOUT.withName("LensFStops"),
-                MemoryLayout.paddingLayout(32),
-                Constants$root.C_LONG_LONG$LAYOUT.withName("TeleconverterID"),
-                MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Teleconverter"),
-                Constants$root.C_LONG_LONG$LAYOUT.withName("AdapterID"),
-                MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Adapter"),
-                Constants$root.C_LONG_LONG$LAYOUT.withName("AttachmentID"),
-                MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("Attachment"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocalUnits"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_FLOAT$LAYOUT.withName("FocalLengthIn35mmFormat")
-            ).withName("makernotes")
-        ).withName("lens"),
-        MemoryLayout.structLayout(
-            MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("ColorDataVer"),
-                Constants$root.C_INT$LAYOUT.withName("ColorDataSubVer"),
-                Constants$root.C_INT$LAYOUT.withName("SpecularWhiteLevel"),
-                Constants$root.C_INT$LAYOUT.withName("NormalWhiteLevel"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("ChannelBlackLevel"),
-                Constants$root.C_INT$LAYOUT.withName("AverageBlackLevel"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("multishot"),
-                Constants$root.C_SHORT$LAYOUT.withName("MeteringMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("SpotMeteringMode"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashMeteringMode"),
-                MemoryLayout.paddingLayout(8),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashExposureLock"),
-                Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("AESetting"),
-                Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashActivity"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashBits"),
-                Constants$root.C_SHORT$LAYOUT.withName("ManualFlashOutput"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashOutput"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashGuideNumber"),
-                Constants$root.C_SHORT$LAYOUT.withName("ContinuousDrive"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
-                Constants$root.C_INT$LAYOUT.withName("AFMicroAdjMode"),
-                Constants$root.C_FLOAT$LAYOUT.withName("AFMicroAdjValue"),
-                Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
-                Constants$root.C_SHORT$LAYOUT.withName("RecordMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("SRAWQuality"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("wbi"),
-                Constants$root.C_SHORT$LAYOUT.withName("RF_lensID"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("AutoLightingOptimizer"),
-                Constants$root.C_INT$LAYOUT.withName("HighlightTonePriority"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("t"),
-                    Constants$root.C_SHORT$LAYOUT.withName("l"),
-                    Constants$root.C_SHORT$LAYOUT.withName("b"),
-                    Constants$root.C_SHORT$LAYOUT.withName("r")
-                ).withName("DefaultCropAbsolute"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("t"),
-                    Constants$root.C_SHORT$LAYOUT.withName("l"),
-                    Constants$root.C_SHORT$LAYOUT.withName("b"),
-                    Constants$root.C_SHORT$LAYOUT.withName("r")
-                ).withName("RecommendedImageArea"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("t"),
-                    Constants$root.C_SHORT$LAYOUT.withName("l"),
-                    Constants$root.C_SHORT$LAYOUT.withName("b"),
-                    Constants$root.C_SHORT$LAYOUT.withName("r")
-                ).withName("LeftOpticalBlack"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("t"),
-                    Constants$root.C_SHORT$LAYOUT.withName("l"),
-                    Constants$root.C_SHORT$LAYOUT.withName("b"),
-                    Constants$root.C_SHORT$LAYOUT.withName("r")
-                ).withName("UpperOpticalBlack"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("t"),
-                    Constants$root.C_SHORT$LAYOUT.withName("l"),
-                    Constants$root.C_SHORT$LAYOUT.withName("b"),
-                    Constants$root.C_SHORT$LAYOUT.withName("r")
-                ).withName("ActiveArea"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("ISOgain")
-            ).withName("canon"),
-            MemoryLayout.structLayout(
-                Constants$root.C_DOUBLE$LAYOUT.withName("ExposureBracketValue"),
-                Constants$root.C_SHORT$LAYOUT.withName("ActiveDLighting"),
-                Constants$root.C_SHORT$LAYOUT.withName("ShootingMode"),
-                MemoryLayout.sequenceLayout(7, Constants$root.C_CHAR$LAYOUT).withName("ImageStabilization"),
-                Constants$root.C_CHAR$LAYOUT.withName("VibrationReduction"),
-                Constants$root.C_CHAR$LAYOUT.withName("VRMode"),
-                MemoryLayout.sequenceLayout(13, Constants$root.C_CHAR$LAYOUT).withName("FlashSetting"),
-                MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("FlashType"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashExposureCompensation"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("ExternalFlashExposureComp"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashExposureBracketValue"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashMode"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashExposureCompensation2"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashExposureCompensation3"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashExposureCompensation4"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashSource"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_CHAR$LAYOUT).withName("FlashFirmware"),
-                Constants$root.C_CHAR$LAYOUT.withName("ExternalFlashFlags"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashControlCommanderMode"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashOutputAndCompensation"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashFocalLength"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashGNDistance"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashGroupControlMode"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashGroupOutputAndCompensation"),
-                Constants$root.C_CHAR$LAYOUT.withName("FlashColorFilter"),
-                MemoryLayout.paddingLayout(8),
-                Constants$root.C_SHORT$LAYOUT.withName("NEFCompression"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("ExposureMode"),
-                Constants$root.C_INT$LAYOUT.withName("ExposureProgram"),
-                Constants$root.C_INT$LAYOUT.withName("nMEshots"),
-                Constants$root.C_INT$LAYOUT.withName("MEgainOn"),
-                MemoryLayout.paddingLayout(32),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_DOUBLE$LAYOUT).withName("ME_WB"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFFineTune"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFFineTuneIndex"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFFineTuneAdj"),
-                MemoryLayout.paddingLayout(8),
-                Constants$root.C_INT$LAYOUT.withName("LensDataVersion"),
-                Constants$root.C_INT$LAYOUT.withName("FlashInfoVersion"),
-                Constants$root.C_INT$LAYOUT.withName("ColorBalanceVersion"),
-                Constants$root.C_CHAR$LAYOUT.withName("key"),
-                MemoryLayout.paddingLayout(8),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("NEFBitDepth"),
-                Constants$root.C_SHORT$LAYOUT.withName("HighSpeedCropFormat"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("cleft"),
-                    Constants$root.C_SHORT$LAYOUT.withName("ctop"),
-                    Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                    Constants$root.C_SHORT$LAYOUT.withName("cheight")
-                ).withName("SensorHighSpeedCrop"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
-                Constants$root.C_SHORT$LAYOUT.withName("Active_D_Lighting"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("ShotInfoVersion"),
-                Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
-                MemoryLayout.paddingLayout(48),
-                Constants$root.C_DOUBLE$LAYOUT.withName("RollAngle"),
-                Constants$root.C_DOUBLE$LAYOUT.withName("PitchAngle"),
-                Constants$root.C_DOUBLE$LAYOUT.withName("YawAngle")
-            ).withName("nikon"),
-            MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("BaseISO"),
-                MemoryLayout.paddingLayout(32),
-                Constants$root.C_DOUBLE$LAYOUT.withName("Gain"),
-                MemoryLayout.sequenceLayout(8, Constants$root.C_CHAR$LAYOUT).withName("Sensor"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SensorUnit"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("HostBody"),
-                Constants$root.C_INT$LAYOUT.withName("SensorCode"),
-                Constants$root.C_INT$LAYOUT.withName("SensorSubCode"),
-                Constants$root.C_INT$LAYOUT.withName("CoatingCode"),
-                Constants$root.C_INT$LAYOUT.withName("uncropped"),
-                MemoryLayout.sequenceLayout(32, Constants$root.C_CHAR$LAYOUT).withName("CaptureSequenceInitiator"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SensorUnitConnector"),
-                Constants$root.C_INT$LAYOUT.withName("format"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("nIFD_CM"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("RecommendedCrop"),
-                MemoryLayout.paddingLayout(32),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_DOUBLE$LAYOUT)).withName("mnColorMatrix")
-            ).withName("hasselblad"),
-            MemoryLayout.structLayout(
-                Constants$root.C_FLOAT$LAYOUT.withName("ExpoMidPointShift"),
-                Constants$root.C_SHORT$LAYOUT.withName("DynamicRange"),
-                Constants$root.C_SHORT$LAYOUT.withName("FilmMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("DynamicRangeSetting"),
-                Constants$root.C_SHORT$LAYOUT.withName("DevelopmentDynamicRange"),
-                Constants$root.C_SHORT$LAYOUT.withName("AutoDynamicRange"),
-                Constants$root.C_SHORT$LAYOUT.withName("DRangePriority"),
-                Constants$root.C_SHORT$LAYOUT.withName("DRangePriorityAuto"),
-                Constants$root.C_SHORT$LAYOUT.withName("DRangePriorityFixed"),
-                Constants$root.C_FLOAT$LAYOUT.withName("BrightnessCompensation"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFMode"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusPixel"),
-                Constants$root.C_SHORT$LAYOUT.withName("PrioritySettings"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("FocusSettings"),
-                Constants$root.C_INT$LAYOUT.withName("AF_C_Settings"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusWarning"),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("ImageStabilization"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("WB_Preset"),
-                Constants$root.C_SHORT$LAYOUT.withName("ShutterType"),
-                Constants$root.C_SHORT$LAYOUT.withName("ExrMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("Macro"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("Rating"),
-                Constants$root.C_SHORT$LAYOUT.withName("CropMode"),
-                MemoryLayout.sequenceLayout(13, Constants$root.C_CHAR$LAYOUT).withName("SerialSignature"),
-                MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("SensorID"),
-                MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("RAFVersion"),
-                MemoryLayout.paddingLayout(24),
-                Constants$root.C_INT$LAYOUT.withName("RAFDataGeneration"),
-                Constants$root.C_SHORT$LAYOUT.withName("RAFDataVersion"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("isTSNERDTS"),
-                Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
-                MemoryLayout.sequenceLayout(9, Constants$root.C_SHORT$LAYOUT).withName("BlackLevel"),
-                MemoryLayout.sequenceLayout(32, Constants$root.C_INT$LAYOUT).withName("RAFData_ImageSizeTable"),
-                Constants$root.C_INT$LAYOUT.withName("AutoBracketing"),
-                Constants$root.C_INT$LAYOUT.withName("SequenceNumber"),
-                Constants$root.C_INT$LAYOUT.withName("SeriesLength"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_FLOAT$LAYOUT).withName("PixelShiftOffset"),
-                Constants$root.C_INT$LAYOUT.withName("ImageCount")
-            ).withName("fuji"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT).withName("CameraType2"),
-                Constants$root.C_SHORT$LAYOUT.withName("ValidBits"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("SensorCalibration"),
-                MemoryLayout.sequenceLayout(5, Constants$root.C_SHORT$LAYOUT).withName("DriveMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("AutoFocus"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_INT$LAYOUT).withName("AFAreas"),
-                MemoryLayout.paddingLayout(32),
-                MemoryLayout.sequenceLayout(5, Constants$root.C_DOUBLE$LAYOUT).withName("AFPointSelected"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFResult"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFFineTune"),
-                MemoryLayout.paddingLayout(8),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_SHORT$LAYOUT).withName("AFFineTuneAdj"),
-                MemoryLayout.paddingLayout(16),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_INT$LAYOUT).withName("SpecialMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("ZoomStepCount"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusStepCount"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusStepInfinity"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusStepNear"),
-                Constants$root.C_DOUBLE$LAYOUT.withName("FocusDistance"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("AspectFrame"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("StackedImage"),
-                Constants$root.C_CHAR$LAYOUT.withName("isLiveND"),
-                MemoryLayout.paddingLayout(24),
-                Constants$root.C_INT$LAYOUT.withName("LiveNDfactor"),
-                Constants$root.C_SHORT$LAYOUT.withName("Panorama_mode"),
-                Constants$root.C_SHORT$LAYOUT.withName("Panorama_frameNum"),
-                MemoryLayout.paddingLayout(32)
-            ).withName("olympus"),
-            MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("CameraType"),
-                Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_version"),
-                Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_ReleaseMode2"),
-                Constants$root.C_INT$LAYOUT.withName("Sony0x9400_SequenceImageNumber"),
-                Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_SequenceLength1"),
-                MemoryLayout.paddingLayout(24),
-                Constants$root.C_INT$LAYOUT.withName("Sony0x9400_SequenceFileNumber"),
-                Constants$root.C_CHAR$LAYOUT.withName("Sony0x9400_SequenceLength2"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFAreaModeSetting"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FlexibleSpotPosition"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFPointSelected"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFPointSelected_0x201e"),
-                Constants$root.C_SHORT$LAYOUT.withName("nAFPointsUsed"),
-                MemoryLayout.sequenceLayout(10, Constants$root.C_CHAR$LAYOUT).withName("AFPointsUsed"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFTracking"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFType"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("FocusLocation"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusPosition"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjValue"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjOn"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFMicroAdjRegisteredLenses"),
-                MemoryLayout.paddingLayout(8),
-                Constants$root.C_SHORT$LAYOUT.withName("VariableLowPassFilter"),
-                Constants$root.C_INT$LAYOUT.withName("LongExposureNoiseReduction"),
-                Constants$root.C_SHORT$LAYOUT.withName("HighISONoiseReduction"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("HDR"),
-                Constants$root.C_SHORT$LAYOUT.withName("group2010"),
-                Constants$root.C_SHORT$LAYOUT.withName("group9050"),
-                Constants$root.C_SHORT$LAYOUT.withName("real_iso_offset"),
-                Constants$root.C_SHORT$LAYOUT.withName("MeteringMode_offset"),
-                Constants$root.C_SHORT$LAYOUT.withName("ExposureProgram_offset"),
-                Constants$root.C_SHORT$LAYOUT.withName("ReleaseMode2_offset"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("MinoltaCamID"),
-                Constants$root.C_FLOAT$LAYOUT.withName("firmware"),
-                Constants$root.C_SHORT$LAYOUT.withName("ImageCount3_offset"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("ImageCount3"),
-                Constants$root.C_INT$LAYOUT.withName("ElectronicFrontCurtainShutter"),
-                Constants$root.C_SHORT$LAYOUT.withName("MeteringMode2"),
-                MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("SonyDateTime"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("ShotNumberSincePowerUp"),
-                Constants$root.C_SHORT$LAYOUT.withName("PixelShiftGroupPrefix"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("PixelShiftGroupID"),
-                Constants$root.C_CHAR$LAYOUT.withName("nShotsInPixelShiftGroup"),
-                Constants$root.C_CHAR$LAYOUT.withName("numInPixelShiftGroup"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_ImageHeight"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_ImageWidth"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_Total_bps"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_Active_bps"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_StorageMethod"),
-                Constants$root.C_SHORT$LAYOUT.withName("prd_BayerPattern"),
-                Constants$root.C_SHORT$LAYOUT.withName("SonyRawFileType"),
-                Constants$root.C_SHORT$LAYOUT.withName("RAWFileType"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("Quality"),
-                Constants$root.C_SHORT$LAYOUT.withName("FileFormat"),
-                MemoryLayout.sequenceLayout(16, Constants$root.C_CHAR$LAYOUT).withName("MetaVersion"),
-                MemoryLayout.paddingLayout(16)
-            ).withName("sony"),
-            MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("BlackLevelTop"),
-                Constants$root.C_SHORT$LAYOUT.withName("BlackLevelBottom"),
-                Constants$root.C_SHORT$LAYOUT.withName("offset_left"),
-                Constants$root.C_SHORT$LAYOUT.withName("offset_top"),
-                Constants$root.C_SHORT$LAYOUT.withName("clipBlack"),
-                Constants$root.C_SHORT$LAYOUT.withName("clipWhite"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camDaylight"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camTungsten"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camFluorescent"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camFlash"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camCustom"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("romm_camAuto"),
-                Constants$root.C_SHORT$LAYOUT.withName("val018percent"),
-                Constants$root.C_SHORT$LAYOUT.withName("val100percent"),
-                Constants$root.C_SHORT$LAYOUT.withName("val170percent"),
-                Constants$root.C_SHORT$LAYOUT.withName("MakerNoteKodak8a"),
-                Constants$root.C_FLOAT$LAYOUT.withName("ISOCalibrationGain"),
-                Constants$root.C_FLOAT$LAYOUT.withName("AnalogISO")
-            ).withName("kodak"),
-            MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("Compression"),
-                Constants$root.C_SHORT$LAYOUT.withName("BlackLevelDim"),
-                MemoryLayout.sequenceLayout(8, Constants$root.C_FLOAT$LAYOUT).withName("BlackLevel"),
-                Constants$root.C_INT$LAYOUT.withName("Multishot"),
-                Constants$root.C_FLOAT$LAYOUT.withName("gamma"),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_INT$LAYOUT).withName("HighISOMultiplier"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusStepNear"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusStepCount"),
-                Constants$root.C_INT$LAYOUT.withName("ZoomPosition"),
-                Constants$root.C_INT$LAYOUT.withName("LensManufacturer")
-            ).withName("panasonic"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("DriveMode"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("FocusMode"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_SHORT$LAYOUT).withName("AFPointSelected"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFPointSelected_Area"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("AFPointsInFocus_version"),
-                Constants$root.C_INT$LAYOUT.withName("AFPointsInFocus"),
-                Constants$root.C_SHORT$LAYOUT.withName("FocusPosition"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAdjustment"),
-                Constants$root.C_CHAR$LAYOUT.withName("AFPointMode"),
-                Constants$root.C_CHAR$LAYOUT.withName("MultiExposure"),
-                Constants$root.C_SHORT$LAYOUT.withName("Quality")
-            ).withName("pentax"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("Software"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SystemType"),
-                MemoryLayout.sequenceLayout(256, Constants$root.C_CHAR$LAYOUT).withName("FirmwareString"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("SystemModel")
-            ).withName("phaseone"),
-            MemoryLayout.paddingLayout(32),
-            MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("AFStatus"),
-                MemoryLayout.paddingLayout(16),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("AFAreaXPosition"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("AFAreaYPosition"),
-                Constants$root.C_SHORT$LAYOUT.withName("AFAreaMode"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_INT$LAYOUT.withName("SensorWidth"),
-                Constants$root.C_INT$LAYOUT.withName("SensorHeight"),
-                Constants$root.C_INT$LAYOUT.withName("CroppedImageWidth"),
-                Constants$root.C_INT$LAYOUT.withName("CroppedImageHeight"),
-                Constants$root.C_SHORT$LAYOUT.withName("WideAdapter"),
-                Constants$root.C_SHORT$LAYOUT.withName("CropMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("NDFilter"),
-                Constants$root.C_SHORT$LAYOUT.withName("AutoBracketing"),
-                Constants$root.C_SHORT$LAYOUT.withName("MacroMode"),
-                Constants$root.C_SHORT$LAYOUT.withName("FlashMode"),
-                MemoryLayout.paddingLayout(32),
-                Constants$root.C_DOUBLE$LAYOUT.withName("FlashExposureComp"),
-                Constants$root.C_DOUBLE$LAYOUT.withName("ManualFlashOutput")
-            ).withName("ricoh"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("ImageSizeFull"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("ImageSizeCrop"),
-                MemoryLayout.sequenceLayout(2, Constants$root.C_INT$LAYOUT).withName("ColorSpace"),
-                MemoryLayout.sequenceLayout(11, Constants$root.C_INT$LAYOUT).withName("key"),
-                MemoryLayout.paddingLayout(32),
-                Constants$root.C_DOUBLE$LAYOUT.withName("DigitalGain"),
-                Constants$root.C_INT$LAYOUT.withName("DeviceType"),
-                MemoryLayout.sequenceLayout(32, Constants$root.C_CHAR$LAYOUT).withName("LensFirmware"),
-                MemoryLayout.paddingLayout(32)
-            ).withName("samsung"),
-            MemoryLayout.structLayout(
-                Constants$root.C_FLOAT$LAYOUT.withName("FlashEC"),
-                Constants$root.C_FLOAT$LAYOUT.withName("FlashGN"),
-                Constants$root.C_FLOAT$LAYOUT.withName("CameraTemperature"),
-                Constants$root.C_FLOAT$LAYOUT.withName("SensorTemperature"),
-                Constants$root.C_FLOAT$LAYOUT.withName("SensorTemperature2"),
-                Constants$root.C_FLOAT$LAYOUT.withName("LensTemperature"),
-                Constants$root.C_FLOAT$LAYOUT.withName("AmbientTemperature"),
-                Constants$root.C_FLOAT$LAYOUT.withName("BatteryTemperature"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifAmbientTemperature"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifHumidity"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifPressure"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifWaterDepth"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifAcceleration"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifCameraElevationAngle"),
-                Constants$root.C_FLOAT$LAYOUT.withName("real_ISO"),
-                Constants$root.C_FLOAT$LAYOUT.withName("exifExposureIndex"),
-                Constants$root.C_SHORT$LAYOUT.withName("ColorSpace"),
-                MemoryLayout.sequenceLayout(128, Constants$root.C_CHAR$LAYOUT).withName("firmware"),
-                MemoryLayout.paddingLayout(16),
-                Constants$root.C_FLOAT$LAYOUT.withName("ExposureCalibrationShift"),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.structLayout(
-                    Constants$root.C_INT$LAYOUT.withName("AFInfoData_tag"),
-                    Constants$root.C_SHORT$LAYOUT.withName("AFInfoData_order"),
-                    MemoryLayout.paddingLayout(16),
-                    Constants$root.C_INT$LAYOUT.withName("AFInfoData_version"),
-                    Constants$root.C_INT$LAYOUT.withName("AFInfoData_length"),
-                    Constants$root.C_POINTER$LAYOUT.withName("AFInfoData")
-                ).withName("libraw_afinfo_item_t")).withName("afdata"),
-                Constants$root.C_INT$LAYOUT.withName("afcount"),
-                MemoryLayout.paddingLayout(32)
-            ).withName("common")
-        ).withName("makernotes"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("DriveMode"),
-            Constants$root.C_SHORT$LAYOUT.withName("FocusMode"),
-            Constants$root.C_SHORT$LAYOUT.withName("MeteringMode"),
-            Constants$root.C_SHORT$LAYOUT.withName("AFPoint"),
-            Constants$root.C_SHORT$LAYOUT.withName("ExposureMode"),
-            Constants$root.C_SHORT$LAYOUT.withName("ExposureProgram"),
-            Constants$root.C_SHORT$LAYOUT.withName("ImageStabilization"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("BodySerial"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("InternalBodySerial")
-        ).withName("shootinginfo"),
-        MemoryLayout.paddingLayout(16),
-        MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("greybox"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("cropbox"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_DOUBLE$LAYOUT).withName("aber"),
-            MemoryLayout.sequenceLayout(6, Constants$root.C_DOUBLE$LAYOUT).withName("gamm"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_mul"),
-            Constants$root.C_FLOAT$LAYOUT.withName("bright"),
-            Constants$root.C_FLOAT$LAYOUT.withName("threshold"),
-            Constants$root.C_INT$LAYOUT.withName("half_size"),
-            Constants$root.C_INT$LAYOUT.withName("four_color_rgb"),
-            Constants$root.C_INT$LAYOUT.withName("highlight"),
-            Constants$root.C_INT$LAYOUT.withName("use_auto_wb"),
-            Constants$root.C_INT$LAYOUT.withName("use_camera_wb"),
-            Constants$root.C_INT$LAYOUT.withName("use_camera_matrix"),
-            Constants$root.C_INT$LAYOUT.withName("output_color"),
-            MemoryLayout.paddingLayout(32),
-            Constants$root.C_POINTER$LAYOUT.withName("output_profile"),
-            Constants$root.C_POINTER$LAYOUT.withName("camera_profile"),
-            Constants$root.C_POINTER$LAYOUT.withName("bad_pixels"),
-            Constants$root.C_POINTER$LAYOUT.withName("dark_frame"),
-            Constants$root.C_INT$LAYOUT.withName("output_bps"),
-            Constants$root.C_INT$LAYOUT.withName("output_tiff"),
-            Constants$root.C_INT$LAYOUT.withName("output_flags"),
-            Constants$root.C_INT$LAYOUT.withName("user_flip"),
-            Constants$root.C_INT$LAYOUT.withName("user_qual"),
-            Constants$root.C_INT$LAYOUT.withName("user_black"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("user_cblack"),
-            Constants$root.C_INT$LAYOUT.withName("user_sat"),
-            Constants$root.C_INT$LAYOUT.withName("med_passes"),
-            Constants$root.C_FLOAT$LAYOUT.withName("auto_bright_thr"),
-            Constants$root.C_FLOAT$LAYOUT.withName("adjust_maximum_thr"),
-            Constants$root.C_INT$LAYOUT.withName("no_auto_bright"),
-            Constants$root.C_INT$LAYOUT.withName("use_fuji_rotate"),
-            Constants$root.C_INT$LAYOUT.withName("green_matching"),
-            Constants$root.C_INT$LAYOUT.withName("dcb_iterations"),
-            Constants$root.C_INT$LAYOUT.withName("dcb_enhance_fl"),
-            Constants$root.C_INT$LAYOUT.withName("fbdd_noiserd"),
-            Constants$root.C_INT$LAYOUT.withName("exp_correc"),
-            Constants$root.C_FLOAT$LAYOUT.withName("exp_shift"),
-            Constants$root.C_FLOAT$LAYOUT.withName("exp_preser"),
-            Constants$root.C_INT$LAYOUT.withName("no_auto_scale"),
-            Constants$root.C_INT$LAYOUT.withName("no_interpolation"),
-            MemoryLayout.paddingLayout(32)
-        ).withName("params"),
-        MemoryLayout.structLayout(
-            Constants$root.C_INT$LAYOUT.withName("use_rawspeed"),
-            Constants$root.C_INT$LAYOUT.withName("use_dngsdk"),
-            Constants$root.C_INT$LAYOUT.withName("options"),
-            Constants$root.C_INT$LAYOUT.withName("shot_select"),
-            Constants$root.C_INT$LAYOUT.withName("specials"),
-            Constants$root.C_INT$LAYOUT.withName("max_raw_memory_mb"),
-            Constants$root.C_INT$LAYOUT.withName("sony_arw2_posterization_thr"),
-            Constants$root.C_FLOAT$LAYOUT.withName("coolscan_nef_gamma"),
-            MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("p4shot_order"),
-            MemoryLayout.paddingLayout(24),
-            Constants$root.C_POINTER$LAYOUT.withName("custom_camera_strings")
-        ).withName("rawparams"),
-        Constants$root.C_INT$LAYOUT.withName("progress_flags"),
-        Constants$root.C_INT$LAYOUT.withName("process_warnings"),
-        MemoryLayout.structLayout(
-            MemoryLayout.sequenceLayout(65536, Constants$root.C_SHORT$LAYOUT).withName("curve"),
-            MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("cblack"),
-            Constants$root.C_INT$LAYOUT.withName("black"),
-            Constants$root.C_INT$LAYOUT.withName("data_maximum"),
-            Constants$root.C_INT$LAYOUT.withName("maximum"),
-            MemoryLayout.paddingLayout(32),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_LONG_LONG$LAYOUT).withName("linear_max"),
-            Constants$root.C_FLOAT$LAYOUT.withName("fmaximum"),
-            Constants$root.C_FLOAT$LAYOUT.withName("fnorm"),
-            MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, Constants$root.C_SHORT$LAYOUT)).withName("white"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("cam_mul"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("pre_mul"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("cmatrix"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("ccm"),
-            MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("rgb_cam"),
-            MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("cam_xyz"),
-            MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("format"),
-                Constants$root.C_INT$LAYOUT.withName("key_off"),
-                Constants$root.C_INT$LAYOUT.withName("tag_21a"),
-                Constants$root.C_INT$LAYOUT.withName("t_black"),
-                Constants$root.C_INT$LAYOUT.withName("split_col"),
-                Constants$root.C_INT$LAYOUT.withName("black_col"),
-                Constants$root.C_INT$LAYOUT.withName("split_row"),
-                Constants$root.C_INT$LAYOUT.withName("black_row"),
-                Constants$root.C_FLOAT$LAYOUT.withName("tag_210")
-            ).withName("phase_one_data"),
-            Constants$root.C_FLOAT$LAYOUT.withName("flash_used"),
-            Constants$root.C_FLOAT$LAYOUT.withName("canon_ev"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model2"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("UniqueCameraModel"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("LocalizedCameraModel"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("ImageUniqueID"),
-            MemoryLayout.sequenceLayout(17, Constants$root.C_CHAR$LAYOUT).withName("RawDataUniqueID"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("OriginalRawFileName"),
-            MemoryLayout.paddingLayout(24),
-            Constants$root.C_POINTER$LAYOUT.withName("profile"),
-            Constants$root.C_INT$LAYOUT.withName("profile_length"),
-            MemoryLayout.sequenceLayout(8, Constants$root.C_INT$LAYOUT).withName("black_stat"),
-            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("parsedfields"),
-                Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
-                MemoryLayout.paddingLayout(16),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-            ).withName("libraw_dng_color_t")).withName("dng_color"),
-            MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("parsedfields"),
-                MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
-                Constants$root.C_INT$LAYOUT.withName("dng_black"),
-                MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
-                Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("dng_whitelevel"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
-                Constants$root.C_INT$LAYOUT.withName("preview_colorspace"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
-                Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
-                Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
-            ).withName("dng_levels"),
-            MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("WB_Coeffs"),
-            MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, Constants$root.C_FLOAT$LAYOUT)).withName("WBCT_Coeffs"),
-            Constants$root.C_INT$LAYOUT.withName("as_shot_wb_applied"),
-            MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
-            ).withName("libraw_P1_color_t")).withName("P1_color"),
-            Constants$root.C_INT$LAYOUT.withName("raw_bps"),
-            Constants$root.C_INT$LAYOUT.withName("ExifColorSpace")
-        ).withName("color"),
-        MemoryLayout.structLayout(
-            Constants$root.C_FLOAT$LAYOUT.withName("iso_speed"),
-            Constants$root.C_FLOAT$LAYOUT.withName("shutter"),
-            Constants$root.C_FLOAT$LAYOUT.withName("aperture"),
-            Constants$root.C_FLOAT$LAYOUT.withName("focal_len"),
-            Constants$root.C_LONG_LONG$LAYOUT.withName("timestamp"),
-            Constants$root.C_INT$LAYOUT.withName("shot_order"),
-            MemoryLayout.sequenceLayout(32, Constants$root.C_INT$LAYOUT).withName("gpsdata"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("latitude"),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("longitude"),
-                MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT).withName("gpstimestamp"),
-                Constants$root.C_FLOAT$LAYOUT.withName("altitude"),
-                Constants$root.C_CHAR$LAYOUT.withName("altref"),
-                Constants$root.C_CHAR$LAYOUT.withName("latref"),
-                Constants$root.C_CHAR$LAYOUT.withName("longref"),
-                Constants$root.C_CHAR$LAYOUT.withName("gpsstatus"),
-                Constants$root.C_CHAR$LAYOUT.withName("gpsparsed"),
-                MemoryLayout.paddingLayout(24)
-            ).withName("parsed_gps"),
-            MemoryLayout.sequenceLayout(512, Constants$root.C_CHAR$LAYOUT).withName("desc"),
-            MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("artist"),
-            MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
-            MemoryLayout.paddingLayout(32)
-        ).withName("other"),
-        MemoryLayout.structLayout(
-            Constants$root.C_INT$LAYOUT.withName("tformat"),
-            Constants$root.C_SHORT$LAYOUT.withName("twidth"),
-            Constants$root.C_SHORT$LAYOUT.withName("theight"),
-            Constants$root.C_INT$LAYOUT.withName("tlength"),
-            Constants$root.C_INT$LAYOUT.withName("tcolors"),
-            Constants$root.C_POINTER$LAYOUT.withName("thumb")
-        ).withName("thumbnail"),
-        MemoryLayout.structLayout(
-            Constants$root.C_POINTER$LAYOUT.withName("raw_alloc"),
-            Constants$root.C_POINTER$LAYOUT.withName("raw_image"),
-            Constants$root.C_POINTER$LAYOUT.withName("color4_image"),
-            Constants$root.C_POINTER$LAYOUT.withName("color3_image"),
-            Constants$root.C_POINTER$LAYOUT.withName("float_image"),
-            Constants$root.C_POINTER$LAYOUT.withName("float3_image"),
-            Constants$root.C_POINTER$LAYOUT.withName("float4_image"),
-            Constants$root.C_POINTER$LAYOUT.withName("ph1_cblack"),
-            Constants$root.C_POINTER$LAYOUT.withName("ph1_rblack"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("guard"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("make"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("software"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_make"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("normalized_model"),
-                Constants$root.C_INT$LAYOUT.withName("maker_index"),
-                Constants$root.C_INT$LAYOUT.withName("raw_count"),
-                Constants$root.C_INT$LAYOUT.withName("dng_version"),
-                Constants$root.C_INT$LAYOUT.withName("is_foveon"),
-                Constants$root.C_INT$LAYOUT.withName("colors"),
-                Constants$root.C_INT$LAYOUT.withName("filters"),
-                MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans"),
-                MemoryLayout.sequenceLayout(6, MemoryLayout.sequenceLayout(6, Constants$root.C_CHAR$LAYOUT)).withName("xtrans_abs"),
-                MemoryLayout.sequenceLayout(5, Constants$root.C_CHAR$LAYOUT).withName("cdesc"),
-                MemoryLayout.paddingLayout(24),
-                Constants$root.C_INT$LAYOUT.withName("xmplen"),
-                Constants$root.C_POINTER$LAYOUT.withName("xmpdata")
-            ).withName("iparams"),
-            MemoryLayout.structLayout(
-                Constants$root.C_SHORT$LAYOUT.withName("raw_height"),
-                Constants$root.C_SHORT$LAYOUT.withName("raw_width"),
-                Constants$root.C_SHORT$LAYOUT.withName("height"),
-                Constants$root.C_SHORT$LAYOUT.withName("width"),
-                Constants$root.C_SHORT$LAYOUT.withName("top_margin"),
-                Constants$root.C_SHORT$LAYOUT.withName("left_margin"),
-                Constants$root.C_SHORT$LAYOUT.withName("iheight"),
-                Constants$root.C_SHORT$LAYOUT.withName("iwidth"),
-                Constants$root.C_INT$LAYOUT.withName("raw_pitch"),
-                MemoryLayout.paddingLayout(32),
-                Constants$root.C_DOUBLE$LAYOUT.withName("pixel_aspect"),
-                Constants$root.C_INT$LAYOUT.withName("flip"),
-                MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("mask"),
-                Constants$root.C_SHORT$LAYOUT.withName("raw_aspect"),
-                MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                    Constants$root.C_SHORT$LAYOUT.withName("cleft"),
-                    Constants$root.C_SHORT$LAYOUT.withName("ctop"),
-                    Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-                    Constants$root.C_SHORT$LAYOUT.withName("cheight")
-                ).withName("libraw_raw_inset_crop_t")).withName("raw_inset_crops"),
-                MemoryLayout.paddingLayout(16)
-            ).withName("sizes"),
-            MemoryLayout.structLayout(
-                Constants$root.C_INT$LAYOUT.withName("mix_green"),
-                Constants$root.C_INT$LAYOUT.withName("raw_color"),
-                Constants$root.C_INT$LAYOUT.withName("zero_is_bad"),
-                Constants$root.C_SHORT$LAYOUT.withName("shrink"),
-                Constants$root.C_SHORT$LAYOUT.withName("fuji_width")
-            ).withName("ioparams"),
-            MemoryLayout.structLayout(
-                MemoryLayout.sequenceLayout(65536, Constants$root.C_SHORT$LAYOUT).withName("curve"),
-                MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("cblack"),
-                Constants$root.C_INT$LAYOUT.withName("black"),
-                Constants$root.C_INT$LAYOUT.withName("data_maximum"),
-                Constants$root.C_INT$LAYOUT.withName("maximum"),
-                MemoryLayout.paddingLayout(32),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_LONG_LONG$LAYOUT).withName("linear_max"),
-                Constants$root.C_FLOAT$LAYOUT.withName("fmaximum"),
-                Constants$root.C_FLOAT$LAYOUT.withName("fnorm"),
-                MemoryLayout.sequenceLayout(8, MemoryLayout.sequenceLayout(8, Constants$root.C_SHORT$LAYOUT)).withName("white"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("cam_mul"),
-                MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("pre_mul"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("cmatrix"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("ccm"),
-                MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("rgb_cam"),
-                MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("cam_xyz"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_INT$LAYOUT.withName("format"),
-                    Constants$root.C_INT$LAYOUT.withName("key_off"),
-                    Constants$root.C_INT$LAYOUT.withName("tag_21a"),
-                    Constants$root.C_INT$LAYOUT.withName("t_black"),
-                    Constants$root.C_INT$LAYOUT.withName("split_col"),
-                    Constants$root.C_INT$LAYOUT.withName("black_col"),
-                    Constants$root.C_INT$LAYOUT.withName("split_row"),
-                    Constants$root.C_INT$LAYOUT.withName("black_row"),
-                    Constants$root.C_FLOAT$LAYOUT.withName("tag_210")
-                ).withName("phase_one_data"),
-                Constants$root.C_FLOAT$LAYOUT.withName("flash_used"),
-                Constants$root.C_FLOAT$LAYOUT.withName("canon_ev"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("model2"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("UniqueCameraModel"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("LocalizedCameraModel"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("ImageUniqueID"),
-                MemoryLayout.sequenceLayout(17, Constants$root.C_CHAR$LAYOUT).withName("RawDataUniqueID"),
-                MemoryLayout.sequenceLayout(64, Constants$root.C_CHAR$LAYOUT).withName("OriginalRawFileName"),
-                MemoryLayout.paddingLayout(24),
-                Constants$root.C_POINTER$LAYOUT.withName("profile"),
-                Constants$root.C_INT$LAYOUT.withName("profile_length"),
-                MemoryLayout.sequenceLayout(8, Constants$root.C_INT$LAYOUT).withName("black_stat"),
-                MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                    Constants$root.C_INT$LAYOUT.withName("parsedfields"),
-                    Constants$root.C_SHORT$LAYOUT.withName("illuminant"),
-                    MemoryLayout.paddingLayout(16),
-                    MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("calibration"),
-                    MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, Constants$root.C_FLOAT$LAYOUT)).withName("colormatrix"),
-                    MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT)).withName("forwardmatrix")
-                ).withName("libraw_dng_color_t")).withName("dng_color"),
-                MemoryLayout.structLayout(
-                    Constants$root.C_INT$LAYOUT.withName("parsedfields"),
-                    MemoryLayout.sequenceLayout(4104, Constants$root.C_INT$LAYOUT).withName("dng_cblack"),
-                    Constants$root.C_INT$LAYOUT.withName("dng_black"),
-                    MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
-                    Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
-                    MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT).withName("dng_whitelevel"),
-                    MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
-                    MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
-                    Constants$root.C_INT$LAYOUT.withName("preview_colorspace"),
-                    MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
-                    MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
-                    Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
-                    Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
-                ).withName("dng_levels"),
-                MemoryLayout.sequenceLayout(256, MemoryLayout.sequenceLayout(4, Constants$root.C_INT$LAYOUT)).withName("WB_Coeffs"),
-                MemoryLayout.sequenceLayout(64, MemoryLayout.sequenceLayout(5, Constants$root.C_FLOAT$LAYOUT)).withName("WBCT_Coeffs"),
-                Constants$root.C_INT$LAYOUT.withName("as_shot_wb_applied"),
-                MemoryLayout.sequenceLayout(2, MemoryLayout.structLayout(
-                    MemoryLayout.sequenceLayout(9, Constants$root.C_FLOAT$LAYOUT).withName("romm_cam")
-                ).withName("libraw_P1_color_t")).withName("P1_color"),
-                Constants$root.C_INT$LAYOUT.withName("raw_bps"),
-                Constants$root.C_INT$LAYOUT.withName("ExifColorSpace")
-            ).withName("color")
-        ).withName("rawdata"),
-        Constants$root.C_POINTER$LAYOUT.withName("parent_class")
-    ).withName("libraw_data_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_data_t.$struct$LAYOUT;
+        return constants$89.const$3;
     }
-    static final VarHandle image$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("image"));
     public static VarHandle image$VH() {
-        return libraw_data_t.image$VH;
+        return constants$89.const$4;
     }
     /**
      * Getter for field:
@@ -876,7 +43,7 @@ public class libraw_data_t {
      * }
      */
     public static MemorySegment image$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_data_t.image$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$89.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -885,13 +52,13 @@ public class libraw_data_t {
      * }
      */
     public static void image$set(MemorySegment seg, MemorySegment x) {
-        libraw_data_t.image$VH.set(seg, x);
+        constants$89.const$4.set(seg, x);
     }
     public static MemorySegment image$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_data_t.image$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$89.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void image$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_data_t.image$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$89.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment sizes$slice(MemorySegment seg) {
         return seg.asSlice(8, 184);
@@ -914,9 +81,8 @@ public class libraw_data_t {
     public static MemorySegment rawparams$slice(MemorySegment seg) {
         return seg.asSlice(5320, 48);
     }
-    static final VarHandle progress_flags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("progress_flags"));
     public static VarHandle progress_flags$VH() {
-        return libraw_data_t.progress_flags$VH;
+        return constants$89.const$5;
     }
     /**
      * Getter for field:
@@ -925,7 +91,7 @@ public class libraw_data_t {
      * }
      */
     public static int progress_flags$get(MemorySegment seg) {
-        return (int)libraw_data_t.progress_flags$VH.get(seg);
+        return (int)constants$89.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -934,17 +100,16 @@ public class libraw_data_t {
      * }
      */
     public static void progress_flags$set(MemorySegment seg, int x) {
-        libraw_data_t.progress_flags$VH.set(seg, x);
+        constants$89.const$5.set(seg, x);
     }
     public static int progress_flags$get(MemorySegment seg, long index) {
-        return (int)libraw_data_t.progress_flags$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$89.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void progress_flags$set(MemorySegment seg, long index, int x) {
-        libraw_data_t.progress_flags$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$89.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle process_warnings$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("process_warnings"));
     public static VarHandle process_warnings$VH() {
-        return libraw_data_t.process_warnings$VH;
+        return constants$90.const$0;
     }
     /**
      * Getter for field:
@@ -953,7 +118,7 @@ public class libraw_data_t {
      * }
      */
     public static int process_warnings$get(MemorySegment seg) {
-        return (int)libraw_data_t.process_warnings$VH.get(seg);
+        return (int)constants$90.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -962,29 +127,28 @@ public class libraw_data_t {
      * }
      */
     public static void process_warnings$set(MemorySegment seg, int x) {
-        libraw_data_t.process_warnings$VH.set(seg, x);
+        constants$90.const$0.set(seg, x);
     }
     public static int process_warnings$get(MemorySegment seg, long index) {
-        return (int)libraw_data_t.process_warnings$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$90.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void process_warnings$set(MemorySegment seg, long index, int x) {
-        libraw_data_t.process_warnings$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$90.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment color$slice(MemorySegment seg) {
-        return seg.asSlice(5376, 187048);
+        return seg.asSlice(5376, 187032);
     }
     public static MemorySegment other$slice(MemorySegment seg) {
-        return seg.asSlice(192424, 800);
+        return seg.asSlice(192408, 800);
     }
     public static MemorySegment thumbnail$slice(MemorySegment seg) {
-        return seg.asSlice(193224, 24);
+        return seg.asSlice(193208, 24);
     }
     public static MemorySegment rawdata$slice(MemorySegment seg) {
-        return seg.asSlice(193248, 187760);
+        return seg.asSlice(193232, 187744);
     }
-    static final VarHandle parent_class$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("parent_class"));
     public static VarHandle parent_class$VH() {
-        return libraw_data_t.parent_class$VH;
+        return constants$90.const$1;
     }
     /**
      * Getter for field:
@@ -993,7 +157,7 @@ public class libraw_data_t {
      * }
      */
     public static MemorySegment parent_class$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)libraw_data_t.parent_class$VH.get(seg);
+        return (java.lang.foreign.MemorySegment)constants$90.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -1002,20 +166,20 @@ public class libraw_data_t {
      * }
      */
     public static void parent_class$set(MemorySegment seg, MemorySegment x) {
-        libraw_data_t.parent_class$VH.set(seg, x);
+        constants$90.const$1.set(seg, x);
     }
     public static MemorySegment parent_class$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)libraw_data_t.parent_class$VH.get(seg.asSlice(index*sizeof()));
+        return (java.lang.foreign.MemorySegment)constants$90.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void parent_class$set(MemorySegment seg, long index, MemorySegment x) {
-        libraw_data_t.parent_class$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$90.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

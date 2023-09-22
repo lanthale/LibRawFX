@@ -28,27 +28,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_dng_levels_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_LONG$LAYOUT.withName("parsedfields"),
-        MemoryLayout.sequenceLayout(4104, Constants$root.C_LONG$LAYOUT).withName("dng_cblack"),
-        Constants$root.C_LONG$LAYOUT.withName("dng_black"),
-        MemoryLayout.sequenceLayout(4104, Constants$root.C_FLOAT$LAYOUT).withName("dng_fcblack"),
-        Constants$root.C_FLOAT$LAYOUT.withName("dng_fblack"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_LONG$LAYOUT).withName("dng_whitelevel"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("default_crop"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("user_crop"),
-        Constants$root.C_LONG$LAYOUT.withName("preview_colorspace"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("analogbalance"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_FLOAT$LAYOUT).withName("asshotneutral"),
-        Constants$root.C_FLOAT$LAYOUT.withName("baseline_exposure"),
-        Constants$root.C_FLOAT$LAYOUT.withName("LinearResponseLimit")
-    ).withName("libraw_dng_levels_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_dng_levels_t.$struct$LAYOUT;
+        return constants$19.const$3;
     }
-    static final VarHandle parsedfields$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("parsedfields"));
     public static VarHandle parsedfields$VH() {
-        return libraw_dng_levels_t.parsedfields$VH;
+        return constants$19.const$4;
     }
     /**
      * Getter for field:
@@ -57,7 +41,7 @@ public class libraw_dng_levels_t {
      * }
      */
     public static int parsedfields$get(MemorySegment seg) {
-        return (int)libraw_dng_levels_t.parsedfields$VH.get(seg);
+        return (int)constants$19.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -66,20 +50,19 @@ public class libraw_dng_levels_t {
      * }
      */
     public static void parsedfields$set(MemorySegment seg, int x) {
-        libraw_dng_levels_t.parsedfields$VH.set(seg, x);
+        constants$19.const$4.set(seg, x);
     }
     public static int parsedfields$get(MemorySegment seg, long index) {
-        return (int)libraw_dng_levels_t.parsedfields$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$19.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void parsedfields$set(MemorySegment seg, long index, int x) {
-        libraw_dng_levels_t.parsedfields$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$19.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment dng_cblack$slice(MemorySegment seg) {
         return seg.asSlice(4, 16416);
     }
-    static final VarHandle dng_black$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("dng_black"));
     public static VarHandle dng_black$VH() {
-        return libraw_dng_levels_t.dng_black$VH;
+        return constants$19.const$5;
     }
     /**
      * Getter for field:
@@ -88,7 +71,7 @@ public class libraw_dng_levels_t {
      * }
      */
     public static int dng_black$get(MemorySegment seg) {
-        return (int)libraw_dng_levels_t.dng_black$VH.get(seg);
+        return (int)constants$19.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -97,20 +80,19 @@ public class libraw_dng_levels_t {
      * }
      */
     public static void dng_black$set(MemorySegment seg, int x) {
-        libraw_dng_levels_t.dng_black$VH.set(seg, x);
+        constants$19.const$5.set(seg, x);
     }
     public static int dng_black$get(MemorySegment seg, long index) {
-        return (int)libraw_dng_levels_t.dng_black$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$19.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void dng_black$set(MemorySegment seg, long index, int x) {
-        libraw_dng_levels_t.dng_black$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$19.const$5.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment dng_fcblack$slice(MemorySegment seg) {
         return seg.asSlice(16424, 16416);
     }
-    static final VarHandle dng_fblack$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("dng_fblack"));
     public static VarHandle dng_fblack$VH() {
-        return libraw_dng_levels_t.dng_fblack$VH;
+        return constants$20.const$0;
     }
     /**
      * Getter for field:
@@ -119,7 +101,7 @@ public class libraw_dng_levels_t {
      * }
      */
     public static float dng_fblack$get(MemorySegment seg) {
-        return (float)libraw_dng_levels_t.dng_fblack$VH.get(seg);
+        return (float)constants$20.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -128,13 +110,13 @@ public class libraw_dng_levels_t {
      * }
      */
     public static void dng_fblack$set(MemorySegment seg, float x) {
-        libraw_dng_levels_t.dng_fblack$VH.set(seg, x);
+        constants$20.const$0.set(seg, x);
     }
     public static float dng_fblack$get(MemorySegment seg, long index) {
-        return (float)libraw_dng_levels_t.dng_fblack$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$20.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void dng_fblack$set(MemorySegment seg, long index, float x) {
-        libraw_dng_levels_t.dng_fblack$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$20.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment dng_whitelevel$slice(MemorySegment seg) {
         return seg.asSlice(32844, 16);
@@ -145,9 +127,8 @@ public class libraw_dng_levels_t {
     public static MemorySegment user_crop$slice(MemorySegment seg) {
         return seg.asSlice(32868, 16);
     }
-    static final VarHandle preview_colorspace$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("preview_colorspace"));
     public static VarHandle preview_colorspace$VH() {
-        return libraw_dng_levels_t.preview_colorspace$VH;
+        return constants$20.const$1;
     }
     /**
      * Getter for field:
@@ -156,7 +137,7 @@ public class libraw_dng_levels_t {
      * }
      */
     public static int preview_colorspace$get(MemorySegment seg) {
-        return (int)libraw_dng_levels_t.preview_colorspace$VH.get(seg);
+        return (int)constants$20.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -165,13 +146,13 @@ public class libraw_dng_levels_t {
      * }
      */
     public static void preview_colorspace$set(MemorySegment seg, int x) {
-        libraw_dng_levels_t.preview_colorspace$VH.set(seg, x);
+        constants$20.const$1.set(seg, x);
     }
     public static int preview_colorspace$get(MemorySegment seg, long index) {
-        return (int)libraw_dng_levels_t.preview_colorspace$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$20.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void preview_colorspace$set(MemorySegment seg, long index, int x) {
-        libraw_dng_levels_t.preview_colorspace$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$20.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment analogbalance$slice(MemorySegment seg) {
         return seg.asSlice(32888, 16);
@@ -179,9 +160,8 @@ public class libraw_dng_levels_t {
     public static MemorySegment asshotneutral$slice(MemorySegment seg) {
         return seg.asSlice(32904, 16);
     }
-    static final VarHandle baseline_exposure$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("baseline_exposure"));
     public static VarHandle baseline_exposure$VH() {
-        return libraw_dng_levels_t.baseline_exposure$VH;
+        return constants$20.const$2;
     }
     /**
      * Getter for field:
@@ -190,7 +170,7 @@ public class libraw_dng_levels_t {
      * }
      */
     public static float baseline_exposure$get(MemorySegment seg) {
-        return (float)libraw_dng_levels_t.baseline_exposure$VH.get(seg);
+        return (float)constants$20.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -199,17 +179,16 @@ public class libraw_dng_levels_t {
      * }
      */
     public static void baseline_exposure$set(MemorySegment seg, float x) {
-        libraw_dng_levels_t.baseline_exposure$VH.set(seg, x);
+        constants$20.const$2.set(seg, x);
     }
     public static float baseline_exposure$get(MemorySegment seg, long index) {
-        return (float)libraw_dng_levels_t.baseline_exposure$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$20.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void baseline_exposure$set(MemorySegment seg, long index, float x) {
-        libraw_dng_levels_t.baseline_exposure$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$20.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LinearResponseLimit$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LinearResponseLimit"));
     public static VarHandle LinearResponseLimit$VH() {
-        return libraw_dng_levels_t.LinearResponseLimit$VH;
+        return constants$20.const$3;
     }
     /**
      * Getter for field:
@@ -218,7 +197,7 @@ public class libraw_dng_levels_t {
      * }
      */
     public static float LinearResponseLimit$get(MemorySegment seg) {
-        return (float)libraw_dng_levels_t.LinearResponseLimit$VH.get(seg);
+        return (float)constants$20.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -227,20 +206,20 @@ public class libraw_dng_levels_t {
      * }
      */
     public static void LinearResponseLimit$set(MemorySegment seg, float x) {
-        libraw_dng_levels_t.LinearResponseLimit$VH.set(seg, x);
+        constants$20.const$3.set(seg, x);
     }
     public static float LinearResponseLimit$get(MemorySegment seg, long index) {
-        return (float)libraw_dng_levels_t.LinearResponseLimit$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$20.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void LinearResponseLimit$set(MemorySegment seg, long index, float x) {
-        libraw_dng_levels_t.LinearResponseLimit$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$20.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

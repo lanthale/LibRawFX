@@ -19,18 +19,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_dnglens_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_FLOAT$LAYOUT.withName("MinFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MinFocal"),
-        Constants$root.C_FLOAT$LAYOUT.withName("MaxAp4MaxFocal")
-    ).withName("libraw_dnglens_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_dnglens_t.$struct$LAYOUT;
+        return constants$83.const$5;
     }
-    static final VarHandle MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MinFocal"));
     public static VarHandle MinFocal$VH() {
-        return libraw_dnglens_t.MinFocal$VH;
+        return constants$84.const$0;
     }
     /**
      * Getter for field:
@@ -39,7 +32,7 @@ public class libraw_dnglens_t {
      * }
      */
     public static float MinFocal$get(MemorySegment seg) {
-        return (float)libraw_dnglens_t.MinFocal$VH.get(seg);
+        return (float)constants$84.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -48,17 +41,16 @@ public class libraw_dnglens_t {
      * }
      */
     public static void MinFocal$set(MemorySegment seg, float x) {
-        libraw_dnglens_t.MinFocal$VH.set(seg, x);
+        constants$84.const$0.set(seg, x);
     }
     public static float MinFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_dnglens_t.MinFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$84.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void MinFocal$set(MemorySegment seg, long index, float x) {
-        libraw_dnglens_t.MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$84.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxFocal"));
     public static VarHandle MaxFocal$VH() {
-        return libraw_dnglens_t.MaxFocal$VH;
+        return constants$84.const$1;
     }
     /**
      * Getter for field:
@@ -67,7 +59,7 @@ public class libraw_dnglens_t {
      * }
      */
     public static float MaxFocal$get(MemorySegment seg) {
-        return (float)libraw_dnglens_t.MaxFocal$VH.get(seg);
+        return (float)constants$84.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -76,17 +68,16 @@ public class libraw_dnglens_t {
      * }
      */
     public static void MaxFocal$set(MemorySegment seg, float x) {
-        libraw_dnglens_t.MaxFocal$VH.set(seg, x);
+        constants$84.const$1.set(seg, x);
     }
     public static float MaxFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_dnglens_t.MaxFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$84.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxFocal$set(MemorySegment seg, long index, float x) {
-        libraw_dnglens_t.MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$84.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4MinFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4MinFocal"));
     public static VarHandle MaxAp4MinFocal$VH() {
-        return libraw_dnglens_t.MaxAp4MinFocal$VH;
+        return constants$84.const$2;
     }
     /**
      * Getter for field:
@@ -95,7 +86,7 @@ public class libraw_dnglens_t {
      * }
      */
     public static float MaxAp4MinFocal$get(MemorySegment seg) {
-        return (float)libraw_dnglens_t.MaxAp4MinFocal$VH.get(seg);
+        return (float)constants$84.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -104,17 +95,16 @@ public class libraw_dnglens_t {
      * }
      */
     public static void MaxAp4MinFocal$set(MemorySegment seg, float x) {
-        libraw_dnglens_t.MaxAp4MinFocal$VH.set(seg, x);
+        constants$84.const$2.set(seg, x);
     }
     public static float MaxAp4MinFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_dnglens_t.MaxAp4MinFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$84.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxAp4MinFocal$set(MemorySegment seg, long index, float x) {
-        libraw_dnglens_t.MaxAp4MinFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$84.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MaxAp4MaxFocal$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MaxAp4MaxFocal"));
     public static VarHandle MaxAp4MaxFocal$VH() {
-        return libraw_dnglens_t.MaxAp4MaxFocal$VH;
+        return constants$84.const$3;
     }
     /**
      * Getter for field:
@@ -123,7 +113,7 @@ public class libraw_dnglens_t {
      * }
      */
     public static float MaxAp4MaxFocal$get(MemorySegment seg) {
-        return (float)libraw_dnglens_t.MaxAp4MaxFocal$VH.get(seg);
+        return (float)constants$84.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -132,20 +122,20 @@ public class libraw_dnglens_t {
      * }
      */
     public static void MaxAp4MaxFocal$set(MemorySegment seg, float x) {
-        libraw_dnglens_t.MaxAp4MaxFocal$VH.set(seg, x);
+        constants$84.const$3.set(seg, x);
     }
     public static float MaxAp4MaxFocal$get(MemorySegment seg, long index) {
-        return (float)libraw_dnglens_t.MaxAp4MaxFocal$VH.get(seg.asSlice(index*sizeof()));
+        return (float)constants$84.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void MaxAp4MaxFocal$set(MemorySegment seg, long index, float x) {
-        libraw_dnglens_t.MaxAp4MaxFocal$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$84.const$3.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 

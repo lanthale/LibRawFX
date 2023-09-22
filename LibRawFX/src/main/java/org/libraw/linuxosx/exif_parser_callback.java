@@ -15,14 +15,14 @@ import static java.lang.foreign.ValueLayout.*;
 public interface exif_parser_callback {
 
     void apply(java.lang.foreign.MemorySegment context, int tag, int type, int len, int ord, java.lang.foreign.MemorySegment ifp, long base);
-    static MemorySegment allocate(exif_parser_callback fi, SegmentScope scope) {
-        return RuntimeHelper.upcallStub(constants$0.exif_parser_callback_UP$MH, fi, constants$0.exif_parser_callback$FUNC, scope);
+    static MemorySegment allocate(exif_parser_callback fi, Arena scope) {
+        return RuntimeHelper.upcallStub(constants$2.const$1, fi, constants$2.const$0, scope);
     }
-    static exif_parser_callback ofAddress(MemorySegment addr, SegmentScope scope) {
-        MemorySegment symbol = MemorySegment.ofAddress(addr.address(), 0, scope);
+    static exif_parser_callback ofAddress(MemorySegment addr, Arena arena) {
+        MemorySegment symbol = addr.reinterpret(arena, null);
         return (java.lang.foreign.MemorySegment _context, int _tag, int _type, int _len, int _ord, java.lang.foreign.MemorySegment _ifp, long _base) -> {
             try {
-                constants$0.exif_parser_callback_DOWN$MH.invokeExact(symbol, _context, _tag, _type, _len, _ord, _ifp, _base);
+                constants$2.const$2.invokeExact(symbol, _context, _tag, _type, _len, _ord, _ifp, _base);
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }

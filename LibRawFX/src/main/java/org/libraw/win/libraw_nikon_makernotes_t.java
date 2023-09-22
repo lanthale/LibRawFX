@@ -64,75 +64,11 @@ import static java.lang.foreign.ValueLayout.*;
  */
 public class libraw_nikon_makernotes_t {
 
-    static final StructLayout $struct$LAYOUT = MemoryLayout.structLayout(
-        Constants$root.C_DOUBLE$LAYOUT.withName("ExposureBracketValue"),
-        Constants$root.C_SHORT$LAYOUT.withName("ActiveDLighting"),
-        Constants$root.C_SHORT$LAYOUT.withName("ShootingMode"),
-        MemoryLayout.sequenceLayout(7, Constants$root.C_CHAR$LAYOUT).withName("ImageStabilization"),
-        Constants$root.C_CHAR$LAYOUT.withName("VibrationReduction"),
-        Constants$root.C_CHAR$LAYOUT.withName("VRMode"),
-        MemoryLayout.sequenceLayout(13, Constants$root.C_CHAR$LAYOUT).withName("FlashSetting"),
-        MemoryLayout.sequenceLayout(20, Constants$root.C_CHAR$LAYOUT).withName("FlashType"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashExposureCompensation"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("ExternalFlashExposureComp"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashExposureBracketValue"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashMode"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashExposureCompensation2"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashExposureCompensation3"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashExposureCompensation4"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashSource"),
-        MemoryLayout.sequenceLayout(2, Constants$root.C_CHAR$LAYOUT).withName("FlashFirmware"),
-        Constants$root.C_CHAR$LAYOUT.withName("ExternalFlashFlags"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashControlCommanderMode"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashOutputAndCompensation"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashFocalLength"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashGNDistance"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashGroupControlMode"),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_CHAR$LAYOUT).withName("FlashGroupOutputAndCompensation"),
-        Constants$root.C_CHAR$LAYOUT.withName("FlashColorFilter"),
-        MemoryLayout.paddingLayout(8),
-        Constants$root.C_SHORT$LAYOUT.withName("NEFCompression"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_LONG$LAYOUT.withName("ExposureMode"),
-        Constants$root.C_LONG$LAYOUT.withName("ExposureProgram"),
-        Constants$root.C_LONG$LAYOUT.withName("nMEshots"),
-        Constants$root.C_LONG$LAYOUT.withName("MEgainOn"),
-        MemoryLayout.paddingLayout(32),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_DOUBLE$LAYOUT).withName("ME_WB"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFFineTune"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFFineTuneIndex"),
-        Constants$root.C_CHAR$LAYOUT.withName("AFFineTuneAdj"),
-        MemoryLayout.paddingLayout(8),
-        Constants$root.C_LONG$LAYOUT.withName("LensDataVersion"),
-        Constants$root.C_LONG$LAYOUT.withName("FlashInfoVersion"),
-        Constants$root.C_LONG$LAYOUT.withName("ColorBalanceVersion"),
-        Constants$root.C_CHAR$LAYOUT.withName("key"),
-        MemoryLayout.paddingLayout(8),
-        MemoryLayout.sequenceLayout(4, Constants$root.C_SHORT$LAYOUT).withName("NEFBitDepth"),
-        Constants$root.C_SHORT$LAYOUT.withName("HighSpeedCropFormat"),
-        MemoryLayout.structLayout(
-            Constants$root.C_SHORT$LAYOUT.withName("cleft"),
-            Constants$root.C_SHORT$LAYOUT.withName("ctop"),
-            Constants$root.C_SHORT$LAYOUT.withName("cwidth"),
-            Constants$root.C_SHORT$LAYOUT.withName("cheight")
-        ).withName("SensorHighSpeedCrop"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorWidth"),
-        Constants$root.C_SHORT$LAYOUT.withName("SensorHeight"),
-        Constants$root.C_SHORT$LAYOUT.withName("Active_D_Lighting"),
-        MemoryLayout.paddingLayout(16),
-        Constants$root.C_LONG$LAYOUT.withName("ShotInfoVersion"),
-        Constants$root.C_SHORT$LAYOUT.withName("MakernotesFlip"),
-        MemoryLayout.paddingLayout(48),
-        Constants$root.C_DOUBLE$LAYOUT.withName("RollAngle"),
-        Constants$root.C_DOUBLE$LAYOUT.withName("PitchAngle"),
-        Constants$root.C_DOUBLE$LAYOUT.withName("YawAngle")
-    ).withName("libraw_nikon_makernotes_t");
     public static MemoryLayout $LAYOUT() {
-        return libraw_nikon_makernotes_t.$struct$LAYOUT;
+        return constants$33.const$3;
     }
-    static final VarHandle ExposureBracketValue$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureBracketValue"));
     public static VarHandle ExposureBracketValue$VH() {
-        return libraw_nikon_makernotes_t.ExposureBracketValue$VH;
+        return constants$33.const$4;
     }
     /**
      * Getter for field:
@@ -141,7 +77,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static double ExposureBracketValue$get(MemorySegment seg) {
-        return (double)libraw_nikon_makernotes_t.ExposureBracketValue$VH.get(seg);
+        return (double)constants$33.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -150,17 +86,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ExposureBracketValue$set(MemorySegment seg, double x) {
-        libraw_nikon_makernotes_t.ExposureBracketValue$VH.set(seg, x);
+        constants$33.const$4.set(seg, x);
     }
     public static double ExposureBracketValue$get(MemorySegment seg, long index) {
-        return (double)libraw_nikon_makernotes_t.ExposureBracketValue$VH.get(seg.asSlice(index*sizeof()));
+        return (double)constants$33.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureBracketValue$set(MemorySegment seg, long index, double x) {
-        libraw_nikon_makernotes_t.ExposureBracketValue$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$33.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ActiveDLighting$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ActiveDLighting"));
     public static VarHandle ActiveDLighting$VH() {
-        return libraw_nikon_makernotes_t.ActiveDLighting$VH;
+        return constants$33.const$5;
     }
     /**
      * Getter for field:
@@ -169,7 +104,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short ActiveDLighting$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.ActiveDLighting$VH.get(seg);
+        return (short)constants$33.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -178,17 +113,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ActiveDLighting$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.ActiveDLighting$VH.set(seg, x);
+        constants$33.const$5.set(seg, x);
     }
     public static short ActiveDLighting$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.ActiveDLighting$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$33.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void ActiveDLighting$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.ActiveDLighting$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$33.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ShootingMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ShootingMode"));
     public static VarHandle ShootingMode$VH() {
-        return libraw_nikon_makernotes_t.ShootingMode$VH;
+        return constants$34.const$0;
     }
     /**
      * Getter for field:
@@ -197,7 +131,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short ShootingMode$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.ShootingMode$VH.get(seg);
+        return (short)constants$34.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -206,20 +140,19 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ShootingMode$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.ShootingMode$VH.set(seg, x);
+        constants$34.const$0.set(seg, x);
     }
     public static short ShootingMode$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.ShootingMode$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$34.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ShootingMode$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.ShootingMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$34.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment ImageStabilization$slice(MemorySegment seg) {
         return seg.asSlice(12, 7);
     }
-    static final VarHandle VibrationReduction$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("VibrationReduction"));
     public static VarHandle VibrationReduction$VH() {
-        return libraw_nikon_makernotes_t.VibrationReduction$VH;
+        return constants$34.const$1;
     }
     /**
      * Getter for field:
@@ -228,7 +161,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte VibrationReduction$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.VibrationReduction$VH.get(seg);
+        return (byte)constants$34.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -237,17 +170,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void VibrationReduction$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.VibrationReduction$VH.set(seg, x);
+        constants$34.const$1.set(seg, x);
     }
     public static byte VibrationReduction$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.VibrationReduction$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$34.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void VibrationReduction$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.VibrationReduction$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$34.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle VRMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("VRMode"));
     public static VarHandle VRMode$VH() {
-        return libraw_nikon_makernotes_t.VRMode$VH;
+        return constants$34.const$2;
     }
     /**
      * Getter for field:
@@ -256,7 +188,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte VRMode$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.VRMode$VH.get(seg);
+        return (byte)constants$34.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -265,13 +197,13 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void VRMode$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.VRMode$VH.set(seg, x);
+        constants$34.const$2.set(seg, x);
     }
     public static byte VRMode$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.VRMode$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$34.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void VRMode$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.VRMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$34.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment FlashSetting$slice(MemorySegment seg) {
         return seg.asSlice(21, 13);
@@ -288,9 +220,8 @@ public class libraw_nikon_makernotes_t {
     public static MemorySegment FlashExposureBracketValue$slice(MemorySegment seg) {
         return seg.asSlice(62, 4);
     }
-    static final VarHandle FlashMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashMode"));
     public static VarHandle FlashMode$VH() {
-        return libraw_nikon_makernotes_t.FlashMode$VH;
+        return constants$34.const$3;
     }
     /**
      * Getter for field:
@@ -299,7 +230,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashMode$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashMode$VH.get(seg);
+        return (byte)constants$34.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -308,17 +239,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashMode$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashMode$VH.set(seg, x);
+        constants$34.const$3.set(seg, x);
     }
     public static byte FlashMode$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashMode$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$34.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashMode$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$34.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashExposureCompensation2$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashExposureCompensation2"));
     public static VarHandle FlashExposureCompensation2$VH() {
-        return libraw_nikon_makernotes_t.FlashExposureCompensation2$VH;
+        return constants$34.const$4;
     }
     /**
      * Getter for field:
@@ -327,7 +257,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashExposureCompensation2$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashExposureCompensation2$VH.get(seg);
+        return (byte)constants$34.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -336,17 +266,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashExposureCompensation2$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashExposureCompensation2$VH.set(seg, x);
+        constants$34.const$4.set(seg, x);
     }
     public static byte FlashExposureCompensation2$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashExposureCompensation2$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$34.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashExposureCompensation2$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashExposureCompensation2$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$34.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashExposureCompensation3$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashExposureCompensation3"));
     public static VarHandle FlashExposureCompensation3$VH() {
-        return libraw_nikon_makernotes_t.FlashExposureCompensation3$VH;
+        return constants$34.const$5;
     }
     /**
      * Getter for field:
@@ -355,7 +284,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashExposureCompensation3$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashExposureCompensation3$VH.get(seg);
+        return (byte)constants$34.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -364,17 +293,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashExposureCompensation3$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashExposureCompensation3$VH.set(seg, x);
+        constants$34.const$5.set(seg, x);
     }
     public static byte FlashExposureCompensation3$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashExposureCompensation3$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$34.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashExposureCompensation3$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashExposureCompensation3$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$34.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashExposureCompensation4$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashExposureCompensation4"));
     public static VarHandle FlashExposureCompensation4$VH() {
-        return libraw_nikon_makernotes_t.FlashExposureCompensation4$VH;
+        return constants$35.const$0;
     }
     /**
      * Getter for field:
@@ -383,7 +311,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashExposureCompensation4$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashExposureCompensation4$VH.get(seg);
+        return (byte)constants$35.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -392,17 +320,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashExposureCompensation4$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashExposureCompensation4$VH.set(seg, x);
+        constants$35.const$0.set(seg, x);
     }
     public static byte FlashExposureCompensation4$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashExposureCompensation4$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$35.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashExposureCompensation4$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashExposureCompensation4$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$35.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashSource$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashSource"));
     public static VarHandle FlashSource$VH() {
-        return libraw_nikon_makernotes_t.FlashSource$VH;
+        return constants$35.const$1;
     }
     /**
      * Getter for field:
@@ -411,7 +338,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashSource$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashSource$VH.get(seg);
+        return (byte)constants$35.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -420,20 +347,19 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashSource$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashSource$VH.set(seg, x);
+        constants$35.const$1.set(seg, x);
     }
     public static byte FlashSource$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashSource$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$35.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashSource$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashSource$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$35.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment FlashFirmware$slice(MemorySegment seg) {
         return seg.asSlice(71, 2);
     }
-    static final VarHandle ExternalFlashFlags$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExternalFlashFlags"));
     public static VarHandle ExternalFlashFlags$VH() {
-        return libraw_nikon_makernotes_t.ExternalFlashFlags$VH;
+        return constants$35.const$2;
     }
     /**
      * Getter for field:
@@ -442,7 +368,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte ExternalFlashFlags$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.ExternalFlashFlags$VH.get(seg);
+        return (byte)constants$35.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -451,17 +377,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ExternalFlashFlags$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.ExternalFlashFlags$VH.set(seg, x);
+        constants$35.const$2.set(seg, x);
     }
     public static byte ExternalFlashFlags$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.ExternalFlashFlags$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$35.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void ExternalFlashFlags$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.ExternalFlashFlags$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$35.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashControlCommanderMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashControlCommanderMode"));
     public static VarHandle FlashControlCommanderMode$VH() {
-        return libraw_nikon_makernotes_t.FlashControlCommanderMode$VH;
+        return constants$35.const$3;
     }
     /**
      * Getter for field:
@@ -470,7 +395,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashControlCommanderMode$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashControlCommanderMode$VH.get(seg);
+        return (byte)constants$35.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -479,17 +404,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashControlCommanderMode$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashControlCommanderMode$VH.set(seg, x);
+        constants$35.const$3.set(seg, x);
     }
     public static byte FlashControlCommanderMode$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashControlCommanderMode$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$35.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashControlCommanderMode$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashControlCommanderMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$35.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashOutputAndCompensation$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashOutputAndCompensation"));
     public static VarHandle FlashOutputAndCompensation$VH() {
-        return libraw_nikon_makernotes_t.FlashOutputAndCompensation$VH;
+        return constants$35.const$4;
     }
     /**
      * Getter for field:
@@ -498,7 +422,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashOutputAndCompensation$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashOutputAndCompensation$VH.get(seg);
+        return (byte)constants$35.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -507,17 +431,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashOutputAndCompensation$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashOutputAndCompensation$VH.set(seg, x);
+        constants$35.const$4.set(seg, x);
     }
     public static byte FlashOutputAndCompensation$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashOutputAndCompensation$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$35.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashOutputAndCompensation$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashOutputAndCompensation$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$35.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashFocalLength$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashFocalLength"));
     public static VarHandle FlashFocalLength$VH() {
-        return libraw_nikon_makernotes_t.FlashFocalLength$VH;
+        return constants$35.const$5;
     }
     /**
      * Getter for field:
@@ -526,7 +449,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashFocalLength$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashFocalLength$VH.get(seg);
+        return (byte)constants$35.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -535,17 +458,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashFocalLength$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashFocalLength$VH.set(seg, x);
+        constants$35.const$5.set(seg, x);
     }
     public static byte FlashFocalLength$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashFocalLength$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$35.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashFocalLength$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashFocalLength$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$35.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashGNDistance$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashGNDistance"));
     public static VarHandle FlashGNDistance$VH() {
-        return libraw_nikon_makernotes_t.FlashGNDistance$VH;
+        return constants$36.const$0;
     }
     /**
      * Getter for field:
@@ -554,7 +476,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashGNDistance$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashGNDistance$VH.get(seg);
+        return (byte)constants$36.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -563,13 +485,13 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashGNDistance$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashGNDistance$VH.set(seg, x);
+        constants$36.const$0.set(seg, x);
     }
     public static byte FlashGNDistance$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashGNDistance$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$36.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashGNDistance$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashGNDistance$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$36.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment FlashGroupControlMode$slice(MemorySegment seg) {
         return seg.asSlice(78, 4);
@@ -577,9 +499,8 @@ public class libraw_nikon_makernotes_t {
     public static MemorySegment FlashGroupOutputAndCompensation$slice(MemorySegment seg) {
         return seg.asSlice(82, 4);
     }
-    static final VarHandle FlashColorFilter$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashColorFilter"));
     public static VarHandle FlashColorFilter$VH() {
-        return libraw_nikon_makernotes_t.FlashColorFilter$VH;
+        return constants$36.const$1;
     }
     /**
      * Getter for field:
@@ -588,7 +509,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte FlashColorFilter$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.FlashColorFilter$VH.get(seg);
+        return (byte)constants$36.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -597,17 +518,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashColorFilter$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.FlashColorFilter$VH.set(seg, x);
+        constants$36.const$1.set(seg, x);
     }
     public static byte FlashColorFilter$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.FlashColorFilter$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$36.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashColorFilter$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.FlashColorFilter$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$36.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle NEFCompression$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("NEFCompression"));
     public static VarHandle NEFCompression$VH() {
-        return libraw_nikon_makernotes_t.NEFCompression$VH;
+        return constants$36.const$2;
     }
     /**
      * Getter for field:
@@ -616,7 +536,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short NEFCompression$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.NEFCompression$VH.get(seg);
+        return (short)constants$36.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -625,17 +545,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void NEFCompression$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.NEFCompression$VH.set(seg, x);
+        constants$36.const$2.set(seg, x);
     }
     public static short NEFCompression$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.NEFCompression$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$36.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void NEFCompression$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.NEFCompression$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$36.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureMode$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureMode"));
     public static VarHandle ExposureMode$VH() {
-        return libraw_nikon_makernotes_t.ExposureMode$VH;
+        return constants$36.const$3;
     }
     /**
      * Getter for field:
@@ -644,7 +563,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int ExposureMode$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.ExposureMode$VH.get(seg);
+        return (int)constants$36.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -653,17 +572,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ExposureMode$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.ExposureMode$VH.set(seg, x);
+        constants$36.const$3.set(seg, x);
     }
     public static int ExposureMode$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.ExposureMode$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$36.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureMode$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.ExposureMode$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$36.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ExposureProgram$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ExposureProgram"));
     public static VarHandle ExposureProgram$VH() {
-        return libraw_nikon_makernotes_t.ExposureProgram$VH;
+        return constants$36.const$4;
     }
     /**
      * Getter for field:
@@ -672,7 +590,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int ExposureProgram$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.ExposureProgram$VH.get(seg);
+        return (int)constants$36.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -681,17 +599,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ExposureProgram$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.ExposureProgram$VH.set(seg, x);
+        constants$36.const$4.set(seg, x);
     }
     public static int ExposureProgram$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.ExposureProgram$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$36.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void ExposureProgram$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.ExposureProgram$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$36.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle nMEshots$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("nMEshots"));
     public static VarHandle nMEshots$VH() {
-        return libraw_nikon_makernotes_t.nMEshots$VH;
+        return constants$36.const$5;
     }
     /**
      * Getter for field:
@@ -700,7 +617,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int nMEshots$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.nMEshots$VH.get(seg);
+        return (int)constants$36.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -709,17 +626,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void nMEshots$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.nMEshots$VH.set(seg, x);
+        constants$36.const$5.set(seg, x);
     }
     public static int nMEshots$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.nMEshots$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$36.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void nMEshots$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.nMEshots$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$36.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MEgainOn$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MEgainOn"));
     public static VarHandle MEgainOn$VH() {
-        return libraw_nikon_makernotes_t.MEgainOn$VH;
+        return constants$37.const$0;
     }
     /**
      * Getter for field:
@@ -728,7 +644,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int MEgainOn$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.MEgainOn$VH.get(seg);
+        return (int)constants$37.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -737,20 +653,19 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void MEgainOn$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.MEgainOn$VH.set(seg, x);
+        constants$37.const$0.set(seg, x);
     }
     public static int MEgainOn$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.MEgainOn$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$37.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void MEgainOn$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.MEgainOn$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$37.const$0.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment ME_WB$slice(MemorySegment seg) {
         return seg.asSlice(112, 32);
     }
-    static final VarHandle AFFineTune$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFFineTune"));
     public static VarHandle AFFineTune$VH() {
-        return libraw_nikon_makernotes_t.AFFineTune$VH;
+        return constants$37.const$1;
     }
     /**
      * Getter for field:
@@ -759,7 +674,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte AFFineTune$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.AFFineTune$VH.get(seg);
+        return (byte)constants$37.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -768,17 +683,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void AFFineTune$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.AFFineTune$VH.set(seg, x);
+        constants$37.const$1.set(seg, x);
     }
     public static byte AFFineTune$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.AFFineTune$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$37.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void AFFineTune$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.AFFineTune$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$37.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFFineTuneIndex$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFFineTuneIndex"));
     public static VarHandle AFFineTuneIndex$VH() {
-        return libraw_nikon_makernotes_t.AFFineTuneIndex$VH;
+        return constants$37.const$2;
     }
     /**
      * Getter for field:
@@ -787,7 +701,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte AFFineTuneIndex$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.AFFineTuneIndex$VH.get(seg);
+        return (byte)constants$37.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -796,17 +710,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void AFFineTuneIndex$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.AFFineTuneIndex$VH.set(seg, x);
+        constants$37.const$2.set(seg, x);
     }
     public static byte AFFineTuneIndex$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.AFFineTuneIndex$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$37.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void AFFineTuneIndex$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.AFFineTuneIndex$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$37.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle AFFineTuneAdj$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("AFFineTuneAdj"));
     public static VarHandle AFFineTuneAdj$VH() {
-        return libraw_nikon_makernotes_t.AFFineTuneAdj$VH;
+        return constants$37.const$3;
     }
     /**
      * Getter for field:
@@ -815,7 +728,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte AFFineTuneAdj$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.AFFineTuneAdj$VH.get(seg);
+        return (byte)constants$37.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -824,17 +737,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void AFFineTuneAdj$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.AFFineTuneAdj$VH.set(seg, x);
+        constants$37.const$3.set(seg, x);
     }
     public static byte AFFineTuneAdj$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.AFFineTuneAdj$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$37.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void AFFineTuneAdj$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.AFFineTuneAdj$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$37.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle LensDataVersion$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("LensDataVersion"));
     public static VarHandle LensDataVersion$VH() {
-        return libraw_nikon_makernotes_t.LensDataVersion$VH;
+        return constants$37.const$4;
     }
     /**
      * Getter for field:
@@ -843,7 +755,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int LensDataVersion$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.LensDataVersion$VH.get(seg);
+        return (int)constants$37.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -852,17 +764,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void LensDataVersion$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.LensDataVersion$VH.set(seg, x);
+        constants$37.const$4.set(seg, x);
     }
     public static int LensDataVersion$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.LensDataVersion$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$37.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void LensDataVersion$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.LensDataVersion$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$37.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle FlashInfoVersion$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("FlashInfoVersion"));
     public static VarHandle FlashInfoVersion$VH() {
-        return libraw_nikon_makernotes_t.FlashInfoVersion$VH;
+        return constants$37.const$5;
     }
     /**
      * Getter for field:
@@ -871,7 +782,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int FlashInfoVersion$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.FlashInfoVersion$VH.get(seg);
+        return (int)constants$37.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -880,17 +791,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void FlashInfoVersion$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.FlashInfoVersion$VH.set(seg, x);
+        constants$37.const$5.set(seg, x);
     }
     public static int FlashInfoVersion$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.FlashInfoVersion$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$37.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void FlashInfoVersion$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.FlashInfoVersion$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$37.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ColorBalanceVersion$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ColorBalanceVersion"));
     public static VarHandle ColorBalanceVersion$VH() {
-        return libraw_nikon_makernotes_t.ColorBalanceVersion$VH;
+        return constants$38.const$0;
     }
     /**
      * Getter for field:
@@ -899,7 +809,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int ColorBalanceVersion$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.ColorBalanceVersion$VH.get(seg);
+        return (int)constants$38.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -908,17 +818,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ColorBalanceVersion$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.ColorBalanceVersion$VH.set(seg, x);
+        constants$38.const$0.set(seg, x);
     }
     public static int ColorBalanceVersion$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.ColorBalanceVersion$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$38.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ColorBalanceVersion$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.ColorBalanceVersion$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$38.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle key$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("key"));
     public static VarHandle key$VH() {
-        return libraw_nikon_makernotes_t.key$VH;
+        return constants$38.const$1;
     }
     /**
      * Getter for field:
@@ -927,7 +836,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static byte key$get(MemorySegment seg) {
-        return (byte)libraw_nikon_makernotes_t.key$VH.get(seg);
+        return (byte)constants$38.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -936,20 +845,19 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void key$set(MemorySegment seg, byte x) {
-        libraw_nikon_makernotes_t.key$VH.set(seg, x);
+        constants$38.const$1.set(seg, x);
     }
     public static byte key$get(MemorySegment seg, long index) {
-        return (byte)libraw_nikon_makernotes_t.key$VH.get(seg.asSlice(index*sizeof()));
+        return (byte)constants$38.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void key$set(MemorySegment seg, long index, byte x) {
-        libraw_nikon_makernotes_t.key$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$38.const$1.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment NEFBitDepth$slice(MemorySegment seg) {
         return seg.asSlice(162, 8);
     }
-    static final VarHandle HighSpeedCropFormat$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("HighSpeedCropFormat"));
     public static VarHandle HighSpeedCropFormat$VH() {
-        return libraw_nikon_makernotes_t.HighSpeedCropFormat$VH;
+        return constants$38.const$2;
     }
     /**
      * Getter for field:
@@ -958,7 +866,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short HighSpeedCropFormat$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.HighSpeedCropFormat$VH.get(seg);
+        return (short)constants$38.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -967,20 +875,19 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void HighSpeedCropFormat$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.HighSpeedCropFormat$VH.set(seg, x);
+        constants$38.const$2.set(seg, x);
     }
     public static short HighSpeedCropFormat$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.HighSpeedCropFormat$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$38.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void HighSpeedCropFormat$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.HighSpeedCropFormat$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$38.const$2.set(seg.asSlice(index*sizeof()), x);
     }
     public static MemorySegment SensorHighSpeedCrop$slice(MemorySegment seg) {
         return seg.asSlice(172, 8);
     }
-    static final VarHandle SensorWidth$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorWidth"));
     public static VarHandle SensorWidth$VH() {
-        return libraw_nikon_makernotes_t.SensorWidth$VH;
+        return constants$38.const$3;
     }
     /**
      * Getter for field:
@@ -989,7 +896,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short SensorWidth$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.SensorWidth$VH.get(seg);
+        return (short)constants$38.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -998,17 +905,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void SensorWidth$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.SensorWidth$VH.set(seg, x);
+        constants$38.const$3.set(seg, x);
     }
     public static short SensorWidth$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.SensorWidth$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$38.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void SensorWidth$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.SensorWidth$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$38.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle SensorHeight$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("SensorHeight"));
     public static VarHandle SensorHeight$VH() {
-        return libraw_nikon_makernotes_t.SensorHeight$VH;
+        return constants$38.const$4;
     }
     /**
      * Getter for field:
@@ -1017,7 +923,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short SensorHeight$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.SensorHeight$VH.get(seg);
+        return (short)constants$38.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -1026,17 +932,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void SensorHeight$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.SensorHeight$VH.set(seg, x);
+        constants$38.const$4.set(seg, x);
     }
     public static short SensorHeight$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.SensorHeight$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$38.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void SensorHeight$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.SensorHeight$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$38.const$4.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle Active_D_Lighting$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("Active_D_Lighting"));
     public static VarHandle Active_D_Lighting$VH() {
-        return libraw_nikon_makernotes_t.Active_D_Lighting$VH;
+        return constants$38.const$5;
     }
     /**
      * Getter for field:
@@ -1045,7 +950,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short Active_D_Lighting$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.Active_D_Lighting$VH.get(seg);
+        return (short)constants$38.const$5.get(seg);
     }
     /**
      * Setter for field:
@@ -1054,17 +959,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void Active_D_Lighting$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.Active_D_Lighting$VH.set(seg, x);
+        constants$38.const$5.set(seg, x);
     }
     public static short Active_D_Lighting$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.Active_D_Lighting$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$38.const$5.get(seg.asSlice(index*sizeof()));
     }
     public static void Active_D_Lighting$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.Active_D_Lighting$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$38.const$5.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle ShotInfoVersion$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("ShotInfoVersion"));
     public static VarHandle ShotInfoVersion$VH() {
-        return libraw_nikon_makernotes_t.ShotInfoVersion$VH;
+        return constants$39.const$0;
     }
     /**
      * Getter for field:
@@ -1073,7 +977,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static int ShotInfoVersion$get(MemorySegment seg) {
-        return (int)libraw_nikon_makernotes_t.ShotInfoVersion$VH.get(seg);
+        return (int)constants$39.const$0.get(seg);
     }
     /**
      * Setter for field:
@@ -1082,17 +986,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void ShotInfoVersion$set(MemorySegment seg, int x) {
-        libraw_nikon_makernotes_t.ShotInfoVersion$VH.set(seg, x);
+        constants$39.const$0.set(seg, x);
     }
     public static int ShotInfoVersion$get(MemorySegment seg, long index) {
-        return (int)libraw_nikon_makernotes_t.ShotInfoVersion$VH.get(seg.asSlice(index*sizeof()));
+        return (int)constants$39.const$0.get(seg.asSlice(index*sizeof()));
     }
     public static void ShotInfoVersion$set(MemorySegment seg, long index, int x) {
-        libraw_nikon_makernotes_t.ShotInfoVersion$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$39.const$0.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle MakernotesFlip$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("MakernotesFlip"));
     public static VarHandle MakernotesFlip$VH() {
-        return libraw_nikon_makernotes_t.MakernotesFlip$VH;
+        return constants$39.const$1;
     }
     /**
      * Getter for field:
@@ -1101,7 +1004,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static short MakernotesFlip$get(MemorySegment seg) {
-        return (short)libraw_nikon_makernotes_t.MakernotesFlip$VH.get(seg);
+        return (short)constants$39.const$1.get(seg);
     }
     /**
      * Setter for field:
@@ -1110,17 +1013,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void MakernotesFlip$set(MemorySegment seg, short x) {
-        libraw_nikon_makernotes_t.MakernotesFlip$VH.set(seg, x);
+        constants$39.const$1.set(seg, x);
     }
     public static short MakernotesFlip$get(MemorySegment seg, long index) {
-        return (short)libraw_nikon_makernotes_t.MakernotesFlip$VH.get(seg.asSlice(index*sizeof()));
+        return (short)constants$39.const$1.get(seg.asSlice(index*sizeof()));
     }
     public static void MakernotesFlip$set(MemorySegment seg, long index, short x) {
-        libraw_nikon_makernotes_t.MakernotesFlip$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$39.const$1.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle RollAngle$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("RollAngle"));
     public static VarHandle RollAngle$VH() {
-        return libraw_nikon_makernotes_t.RollAngle$VH;
+        return constants$39.const$2;
     }
     /**
      * Getter for field:
@@ -1129,7 +1031,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static double RollAngle$get(MemorySegment seg) {
-        return (double)libraw_nikon_makernotes_t.RollAngle$VH.get(seg);
+        return (double)constants$39.const$2.get(seg);
     }
     /**
      * Setter for field:
@@ -1138,17 +1040,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void RollAngle$set(MemorySegment seg, double x) {
-        libraw_nikon_makernotes_t.RollAngle$VH.set(seg, x);
+        constants$39.const$2.set(seg, x);
     }
     public static double RollAngle$get(MemorySegment seg, long index) {
-        return (double)libraw_nikon_makernotes_t.RollAngle$VH.get(seg.asSlice(index*sizeof()));
+        return (double)constants$39.const$2.get(seg.asSlice(index*sizeof()));
     }
     public static void RollAngle$set(MemorySegment seg, long index, double x) {
-        libraw_nikon_makernotes_t.RollAngle$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$39.const$2.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle PitchAngle$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("PitchAngle"));
     public static VarHandle PitchAngle$VH() {
-        return libraw_nikon_makernotes_t.PitchAngle$VH;
+        return constants$39.const$3;
     }
     /**
      * Getter for field:
@@ -1157,7 +1058,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static double PitchAngle$get(MemorySegment seg) {
-        return (double)libraw_nikon_makernotes_t.PitchAngle$VH.get(seg);
+        return (double)constants$39.const$3.get(seg);
     }
     /**
      * Setter for field:
@@ -1166,17 +1067,16 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void PitchAngle$set(MemorySegment seg, double x) {
-        libraw_nikon_makernotes_t.PitchAngle$VH.set(seg, x);
+        constants$39.const$3.set(seg, x);
     }
     public static double PitchAngle$get(MemorySegment seg, long index) {
-        return (double)libraw_nikon_makernotes_t.PitchAngle$VH.get(seg.asSlice(index*sizeof()));
+        return (double)constants$39.const$3.get(seg.asSlice(index*sizeof()));
     }
     public static void PitchAngle$set(MemorySegment seg, long index, double x) {
-        libraw_nikon_makernotes_t.PitchAngle$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$39.const$3.set(seg.asSlice(index*sizeof()), x);
     }
-    static final VarHandle YawAngle$VH = $struct$LAYOUT.varHandle(MemoryLayout.PathElement.groupElement("YawAngle"));
     public static VarHandle YawAngle$VH() {
-        return libraw_nikon_makernotes_t.YawAngle$VH;
+        return constants$39.const$4;
     }
     /**
      * Getter for field:
@@ -1185,7 +1085,7 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static double YawAngle$get(MemorySegment seg) {
-        return (double)libraw_nikon_makernotes_t.YawAngle$VH.get(seg);
+        return (double)constants$39.const$4.get(seg);
     }
     /**
      * Setter for field:
@@ -1194,20 +1094,20 @@ public class libraw_nikon_makernotes_t {
      * }
      */
     public static void YawAngle$set(MemorySegment seg, double x) {
-        libraw_nikon_makernotes_t.YawAngle$VH.set(seg, x);
+        constants$39.const$4.set(seg, x);
     }
     public static double YawAngle$get(MemorySegment seg, long index) {
-        return (double)libraw_nikon_makernotes_t.YawAngle$VH.get(seg.asSlice(index*sizeof()));
+        return (double)constants$39.const$4.get(seg.asSlice(index*sizeof()));
     }
     public static void YawAngle$set(MemorySegment seg, long index, double x) {
-        libraw_nikon_makernotes_t.YawAngle$VH.set(seg.asSlice(index*sizeof()), x);
+        constants$39.const$4.set(seg.asSlice(index*sizeof()), x);
     }
     public static long sizeof() { return $LAYOUT().byteSize(); }
     public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
     public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
     }
-    public static MemorySegment ofAddress(MemorySegment addr, SegmentScope scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
+    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
 
 
