@@ -2,950 +2,862 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_callbacks_t {
- *     void (*mem_cb)(void*,char*,char*);
- *     void* memcb_data;
- *     void (*data_cb)(void*,char*,int);
- *     void* datacb_data;
- *     int (*progress_cb)(void*,enum LibRaw_progress,int,int);
- *     void* progresscb_data;
- *     void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
- *     void* exifparser_data;
- *     int (*pre_identify_cb)(void*);
- *     void (*post_identify_cb)(void*);
- *     void (*pre_subtractblack_cb)(void*);
- *     void (*pre_scalecolors_cb)(void*);
- *     void (*pre_preinterpolate_cb)(void*);
- *     void (*pre_interpolate_cb)(void*);
- *     void (*interpolate_bayer_cb)(void*);
- *     void (*interpolate_xtrans_cb)(void*);
- *     void (*post_interpolate_cb)(void*);
- *     void (*pre_converttorgb_cb)(void*);
- *     void (*post_converttorgb_cb)(void*);
- * };
+ * {@snippet lang=c :
+ * struct {
+ *     data_callback data_cb;
+ *     void *datacb_data;
+ *     progress_callback progress_cb;
+ *     void *progresscb_data;
+ *     exif_parser_callback exif_cb;
+ *     void *exifparser_data;
+ *     pre_identify_callback pre_identify_cb;
+ *     post_identify_callback post_identify_cb;
+ *     process_step_callback pre_subtractblack_cb;
+ *     process_step_callback pre_scalecolors_cb;
+ *     process_step_callback pre_preinterpolate_cb;
+ *     process_step_callback pre_interpolate_cb;
+ *     process_step_callback interpolate_bayer_cb;
+ *     process_step_callback interpolate_xtrans_cb;
+ *     process_step_callback post_interpolate_cb;
+ *     process_step_callback pre_converttorgb_cb;
+ *     process_step_callback post_converttorgb_cb;
+ * }
  * }
  */
 public class libraw_callbacks_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$5.const$0;
+    libraw_callbacks_t() {
+        // Should not be called directly
     }
+
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_POINTER.withName("data_cb"),
+        libraw_h.C_POINTER.withName("datacb_data"),
+        libraw_h.C_POINTER.withName("progress_cb"),
+        libraw_h.C_POINTER.withName("progresscb_data"),
+        libraw_h.C_POINTER.withName("exif_cb"),
+        libraw_h.C_POINTER.withName("exifparser_data"),
+        libraw_h.C_POINTER.withName("pre_identify_cb"),
+        libraw_h.C_POINTER.withName("post_identify_cb"),
+        libraw_h.C_POINTER.withName("pre_subtractblack_cb"),
+        libraw_h.C_POINTER.withName("pre_scalecolors_cb"),
+        libraw_h.C_POINTER.withName("pre_preinterpolate_cb"),
+        libraw_h.C_POINTER.withName("pre_interpolate_cb"),
+        libraw_h.C_POINTER.withName("interpolate_bayer_cb"),
+        libraw_h.C_POINTER.withName("interpolate_xtrans_cb"),
+        libraw_h.C_POINTER.withName("post_interpolate_cb"),
+        libraw_h.C_POINTER.withName("pre_converttorgb_cb"),
+        libraw_h.C_POINTER.withName("post_converttorgb_cb")
+    ).withName("$anon$152:11");
+
     /**
-     * {@snippet :
- * void (*mem_cb)(void*,char*,char*);
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final AddressLayout data_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("data_cb"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * data_callback data_cb
      * }
      */
-    public interface mem_cb {
-
-        void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, java.lang.foreign.MemorySegment where);
-        static MemorySegment allocate(mem_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$5.const$1, fi, constants$1.const$3, scope);
-        }
-        static mem_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, java.lang.foreign.MemorySegment _where) -> {
-                try {
-                    constants$1.const$5.invokeExact(symbol, _data, _file, _where);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout data_cb$layout() {
+        return data_cb$LAYOUT;
     }
 
-    public static VarHandle mem_cb$VH() {
-        return constants$5.const$2;
+    private static final long data_cb$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * data_callback data_cb
+     * }
+     */
+    public static final long data_cb$offset() {
+        return data_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*mem_cb)(void*,char*,char*);
+     * {@snippet lang=c :
+     * data_callback data_cb
      * }
      */
-    public static MemorySegment mem_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$5.const$2.get(seg);
+    public static MemorySegment data_cb(MemorySegment struct) {
+        return struct.get(data_cb$LAYOUT, data_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*mem_cb)(void*,char*,char*);
+     * {@snippet lang=c :
+     * data_callback data_cb
      * }
      */
-    public static void mem_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$5.const$2.set(seg, x);
+    public static void data_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(data_cb$LAYOUT, data_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment mem_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$5.const$2.get(seg.asSlice(index*sizeof()));
+
+    private static final AddressLayout datacb_data$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("datacb_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * void *datacb_data
+     * }
+     */
+    public static final AddressLayout datacb_data$layout() {
+        return datacb_data$LAYOUT;
     }
-    public static void mem_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$5.const$2.set(seg.asSlice(index*sizeof()), x);
+
+    private static final long datacb_data$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * void *datacb_data
+     * }
+     */
+    public static final long datacb_data$offset() {
+        return datacb_data$OFFSET;
     }
-    public static mem_cb mem_cb(MemorySegment segment, Arena scope) {
-        return mem_cb.ofAddress(mem_cb$get(segment), scope);
-    }
-    public static VarHandle memcb_data$VH() {
-        return constants$5.const$3;
-    }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void* memcb_data;
+     * {@snippet lang=c :
+     * void *datacb_data
      * }
      */
-    public static MemorySegment memcb_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$5.const$3.get(seg);
+    public static MemorySegment datacb_data(MemorySegment struct) {
+        return struct.get(datacb_data$LAYOUT, datacb_data$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void* memcb_data;
+     * {@snippet lang=c :
+     * void *datacb_data
      * }
      */
-    public static void memcb_data$set(MemorySegment seg, MemorySegment x) {
-        constants$5.const$3.set(seg, x);
+    public static void datacb_data(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(datacb_data$LAYOUT, datacb_data$OFFSET, fieldValue);
     }
-    public static MemorySegment memcb_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$5.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void memcb_data$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$5.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
+
+    private static final AddressLayout progress_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("progress_cb"));
+
     /**
-     * {@snippet :
- * void (*data_cb)(void*,char*,int);
+     * Layout for field:
+     * {@snippet lang=c :
+     * progress_callback progress_cb
      * }
      */
-    public interface data_cb {
-
-        void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, int offset);
-        static MemorySegment allocate(data_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$5.const$4, fi, constants$2.const$4, scope);
-        }
-        static data_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, int _offset) -> {
-                try {
-                    constants$3.const$0.invokeExact(symbol, _data, _file, _offset);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout progress_cb$layout() {
+        return progress_cb$LAYOUT;
     }
 
-    public static VarHandle data_cb$VH() {
-        return constants$5.const$5;
+    private static final long progress_cb$OFFSET = 16;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * progress_callback progress_cb
+     * }
+     */
+    public static final long progress_cb$offset() {
+        return progress_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*data_cb)(void*,char*,int);
+     * {@snippet lang=c :
+     * progress_callback progress_cb
      * }
      */
-    public static MemorySegment data_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$5.const$5.get(seg);
+    public static MemorySegment progress_cb(MemorySegment struct) {
+        return struct.get(progress_cb$LAYOUT, progress_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*data_cb)(void*,char*,int);
+     * {@snippet lang=c :
+     * progress_callback progress_cb
      * }
      */
-    public static void data_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$5.const$5.set(seg, x);
+    public static void progress_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(progress_cb$LAYOUT, progress_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment data_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$5.const$5.get(seg.asSlice(index*sizeof()));
+
+    private static final AddressLayout progresscb_data$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("progresscb_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * void *progresscb_data
+     * }
+     */
+    public static final AddressLayout progresscb_data$layout() {
+        return progresscb_data$LAYOUT;
     }
-    public static void data_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$5.const$5.set(seg.asSlice(index*sizeof()), x);
+
+    private static final long progresscb_data$OFFSET = 24;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * void *progresscb_data
+     * }
+     */
+    public static final long progresscb_data$offset() {
+        return progresscb_data$OFFSET;
     }
-    public static data_cb data_cb(MemorySegment segment, Arena scope) {
-        return data_cb.ofAddress(data_cb$get(segment), scope);
-    }
-    public static VarHandle datacb_data$VH() {
-        return constants$6.const$0;
-    }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void* datacb_data;
+     * {@snippet lang=c :
+     * void *progresscb_data
      * }
      */
-    public static MemorySegment datacb_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$0.get(seg);
+    public static MemorySegment progresscb_data(MemorySegment struct) {
+        return struct.get(progresscb_data$LAYOUT, progresscb_data$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void* datacb_data;
+     * {@snippet lang=c :
+     * void *progresscb_data
      * }
      */
-    public static void datacb_data$set(MemorySegment seg, MemorySegment x) {
-        constants$6.const$0.set(seg, x);
+    public static void progresscb_data(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(progresscb_data$LAYOUT, progresscb_data$OFFSET, fieldValue);
     }
-    public static MemorySegment datacb_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void datacb_data$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$6.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
+
+    private static final AddressLayout exif_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("exif_cb"));
+
     /**
-     * {@snippet :
- * int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+     * Layout for field:
+     * {@snippet lang=c :
+     * exif_parser_callback exif_cb
      * }
      */
-    public interface progress_cb {
-
-        int apply(java.lang.foreign.MemorySegment data, int stage, int iteration, int expected);
-        static MemorySegment allocate(progress_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$6.const$1, fi, constants$3.const$2, scope);
-        }
-        static progress_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _data, int _stage, int _iteration, int _expected) -> {
-                try {
-                    return (int)constants$3.const$4.invokeExact(symbol, _data, _stage, _iteration, _expected);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout exif_cb$layout() {
+        return exif_cb$LAYOUT;
     }
 
-    public static VarHandle progress_cb$VH() {
-        return constants$6.const$2;
+    private static final long exif_cb$OFFSET = 32;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * exif_parser_callback exif_cb
+     * }
+     */
+    public static final long exif_cb$offset() {
+        return exif_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+     * {@snippet lang=c :
+     * exif_parser_callback exif_cb
      * }
      */
-    public static MemorySegment progress_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$2.get(seg);
+    public static MemorySegment exif_cb(MemorySegment struct) {
+        return struct.get(exif_cb$LAYOUT, exif_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * int (*progress_cb)(void*,enum LibRaw_progress,int,int);
+     * {@snippet lang=c :
+     * exif_parser_callback exif_cb
      * }
      */
-    public static void progress_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$6.const$2.set(seg, x);
+    public static void exif_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(exif_cb$LAYOUT, exif_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment progress_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$2.get(seg.asSlice(index*sizeof()));
+
+    private static final AddressLayout exifparser_data$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("exifparser_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * void *exifparser_data
+     * }
+     */
+    public static final AddressLayout exifparser_data$layout() {
+        return exifparser_data$LAYOUT;
     }
-    public static void progress_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$6.const$2.set(seg.asSlice(index*sizeof()), x);
+
+    private static final long exifparser_data$OFFSET = 40;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * void *exifparser_data
+     * }
+     */
+    public static final long exifparser_data$offset() {
+        return exifparser_data$OFFSET;
     }
-    public static progress_cb progress_cb(MemorySegment segment, Arena scope) {
-        return progress_cb.ofAddress(progress_cb$get(segment), scope);
-    }
-    public static VarHandle progresscb_data$VH() {
-        return constants$6.const$3;
-    }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void* progresscb_data;
+     * {@snippet lang=c :
+     * void *exifparser_data
      * }
      */
-    public static MemorySegment progresscb_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$3.get(seg);
+    public static MemorySegment exifparser_data(MemorySegment struct) {
+        return struct.get(exifparser_data$LAYOUT, exifparser_data$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void* progresscb_data;
+     * {@snippet lang=c :
+     * void *exifparser_data
      * }
      */
-    public static void progresscb_data$set(MemorySegment seg, MemorySegment x) {
-        constants$6.const$3.set(seg, x);
+    public static void exifparser_data(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(exifparser_data$LAYOUT, exifparser_data$OFFSET, fieldValue);
     }
-    public static MemorySegment progresscb_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void progresscb_data$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$6.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
+
+    private static final AddressLayout pre_identify_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("pre_identify_cb"));
+
     /**
-     * {@snippet :
- * void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+     * Layout for field:
+     * {@snippet lang=c :
+     * pre_identify_callback pre_identify_cb
      * }
      */
-    public interface exif_cb {
-
-        void apply(java.lang.foreign.MemorySegment context, int tag, int type, int len, int ord, java.lang.foreign.MemorySegment ifp, long base);
-        static MemorySegment allocate(exif_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$6.const$4, fi, constants$2.const$0, scope);
-        }
-        static exif_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _context, int _tag, int _type, int _len, int _ord, java.lang.foreign.MemorySegment _ifp, long _base) -> {
-                try {
-                    constants$2.const$2.invokeExact(symbol, _context, _tag, _type, _len, _ord, _ifp, _base);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout pre_identify_cb$layout() {
+        return pre_identify_cb$LAYOUT;
     }
 
-    public static VarHandle exif_cb$VH() {
-        return constants$6.const$5;
+    private static final long pre_identify_cb$OFFSET = 48;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * pre_identify_callback pre_identify_cb
+     * }
+     */
+    public static final long pre_identify_cb$offset() {
+        return pre_identify_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+     * {@snippet lang=c :
+     * pre_identify_callback pre_identify_cb
      * }
      */
-    public static MemorySegment exif_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$5.get(seg);
+    public static MemorySegment pre_identify_cb(MemorySegment struct) {
+        return struct.get(pre_identify_cb$LAYOUT, pre_identify_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*exif_cb)(void*,int,int,int,unsigned int,void*,long long);
+     * {@snippet lang=c :
+     * pre_identify_callback pre_identify_cb
      * }
      */
-    public static void exif_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$6.const$5.set(seg, x);
+    public static void pre_identify_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(pre_identify_cb$LAYOUT, pre_identify_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment exif_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$6.const$5.get(seg.asSlice(index*sizeof()));
+
+    private static final AddressLayout post_identify_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("post_identify_cb"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * post_identify_callback post_identify_cb
+     * }
+     */
+    public static final AddressLayout post_identify_cb$layout() {
+        return post_identify_cb$LAYOUT;
     }
-    public static void exif_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$6.const$5.set(seg.asSlice(index*sizeof()), x);
+
+    private static final long post_identify_cb$OFFSET = 56;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * post_identify_callback post_identify_cb
+     * }
+     */
+    public static final long post_identify_cb$offset() {
+        return post_identify_cb$OFFSET;
     }
-    public static exif_cb exif_cb(MemorySegment segment, Arena scope) {
-        return exif_cb.ofAddress(exif_cb$get(segment), scope);
-    }
-    public static VarHandle exifparser_data$VH() {
-        return constants$7.const$0;
-    }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void* exifparser_data;
+     * {@snippet lang=c :
+     * post_identify_callback post_identify_cb
      * }
      */
-    public static MemorySegment exifparser_data$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$7.const$0.get(seg);
+    public static MemorySegment post_identify_cb(MemorySegment struct) {
+        return struct.get(post_identify_cb$LAYOUT, post_identify_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void* exifparser_data;
+     * {@snippet lang=c :
+     * post_identify_callback post_identify_cb
      * }
      */
-    public static void exifparser_data$set(MemorySegment seg, MemorySegment x) {
-        constants$7.const$0.set(seg, x);
+    public static void post_identify_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(post_identify_cb$LAYOUT, post_identify_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment exifparser_data$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$7.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void exifparser_data$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$7.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
+
+    private static final AddressLayout pre_subtractblack_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("pre_subtractblack_cb"));
+
     /**
-     * {@snippet :
- * int (*pre_identify_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_subtractblack_cb
      * }
      */
-    public interface pre_identify_cb {
-
-        int apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(pre_identify_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$7.const$1, fi, constants$3.const$5, scope);
-        }
-        static pre_identify_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    return (int)constants$4.const$1.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout pre_subtractblack_cb$layout() {
+        return pre_subtractblack_cb$LAYOUT;
     }
 
-    public static VarHandle pre_identify_cb$VH() {
-        return constants$7.const$2;
+    private static final long pre_subtractblack_cb$OFFSET = 64;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_subtractblack_cb
+     * }
+     */
+    public static final long pre_subtractblack_cb$offset() {
+        return pre_subtractblack_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * int (*pre_identify_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_subtractblack_cb
      * }
      */
-    public static MemorySegment pre_identify_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$7.const$2.get(seg);
+    public static MemorySegment pre_subtractblack_cb(MemorySegment struct) {
+        return struct.get(pre_subtractblack_cb$LAYOUT, pre_subtractblack_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * int (*pre_identify_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_subtractblack_cb
      * }
      */
-    public static void pre_identify_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$7.const$2.set(seg, x);
+    public static void pre_subtractblack_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(pre_subtractblack_cb$LAYOUT, pre_subtractblack_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment pre_identify_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$7.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pre_identify_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$7.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static pre_identify_cb pre_identify_cb(MemorySegment segment, Arena scope) {
-        return pre_identify_cb.ofAddress(pre_identify_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout pre_scalecolors_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("pre_scalecolors_cb"));
+
     /**
-     * {@snippet :
- * void (*post_identify_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_scalecolors_cb
      * }
      */
-    public interface post_identify_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(post_identify_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$7.const$3, fi, constants$4.const$2, scope);
-        }
-        static post_identify_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout pre_scalecolors_cb$layout() {
+        return pre_scalecolors_cb$LAYOUT;
     }
 
-    public static VarHandle post_identify_cb$VH() {
-        return constants$7.const$4;
+    private static final long pre_scalecolors_cb$OFFSET = 72;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_scalecolors_cb
+     * }
+     */
+    public static final long pre_scalecolors_cb$offset() {
+        return pre_scalecolors_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*post_identify_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_scalecolors_cb
      * }
      */
-    public static MemorySegment post_identify_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$7.const$4.get(seg);
+    public static MemorySegment pre_scalecolors_cb(MemorySegment struct) {
+        return struct.get(pre_scalecolors_cb$LAYOUT, pre_scalecolors_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*post_identify_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_scalecolors_cb
      * }
      */
-    public static void post_identify_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$7.const$4.set(seg, x);
+    public static void pre_scalecolors_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(pre_scalecolors_cb$LAYOUT, pre_scalecolors_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment post_identify_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$7.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void post_identify_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$7.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static post_identify_cb post_identify_cb(MemorySegment segment, Arena scope) {
-        return post_identify_cb.ofAddress(post_identify_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout pre_preinterpolate_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("pre_preinterpolate_cb"));
+
     /**
-     * {@snippet :
- * void (*pre_subtractblack_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_preinterpolate_cb
      * }
      */
-    public interface pre_subtractblack_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(pre_subtractblack_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$7.const$5, fi, constants$4.const$2, scope);
-        }
-        static pre_subtractblack_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout pre_preinterpolate_cb$layout() {
+        return pre_preinterpolate_cb$LAYOUT;
     }
 
-    public static VarHandle pre_subtractblack_cb$VH() {
-        return constants$8.const$0;
+    private static final long pre_preinterpolate_cb$OFFSET = 80;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_preinterpolate_cb
+     * }
+     */
+    public static final long pre_preinterpolate_cb$offset() {
+        return pre_preinterpolate_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*pre_subtractblack_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_preinterpolate_cb
      * }
      */
-    public static MemorySegment pre_subtractblack_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$8.const$0.get(seg);
+    public static MemorySegment pre_preinterpolate_cb(MemorySegment struct) {
+        return struct.get(pre_preinterpolate_cb$LAYOUT, pre_preinterpolate_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*pre_subtractblack_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_preinterpolate_cb
      * }
      */
-    public static void pre_subtractblack_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$8.const$0.set(seg, x);
+    public static void pre_preinterpolate_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(pre_preinterpolate_cb$LAYOUT, pre_preinterpolate_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment pre_subtractblack_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$8.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pre_subtractblack_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$8.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static pre_subtractblack_cb pre_subtractblack_cb(MemorySegment segment, Arena scope) {
-        return pre_subtractblack_cb.ofAddress(pre_subtractblack_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout pre_interpolate_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("pre_interpolate_cb"));
+
     /**
-     * {@snippet :
- * void (*pre_scalecolors_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_interpolate_cb
      * }
      */
-    public interface pre_scalecolors_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(pre_scalecolors_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$8.const$1, fi, constants$4.const$2, scope);
-        }
-        static pre_scalecolors_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout pre_interpolate_cb$layout() {
+        return pre_interpolate_cb$LAYOUT;
     }
 
-    public static VarHandle pre_scalecolors_cb$VH() {
-        return constants$8.const$2;
+    private static final long pre_interpolate_cb$OFFSET = 88;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_interpolate_cb
+     * }
+     */
+    public static final long pre_interpolate_cb$offset() {
+        return pre_interpolate_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*pre_scalecolors_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_interpolate_cb
      * }
      */
-    public static MemorySegment pre_scalecolors_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$8.const$2.get(seg);
+    public static MemorySegment pre_interpolate_cb(MemorySegment struct) {
+        return struct.get(pre_interpolate_cb$LAYOUT, pre_interpolate_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*pre_scalecolors_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_interpolate_cb
      * }
      */
-    public static void pre_scalecolors_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$8.const$2.set(seg, x);
+    public static void pre_interpolate_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(pre_interpolate_cb$LAYOUT, pre_interpolate_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment pre_scalecolors_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$8.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pre_scalecolors_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$8.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static pre_scalecolors_cb pre_scalecolors_cb(MemorySegment segment, Arena scope) {
-        return pre_scalecolors_cb.ofAddress(pre_scalecolors_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout interpolate_bayer_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("interpolate_bayer_cb"));
+
     /**
-     * {@snippet :
- * void (*pre_preinterpolate_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback interpolate_bayer_cb
      * }
      */
-    public interface pre_preinterpolate_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(pre_preinterpolate_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$8.const$3, fi, constants$4.const$2, scope);
-        }
-        static pre_preinterpolate_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout interpolate_bayer_cb$layout() {
+        return interpolate_bayer_cb$LAYOUT;
     }
 
-    public static VarHandle pre_preinterpolate_cb$VH() {
-        return constants$8.const$4;
+    private static final long interpolate_bayer_cb$OFFSET = 96;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback interpolate_bayer_cb
+     * }
+     */
+    public static final long interpolate_bayer_cb$offset() {
+        return interpolate_bayer_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*pre_preinterpolate_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback interpolate_bayer_cb
      * }
      */
-    public static MemorySegment pre_preinterpolate_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$8.const$4.get(seg);
+    public static MemorySegment interpolate_bayer_cb(MemorySegment struct) {
+        return struct.get(interpolate_bayer_cb$LAYOUT, interpolate_bayer_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*pre_preinterpolate_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback interpolate_bayer_cb
      * }
      */
-    public static void pre_preinterpolate_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$8.const$4.set(seg, x);
+    public static void interpolate_bayer_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(interpolate_bayer_cb$LAYOUT, interpolate_bayer_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment pre_preinterpolate_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$8.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pre_preinterpolate_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$8.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static pre_preinterpolate_cb pre_preinterpolate_cb(MemorySegment segment, Arena scope) {
-        return pre_preinterpolate_cb.ofAddress(pre_preinterpolate_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout interpolate_xtrans_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("interpolate_xtrans_cb"));
+
     /**
-     * {@snippet :
- * void (*pre_interpolate_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback interpolate_xtrans_cb
      * }
      */
-    public interface pre_interpolate_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(pre_interpolate_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$8.const$5, fi, constants$4.const$2, scope);
-        }
-        static pre_interpolate_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout interpolate_xtrans_cb$layout() {
+        return interpolate_xtrans_cb$LAYOUT;
     }
 
-    public static VarHandle pre_interpolate_cb$VH() {
-        return constants$9.const$0;
+    private static final long interpolate_xtrans_cb$OFFSET = 104;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback interpolate_xtrans_cb
+     * }
+     */
+    public static final long interpolate_xtrans_cb$offset() {
+        return interpolate_xtrans_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*pre_interpolate_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback interpolate_xtrans_cb
      * }
      */
-    public static MemorySegment pre_interpolate_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$9.const$0.get(seg);
+    public static MemorySegment interpolate_xtrans_cb(MemorySegment struct) {
+        return struct.get(interpolate_xtrans_cb$LAYOUT, interpolate_xtrans_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*pre_interpolate_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback interpolate_xtrans_cb
      * }
      */
-    public static void pre_interpolate_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$9.const$0.set(seg, x);
+    public static void interpolate_xtrans_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(interpolate_xtrans_cb$LAYOUT, interpolate_xtrans_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment pre_interpolate_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$9.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pre_interpolate_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$9.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static pre_interpolate_cb pre_interpolate_cb(MemorySegment segment, Arena scope) {
-        return pre_interpolate_cb.ofAddress(pre_interpolate_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout post_interpolate_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("post_interpolate_cb"));
+
     /**
-     * {@snippet :
- * void (*interpolate_bayer_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback post_interpolate_cb
      * }
      */
-    public interface interpolate_bayer_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(interpolate_bayer_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$9.const$1, fi, constants$4.const$2, scope);
-        }
-        static interpolate_bayer_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout post_interpolate_cb$layout() {
+        return post_interpolate_cb$LAYOUT;
     }
 
-    public static VarHandle interpolate_bayer_cb$VH() {
-        return constants$9.const$2;
+    private static final long post_interpolate_cb$OFFSET = 112;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback post_interpolate_cb
+     * }
+     */
+    public static final long post_interpolate_cb$offset() {
+        return post_interpolate_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*interpolate_bayer_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback post_interpolate_cb
      * }
      */
-    public static MemorySegment interpolate_bayer_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$9.const$2.get(seg);
+    public static MemorySegment post_interpolate_cb(MemorySegment struct) {
+        return struct.get(post_interpolate_cb$LAYOUT, post_interpolate_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*interpolate_bayer_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback post_interpolate_cb
      * }
      */
-    public static void interpolate_bayer_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$9.const$2.set(seg, x);
+    public static void post_interpolate_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(post_interpolate_cb$LAYOUT, post_interpolate_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment interpolate_bayer_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$9.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void interpolate_bayer_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$9.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static interpolate_bayer_cb interpolate_bayer_cb(MemorySegment segment, Arena scope) {
-        return interpolate_bayer_cb.ofAddress(interpolate_bayer_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout pre_converttorgb_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("pre_converttorgb_cb"));
+
     /**
-     * {@snippet :
- * void (*interpolate_xtrans_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_converttorgb_cb
      * }
      */
-    public interface interpolate_xtrans_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(interpolate_xtrans_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$9.const$3, fi, constants$4.const$2, scope);
-        }
-        static interpolate_xtrans_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout pre_converttorgb_cb$layout() {
+        return pre_converttorgb_cb$LAYOUT;
     }
 
-    public static VarHandle interpolate_xtrans_cb$VH() {
-        return constants$9.const$4;
+    private static final long pre_converttorgb_cb$OFFSET = 120;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback pre_converttorgb_cb
+     * }
+     */
+    public static final long pre_converttorgb_cb$offset() {
+        return pre_converttorgb_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*interpolate_xtrans_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_converttorgb_cb
      * }
      */
-    public static MemorySegment interpolate_xtrans_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$9.const$4.get(seg);
+    public static MemorySegment pre_converttorgb_cb(MemorySegment struct) {
+        return struct.get(pre_converttorgb_cb$LAYOUT, pre_converttorgb_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*interpolate_xtrans_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback pre_converttorgb_cb
      * }
      */
-    public static void interpolate_xtrans_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$9.const$4.set(seg, x);
+    public static void pre_converttorgb_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(pre_converttorgb_cb$LAYOUT, pre_converttorgb_cb$OFFSET, fieldValue);
     }
-    public static MemorySegment interpolate_xtrans_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$9.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void interpolate_xtrans_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$9.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static interpolate_xtrans_cb interpolate_xtrans_cb(MemorySegment segment, Arena scope) {
-        return interpolate_xtrans_cb.ofAddress(interpolate_xtrans_cb$get(segment), scope);
-    }
+
+    private static final AddressLayout post_converttorgb_cb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("post_converttorgb_cb"));
+
     /**
-     * {@snippet :
- * void (*post_interpolate_cb)(void*);
+     * Layout for field:
+     * {@snippet lang=c :
+     * process_step_callback post_converttorgb_cb
      * }
      */
-    public interface post_interpolate_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(post_interpolate_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$9.const$5, fi, constants$4.const$2, scope);
-        }
-        static post_interpolate_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static final AddressLayout post_converttorgb_cb$layout() {
+        return post_converttorgb_cb$LAYOUT;
     }
 
-    public static VarHandle post_interpolate_cb$VH() {
-        return constants$10.const$0;
+    private static final long post_converttorgb_cb$OFFSET = 128;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * process_step_callback post_converttorgb_cb
+     * }
+     */
+    public static final long post_converttorgb_cb$offset() {
+        return post_converttorgb_cb$OFFSET;
     }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * void (*post_interpolate_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback post_converttorgb_cb
      * }
      */
-    public static MemorySegment post_interpolate_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$10.const$0.get(seg);
+    public static MemorySegment post_converttorgb_cb(MemorySegment struct) {
+        return struct.get(post_converttorgb_cb$LAYOUT, post_converttorgb_cb$OFFSET);
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * void (*post_interpolate_cb)(void*);
+     * {@snippet lang=c :
+     * process_step_callback post_converttorgb_cb
      * }
      */
-    public static void post_interpolate_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$10.const$0.set(seg, x);
-    }
-    public static MemorySegment post_interpolate_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$10.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void post_interpolate_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$10.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static post_interpolate_cb post_interpolate_cb(MemorySegment segment, Arena scope) {
-        return post_interpolate_cb.ofAddress(post_interpolate_cb$get(segment), scope);
-    }
-    /**
-     * {@snippet :
- * void (*pre_converttorgb_cb)(void*);
-     * }
-     */
-    public interface pre_converttorgb_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(pre_converttorgb_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$10.const$1, fi, constants$4.const$2, scope);
-        }
-        static pre_converttorgb_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static void post_converttorgb_cb(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(post_converttorgb_cb$LAYOUT, post_converttorgb_cb$OFFSET, fieldValue);
     }
 
-    public static VarHandle pre_converttorgb_cb$VH() {
-        return constants$10.const$2;
-    }
     /**
-     * Getter for field:
-     * {@snippet :
-     * void (*pre_converttorgb_cb)(void*);
-     * }
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
-    public static MemorySegment pre_converttorgb_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$10.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * void (*pre_converttorgb_cb)(void*);
-     * }
-     */
-    public static void pre_converttorgb_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$10.const$2.set(seg, x);
-    }
-    public static MemorySegment pre_converttorgb_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$10.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pre_converttorgb_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$10.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static pre_converttorgb_cb pre_converttorgb_cb(MemorySegment segment, Arena scope) {
-        return pre_converttorgb_cb.ofAddress(pre_converttorgb_cb$get(segment), scope);
-    }
-    /**
-     * {@snippet :
- * void (*post_converttorgb_cb)(void*);
-     * }
-     */
-    public interface post_converttorgb_cb {
-
-        void apply(java.lang.foreign.MemorySegment ctx);
-        static MemorySegment allocate(post_converttorgb_cb fi, Arena scope) {
-            return RuntimeHelper.upcallStub(constants$10.const$3, fi, constants$4.const$2, scope);
-        }
-        static post_converttorgb_cb ofAddress(MemorySegment addr, Arena arena) {
-            MemorySegment symbol = addr.reinterpret(arena, null);
-            return (java.lang.foreign.MemorySegment _ctx) -> {
-                try {
-                    constants$4.const$4.invokeExact(symbol, _ctx);
-                } catch (Throwable ex$) {
-                    throw new AssertionError("should not reach here", ex$);
-                }
-            };
-        }
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
     }
 
-    public static VarHandle post_converttorgb_cb$VH() {
-        return constants$10.const$4;
-    }
     /**
-     * Getter for field:
-     * {@snippet :
-     * void (*post_converttorgb_cb)(void*);
-     * }
+     * The size (in bytes) of this struct
      */
-    public static MemorySegment post_converttorgb_cb$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$10.const$4.get(seg);
-    }
+    public static long sizeof() { return layout().byteSize(); }
+
     /**
-     * Setter for field:
-     * {@snippet :
-     * void (*post_converttorgb_cb)(void*);
-     * }
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
-    public static void post_converttorgb_cb$set(MemorySegment seg, MemorySegment x) {
-        constants$10.const$4.set(seg, x);
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
     }
-    public static MemorySegment post_converttorgb_cb$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$10.const$4.get(seg.asSlice(index*sizeof()));
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
     }
-    public static void post_converttorgb_cb$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$10.const$4.set(seg.asSlice(index*sizeof()), x);
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
     }
-    public static post_converttorgb_cb post_converttorgb_cb(MemorySegment segment, Arena scope) {
-        return post_converttorgb_cb.ofAddress(post_converttorgb_cb$get(segment), scope);
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
 }
-
 

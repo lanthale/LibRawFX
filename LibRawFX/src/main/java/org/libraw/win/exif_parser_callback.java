@@ -2,32 +2,72 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * void (*exif_parser_callback)(void* context,int tag,int type,int len,unsigned int ord,void* ifp,long long base);
+ * {@snippet lang=c :
+ * typedef void (*exif_parser_callback)(void *, int, int, int, unsigned int, void *, INT64)
  * }
  */
-public interface exif_parser_callback {
+public class exif_parser_callback {
 
-    void apply(java.lang.foreign.MemorySegment context, int tag, int type, int len, int ord, java.lang.foreign.MemorySegment ifp, long base);
-    static MemorySegment allocate(exif_parser_callback fi, Arena scope) {
-        return RuntimeHelper.upcallStub(constants$2.const$1, fi, constants$2.const$0, scope);
+    exif_parser_callback() {
+        // Should not be called directly
     }
-    static exif_parser_callback ofAddress(MemorySegment addr, Arena arena) {
-        MemorySegment symbol = addr.reinterpret(arena, null);
-        return (java.lang.foreign.MemorySegment _context, int _tag, int _type, int _len, int _ord, java.lang.foreign.MemorySegment _ifp, long _base) -> {
-            try {
-                constants$2.const$2.invokeExact(symbol, _context, _tag, _type, _len, _ord, _ifp, _base);
-            } catch (Throwable ex$) {
-                throw new AssertionError("should not reach here", ex$);
-            }
-        };
+
+    /**
+     * The function pointer signature, expressed as a functional interface
+     */
+    public interface Function {
+        void apply(MemorySegment context, int tag, int type, int len, int ord, MemorySegment ifp, long base);
+    }
+
+    private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
+        libraw_h.C_POINTER,
+        libraw_h.C_INT,
+        libraw_h.C_INT,
+        libraw_h.C_INT,
+        libraw_h.C_INT,
+        libraw_h.C_POINTER,
+        libraw_h.C_LONG_LONG
+    );
+
+    /**
+     * The descriptor of this function pointer
+     */
+    public static FunctionDescriptor descriptor() {
+        return $DESC;
+    }
+
+    private static final MethodHandle UP$MH = libraw_h.upcallHandle(exif_parser_callback.Function.class, "apply", $DESC);
+
+    /**
+     * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
+     * The lifetime of the returned segment is managed by {@code arena}
+     */
+    public static MemorySegment allocate(exif_parser_callback.Function fi, Arena arena) {
+        return Linker.nativeLinker().upcallStub(UP$MH.bindTo(fi), $DESC, arena);
+    }
+
+    private static final MethodHandle DOWN$MH = Linker.nativeLinker().downcallHandle($DESC);
+
+    /**
+     * Invoke the upcall stub {@code funcPtr}, with given parameters
+     */
+    public static void invoke(MemorySegment funcPtr,MemorySegment context, int tag, int type, int len, int ord, MemorySegment ifp, long base) {
+        try {
+             DOWN$MH.invokeExact(funcPtr, context, tag, type, len, ord, ifp, base);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
     }
 }
-
 

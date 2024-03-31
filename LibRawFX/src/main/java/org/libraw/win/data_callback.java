@@ -2,32 +2,68 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * void (*data_callback)(void* data,char* file,int offset);
+ * {@snippet lang=c :
+ * typedef void (*data_callback)(void *, const char *, const int)
  * }
  */
-public interface data_callback {
+public class data_callback {
 
-    void apply(java.lang.foreign.MemorySegment data, java.lang.foreign.MemorySegment file, int offset);
-    static MemorySegment allocate(data_callback fi, Arena scope) {
-        return RuntimeHelper.upcallStub(constants$2.const$5, fi, constants$2.const$4, scope);
+    data_callback() {
+        // Should not be called directly
     }
-    static data_callback ofAddress(MemorySegment addr, Arena arena) {
-        MemorySegment symbol = addr.reinterpret(arena, null);
-        return (java.lang.foreign.MemorySegment _data, java.lang.foreign.MemorySegment _file, int _offset) -> {
-            try {
-                constants$3.const$0.invokeExact(symbol, _data, _file, _offset);
-            } catch (Throwable ex$) {
-                throw new AssertionError("should not reach here", ex$);
-            }
-        };
+
+    /**
+     * The function pointer signature, expressed as a functional interface
+     */
+    public interface Function {
+        void apply(MemorySegment data, MemorySegment file, int offset);
+    }
+
+    private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
+        libraw_h.C_POINTER,
+        libraw_h.C_POINTER,
+        libraw_h.C_INT
+    );
+
+    /**
+     * The descriptor of this function pointer
+     */
+    public static FunctionDescriptor descriptor() {
+        return $DESC;
+    }
+
+    private static final MethodHandle UP$MH = libraw_h.upcallHandle(data_callback.Function.class, "apply", $DESC);
+
+    /**
+     * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
+     * The lifetime of the returned segment is managed by {@code arena}
+     */
+    public static MemorySegment allocate(data_callback.Function fi, Arena arena) {
+        return Linker.nativeLinker().upcallStub(UP$MH.bindTo(fi), $DESC, arena);
+    }
+
+    private static final MethodHandle DOWN$MH = Linker.nativeLinker().downcallHandle($DESC);
+
+    /**
+     * Invoke the upcall stub {@code funcPtr}, with given parameters
+     */
+    public static void invoke(MemorySegment funcPtr,MemorySegment data, MemorySegment file, int offset) {
+        try {
+             DOWN$MH.invokeExact(funcPtr, data, file, offset);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
     }
 }
-
 

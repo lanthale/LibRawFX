@@ -2,168 +2,310 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_internal_output_params_t {
+ * {@snippet lang=c :
+ * struct {
  *     unsigned int mix_green;
  *     unsigned int raw_color;
  *     unsigned int zero_is_bad;
- *     unsigned short shrink;
- *     unsigned short fuji_width;
- * };
+ *     ushort shrink;
+ *     ushort fuji_width;
+ * }
  * }
  */
 public class libraw_internal_output_params_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$0.const$3;
+    libraw_internal_output_params_t() {
+        // Should not be called directly
     }
-    public static VarHandle mix_green$VH() {
-        return constants$0.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int mix_green;
-     * }
-     */
-    public static int mix_green$get(MemorySegment seg) {
-        return (int)constants$0.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int mix_green;
-     * }
-     */
-    public static void mix_green$set(MemorySegment seg, int x) {
-        constants$0.const$4.set(seg, x);
-    }
-    public static int mix_green$get(MemorySegment seg, long index) {
-        return (int)constants$0.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void mix_green$set(MemorySegment seg, long index, int x) {
-        constants$0.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle raw_color$VH() {
-        return constants$0.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int raw_color;
-     * }
-     */
-    public static int raw_color$get(MemorySegment seg) {
-        return (int)constants$0.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int raw_color;
-     * }
-     */
-    public static void raw_color$set(MemorySegment seg, int x) {
-        constants$0.const$5.set(seg, x);
-    }
-    public static int raw_color$get(MemorySegment seg, long index) {
-        return (int)constants$0.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void raw_color$set(MemorySegment seg, long index, int x) {
-        constants$0.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle zero_is_bad$VH() {
-        return constants$1.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int zero_is_bad;
-     * }
-     */
-    public static int zero_is_bad$get(MemorySegment seg) {
-        return (int)constants$1.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int zero_is_bad;
-     * }
-     */
-    public static void zero_is_bad$set(MemorySegment seg, int x) {
-        constants$1.const$0.set(seg, x);
-    }
-    public static int zero_is_bad$get(MemorySegment seg, long index) {
-        return (int)constants$1.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void zero_is_bad$set(MemorySegment seg, long index, int x) {
-        constants$1.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle shrink$VH() {
-        return constants$1.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short shrink;
-     * }
-     */
-    public static short shrink$get(MemorySegment seg) {
-        return (short)constants$1.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short shrink;
-     * }
-     */
-    public static void shrink$set(MemorySegment seg, short x) {
-        constants$1.const$1.set(seg, x);
-    }
-    public static short shrink$get(MemorySegment seg, long index) {
-        return (short)constants$1.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void shrink$set(MemorySegment seg, long index, short x) {
-        constants$1.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_width$VH() {
-        return constants$1.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short fuji_width;
-     * }
-     */
-    public static short fuji_width$get(MemorySegment seg) {
-        return (short)constants$1.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short fuji_width;
-     * }
-     */
-    public static void fuji_width$set(MemorySegment seg, short x) {
-        constants$1.const$2.set(seg, x);
-    }
-    public static short fuji_width$get(MemorySegment seg, long index) {
-        return (short)constants$1.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_width$set(MemorySegment seg, long index, short x) {
-        constants$1.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_INT.withName("mix_green"),
+        libraw_h.C_INT.withName("raw_color"),
+        libraw_h.C_INT.withName("zero_is_bad"),
+        libraw_h.C_SHORT.withName("shrink"),
+        libraw_h.C_SHORT.withName("fuji_width")
+    ).withName("$anon$126:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfInt mix_green$LAYOUT = (OfInt)$LAYOUT.select(groupElement("mix_green"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int mix_green
+     * }
+     */
+    public static final OfInt mix_green$layout() {
+        return mix_green$LAYOUT;
+    }
+
+    private static final long mix_green$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int mix_green
+     * }
+     */
+    public static final long mix_green$offset() {
+        return mix_green$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int mix_green
+     * }
+     */
+    public static int mix_green(MemorySegment struct) {
+        return struct.get(mix_green$LAYOUT, mix_green$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int mix_green
+     * }
+     */
+    public static void mix_green(MemorySegment struct, int fieldValue) {
+        struct.set(mix_green$LAYOUT, mix_green$OFFSET, fieldValue);
+    }
+
+    private static final OfInt raw_color$LAYOUT = (OfInt)$LAYOUT.select(groupElement("raw_color"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int raw_color
+     * }
+     */
+    public static final OfInt raw_color$layout() {
+        return raw_color$LAYOUT;
+    }
+
+    private static final long raw_color$OFFSET = 4;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int raw_color
+     * }
+     */
+    public static final long raw_color$offset() {
+        return raw_color$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int raw_color
+     * }
+     */
+    public static int raw_color(MemorySegment struct) {
+        return struct.get(raw_color$LAYOUT, raw_color$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int raw_color
+     * }
+     */
+    public static void raw_color(MemorySegment struct, int fieldValue) {
+        struct.set(raw_color$LAYOUT, raw_color$OFFSET, fieldValue);
+    }
+
+    private static final OfInt zero_is_bad$LAYOUT = (OfInt)$LAYOUT.select(groupElement("zero_is_bad"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int zero_is_bad
+     * }
+     */
+    public static final OfInt zero_is_bad$layout() {
+        return zero_is_bad$LAYOUT;
+    }
+
+    private static final long zero_is_bad$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int zero_is_bad
+     * }
+     */
+    public static final long zero_is_bad$offset() {
+        return zero_is_bad$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int zero_is_bad
+     * }
+     */
+    public static int zero_is_bad(MemorySegment struct) {
+        return struct.get(zero_is_bad$LAYOUT, zero_is_bad$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int zero_is_bad
+     * }
+     */
+    public static void zero_is_bad(MemorySegment struct, int fieldValue) {
+        struct.set(zero_is_bad$LAYOUT, zero_is_bad$OFFSET, fieldValue);
+    }
+
+    private static final OfShort shrink$LAYOUT = (OfShort)$LAYOUT.select(groupElement("shrink"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort shrink
+     * }
+     */
+    public static final OfShort shrink$layout() {
+        return shrink$LAYOUT;
+    }
+
+    private static final long shrink$OFFSET = 12;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort shrink
+     * }
+     */
+    public static final long shrink$offset() {
+        return shrink$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort shrink
+     * }
+     */
+    public static short shrink(MemorySegment struct) {
+        return struct.get(shrink$LAYOUT, shrink$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort shrink
+     * }
+     */
+    public static void shrink(MemorySegment struct, short fieldValue) {
+        struct.set(shrink$LAYOUT, shrink$OFFSET, fieldValue);
+    }
+
+    private static final OfShort fuji_width$LAYOUT = (OfShort)$LAYOUT.select(groupElement("fuji_width"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort fuji_width
+     * }
+     */
+    public static final OfShort fuji_width$layout() {
+        return fuji_width$LAYOUT;
+    }
+
+    private static final long fuji_width$OFFSET = 14;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort fuji_width
+     * }
+     */
+    public static final long fuji_width$offset() {
+        return fuji_width$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort fuji_width
+     * }
+     */
+    public static short fuji_width(MemorySegment struct) {
+        return struct.get(fuji_width$LAYOUT, fuji_width$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort fuji_width
+     * }
+     */
+    public static void fuji_width(MemorySegment struct, short fieldValue) {
+        struct.set(fuji_width$LAYOUT, fuji_width$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

@@ -2,388 +2,1106 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_kodak_makernotes_t {
- *     unsigned short BlackLevelTop;
- *     unsigned short BlackLevelBottom;
+ * {@snippet lang=c :
+ * struct {
+ *     ushort BlackLevelTop;
+ *     ushort BlackLevelBottom;
  *     short offset_left;
  *     short offset_top;
- *     unsigned short clipBlack;
- *     unsigned short clipWhite;
- *     float  romm_camDaylight[3][3];
- *     float  romm_camTungsten[3][3];
- *     float  romm_camFluorescent[3][3];
- *     float  romm_camFlash[3][3];
- *     float  romm_camCustom[3][3];
- *     float  romm_camAuto[3][3];
- *     unsigned short val018percent;
- *     unsigned short val100percent;
- *     unsigned short val170percent;
+ *     ushort clipBlack;
+ *     ushort clipWhite;
+ *     float romm_camDaylight[3][3];
+ *     float romm_camTungsten[3][3];
+ *     float romm_camFluorescent[3][3];
+ *     float romm_camFlash[3][3];
+ *     float romm_camCustom[3][3];
+ *     float romm_camAuto[3][3];
+ *     ushort val018percent;
+ *     ushort val100percent;
+ *     ushort val170percent;
  *     short MakerNoteKodak8a;
  *     float ISOCalibrationGain;
  *     float AnalogISO;
- * };
+ * }
  * }
  */
 public class libraw_kodak_makernotes_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$48.const$3;
+    libraw_kodak_makernotes_t() {
+        // Should not be called directly
     }
-    public static VarHandle BlackLevelTop$VH() {
-        return constants$48.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short BlackLevelTop;
-     * }
-     */
-    public static short BlackLevelTop$get(MemorySegment seg) {
-        return (short)constants$48.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short BlackLevelTop;
-     * }
-     */
-    public static void BlackLevelTop$set(MemorySegment seg, short x) {
-        constants$48.const$4.set(seg, x);
-    }
-    public static short BlackLevelTop$get(MemorySegment seg, long index) {
-        return (short)constants$48.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void BlackLevelTop$set(MemorySegment seg, long index, short x) {
-        constants$48.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle BlackLevelBottom$VH() {
-        return constants$48.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short BlackLevelBottom;
-     * }
-     */
-    public static short BlackLevelBottom$get(MemorySegment seg) {
-        return (short)constants$48.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short BlackLevelBottom;
-     * }
-     */
-    public static void BlackLevelBottom$set(MemorySegment seg, short x) {
-        constants$48.const$5.set(seg, x);
-    }
-    public static short BlackLevelBottom$get(MemorySegment seg, long index) {
-        return (short)constants$48.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void BlackLevelBottom$set(MemorySegment seg, long index, short x) {
-        constants$48.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle offset_left$VH() {
-        return constants$49.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short offset_left;
-     * }
-     */
-    public static short offset_left$get(MemorySegment seg) {
-        return (short)constants$49.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short offset_left;
-     * }
-     */
-    public static void offset_left$set(MemorySegment seg, short x) {
-        constants$49.const$0.set(seg, x);
-    }
-    public static short offset_left$get(MemorySegment seg, long index) {
-        return (short)constants$49.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void offset_left$set(MemorySegment seg, long index, short x) {
-        constants$49.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle offset_top$VH() {
-        return constants$49.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short offset_top;
-     * }
-     */
-    public static short offset_top$get(MemorySegment seg) {
-        return (short)constants$49.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short offset_top;
-     * }
-     */
-    public static void offset_top$set(MemorySegment seg, short x) {
-        constants$49.const$1.set(seg, x);
-    }
-    public static short offset_top$get(MemorySegment seg, long index) {
-        return (short)constants$49.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void offset_top$set(MemorySegment seg, long index, short x) {
-        constants$49.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle clipBlack$VH() {
-        return constants$49.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short clipBlack;
-     * }
-     */
-    public static short clipBlack$get(MemorySegment seg) {
-        return (short)constants$49.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short clipBlack;
-     * }
-     */
-    public static void clipBlack$set(MemorySegment seg, short x) {
-        constants$49.const$2.set(seg, x);
-    }
-    public static short clipBlack$get(MemorySegment seg, long index) {
-        return (short)constants$49.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void clipBlack$set(MemorySegment seg, long index, short x) {
-        constants$49.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle clipWhite$VH() {
-        return constants$49.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short clipWhite;
-     * }
-     */
-    public static short clipWhite$get(MemorySegment seg) {
-        return (short)constants$49.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short clipWhite;
-     * }
-     */
-    public static void clipWhite$set(MemorySegment seg, short x) {
-        constants$49.const$3.set(seg, x);
-    }
-    public static short clipWhite$get(MemorySegment seg, long index) {
-        return (short)constants$49.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void clipWhite$set(MemorySegment seg, long index, short x) {
-        constants$49.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment romm_camDaylight$slice(MemorySegment seg) {
-        return seg.asSlice(12, 36);
-    }
-    public static MemorySegment romm_camTungsten$slice(MemorySegment seg) {
-        return seg.asSlice(48, 36);
-    }
-    public static MemorySegment romm_camFluorescent$slice(MemorySegment seg) {
-        return seg.asSlice(84, 36);
-    }
-    public static MemorySegment romm_camFlash$slice(MemorySegment seg) {
-        return seg.asSlice(120, 36);
-    }
-    public static MemorySegment romm_camCustom$slice(MemorySegment seg) {
-        return seg.asSlice(156, 36);
-    }
-    public static MemorySegment romm_camAuto$slice(MemorySegment seg) {
-        return seg.asSlice(192, 36);
-    }
-    public static VarHandle val018percent$VH() {
-        return constants$49.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short val018percent;
-     * }
-     */
-    public static short val018percent$get(MemorySegment seg) {
-        return (short)constants$49.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short val018percent;
-     * }
-     */
-    public static void val018percent$set(MemorySegment seg, short x) {
-        constants$49.const$4.set(seg, x);
-    }
-    public static short val018percent$get(MemorySegment seg, long index) {
-        return (short)constants$49.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void val018percent$set(MemorySegment seg, long index, short x) {
-        constants$49.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle val100percent$VH() {
-        return constants$49.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short val100percent;
-     * }
-     */
-    public static short val100percent$get(MemorySegment seg) {
-        return (short)constants$49.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short val100percent;
-     * }
-     */
-    public static void val100percent$set(MemorySegment seg, short x) {
-        constants$49.const$5.set(seg, x);
-    }
-    public static short val100percent$get(MemorySegment seg, long index) {
-        return (short)constants$49.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void val100percent$set(MemorySegment seg, long index, short x) {
-        constants$49.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle val170percent$VH() {
-        return constants$50.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short val170percent;
-     * }
-     */
-    public static short val170percent$get(MemorySegment seg) {
-        return (short)constants$50.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short val170percent;
-     * }
-     */
-    public static void val170percent$set(MemorySegment seg, short x) {
-        constants$50.const$0.set(seg, x);
-    }
-    public static short val170percent$get(MemorySegment seg, long index) {
-        return (short)constants$50.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void val170percent$set(MemorySegment seg, long index, short x) {
-        constants$50.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MakerNoteKodak8a$VH() {
-        return constants$50.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short MakerNoteKodak8a;
-     * }
-     */
-    public static short MakerNoteKodak8a$get(MemorySegment seg) {
-        return (short)constants$50.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short MakerNoteKodak8a;
-     * }
-     */
-    public static void MakerNoteKodak8a$set(MemorySegment seg, short x) {
-        constants$50.const$1.set(seg, x);
-    }
-    public static short MakerNoteKodak8a$get(MemorySegment seg, long index) {
-        return (short)constants$50.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MakerNoteKodak8a$set(MemorySegment seg, long index, short x) {
-        constants$50.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle ISOCalibrationGain$VH() {
-        return constants$50.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float ISOCalibrationGain;
-     * }
-     */
-    public static float ISOCalibrationGain$get(MemorySegment seg) {
-        return (float)constants$50.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float ISOCalibrationGain;
-     * }
-     */
-    public static void ISOCalibrationGain$set(MemorySegment seg, float x) {
-        constants$50.const$2.set(seg, x);
-    }
-    public static float ISOCalibrationGain$get(MemorySegment seg, long index) {
-        return (float)constants$50.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void ISOCalibrationGain$set(MemorySegment seg, long index, float x) {
-        constants$50.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle AnalogISO$VH() {
-        return constants$50.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float AnalogISO;
-     * }
-     */
-    public static float AnalogISO$get(MemorySegment seg) {
-        return (float)constants$50.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float AnalogISO;
-     * }
-     */
-    public static void AnalogISO$set(MemorySegment seg, float x) {
-        constants$50.const$3.set(seg, x);
-    }
-    public static float AnalogISO$get(MemorySegment seg, long index) {
-        return (float)constants$50.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AnalogISO$set(MemorySegment seg, long index, float x) {
-        constants$50.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_SHORT.withName("BlackLevelTop"),
+        libraw_h.C_SHORT.withName("BlackLevelBottom"),
+        libraw_h.C_SHORT.withName("offset_left"),
+        libraw_h.C_SHORT.withName("offset_top"),
+        libraw_h.C_SHORT.withName("clipBlack"),
+        libraw_h.C_SHORT.withName("clipWhite"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("romm_camDaylight"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("romm_camTungsten"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("romm_camFluorescent"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("romm_camFlash"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("romm_camCustom"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("romm_camAuto"),
+        libraw_h.C_SHORT.withName("val018percent"),
+        libraw_h.C_SHORT.withName("val100percent"),
+        libraw_h.C_SHORT.withName("val170percent"),
+        libraw_h.C_SHORT.withName("MakerNoteKodak8a"),
+        libraw_h.C_FLOAT.withName("ISOCalibrationGain"),
+        libraw_h.C_FLOAT.withName("AnalogISO")
+    ).withName("$anon$616:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfShort BlackLevelTop$LAYOUT = (OfShort)$LAYOUT.select(groupElement("BlackLevelTop"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelTop
+     * }
+     */
+    public static final OfShort BlackLevelTop$layout() {
+        return BlackLevelTop$LAYOUT;
+    }
+
+    private static final long BlackLevelTop$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelTop
+     * }
+     */
+    public static final long BlackLevelTop$offset() {
+        return BlackLevelTop$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelTop
+     * }
+     */
+    public static short BlackLevelTop(MemorySegment struct) {
+        return struct.get(BlackLevelTop$LAYOUT, BlackLevelTop$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelTop
+     * }
+     */
+    public static void BlackLevelTop(MemorySegment struct, short fieldValue) {
+        struct.set(BlackLevelTop$LAYOUT, BlackLevelTop$OFFSET, fieldValue);
+    }
+
+    private static final OfShort BlackLevelBottom$LAYOUT = (OfShort)$LAYOUT.select(groupElement("BlackLevelBottom"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelBottom
+     * }
+     */
+    public static final OfShort BlackLevelBottom$layout() {
+        return BlackLevelBottom$LAYOUT;
+    }
+
+    private static final long BlackLevelBottom$OFFSET = 2;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelBottom
+     * }
+     */
+    public static final long BlackLevelBottom$offset() {
+        return BlackLevelBottom$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelBottom
+     * }
+     */
+    public static short BlackLevelBottom(MemorySegment struct) {
+        return struct.get(BlackLevelBottom$LAYOUT, BlackLevelBottom$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort BlackLevelBottom
+     * }
+     */
+    public static void BlackLevelBottom(MemorySegment struct, short fieldValue) {
+        struct.set(BlackLevelBottom$LAYOUT, BlackLevelBottom$OFFSET, fieldValue);
+    }
+
+    private static final OfShort offset_left$LAYOUT = (OfShort)$LAYOUT.select(groupElement("offset_left"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short offset_left
+     * }
+     */
+    public static final OfShort offset_left$layout() {
+        return offset_left$LAYOUT;
+    }
+
+    private static final long offset_left$OFFSET = 4;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short offset_left
+     * }
+     */
+    public static final long offset_left$offset() {
+        return offset_left$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short offset_left
+     * }
+     */
+    public static short offset_left(MemorySegment struct) {
+        return struct.get(offset_left$LAYOUT, offset_left$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short offset_left
+     * }
+     */
+    public static void offset_left(MemorySegment struct, short fieldValue) {
+        struct.set(offset_left$LAYOUT, offset_left$OFFSET, fieldValue);
+    }
+
+    private static final OfShort offset_top$LAYOUT = (OfShort)$LAYOUT.select(groupElement("offset_top"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short offset_top
+     * }
+     */
+    public static final OfShort offset_top$layout() {
+        return offset_top$LAYOUT;
+    }
+
+    private static final long offset_top$OFFSET = 6;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short offset_top
+     * }
+     */
+    public static final long offset_top$offset() {
+        return offset_top$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short offset_top
+     * }
+     */
+    public static short offset_top(MemorySegment struct) {
+        return struct.get(offset_top$LAYOUT, offset_top$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short offset_top
+     * }
+     */
+    public static void offset_top(MemorySegment struct, short fieldValue) {
+        struct.set(offset_top$LAYOUT, offset_top$OFFSET, fieldValue);
+    }
+
+    private static final OfShort clipBlack$LAYOUT = (OfShort)$LAYOUT.select(groupElement("clipBlack"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort clipBlack
+     * }
+     */
+    public static final OfShort clipBlack$layout() {
+        return clipBlack$LAYOUT;
+    }
+
+    private static final long clipBlack$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort clipBlack
+     * }
+     */
+    public static final long clipBlack$offset() {
+        return clipBlack$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort clipBlack
+     * }
+     */
+    public static short clipBlack(MemorySegment struct) {
+        return struct.get(clipBlack$LAYOUT, clipBlack$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort clipBlack
+     * }
+     */
+    public static void clipBlack(MemorySegment struct, short fieldValue) {
+        struct.set(clipBlack$LAYOUT, clipBlack$OFFSET, fieldValue);
+    }
+
+    private static final OfShort clipWhite$LAYOUT = (OfShort)$LAYOUT.select(groupElement("clipWhite"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort clipWhite
+     * }
+     */
+    public static final OfShort clipWhite$layout() {
+        return clipWhite$LAYOUT;
+    }
+
+    private static final long clipWhite$OFFSET = 10;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort clipWhite
+     * }
+     */
+    public static final long clipWhite$offset() {
+        return clipWhite$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort clipWhite
+     * }
+     */
+    public static short clipWhite(MemorySegment struct) {
+        return struct.get(clipWhite$LAYOUT, clipWhite$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort clipWhite
+     * }
+     */
+    public static void clipWhite(MemorySegment struct, short fieldValue) {
+        struct.set(clipWhite$LAYOUT, clipWhite$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout romm_camDaylight$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("romm_camDaylight"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static final SequenceLayout romm_camDaylight$layout() {
+        return romm_camDaylight$LAYOUT;
+    }
+
+    private static final long romm_camDaylight$OFFSET = 12;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static final long romm_camDaylight$offset() {
+        return romm_camDaylight$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static MemorySegment romm_camDaylight(MemorySegment struct) {
+        return struct.asSlice(romm_camDaylight$OFFSET, romm_camDaylight$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static void romm_camDaylight(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, romm_camDaylight$OFFSET, romm_camDaylight$LAYOUT.byteSize());
+    }
+
+    private static long[] romm_camDaylight$DIMS = { 3, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static long[] romm_camDaylight$dimensions() {
+        return romm_camDaylight$DIMS;
+    }
+    private static final VarHandle romm_camDaylight$ELEM_HANDLE = romm_camDaylight$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static float romm_camDaylight(MemorySegment struct, long index0, long index1) {
+        return (float)romm_camDaylight$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float romm_camDaylight[3][3]
+     * }
+     */
+    public static void romm_camDaylight(MemorySegment struct, long index0, long index1, float fieldValue) {
+        romm_camDaylight$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout romm_camTungsten$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("romm_camTungsten"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static final SequenceLayout romm_camTungsten$layout() {
+        return romm_camTungsten$LAYOUT;
+    }
+
+    private static final long romm_camTungsten$OFFSET = 48;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static final long romm_camTungsten$offset() {
+        return romm_camTungsten$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static MemorySegment romm_camTungsten(MemorySegment struct) {
+        return struct.asSlice(romm_camTungsten$OFFSET, romm_camTungsten$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static void romm_camTungsten(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, romm_camTungsten$OFFSET, romm_camTungsten$LAYOUT.byteSize());
+    }
+
+    private static long[] romm_camTungsten$DIMS = { 3, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static long[] romm_camTungsten$dimensions() {
+        return romm_camTungsten$DIMS;
+    }
+    private static final VarHandle romm_camTungsten$ELEM_HANDLE = romm_camTungsten$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static float romm_camTungsten(MemorySegment struct, long index0, long index1) {
+        return (float)romm_camTungsten$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float romm_camTungsten[3][3]
+     * }
+     */
+    public static void romm_camTungsten(MemorySegment struct, long index0, long index1, float fieldValue) {
+        romm_camTungsten$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout romm_camFluorescent$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("romm_camFluorescent"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static final SequenceLayout romm_camFluorescent$layout() {
+        return romm_camFluorescent$LAYOUT;
+    }
+
+    private static final long romm_camFluorescent$OFFSET = 84;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static final long romm_camFluorescent$offset() {
+        return romm_camFluorescent$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static MemorySegment romm_camFluorescent(MemorySegment struct) {
+        return struct.asSlice(romm_camFluorescent$OFFSET, romm_camFluorescent$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static void romm_camFluorescent(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, romm_camFluorescent$OFFSET, romm_camFluorescent$LAYOUT.byteSize());
+    }
+
+    private static long[] romm_camFluorescent$DIMS = { 3, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static long[] romm_camFluorescent$dimensions() {
+        return romm_camFluorescent$DIMS;
+    }
+    private static final VarHandle romm_camFluorescent$ELEM_HANDLE = romm_camFluorescent$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static float romm_camFluorescent(MemorySegment struct, long index0, long index1) {
+        return (float)romm_camFluorescent$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float romm_camFluorescent[3][3]
+     * }
+     */
+    public static void romm_camFluorescent(MemorySegment struct, long index0, long index1, float fieldValue) {
+        romm_camFluorescent$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout romm_camFlash$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("romm_camFlash"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static final SequenceLayout romm_camFlash$layout() {
+        return romm_camFlash$LAYOUT;
+    }
+
+    private static final long romm_camFlash$OFFSET = 120;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static final long romm_camFlash$offset() {
+        return romm_camFlash$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static MemorySegment romm_camFlash(MemorySegment struct) {
+        return struct.asSlice(romm_camFlash$OFFSET, romm_camFlash$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static void romm_camFlash(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, romm_camFlash$OFFSET, romm_camFlash$LAYOUT.byteSize());
+    }
+
+    private static long[] romm_camFlash$DIMS = { 3, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static long[] romm_camFlash$dimensions() {
+        return romm_camFlash$DIMS;
+    }
+    private static final VarHandle romm_camFlash$ELEM_HANDLE = romm_camFlash$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static float romm_camFlash(MemorySegment struct, long index0, long index1) {
+        return (float)romm_camFlash$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float romm_camFlash[3][3]
+     * }
+     */
+    public static void romm_camFlash(MemorySegment struct, long index0, long index1, float fieldValue) {
+        romm_camFlash$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout romm_camCustom$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("romm_camCustom"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static final SequenceLayout romm_camCustom$layout() {
+        return romm_camCustom$LAYOUT;
+    }
+
+    private static final long romm_camCustom$OFFSET = 156;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static final long romm_camCustom$offset() {
+        return romm_camCustom$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static MemorySegment romm_camCustom(MemorySegment struct) {
+        return struct.asSlice(romm_camCustom$OFFSET, romm_camCustom$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static void romm_camCustom(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, romm_camCustom$OFFSET, romm_camCustom$LAYOUT.byteSize());
+    }
+
+    private static long[] romm_camCustom$DIMS = { 3, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static long[] romm_camCustom$dimensions() {
+        return romm_camCustom$DIMS;
+    }
+    private static final VarHandle romm_camCustom$ELEM_HANDLE = romm_camCustom$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static float romm_camCustom(MemorySegment struct, long index0, long index1) {
+        return (float)romm_camCustom$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float romm_camCustom[3][3]
+     * }
+     */
+    public static void romm_camCustom(MemorySegment struct, long index0, long index1, float fieldValue) {
+        romm_camCustom$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout romm_camAuto$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("romm_camAuto"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static final SequenceLayout romm_camAuto$layout() {
+        return romm_camAuto$LAYOUT;
+    }
+
+    private static final long romm_camAuto$OFFSET = 192;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static final long romm_camAuto$offset() {
+        return romm_camAuto$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static MemorySegment romm_camAuto(MemorySegment struct) {
+        return struct.asSlice(romm_camAuto$OFFSET, romm_camAuto$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static void romm_camAuto(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, romm_camAuto$OFFSET, romm_camAuto$LAYOUT.byteSize());
+    }
+
+    private static long[] romm_camAuto$DIMS = { 3, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static long[] romm_camAuto$dimensions() {
+        return romm_camAuto$DIMS;
+    }
+    private static final VarHandle romm_camAuto$ELEM_HANDLE = romm_camAuto$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static float romm_camAuto(MemorySegment struct, long index0, long index1) {
+        return (float)romm_camAuto$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float romm_camAuto[3][3]
+     * }
+     */
+    public static void romm_camAuto(MemorySegment struct, long index0, long index1, float fieldValue) {
+        romm_camAuto$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final OfShort val018percent$LAYOUT = (OfShort)$LAYOUT.select(groupElement("val018percent"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort val018percent
+     * }
+     */
+    public static final OfShort val018percent$layout() {
+        return val018percent$LAYOUT;
+    }
+
+    private static final long val018percent$OFFSET = 228;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort val018percent
+     * }
+     */
+    public static final long val018percent$offset() {
+        return val018percent$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort val018percent
+     * }
+     */
+    public static short val018percent(MemorySegment struct) {
+        return struct.get(val018percent$LAYOUT, val018percent$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort val018percent
+     * }
+     */
+    public static void val018percent(MemorySegment struct, short fieldValue) {
+        struct.set(val018percent$LAYOUT, val018percent$OFFSET, fieldValue);
+    }
+
+    private static final OfShort val100percent$LAYOUT = (OfShort)$LAYOUT.select(groupElement("val100percent"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort val100percent
+     * }
+     */
+    public static final OfShort val100percent$layout() {
+        return val100percent$LAYOUT;
+    }
+
+    private static final long val100percent$OFFSET = 230;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort val100percent
+     * }
+     */
+    public static final long val100percent$offset() {
+        return val100percent$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort val100percent
+     * }
+     */
+    public static short val100percent(MemorySegment struct) {
+        return struct.get(val100percent$LAYOUT, val100percent$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort val100percent
+     * }
+     */
+    public static void val100percent(MemorySegment struct, short fieldValue) {
+        struct.set(val100percent$LAYOUT, val100percent$OFFSET, fieldValue);
+    }
+
+    private static final OfShort val170percent$LAYOUT = (OfShort)$LAYOUT.select(groupElement("val170percent"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort val170percent
+     * }
+     */
+    public static final OfShort val170percent$layout() {
+        return val170percent$LAYOUT;
+    }
+
+    private static final long val170percent$OFFSET = 232;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort val170percent
+     * }
+     */
+    public static final long val170percent$offset() {
+        return val170percent$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort val170percent
+     * }
+     */
+    public static short val170percent(MemorySegment struct) {
+        return struct.get(val170percent$LAYOUT, val170percent$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort val170percent
+     * }
+     */
+    public static void val170percent(MemorySegment struct, short fieldValue) {
+        struct.set(val170percent$LAYOUT, val170percent$OFFSET, fieldValue);
+    }
+
+    private static final OfShort MakerNoteKodak8a$LAYOUT = (OfShort)$LAYOUT.select(groupElement("MakerNoteKodak8a"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short MakerNoteKodak8a
+     * }
+     */
+    public static final OfShort MakerNoteKodak8a$layout() {
+        return MakerNoteKodak8a$LAYOUT;
+    }
+
+    private static final long MakerNoteKodak8a$OFFSET = 234;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short MakerNoteKodak8a
+     * }
+     */
+    public static final long MakerNoteKodak8a$offset() {
+        return MakerNoteKodak8a$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short MakerNoteKodak8a
+     * }
+     */
+    public static short MakerNoteKodak8a(MemorySegment struct) {
+        return struct.get(MakerNoteKodak8a$LAYOUT, MakerNoteKodak8a$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short MakerNoteKodak8a
+     * }
+     */
+    public static void MakerNoteKodak8a(MemorySegment struct, short fieldValue) {
+        struct.set(MakerNoteKodak8a$LAYOUT, MakerNoteKodak8a$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat ISOCalibrationGain$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("ISOCalibrationGain"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float ISOCalibrationGain
+     * }
+     */
+    public static final OfFloat ISOCalibrationGain$layout() {
+        return ISOCalibrationGain$LAYOUT;
+    }
+
+    private static final long ISOCalibrationGain$OFFSET = 236;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float ISOCalibrationGain
+     * }
+     */
+    public static final long ISOCalibrationGain$offset() {
+        return ISOCalibrationGain$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float ISOCalibrationGain
+     * }
+     */
+    public static float ISOCalibrationGain(MemorySegment struct) {
+        return struct.get(ISOCalibrationGain$LAYOUT, ISOCalibrationGain$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float ISOCalibrationGain
+     * }
+     */
+    public static void ISOCalibrationGain(MemorySegment struct, float fieldValue) {
+        struct.set(ISOCalibrationGain$LAYOUT, ISOCalibrationGain$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat AnalogISO$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("AnalogISO"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float AnalogISO
+     * }
+     */
+    public static final OfFloat AnalogISO$layout() {
+        return AnalogISO$LAYOUT;
+    }
+
+    private static final long AnalogISO$OFFSET = 240;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float AnalogISO
+     * }
+     */
+    public static final long AnalogISO$offset() {
+        return AnalogISO$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float AnalogISO
+     * }
+     */
+    public static float AnalogISO(MemorySegment struct) {
+        return struct.get(AnalogISO$LAYOUT, AnalogISO$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float AnalogISO
+     * }
+     */
+    public static void AnalogISO(MemorySegment struct, float fieldValue) {
+        struct.set(AnalogISO$LAYOUT, AnalogISO$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

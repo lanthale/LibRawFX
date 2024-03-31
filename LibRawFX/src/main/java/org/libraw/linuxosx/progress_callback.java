@@ -2,32 +2,103 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * int (*progress_callback)(void* data,enum LibRaw_progress stage,int iteration,int expected);
+ * {@snippet lang=c :
+ * typedef int (*progress_callback)(void *, enum LibRaw_progress {
+ *     LIBRAW_PROGRESS_START = 0,
+ *     LIBRAW_PROGRESS_OPEN = 1,
+ *     LIBRAW_PROGRESS_IDENTIFY = 1 << 1,
+ *     LIBRAW_PROGRESS_SIZE_ADJUST = 1 << 2,
+ *     LIBRAW_PROGRESS_LOAD_RAW = 1 << 3,
+ *     LIBRAW_PROGRESS_RAW2_IMAGE = 1 << 4,
+ *     LIBRAW_PROGRESS_REMOVE_ZEROES = 1 << 5,
+ *     LIBRAW_PROGRESS_BAD_PIXELS = 1 << 6,
+ *     LIBRAW_PROGRESS_DARK_FRAME = 1 << 7,
+ *     LIBRAW_PROGRESS_FOVEON_INTERPOLATE = 1 << 8,
+ *     LIBRAW_PROGRESS_SCALE_COLORS = 1 << 9,
+ *     LIBRAW_PROGRESS_PRE_INTERPOLATE = 1 << 10,
+ *     LIBRAW_PROGRESS_INTERPOLATE = 1 << 11,
+ *     LIBRAW_PROGRESS_MIX_GREEN = 1 << 12,
+ *     LIBRAW_PROGRESS_MEDIAN_FILTER = 1 << 13,
+ *     LIBRAW_PROGRESS_HIGHLIGHTS = 1 << 14,
+ *     LIBRAW_PROGRESS_FUJI_ROTATE = 1 << 15,
+ *     LIBRAW_PROGRESS_FLIP = 1 << 16,
+ *     LIBRAW_PROGRESS_APPLY_PROFILE = 1 << 17,
+ *     LIBRAW_PROGRESS_CONVERT_RGB = 1 << 18,
+ *     LIBRAW_PROGRESS_STRETCH = 1 << 19,
+ *     LIBRAW_PROGRESS_STAGE20 = 1 << 20,
+ *     LIBRAW_PROGRESS_STAGE21 = 1 << 21,
+ *     LIBRAW_PROGRESS_STAGE22 = 1 << 22,
+ *     LIBRAW_PROGRESS_STAGE23 = 1 << 23,
+ *     LIBRAW_PROGRESS_STAGE24 = 1 << 24,
+ *     LIBRAW_PROGRESS_STAGE25 = 1 << 25,
+ *     LIBRAW_PROGRESS_STAGE26 = 1 << 26,
+ *     LIBRAW_PROGRESS_STAGE27 = 1 << 27,
+ *     LIBRAW_PROGRESS_THUMB_LOAD = 1 << 28,
+ *     LIBRAW_PROGRESS_TRESERVED1 = 1 << 29,
+ *     LIBRAW_PROGRESS_TRESERVED2 = 1 << 30
+ * }, int, int)
  * }
  */
-public interface progress_callback {
+public class progress_callback {
 
-    int apply(java.lang.foreign.MemorySegment data, int stage, int iteration, int expected);
-    static MemorySegment allocate(progress_callback fi, Arena scope) {
-        return RuntimeHelper.upcallStub(constants$3.const$3, fi, constants$3.const$2, scope);
+    progress_callback() {
+        // Should not be called directly
     }
-    static progress_callback ofAddress(MemorySegment addr, Arena arena) {
-        MemorySegment symbol = addr.reinterpret(arena, null);
-        return (java.lang.foreign.MemorySegment _data, int _stage, int _iteration, int _expected) -> {
-            try {
-                return (int)constants$3.const$4.invokeExact(symbol, _data, _stage, _iteration, _expected);
-            } catch (Throwable ex$) {
-                throw new AssertionError("should not reach here", ex$);
-            }
-        };
+
+    /**
+     * The function pointer signature, expressed as a functional interface
+     */
+    public interface Function {
+        int apply(MemorySegment data, int stage, int iteration, int expected);
+    }
+
+    private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
+        libraw_h.C_INT,
+        libraw_h.C_POINTER,
+        libraw_h.C_INT,
+        libraw_h.C_INT,
+        libraw_h.C_INT
+    );
+
+    /**
+     * The descriptor of this function pointer
+     */
+    public static FunctionDescriptor descriptor() {
+        return $DESC;
+    }
+
+    private static final MethodHandle UP$MH = libraw_h.upcallHandle(progress_callback.Function.class, "apply", $DESC);
+
+    /**
+     * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
+     * The lifetime of the returned segment is managed by {@code arena}
+     */
+    public static MemorySegment allocate(progress_callback.Function fi, Arena arena) {
+        return Linker.nativeLinker().upcallStub(UP$MH.bindTo(fi), $DESC, arena);
+    }
+
+    private static final MethodHandle DOWN$MH = Linker.nativeLinker().downcallHandle($DESC);
+
+    /**
+     * Invoke the upcall stub {@code funcPtr}, with given parameters
+     */
+    public static int invoke(MemorySegment funcPtr,MemorySegment data, int stage, int iteration, int expected) {
+        try {
+            return (int) DOWN$MH.invokeExact(funcPtr, data, stage, iteration, expected);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
     }
 }
-
 

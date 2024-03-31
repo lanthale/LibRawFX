@@ -15,18 +15,19 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
 /**
  * {@snippet lang=c :
  * struct {
- *     enum LibRaw_thumbnail_formats tformat;
+ *     enum LibRaw_internal_thumbnail_formats tformat;
  *     ushort twidth;
  *     ushort theight;
+ *     ushort tflip;
  *     unsigned int tlength;
- *     int tcolors;
- *     char *thumb;
+ *     unsigned int tmisc;
+ *     INT64 toffset;
  * }
  * }
  */
-public class libraw_thumbnail_t {
+public class libraw_thumbnail_item_t {
 
-    libraw_thumbnail_t() {
+    libraw_thumbnail_item_t() {
         // Should not be called directly
     }
 
@@ -34,10 +35,13 @@ public class libraw_thumbnail_t {
         libraw_h.C_INT.withName("tformat"),
         libraw_h.C_SHORT.withName("twidth"),
         libraw_h.C_SHORT.withName("theight"),
+        libraw_h.C_SHORT.withName("tflip"),
+        MemoryLayout.paddingLayout(2),
         libraw_h.C_INT.withName("tlength"),
-        libraw_h.C_INT.withName("tcolors"),
-        libraw_h.C_POINTER.withName("thumb")
-    ).withName("$anon$804:11");
+        libraw_h.C_INT.withName("tmisc"),
+        MemoryLayout.paddingLayout(4),
+        libraw_h.C_LONG_LONG.withName("toffset")
+    ).withName("$anon$813:11");
 
     /**
      * The layout of this struct
@@ -51,7 +55,7 @@ public class libraw_thumbnail_t {
     /**
      * Layout for field:
      * {@snippet lang=c :
-     * enum LibRaw_thumbnail_formats tformat
+     * enum LibRaw_internal_thumbnail_formats tformat
      * }
      */
     public static final OfInt tformat$layout() {
@@ -63,7 +67,7 @@ public class libraw_thumbnail_t {
     /**
      * Offset for field:
      * {@snippet lang=c :
-     * enum LibRaw_thumbnail_formats tformat
+     * enum LibRaw_internal_thumbnail_formats tformat
      * }
      */
     public static final long tformat$offset() {
@@ -73,7 +77,7 @@ public class libraw_thumbnail_t {
     /**
      * Getter for field:
      * {@snippet lang=c :
-     * enum LibRaw_thumbnail_formats tformat
+     * enum LibRaw_internal_thumbnail_formats tformat
      * }
      */
     public static int tformat(MemorySegment struct) {
@@ -83,7 +87,7 @@ public class libraw_thumbnail_t {
     /**
      * Setter for field:
      * {@snippet lang=c :
-     * enum LibRaw_thumbnail_formats tformat
+     * enum LibRaw_internal_thumbnail_formats tformat
      * }
      */
     public static void tformat(MemorySegment struct, int fieldValue) {
@@ -178,6 +182,50 @@ public class libraw_thumbnail_t {
         struct.set(theight$LAYOUT, theight$OFFSET, fieldValue);
     }
 
+    private static final OfShort tflip$LAYOUT = (OfShort)$LAYOUT.select(groupElement("tflip"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort tflip
+     * }
+     */
+    public static final OfShort tflip$layout() {
+        return tflip$LAYOUT;
+    }
+
+    private static final long tflip$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort tflip
+     * }
+     */
+    public static final long tflip$offset() {
+        return tflip$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort tflip
+     * }
+     */
+    public static short tflip(MemorySegment struct) {
+        return struct.get(tflip$LAYOUT, tflip$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort tflip
+     * }
+     */
+    public static void tflip(MemorySegment struct, short fieldValue) {
+        struct.set(tflip$LAYOUT, tflip$OFFSET, fieldValue);
+    }
+
     private static final OfInt tlength$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tlength"));
 
     /**
@@ -190,7 +238,7 @@ public class libraw_thumbnail_t {
         return tlength$LAYOUT;
     }
 
-    private static final long tlength$OFFSET = 8;
+    private static final long tlength$OFFSET = 12;
 
     /**
      * Offset for field:
@@ -222,92 +270,92 @@ public class libraw_thumbnail_t {
         struct.set(tlength$LAYOUT, tlength$OFFSET, fieldValue);
     }
 
-    private static final OfInt tcolors$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tcolors"));
+    private static final OfInt tmisc$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tmisc"));
 
     /**
      * Layout for field:
      * {@snippet lang=c :
-     * int tcolors
+     * unsigned int tmisc
      * }
      */
-    public static final OfInt tcolors$layout() {
-        return tcolors$LAYOUT;
+    public static final OfInt tmisc$layout() {
+        return tmisc$LAYOUT;
     }
 
-    private static final long tcolors$OFFSET = 12;
+    private static final long tmisc$OFFSET = 16;
 
     /**
      * Offset for field:
      * {@snippet lang=c :
-     * int tcolors
+     * unsigned int tmisc
      * }
      */
-    public static final long tcolors$offset() {
-        return tcolors$OFFSET;
+    public static final long tmisc$offset() {
+        return tmisc$OFFSET;
     }
 
     /**
      * Getter for field:
      * {@snippet lang=c :
-     * int tcolors
+     * unsigned int tmisc
      * }
      */
-    public static int tcolors(MemorySegment struct) {
-        return struct.get(tcolors$LAYOUT, tcolors$OFFSET);
+    public static int tmisc(MemorySegment struct) {
+        return struct.get(tmisc$LAYOUT, tmisc$OFFSET);
     }
 
     /**
      * Setter for field:
      * {@snippet lang=c :
-     * int tcolors
+     * unsigned int tmisc
      * }
      */
-    public static void tcolors(MemorySegment struct, int fieldValue) {
-        struct.set(tcolors$LAYOUT, tcolors$OFFSET, fieldValue);
+    public static void tmisc(MemorySegment struct, int fieldValue) {
+        struct.set(tmisc$LAYOUT, tmisc$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout thumb$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("thumb"));
+    private static final OfLong toffset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("toffset"));
 
     /**
      * Layout for field:
      * {@snippet lang=c :
-     * char *thumb
+     * INT64 toffset
      * }
      */
-    public static final AddressLayout thumb$layout() {
-        return thumb$LAYOUT;
+    public static final OfLong toffset$layout() {
+        return toffset$LAYOUT;
     }
 
-    private static final long thumb$OFFSET = 16;
+    private static final long toffset$OFFSET = 24;
 
     /**
      * Offset for field:
      * {@snippet lang=c :
-     * char *thumb
+     * INT64 toffset
      * }
      */
-    public static final long thumb$offset() {
-        return thumb$OFFSET;
+    public static final long toffset$offset() {
+        return toffset$OFFSET;
     }
 
     /**
      * Getter for field:
      * {@snippet lang=c :
-     * char *thumb
+     * INT64 toffset
      * }
      */
-    public static MemorySegment thumb(MemorySegment struct) {
-        return struct.get(thumb$LAYOUT, thumb$OFFSET);
+    public static long toffset(MemorySegment struct) {
+        return struct.get(toffset$LAYOUT, toffset$OFFSET);
     }
 
     /**
      * Setter for field:
      * {@snippet lang=c :
-     * char *thumb
+     * INT64 toffset
      * }
      */
-    public static void thumb(MemorySegment struct, MemorySegment fieldValue) {
-        struct.set(thumb$LAYOUT, thumb$OFFSET, fieldValue);
+    public static void toffset(MemorySegment struct, long fieldValue) {
+        struct.set(toffset$LAYOUT, toffset$OFFSET, fieldValue);
     }
 
     /**

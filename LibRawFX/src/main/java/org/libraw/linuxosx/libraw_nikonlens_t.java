@@ -2,168 +2,310 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_nikonlens_t {
+ * {@snippet lang=c :
+ * struct {
  *     float EffectiveMaxAp;
- *     unsigned char LensIDNumber;
- *     unsigned char LensFStops;
- *     unsigned char MCUVersion;
- *     unsigned char LensType;
- * };
+ *     uchar LensIDNumber;
+ *     uchar LensFStops;
+ *     uchar MCUVersion;
+ *     uchar LensType;
+ * }
  * }
  */
 public class libraw_nikonlens_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$82.const$5;
+    libraw_nikonlens_t() {
+        // Should not be called directly
     }
-    public static VarHandle EffectiveMaxAp$VH() {
-        return constants$83.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float EffectiveMaxAp;
-     * }
-     */
-    public static float EffectiveMaxAp$get(MemorySegment seg) {
-        return (float)constants$83.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float EffectiveMaxAp;
-     * }
-     */
-    public static void EffectiveMaxAp$set(MemorySegment seg, float x) {
-        constants$83.const$0.set(seg, x);
-    }
-    public static float EffectiveMaxAp$get(MemorySegment seg, long index) {
-        return (float)constants$83.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void EffectiveMaxAp$set(MemorySegment seg, long index, float x) {
-        constants$83.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle LensIDNumber$VH() {
-        return constants$83.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned char LensIDNumber;
-     * }
-     */
-    public static byte LensIDNumber$get(MemorySegment seg) {
-        return (byte)constants$83.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned char LensIDNumber;
-     * }
-     */
-    public static void LensIDNumber$set(MemorySegment seg, byte x) {
-        constants$83.const$1.set(seg, x);
-    }
-    public static byte LensIDNumber$get(MemorySegment seg, long index) {
-        return (byte)constants$83.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensIDNumber$set(MemorySegment seg, long index, byte x) {
-        constants$83.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle LensFStops$VH() {
-        return constants$83.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned char LensFStops;
-     * }
-     */
-    public static byte LensFStops$get(MemorySegment seg) {
-        return (byte)constants$83.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned char LensFStops;
-     * }
-     */
-    public static void LensFStops$set(MemorySegment seg, byte x) {
-        constants$83.const$2.set(seg, x);
-    }
-    public static byte LensFStops$get(MemorySegment seg, long index) {
-        return (byte)constants$83.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensFStops$set(MemorySegment seg, long index, byte x) {
-        constants$83.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MCUVersion$VH() {
-        return constants$83.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned char MCUVersion;
-     * }
-     */
-    public static byte MCUVersion$get(MemorySegment seg) {
-        return (byte)constants$83.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned char MCUVersion;
-     * }
-     */
-    public static void MCUVersion$set(MemorySegment seg, byte x) {
-        constants$83.const$3.set(seg, x);
-    }
-    public static byte MCUVersion$get(MemorySegment seg, long index) {
-        return (byte)constants$83.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MCUVersion$set(MemorySegment seg, long index, byte x) {
-        constants$83.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle LensType$VH() {
-        return constants$83.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned char LensType;
-     * }
-     */
-    public static byte LensType$get(MemorySegment seg) {
-        return (byte)constants$83.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned char LensType;
-     * }
-     */
-    public static void LensType$set(MemorySegment seg, byte x) {
-        constants$83.const$4.set(seg, x);
-    }
-    public static byte LensType$get(MemorySegment seg, long index) {
-        return (byte)constants$83.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensType$set(MemorySegment seg, long index, byte x) {
-        constants$83.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_FLOAT.withName("EffectiveMaxAp"),
+        libraw_h.C_CHAR.withName("LensIDNumber"),
+        libraw_h.C_CHAR.withName("LensFStops"),
+        libraw_h.C_CHAR.withName("MCUVersion"),
+        libraw_h.C_CHAR.withName("LensType")
+    ).withName("$anon$1007:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfFloat EffectiveMaxAp$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("EffectiveMaxAp"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float EffectiveMaxAp
+     * }
+     */
+    public static final OfFloat EffectiveMaxAp$layout() {
+        return EffectiveMaxAp$LAYOUT;
+    }
+
+    private static final long EffectiveMaxAp$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float EffectiveMaxAp
+     * }
+     */
+    public static final long EffectiveMaxAp$offset() {
+        return EffectiveMaxAp$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float EffectiveMaxAp
+     * }
+     */
+    public static float EffectiveMaxAp(MemorySegment struct) {
+        return struct.get(EffectiveMaxAp$LAYOUT, EffectiveMaxAp$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float EffectiveMaxAp
+     * }
+     */
+    public static void EffectiveMaxAp(MemorySegment struct, float fieldValue) {
+        struct.set(EffectiveMaxAp$LAYOUT, EffectiveMaxAp$OFFSET, fieldValue);
+    }
+
+    private static final OfByte LensIDNumber$LAYOUT = (OfByte)$LAYOUT.select(groupElement("LensIDNumber"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * uchar LensIDNumber
+     * }
+     */
+    public static final OfByte LensIDNumber$layout() {
+        return LensIDNumber$LAYOUT;
+    }
+
+    private static final long LensIDNumber$OFFSET = 4;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * uchar LensIDNumber
+     * }
+     */
+    public static final long LensIDNumber$offset() {
+        return LensIDNumber$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * uchar LensIDNumber
+     * }
+     */
+    public static byte LensIDNumber(MemorySegment struct) {
+        return struct.get(LensIDNumber$LAYOUT, LensIDNumber$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * uchar LensIDNumber
+     * }
+     */
+    public static void LensIDNumber(MemorySegment struct, byte fieldValue) {
+        struct.set(LensIDNumber$LAYOUT, LensIDNumber$OFFSET, fieldValue);
+    }
+
+    private static final OfByte LensFStops$LAYOUT = (OfByte)$LAYOUT.select(groupElement("LensFStops"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * uchar LensFStops
+     * }
+     */
+    public static final OfByte LensFStops$layout() {
+        return LensFStops$LAYOUT;
+    }
+
+    private static final long LensFStops$OFFSET = 5;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * uchar LensFStops
+     * }
+     */
+    public static final long LensFStops$offset() {
+        return LensFStops$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * uchar LensFStops
+     * }
+     */
+    public static byte LensFStops(MemorySegment struct) {
+        return struct.get(LensFStops$LAYOUT, LensFStops$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * uchar LensFStops
+     * }
+     */
+    public static void LensFStops(MemorySegment struct, byte fieldValue) {
+        struct.set(LensFStops$LAYOUT, LensFStops$OFFSET, fieldValue);
+    }
+
+    private static final OfByte MCUVersion$LAYOUT = (OfByte)$LAYOUT.select(groupElement("MCUVersion"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * uchar MCUVersion
+     * }
+     */
+    public static final OfByte MCUVersion$layout() {
+        return MCUVersion$LAYOUT;
+    }
+
+    private static final long MCUVersion$OFFSET = 6;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * uchar MCUVersion
+     * }
+     */
+    public static final long MCUVersion$offset() {
+        return MCUVersion$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * uchar MCUVersion
+     * }
+     */
+    public static byte MCUVersion(MemorySegment struct) {
+        return struct.get(MCUVersion$LAYOUT, MCUVersion$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * uchar MCUVersion
+     * }
+     */
+    public static void MCUVersion(MemorySegment struct, byte fieldValue) {
+        struct.set(MCUVersion$LAYOUT, MCUVersion$OFFSET, fieldValue);
+    }
+
+    private static final OfByte LensType$LAYOUT = (OfByte)$LAYOUT.select(groupElement("LensType"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * uchar LensType
+     * }
+     */
+    public static final OfByte LensType$layout() {
+        return LensType$LAYOUT;
+    }
+
+    private static final long LensType$OFFSET = 7;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * uchar LensType
+     * }
+     */
+    public static final long LensType$offset() {
+        return LensType$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * uchar LensType
+     * }
+     */
+    public static byte LensType(MemorySegment struct) {
+        return struct.get(LensType$LAYOUT, LensType$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * uchar LensType
+     * }
+     */
+    public static void LensType(MemorySegment struct, byte fieldValue) {
+        struct.set(LensType$LAYOUT, LensType$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

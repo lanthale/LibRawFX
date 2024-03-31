@@ -2,5453 +2,8311 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
-import static java.lang.foreign.ValueLayout.*;
-public class libraw_h  {
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
-    public static final OfByte C_CHAR = JAVA_BYTE;
-    public static final OfShort C_SHORT = JAVA_SHORT;
-    public static final OfInt C_INT = JAVA_INT;
-    public static final OfInt C_LONG = JAVA_INT;
-    public static final OfLong C_LONG_LONG = JAVA_LONG;
-    public static final OfFloat C_FLOAT = JAVA_FLOAT;
-    public static final OfDouble C_DOUBLE = JAVA_DOUBLE;
-    public static final AddressLayout C_POINTER = RuntimeHelper.POINTER;
+import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
+public class libraw_h {
+
+    libraw_h() {
+        // Should not be called directly
+    }
+
+    static final Arena LIBRARY_ARENA = Arena.ofAuto();
+    static final boolean TRACE_DOWNCALLS = Boolean.getBoolean("jextract.trace.downcalls");
+
+    static void traceDowncall(String name, Object... args) {
+         String traceArgs = Arrays.stream(args)
+                       .map(Object::toString)
+                       .collect(Collectors.joining(", "));
+         System.out.printf("%s(%s)\n", name, traceArgs);
+    }
+
+    static MemorySegment findOrThrow(String symbol) {
+        return SYMBOL_LOOKUP.find(symbol)
+            .orElseThrow(() -> new UnsatisfiedLinkError("unresolved symbol: " + symbol));
+    }
+
+    static MethodHandle upcallHandle(Class<?> fi, String name, FunctionDescriptor fdesc) {
+        try {
+            return MethodHandles.lookup().findVirtual(fi, name, fdesc.toMethodType());
+        } catch (ReflectiveOperationException ex) {
+            throw new AssertionError(ex);
+        }
+    }
+
+    static MemoryLayout align(MemoryLayout layout, long align) {
+        return switch (layout) {
+            case PaddingLayout p -> p;
+            case ValueLayout v -> v.withByteAlignment(align);
+            case GroupLayout g -> {
+                MemoryLayout[] alignedMembers = g.memberLayouts().stream()
+                        .map(m -> align(m, align)).toArray(MemoryLayout[]::new);
+                yield g instanceof StructLayout ?
+                        MemoryLayout.structLayout(alignedMembers) : MemoryLayout.unionLayout(alignedMembers);
+            }
+            case SequenceLayout s -> MemoryLayout.sequenceLayout(s.elementCount(), align(s.elementLayout(), align));
+        };
+    }
+
+    static final SymbolLookup SYMBOL_LOOKUP = SymbolLookup.loaderLookup()
+            .or(Linker.nativeLinker().defaultLookup());
+
+    public static final ValueLayout.OfBoolean C_BOOL = ValueLayout.JAVA_BOOLEAN;
+    public static final ValueLayout.OfByte C_CHAR = ValueLayout.JAVA_BYTE;
+    public static final ValueLayout.OfShort C_SHORT = ValueLayout.JAVA_SHORT;
+    public static final ValueLayout.OfInt C_INT = ValueLayout.JAVA_INT;
+    public static final ValueLayout.OfLong C_LONG_LONG = ValueLayout.JAVA_LONG;
+    public static final ValueLayout.OfFloat C_FLOAT = ValueLayout.JAVA_FLOAT;
+    public static final ValueLayout.OfDouble C_DOUBLE = ValueLayout.JAVA_DOUBLE;
+    public static final AddressLayout C_POINTER = ValueLayout.ADDRESS
+            .withTargetLayout(MemoryLayout.sequenceLayout(java.lang.Long.MAX_VALUE, JAVA_BYTE));
+    public static final ValueLayout.OfInt C_LONG = ValueLayout.JAVA_INT;
+    public static final ValueLayout.OfDouble C_LONG_DOUBLE = ValueLayout.JAVA_DOUBLE;
+    private static final int CHAR_BIT = (int)8L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
+     * #define CHAR_BIT 8
+     * }
+     */
+    public static int CHAR_BIT() {
+        return CHAR_BIT;
+    }
+    private static final int SCHAR_MAX = (int)127L;
+    /**
+     * {@snippet lang=c :
+     * #define SCHAR_MAX 127
+     * }
+     */
+    public static int SCHAR_MAX() {
+        return SCHAR_MAX;
+    }
+    private static final int UCHAR_MAX = (int)255L;
+    /**
+     * {@snippet lang=c :
+     * #define UCHAR_MAX 255
+     * }
+     */
+    public static int UCHAR_MAX() {
+        return UCHAR_MAX;
+    }
+    private static final int SHRT_MAX = (int)32767L;
+    /**
+     * {@snippet lang=c :
+     * #define SHRT_MAX 32767
+     * }
+     */
+    public static int SHRT_MAX() {
+        return SHRT_MAX;
+    }
+    private static final int USHRT_MAX = (int)65535L;
+    /**
+     * {@snippet lang=c :
+     * #define USHRT_MAX 65535
+     * }
+     */
+    public static int USHRT_MAX() {
+        return USHRT_MAX;
+    }
+    private static final int INT_MAX = (int)2147483647L;
+    /**
+     * {@snippet lang=c :
+     * #define INT_MAX 2147483647
+     * }
+     */
+    public static int INT_MAX() {
+        return INT_MAX;
+    }
+    private static final int LIBRAW_MAX_METADATA_BLOCKS = (int)1024L;
+    /**
+     * {@snippet lang=c :
      * #define LIBRAW_MAX_METADATA_BLOCKS 1024
      * }
      */
     public static int LIBRAW_MAX_METADATA_BLOCKS() {
-        return (int)1024L;
+        return LIBRAW_MAX_METADATA_BLOCKS;
     }
+    private static final int LIBRAW_CBLACK_SIZE = (int)4104L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_CBLACK_SIZE 4104
      * }
      */
     public static int LIBRAW_CBLACK_SIZE() {
-        return (int)4104L;
+        return LIBRAW_CBLACK_SIZE;
     }
+    private static final int LIBRAW_IFD_MAXCOUNT = (int)10L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_IFD_MAXCOUNT 10
      * }
      */
     public static int LIBRAW_IFD_MAXCOUNT() {
-        return (int)10L;
+        return LIBRAW_IFD_MAXCOUNT;
     }
+    private static final int LIBRAW_THUMBNAIL_MAXCOUNT = (int)8L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
+     * #define LIBRAW_THUMBNAIL_MAXCOUNT 8
+     * }
+     */
+    public static int LIBRAW_THUMBNAIL_MAXCOUNT() {
+        return LIBRAW_THUMBNAIL_MAXCOUNT;
+    }
+    private static final int LIBRAW_CRXTRACKS_MAXCOUNT = (int)16L;
+    /**
+     * {@snippet lang=c :
      * #define LIBRAW_CRXTRACKS_MAXCOUNT 16
      * }
      */
     public static int LIBRAW_CRXTRACKS_MAXCOUNT() {
-        return (int)16L;
+        return LIBRAW_CRXTRACKS_MAXCOUNT;
     }
+    private static final int LIBRAW_AFDATA_MAXCOUNT = (int)4L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_AFDATA_MAXCOUNT 4
      * }
      */
     public static int LIBRAW_AFDATA_MAXCOUNT() {
-        return (int)4L;
+        return LIBRAW_AFDATA_MAXCOUNT;
     }
+    private static final int LIBRAW_AHD_TILE = (int)512L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_AHD_TILE 512
      * }
      */
     public static int LIBRAW_AHD_TILE() {
-        return (int)512L;
+        return LIBRAW_AHD_TILE;
     }
+    private static final int LIBRAW_XTRANS = (int)9L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_XTRANS 9
      * }
      */
     public static int LIBRAW_XTRANS() {
-        return (int)9L;
+        return LIBRAW_XTRANS;
     }
+    private static final int LIBRAW_PROGRESS_THUMB_MASK = (int)268435455L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_PROGRESS_THUMB_MASK 268435455
      * }
      */
     public static int LIBRAW_PROGRESS_THUMB_MASK() {
-        return (int)268435455L;
+        return LIBRAW_PROGRESS_THUMB_MASK;
     }
+    private static final int LIBRAW_MAJOR_VERSION = (int)0L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_MAJOR_VERSION 0
      * }
      */
     public static int LIBRAW_MAJOR_VERSION() {
-        return (int)0L;
+        return LIBRAW_MAJOR_VERSION;
     }
+    private static final int LIBRAW_MINOR_VERSION = (int)21L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_MINOR_VERSION 21
      * }
      */
     public static int LIBRAW_MINOR_VERSION() {
-        return (int)21L;
+        return LIBRAW_MINOR_VERSION;
     }
+    private static final int LIBRAW_PATCH_VERSION = (int)2L;
     /**
-     * {@snippet :
-     * #define LIBRAW_PATCH_VERSION 0
+     * {@snippet lang=c :
+     * #define LIBRAW_PATCH_VERSION 2
      * }
      */
     public static int LIBRAW_PATCH_VERSION() {
-        return (int)0L;
+        return LIBRAW_PATCH_VERSION;
     }
+    private static final int LIBRAW_SHLIB_CURRENT = (int)23L;
     /**
-     * {@snippet :
-     * #define LIBRAW_SHLIB_CURRENT 22
+     * {@snippet lang=c :
+     * #define LIBRAW_SHLIB_CURRENT 23
      * }
      */
     public static int LIBRAW_SHLIB_CURRENT() {
-        return (int)22L;
+        return LIBRAW_SHLIB_CURRENT;
     }
+    private static final int LIBRAW_SHLIB_REVISION = (int)0L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_SHLIB_REVISION 0
      * }
      */
     public static int LIBRAW_SHLIB_REVISION() {
-        return (int)0L;
+        return LIBRAW_SHLIB_REVISION;
     }
+    private static final int LIBRAW_SHLIB_AGE = (int)0L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_SHLIB_AGE 0
      * }
      */
     public static int LIBRAW_SHLIB_AGE() {
-        return (int)0L;
+        return LIBRAW_SHLIB_AGE;
     }
+    private static final int LibRawBigEndian = (int)0L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LibRawBigEndian 0
      * }
      */
     public static int LibRawBigEndian() {
-        return (int)0L;
+        return LibRawBigEndian;
     }
+    private static final int LIBRAW_HISTOGRAM_SIZE = (int)8192L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_HISTOGRAM_SIZE 8192
      * }
      */
     public static int LIBRAW_HISTOGRAM_SIZE() {
-        return (int)8192L;
+        return LIBRAW_HISTOGRAM_SIZE;
     }
     /**
-     * {@snippet :
-     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_RGGB = 148;
+     * {@snippet lang=c :
+     * typedef unsigned long long size_t
+     * }
+     */
+    public static final OfLong size_t = libraw_h.C_LONG_LONG;
+    /**
+     * {@snippet lang=c :
+     * typedef long long ptrdiff_t
+     * }
+     */
+    public static final OfLong ptrdiff_t = libraw_h.C_LONG_LONG;
+    /**
+     * {@snippet lang=c :
+     * typedef unsigned short wchar_t
+     * }
+     */
+    public static final OfShort wchar_t = libraw_h.C_SHORT;
+    /**
+     * {@snippet lang=c :
+     * typedef double max_align_t
+     * }
+     */
+    public static final OfDouble max_align_t = libraw_h.C_DOUBLE;
+    private static final int LIBRAW_OPENBAYER_RGGB = (int)148L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_RGGB = 148
      * }
      */
     public static int LIBRAW_OPENBAYER_RGGB() {
-        return (int)148L;
+        return LIBRAW_OPENBAYER_RGGB;
     }
+    private static final int LIBRAW_OPENBAYER_BGGR = (int)22L;
     /**
-     * {@snippet :
-     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_BGGR = 22;
+     * {@snippet lang=c :
+     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_BGGR = 22
      * }
      */
     public static int LIBRAW_OPENBAYER_BGGR() {
-        return (int)22L;
+        return LIBRAW_OPENBAYER_BGGR;
     }
+    private static final int LIBRAW_OPENBAYER_GRBG = (int)97L;
     /**
-     * {@snippet :
-     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_GRBG = 97;
+     * {@snippet lang=c :
+     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_GRBG = 97
      * }
      */
     public static int LIBRAW_OPENBAYER_GRBG() {
-        return (int)97L;
+        return LIBRAW_OPENBAYER_GRBG;
     }
+    private static final int LIBRAW_OPENBAYER_GBRG = (int)73L;
     /**
-     * {@snippet :
-     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_GBRG = 73;
+     * {@snippet lang=c :
+     * enum LibRaw_openbayer_patterns.LIBRAW_OPENBAYER_GBRG = 73
      * }
      */
     public static int LIBRAW_OPENBAYER_GBRG() {
-        return (int)73L;
+        return LIBRAW_OPENBAYER_GBRG;
     }
+    private static final int LIBRAW_DNGFM_FORWARDMATRIX = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_FORWARDMATRIX = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_FORWARDMATRIX = 1
      * }
      */
     public static int LIBRAW_DNGFM_FORWARDMATRIX() {
-        return (int)1L;
+        return LIBRAW_DNGFM_FORWARDMATRIX;
     }
+    private static final int LIBRAW_DNGFM_ILLUMINANT = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_ILLUMINANT = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_ILLUMINANT = 2
      * }
      */
     public static int LIBRAW_DNGFM_ILLUMINANT() {
-        return (int)2L;
+        return LIBRAW_DNGFM_ILLUMINANT;
     }
+    private static final int LIBRAW_DNGFM_COLORMATRIX = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_COLORMATRIX = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_COLORMATRIX = 4
      * }
      */
     public static int LIBRAW_DNGFM_COLORMATRIX() {
-        return (int)4L;
+        return LIBRAW_DNGFM_COLORMATRIX;
     }
+    private static final int LIBRAW_DNGFM_CALIBRATION = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_CALIBRATION = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_CALIBRATION = 8
      * }
      */
     public static int LIBRAW_DNGFM_CALIBRATION() {
-        return (int)8L;
+        return LIBRAW_DNGFM_CALIBRATION;
     }
+    private static final int LIBRAW_DNGFM_ANALOGBALANCE = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_ANALOGBALANCE = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_ANALOGBALANCE = 16
      * }
      */
     public static int LIBRAW_DNGFM_ANALOGBALANCE() {
-        return (int)16L;
+        return LIBRAW_DNGFM_ANALOGBALANCE;
     }
+    private static final int LIBRAW_DNGFM_BLACK = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_BLACK = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_BLACK = 32
      * }
      */
     public static int LIBRAW_DNGFM_BLACK() {
-        return (int)32L;
+        return LIBRAW_DNGFM_BLACK;
     }
+    private static final int LIBRAW_DNGFM_WHITE = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_WHITE = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_WHITE = 64
      * }
      */
     public static int LIBRAW_DNGFM_WHITE() {
-        return (int)64L;
+        return LIBRAW_DNGFM_WHITE;
     }
+    private static final int LIBRAW_DNGFM_OPCODE2 = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_OPCODE2 = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_OPCODE2 = 128
      * }
      */
     public static int LIBRAW_DNGFM_OPCODE2() {
-        return (int)128L;
+        return LIBRAW_DNGFM_OPCODE2;
     }
+    private static final int LIBRAW_DNGFM_LINTABLE = (int)256L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_LINTABLE = 256;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_LINTABLE = 256
      * }
      */
     public static int LIBRAW_DNGFM_LINTABLE() {
-        return (int)256L;
+        return LIBRAW_DNGFM_LINTABLE;
     }
+    private static final int LIBRAW_DNGFM_CROPORIGIN = (int)512L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_CROPORIGIN = 512;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_CROPORIGIN = 512
      * }
      */
     public static int LIBRAW_DNGFM_CROPORIGIN() {
-        return (int)512L;
+        return LIBRAW_DNGFM_CROPORIGIN;
     }
+    private static final int LIBRAW_DNGFM_CROPSIZE = (int)1024L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_CROPSIZE = 1024;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_CROPSIZE = 1024
      * }
      */
     public static int LIBRAW_DNGFM_CROPSIZE() {
-        return (int)1024L;
+        return LIBRAW_DNGFM_CROPSIZE;
     }
+    private static final int LIBRAW_DNGFM_PREVIEWCS = (int)2048L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_PREVIEWCS = 2048;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_PREVIEWCS = 2048
      * }
      */
     public static int LIBRAW_DNGFM_PREVIEWCS() {
-        return (int)2048L;
+        return LIBRAW_DNGFM_PREVIEWCS;
     }
+    private static final int LIBRAW_DNGFM_ASSHOTNEUTRAL = (int)4096L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_ASSHOTNEUTRAL = 4096;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_ASSHOTNEUTRAL = 4096
      * }
      */
     public static int LIBRAW_DNGFM_ASSHOTNEUTRAL() {
-        return (int)4096L;
+        return LIBRAW_DNGFM_ASSHOTNEUTRAL;
     }
+    private static final int LIBRAW_DNGFM_BASELINEEXPOSURE = (int)8192L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_BASELINEEXPOSURE = 8192;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_BASELINEEXPOSURE = 8192
      * }
      */
     public static int LIBRAW_DNGFM_BASELINEEXPOSURE() {
-        return (int)8192L;
+        return LIBRAW_DNGFM_BASELINEEXPOSURE;
     }
+    private static final int LIBRAW_DNGFM_LINEARRESPONSELIMIT = (int)16384L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_LINEARRESPONSELIMIT = 16384;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_LINEARRESPONSELIMIT = 16384
      * }
      */
     public static int LIBRAW_DNGFM_LINEARRESPONSELIMIT() {
-        return (int)16384L;
+        return LIBRAW_DNGFM_LINEARRESPONSELIMIT;
     }
+    private static final int LIBRAW_DNGFM_USERCROP = (int)32768L;
     /**
-     * {@snippet :
-     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_USERCROP = 32768;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_USERCROP = 32768
      * }
      */
     public static int LIBRAW_DNGFM_USERCROP() {
-        return (int)32768L;
+        return LIBRAW_DNGFM_USERCROP;
     }
+    private static final int LIBRAW_DNGFM_OPCODE1 = (int)65536L;
     /**
-     * {@snippet :
-     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_APPLIED = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_OPCODE1 = 65536
+     * }
+     */
+    public static int LIBRAW_DNGFM_OPCODE1() {
+        return LIBRAW_DNGFM_OPCODE1;
+    }
+    private static final int LIBRAW_DNGFM_OPCODE3 = (int)131072L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_dngfields_marks.LIBRAW_DNGFM_OPCODE3 = 131072
+     * }
+     */
+    public static int LIBRAW_DNGFM_OPCODE3() {
+        return LIBRAW_DNGFM_OPCODE3;
+    }
+    private static final int LIBRAW_ASWB_APPLIED = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_APPLIED = 1
      * }
      */
     public static int LIBRAW_ASWB_APPLIED() {
-        return (int)1L;
+        return LIBRAW_ASWB_APPLIED;
     }
+    private static final int LIBRAW_ASWB_CANON = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_CANON = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_CANON = 2
      * }
      */
     public static int LIBRAW_ASWB_CANON() {
-        return (int)2L;
+        return LIBRAW_ASWB_CANON;
     }
+    private static final int LIBRAW_ASWB_NIKON = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_NIKON = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_NIKON = 4
      * }
      */
     public static int LIBRAW_ASWB_NIKON() {
-        return (int)4L;
+        return LIBRAW_ASWB_NIKON;
     }
+    private static final int LIBRAW_ASWB_NIKON_SRAW = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_NIKON_SRAW = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_NIKON_SRAW = 8
      * }
      */
     public static int LIBRAW_ASWB_NIKON_SRAW() {
-        return (int)8L;
+        return LIBRAW_ASWB_NIKON_SRAW;
     }
+    private static final int LIBRAW_ASWB_PENTAX = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_PENTAX = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_As_Shot_WB_Applied_codes.LIBRAW_ASWB_PENTAX = 16
      * }
      */
     public static int LIBRAW_ASWB_PENTAX() {
-        return (int)16L;
+        return LIBRAW_ASWB_PENTAX;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_UNKNOWN = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_UNKNOWN = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_UNKNOWN = 0
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_UNKNOWN() {
-        return (int)0L;
+        return LIBRAW_EXIFTAG_TYPE_UNKNOWN;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_BYTE = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_BYTE = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_BYTE = 1
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_BYTE() {
-        return (int)1L;
+        return LIBRAW_EXIFTAG_TYPE_BYTE;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_ASCII = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_ASCII = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_ASCII = 2
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_ASCII() {
-        return (int)2L;
+        return LIBRAW_EXIFTAG_TYPE_ASCII;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_SHORT = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SHORT = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SHORT = 3
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_SHORT() {
-        return (int)3L;
+        return LIBRAW_EXIFTAG_TYPE_SHORT;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_LONG = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_LONG = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_LONG = 4
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_LONG() {
-        return (int)4L;
+        return LIBRAW_EXIFTAG_TYPE_LONG;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_RATIONAL = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_RATIONAL = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_RATIONAL = 5
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_RATIONAL() {
-        return (int)5L;
+        return LIBRAW_EXIFTAG_TYPE_RATIONAL;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_SBYTE = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SBYTE = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SBYTE = 6
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_SBYTE() {
-        return (int)6L;
+        return LIBRAW_EXIFTAG_TYPE_SBYTE;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_UNDEFINED = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_UNDEFINED = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_UNDEFINED = 7
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_UNDEFINED() {
-        return (int)7L;
+        return LIBRAW_EXIFTAG_TYPE_UNDEFINED;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_SSHORT = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SSHORT = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SSHORT = 8
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_SSHORT() {
-        return (int)8L;
+        return LIBRAW_EXIFTAG_TYPE_SSHORT;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_SLONG = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SLONG = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SLONG = 9
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_SLONG() {
-        return (int)9L;
+        return LIBRAW_EXIFTAG_TYPE_SLONG;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_SRATIONAL = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SRATIONAL = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SRATIONAL = 10
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_SRATIONAL() {
-        return (int)10L;
+        return LIBRAW_EXIFTAG_TYPE_SRATIONAL;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_FLOAT = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_FLOAT = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_FLOAT = 11
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_FLOAT() {
-        return (int)11L;
+        return LIBRAW_EXIFTAG_TYPE_FLOAT;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_DOUBLE = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_DOUBLE = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_DOUBLE = 12
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_DOUBLE() {
-        return (int)12L;
+        return LIBRAW_EXIFTAG_TYPE_DOUBLE;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_IFD = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_IFD = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_IFD = 13
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_IFD() {
-        return (int)13L;
+        return LIBRAW_EXIFTAG_TYPE_IFD;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_UNICODE = (int)14L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_UNICODE = 14;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_UNICODE = 14
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_UNICODE() {
-        return (int)14L;
+        return LIBRAW_EXIFTAG_TYPE_UNICODE;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_COMPLEX = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_COMPLEX = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_COMPLEX = 15
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_COMPLEX() {
-        return (int)15L;
+        return LIBRAW_EXIFTAG_TYPE_COMPLEX;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_LONG8 = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_LONG8 = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_LONG8 = 16
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_LONG8() {
-        return (int)16L;
+        return LIBRAW_EXIFTAG_TYPE_LONG8;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_SLONG8 = (int)17L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SLONG8 = 17;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_SLONG8 = 17
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_SLONG8() {
-        return (int)17L;
+        return LIBRAW_EXIFTAG_TYPE_SLONG8;
     }
+    private static final int LIBRAW_EXIFTAG_TYPE_IFD8 = (int)18L;
     /**
-     * {@snippet :
-     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_IFD8 = 18;
+     * {@snippet lang=c :
+     * enum LibRaw_ExifTagTypes.LIBRAW_EXIFTAG_TYPE_IFD8 = 18
      * }
      */
     public static int LIBRAW_EXIFTAG_TYPE_IFD8() {
-        return (int)18L;
+        return LIBRAW_EXIFTAG_TYPE_IFD8;
     }
+    private static final int LIBRAW_WBI_Unknown = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Unknown = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Unknown = 0
      * }
      */
     public static int LIBRAW_WBI_Unknown() {
-        return (int)0L;
+        return LIBRAW_WBI_Unknown;
     }
+    private static final int LIBRAW_WBI_Daylight = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Daylight = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Daylight = 1
      * }
      */
     public static int LIBRAW_WBI_Daylight() {
-        return (int)1L;
+        return LIBRAW_WBI_Daylight;
     }
+    private static final int LIBRAW_WBI_Fluorescent = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Fluorescent = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Fluorescent = 2
      * }
      */
     public static int LIBRAW_WBI_Fluorescent() {
-        return (int)2L;
+        return LIBRAW_WBI_Fluorescent;
     }
+    private static final int LIBRAW_WBI_Tungsten = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Tungsten = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Tungsten = 3
      * }
      */
     public static int LIBRAW_WBI_Tungsten() {
-        return (int)3L;
+        return LIBRAW_WBI_Tungsten;
     }
+    private static final int LIBRAW_WBI_Flash = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Flash = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Flash = 4
      * }
      */
     public static int LIBRAW_WBI_Flash() {
-        return (int)4L;
+        return LIBRAW_WBI_Flash;
     }
+    private static final int LIBRAW_WBI_FineWeather = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FineWeather = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FineWeather = 9
      * }
      */
     public static int LIBRAW_WBI_FineWeather() {
-        return (int)9L;
+        return LIBRAW_WBI_FineWeather;
     }
+    private static final int LIBRAW_WBI_Cloudy = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Cloudy = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Cloudy = 10
      * }
      */
     public static int LIBRAW_WBI_Cloudy() {
-        return (int)10L;
+        return LIBRAW_WBI_Cloudy;
     }
+    private static final int LIBRAW_WBI_Shade = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Shade = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Shade = 11
      * }
      */
     public static int LIBRAW_WBI_Shade() {
-        return (int)11L;
+        return LIBRAW_WBI_Shade;
     }
+    private static final int LIBRAW_WBI_FL_D = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_D = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_D = 12
      * }
      */
     public static int LIBRAW_WBI_FL_D() {
-        return (int)12L;
+        return LIBRAW_WBI_FL_D;
     }
+    private static final int LIBRAW_WBI_FL_N = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_N = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_N = 13
      * }
      */
     public static int LIBRAW_WBI_FL_N() {
-        return (int)13L;
+        return LIBRAW_WBI_FL_N;
     }
+    private static final int LIBRAW_WBI_FL_W = (int)14L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_W = 14;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_W = 14
      * }
      */
     public static int LIBRAW_WBI_FL_W() {
-        return (int)14L;
+        return LIBRAW_WBI_FL_W;
     }
+    private static final int LIBRAW_WBI_FL_WW = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_WW = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_WW = 15
      * }
      */
     public static int LIBRAW_WBI_FL_WW() {
-        return (int)15L;
+        return LIBRAW_WBI_FL_WW;
     }
+    private static final int LIBRAW_WBI_FL_L = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_L = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FL_L = 16
      * }
      */
     public static int LIBRAW_WBI_FL_L() {
-        return (int)16L;
+        return LIBRAW_WBI_FL_L;
     }
+    private static final int LIBRAW_WBI_Ill_A = (int)17L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Ill_A = 17;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Ill_A = 17
      * }
      */
     public static int LIBRAW_WBI_Ill_A() {
-        return (int)17L;
+        return LIBRAW_WBI_Ill_A;
     }
+    private static final int LIBRAW_WBI_Ill_B = (int)18L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Ill_B = 18;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Ill_B = 18
      * }
      */
     public static int LIBRAW_WBI_Ill_B() {
-        return (int)18L;
+        return LIBRAW_WBI_Ill_B;
     }
+    private static final int LIBRAW_WBI_Ill_C = (int)19L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Ill_C = 19;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Ill_C = 19
      * }
      */
     public static int LIBRAW_WBI_Ill_C() {
-        return (int)19L;
+        return LIBRAW_WBI_Ill_C;
     }
+    private static final int LIBRAW_WBI_D55 = (int)20L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D55 = 20;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D55 = 20
      * }
      */
     public static int LIBRAW_WBI_D55() {
-        return (int)20L;
+        return LIBRAW_WBI_D55;
     }
+    private static final int LIBRAW_WBI_D65 = (int)21L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D65 = 21;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D65 = 21
      * }
      */
     public static int LIBRAW_WBI_D65() {
-        return (int)21L;
+        return LIBRAW_WBI_D65;
     }
+    private static final int LIBRAW_WBI_D75 = (int)22L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D75 = 22;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D75 = 22
      * }
      */
     public static int LIBRAW_WBI_D75() {
-        return (int)22L;
+        return LIBRAW_WBI_D75;
     }
+    private static final int LIBRAW_WBI_D50 = (int)23L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D50 = 23;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_D50 = 23
      * }
      */
     public static int LIBRAW_WBI_D50() {
-        return (int)23L;
+        return LIBRAW_WBI_D50;
     }
+    private static final int LIBRAW_WBI_StudioTungsten = (int)24L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_StudioTungsten = 24;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_StudioTungsten = 24
      * }
      */
     public static int LIBRAW_WBI_StudioTungsten() {
-        return (int)24L;
+        return LIBRAW_WBI_StudioTungsten;
     }
+    private static final int LIBRAW_WBI_Sunset = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Sunset = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Sunset = 64
      * }
      */
     public static int LIBRAW_WBI_Sunset() {
-        return (int)64L;
+        return LIBRAW_WBI_Sunset;
     }
+    private static final int LIBRAW_WBI_Underwater = (int)65L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Underwater = 65;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Underwater = 65
      * }
      */
     public static int LIBRAW_WBI_Underwater() {
-        return (int)65L;
+        return LIBRAW_WBI_Underwater;
     }
+    private static final int LIBRAW_WBI_FluorescentHigh = (int)66L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FluorescentHigh = 66;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_FluorescentHigh = 66
      * }
      */
     public static int LIBRAW_WBI_FluorescentHigh() {
-        return (int)66L;
+        return LIBRAW_WBI_FluorescentHigh;
     }
+    private static final int LIBRAW_WBI_HT_Mercury = (int)67L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_HT_Mercury = 67;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_HT_Mercury = 67
      * }
      */
     public static int LIBRAW_WBI_HT_Mercury() {
-        return (int)67L;
+        return LIBRAW_WBI_HT_Mercury;
     }
+    private static final int LIBRAW_WBI_AsShot = (int)81L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_AsShot = 81;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_AsShot = 81
      * }
      */
     public static int LIBRAW_WBI_AsShot() {
-        return (int)81L;
+        return LIBRAW_WBI_AsShot;
     }
+    private static final int LIBRAW_WBI_Auto = (int)82L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto = 82;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto = 82
      * }
      */
     public static int LIBRAW_WBI_Auto() {
-        return (int)82L;
+        return LIBRAW_WBI_Auto;
     }
+    private static final int LIBRAW_WBI_Custom = (int)83L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom = 83;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom = 83
      * }
      */
     public static int LIBRAW_WBI_Custom() {
-        return (int)83L;
+        return LIBRAW_WBI_Custom;
     }
+    private static final int LIBRAW_WBI_Auto1 = (int)85L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto1 = 85;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto1 = 85
      * }
      */
     public static int LIBRAW_WBI_Auto1() {
-        return (int)85L;
+        return LIBRAW_WBI_Auto1;
     }
+    private static final int LIBRAW_WBI_Auto2 = (int)86L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto2 = 86;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto2 = 86
      * }
      */
     public static int LIBRAW_WBI_Auto2() {
-        return (int)86L;
+        return LIBRAW_WBI_Auto2;
     }
+    private static final int LIBRAW_WBI_Auto3 = (int)87L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto3 = 87;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto3 = 87
      * }
      */
     public static int LIBRAW_WBI_Auto3() {
-        return (int)87L;
+        return LIBRAW_WBI_Auto3;
     }
+    private static final int LIBRAW_WBI_Auto4 = (int)88L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto4 = 88;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Auto4 = 88
      * }
      */
     public static int LIBRAW_WBI_Auto4() {
-        return (int)88L;
+        return LIBRAW_WBI_Auto4;
     }
+    private static final int LIBRAW_WBI_Custom1 = (int)90L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom1 = 90;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom1 = 90
      * }
      */
     public static int LIBRAW_WBI_Custom1() {
-        return (int)90L;
+        return LIBRAW_WBI_Custom1;
     }
+    private static final int LIBRAW_WBI_Custom2 = (int)91L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom2 = 91;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom2 = 91
      * }
      */
     public static int LIBRAW_WBI_Custom2() {
-        return (int)91L;
+        return LIBRAW_WBI_Custom2;
     }
+    private static final int LIBRAW_WBI_Custom3 = (int)92L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom3 = 92;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom3 = 92
      * }
      */
     public static int LIBRAW_WBI_Custom3() {
-        return (int)92L;
+        return LIBRAW_WBI_Custom3;
     }
+    private static final int LIBRAW_WBI_Custom4 = (int)93L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom4 = 93;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom4 = 93
      * }
      */
     public static int LIBRAW_WBI_Custom4() {
-        return (int)93L;
+        return LIBRAW_WBI_Custom4;
     }
+    private static final int LIBRAW_WBI_Custom5 = (int)94L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom5 = 94;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom5 = 94
      * }
      */
     public static int LIBRAW_WBI_Custom5() {
-        return (int)94L;
+        return LIBRAW_WBI_Custom5;
     }
+    private static final int LIBRAW_WBI_Custom6 = (int)95L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom6 = 95;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Custom6 = 95
      * }
      */
     public static int LIBRAW_WBI_Custom6() {
-        return (int)95L;
+        return LIBRAW_WBI_Custom6;
     }
+    private static final int LIBRAW_WBI_PC_Set1 = (int)96L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set1 = 96;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set1 = 96
      * }
      */
     public static int LIBRAW_WBI_PC_Set1() {
-        return (int)96L;
+        return LIBRAW_WBI_PC_Set1;
     }
+    private static final int LIBRAW_WBI_PC_Set2 = (int)97L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set2 = 97;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set2 = 97
      * }
      */
     public static int LIBRAW_WBI_PC_Set2() {
-        return (int)97L;
+        return LIBRAW_WBI_PC_Set2;
     }
+    private static final int LIBRAW_WBI_PC_Set3 = (int)98L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set3 = 98;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set3 = 98
      * }
      */
     public static int LIBRAW_WBI_PC_Set3() {
-        return (int)98L;
+        return LIBRAW_WBI_PC_Set3;
     }
+    private static final int LIBRAW_WBI_PC_Set4 = (int)99L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set4 = 99;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set4 = 99
      * }
      */
     public static int LIBRAW_WBI_PC_Set4() {
-        return (int)99L;
+        return LIBRAW_WBI_PC_Set4;
     }
+    private static final int LIBRAW_WBI_PC_Set5 = (int)100L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set5 = 100;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_PC_Set5 = 100
      * }
      */
     public static int LIBRAW_WBI_PC_Set5() {
-        return (int)100L;
+        return LIBRAW_WBI_PC_Set5;
     }
+    private static final int LIBRAW_WBI_Measured = (int)110L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Measured = 110;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Measured = 110
      * }
      */
     public static int LIBRAW_WBI_Measured() {
-        return (int)110L;
+        return LIBRAW_WBI_Measured;
     }
+    private static final int LIBRAW_WBI_BW = (int)120L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_BW = 120;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_BW = 120
      * }
      */
     public static int LIBRAW_WBI_BW() {
-        return (int)120L;
+        return LIBRAW_WBI_BW;
     }
+    private static final int LIBRAW_WBI_Kelvin = (int)254L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Kelvin = 254;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Kelvin = 254
      * }
      */
     public static int LIBRAW_WBI_Kelvin() {
-        return (int)254L;
+        return LIBRAW_WBI_Kelvin;
     }
+    private static final int LIBRAW_WBI_Other = (int)255L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Other = 255;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_Other = 255
      * }
      */
     public static int LIBRAW_WBI_Other() {
-        return (int)255L;
+        return LIBRAW_WBI_Other;
     }
+    private static final int LIBRAW_WBI_None = (int)65535L;
     /**
-     * {@snippet :
-     * enum LibRaw_whitebalance_code.LIBRAW_WBI_None = 65535;
+     * {@snippet lang=c :
+     * enum LibRaw_whitebalance_code.LIBRAW_WBI_None = 65535
      * }
      */
     public static int LIBRAW_WBI_None() {
-        return (int)65535L;
+        return LIBRAW_WBI_None;
     }
+    private static final int LIBRAW_ME_NONE = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_MultiExposure_related.LIBRAW_ME_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_MultiExposure_related.LIBRAW_ME_NONE = 0
      * }
      */
     public static int LIBRAW_ME_NONE() {
-        return (int)0L;
+        return LIBRAW_ME_NONE;
     }
+    private static final int LIBRAW_ME_SIMPLE = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_MultiExposure_related.LIBRAW_ME_SIMPLE = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_MultiExposure_related.LIBRAW_ME_SIMPLE = 1
      * }
      */
     public static int LIBRAW_ME_SIMPLE() {
-        return (int)1L;
+        return LIBRAW_ME_SIMPLE;
     }
+    private static final int LIBRAW_ME_OVERLAY = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_MultiExposure_related.LIBRAW_ME_OVERLAY = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_MultiExposure_related.LIBRAW_ME_OVERLAY = 2
      * }
      */
     public static int LIBRAW_ME_OVERLAY() {
-        return (int)2L;
+        return LIBRAW_ME_OVERLAY;
     }
+    private static final int LIBRAW_ME_HDR = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_MultiExposure_related.LIBRAW_ME_HDR = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_MultiExposure_related.LIBRAW_ME_HDR = 3
      * }
      */
     public static int LIBRAW_ME_HDR() {
-        return (int)3L;
+        return LIBRAW_ME_HDR;
     }
+    private static final int LIBRAW_DNG_NONE = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_NONE = 0
      * }
      */
     public static int LIBRAW_DNG_NONE() {
-        return (int)0L;
+        return LIBRAW_DNG_NONE;
     }
+    private static final int LIBRAW_DNG_FLOAT = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_FLOAT = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_FLOAT = 1
      * }
      */
     public static int LIBRAW_DNG_FLOAT() {
-        return (int)1L;
+        return LIBRAW_DNG_FLOAT;
     }
+    private static final int LIBRAW_DNG_LINEAR = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_LINEAR = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_LINEAR = 2
      * }
      */
     public static int LIBRAW_DNG_LINEAR() {
-        return (int)2L;
+        return LIBRAW_DNG_LINEAR;
     }
+    private static final int LIBRAW_DNG_DEFLATE = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_DEFLATE = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_DEFLATE = 4
      * }
      */
     public static int LIBRAW_DNG_DEFLATE() {
-        return (int)4L;
+        return LIBRAW_DNG_DEFLATE;
     }
+    private static final int LIBRAW_DNG_XTRANS = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_XTRANS = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_XTRANS = 8
      * }
      */
     public static int LIBRAW_DNG_XTRANS() {
-        return (int)8L;
+        return LIBRAW_DNG_XTRANS;
     }
+    private static final int LIBRAW_DNG_OTHER = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_OTHER = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_OTHER = 16
      * }
      */
     public static int LIBRAW_DNG_OTHER() {
-        return (int)16L;
+        return LIBRAW_DNG_OTHER;
     }
+    private static final int LIBRAW_DNG_8BIT = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_8BIT = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_8BIT = 32
      * }
      */
     public static int LIBRAW_DNG_8BIT() {
-        return (int)32L;
+        return LIBRAW_DNG_8BIT;
     }
+    private static final int LIBRAW_DNG_ALL = (int)63L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_ALL = 63;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_ALL = 63
      * }
      */
     public static int LIBRAW_DNG_ALL() {
-        return (int)63L;
+        return LIBRAW_DNG_ALL;
     }
+    private static final int LIBRAW_DNG_DEFAULT = (int)39L;
     /**
-     * {@snippet :
-     * enum LibRaw_dng_processing.LIBRAW_DNG_DEFAULT = 39;
+     * {@snippet lang=c :
+     * enum LibRaw_dng_processing.LIBRAW_DNG_DEFAULT = 39
      * }
      */
     public static int LIBRAW_DNG_DEFAULT() {
-        return (int)39L;
+        return LIBRAW_DNG_DEFAULT;
     }
+    private static final int LIBRAW_OUTPUT_FLAGS_NONE = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_output_flags.LIBRAW_OUTPUT_FLAGS_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_output_flags.LIBRAW_OUTPUT_FLAGS_NONE = 0
      * }
      */
     public static int LIBRAW_OUTPUT_FLAGS_NONE() {
-        return (int)0L;
+        return LIBRAW_OUTPUT_FLAGS_NONE;
     }
+    private static final int LIBRAW_OUTPUT_FLAGS_PPMMETA = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_output_flags.LIBRAW_OUTPUT_FLAGS_PPMMETA = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_output_flags.LIBRAW_OUTPUT_FLAGS_PPMMETA = 1
      * }
      */
     public static int LIBRAW_OUTPUT_FLAGS_PPMMETA() {
-        return (int)1L;
+        return LIBRAW_OUTPUT_FLAGS_PPMMETA;
     }
+    private static final int LIBRAW_CAPS_RAWSPEED = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_RAWSPEED = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_RAWSPEED = 1
      * }
      */
     public static int LIBRAW_CAPS_RAWSPEED() {
-        return (int)1L;
+        return LIBRAW_CAPS_RAWSPEED;
     }
+    private static final int LIBRAW_CAPS_DNGSDK = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_DNGSDK = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_DNGSDK = 2
      * }
      */
     public static int LIBRAW_CAPS_DNGSDK() {
-        return (int)2L;
+        return LIBRAW_CAPS_DNGSDK;
     }
+    private static final int LIBRAW_CAPS_GPRSDK = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_GPRSDK = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_GPRSDK = 4
      * }
      */
     public static int LIBRAW_CAPS_GPRSDK() {
-        return (int)4L;
+        return LIBRAW_CAPS_GPRSDK;
     }
+    private static final int LIBRAW_CAPS_UNICODEPATHS = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_UNICODEPATHS = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_UNICODEPATHS = 8
      * }
      */
     public static int LIBRAW_CAPS_UNICODEPATHS() {
-        return (int)8L;
+        return LIBRAW_CAPS_UNICODEPATHS;
     }
+    private static final int LIBRAW_CAPS_X3FTOOLS = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_X3FTOOLS = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_X3FTOOLS = 16
      * }
      */
     public static int LIBRAW_CAPS_X3FTOOLS() {
-        return (int)16L;
+        return LIBRAW_CAPS_X3FTOOLS;
     }
+    private static final int LIBRAW_CAPS_RPI6BY9 = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_RPI6BY9 = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_RPI6BY9 = 32
      * }
      */
     public static int LIBRAW_CAPS_RPI6BY9() {
-        return (int)32L;
+        return LIBRAW_CAPS_RPI6BY9;
     }
+    private static final int LIBRAW_CAPS_ZLIB = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_ZLIB = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_ZLIB = 64
      * }
      */
     public static int LIBRAW_CAPS_ZLIB() {
-        return (int)64L;
+        return LIBRAW_CAPS_ZLIB;
     }
+    private static final int LIBRAW_CAPS_JPEG = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_JPEG = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_JPEG = 128
      * }
      */
     public static int LIBRAW_CAPS_JPEG() {
-        return (int)128L;
+        return LIBRAW_CAPS_JPEG;
     }
+    private static final int LIBRAW_CAPS_RAWSPEED3 = (int)256L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_NotFound = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_RAWSPEED3 = 256
+     * }
+     */
+    public static int LIBRAW_CAPS_RAWSPEED3() {
+        return LIBRAW_CAPS_RAWSPEED3;
+    }
+    private static final int LIBRAW_CAPS_RAWSPEED_BITS = (int)512L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_runtime_capabilities.LIBRAW_CAPS_RAWSPEED_BITS = 512
+     * }
+     */
+    public static int LIBRAW_CAPS_RAWSPEED_BITS() {
+        return LIBRAW_CAPS_RAWSPEED_BITS;
+    }
+    private static final int LIBRAW_COLORSPACE_NotFound = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_NotFound = 0
      * }
      */
     public static int LIBRAW_COLORSPACE_NotFound() {
-        return (int)0L;
+        return LIBRAW_COLORSPACE_NotFound;
     }
+    private static final int LIBRAW_COLORSPACE_sRGB = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_sRGB = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_sRGB = 1
      * }
      */
     public static int LIBRAW_COLORSPACE_sRGB() {
-        return (int)1L;
+        return LIBRAW_COLORSPACE_sRGB;
     }
+    private static final int LIBRAW_COLORSPACE_AdobeRGB = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_AdobeRGB = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_AdobeRGB = 2
      * }
      */
     public static int LIBRAW_COLORSPACE_AdobeRGB() {
-        return (int)2L;
+        return LIBRAW_COLORSPACE_AdobeRGB;
     }
+    private static final int LIBRAW_COLORSPACE_WideGamutRGB = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_WideGamutRGB = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_WideGamutRGB = 3
      * }
      */
     public static int LIBRAW_COLORSPACE_WideGamutRGB() {
-        return (int)3L;
+        return LIBRAW_COLORSPACE_WideGamutRGB;
     }
+    private static final int LIBRAW_COLORSPACE_ProPhotoRGB = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_ProPhotoRGB = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_ProPhotoRGB = 4
      * }
      */
     public static int LIBRAW_COLORSPACE_ProPhotoRGB() {
-        return (int)4L;
+        return LIBRAW_COLORSPACE_ProPhotoRGB;
     }
+    private static final int LIBRAW_COLORSPACE_ICC = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_ICC = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_ICC = 5
      * }
      */
     public static int LIBRAW_COLORSPACE_ICC() {
-        return (int)5L;
+        return LIBRAW_COLORSPACE_ICC;
     }
+    private static final int LIBRAW_COLORSPACE_Uncalibrated = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_Uncalibrated = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_Uncalibrated = 6
      * }
      */
     public static int LIBRAW_COLORSPACE_Uncalibrated() {
-        return (int)6L;
+        return LIBRAW_COLORSPACE_Uncalibrated;
     }
+    private static final int LIBRAW_COLORSPACE_CameraLinearUniWB = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraLinearUniWB = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraLinearUniWB = 7
      * }
      */
     public static int LIBRAW_COLORSPACE_CameraLinearUniWB() {
-        return (int)7L;
+        return LIBRAW_COLORSPACE_CameraLinearUniWB;
     }
+    private static final int LIBRAW_COLORSPACE_CameraLinear = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraLinear = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraLinear = 8
      * }
      */
     public static int LIBRAW_COLORSPACE_CameraLinear() {
-        return (int)8L;
+        return LIBRAW_COLORSPACE_CameraLinear;
     }
+    private static final int LIBRAW_COLORSPACE_CameraGammaUniWB = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraGammaUniWB = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraGammaUniWB = 9
      * }
      */
     public static int LIBRAW_COLORSPACE_CameraGammaUniWB() {
-        return (int)9L;
+        return LIBRAW_COLORSPACE_CameraGammaUniWB;
     }
+    private static final int LIBRAW_COLORSPACE_CameraGamma = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraGamma = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_CameraGamma = 10
      * }
      */
     public static int LIBRAW_COLORSPACE_CameraGamma() {
-        return (int)10L;
+        return LIBRAW_COLORSPACE_CameraGamma;
     }
+    private static final int LIBRAW_COLORSPACE_MonochromeLinear = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_MonochromeLinear = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_MonochromeLinear = 11
      * }
      */
     public static int LIBRAW_COLORSPACE_MonochromeLinear() {
-        return (int)11L;
+        return LIBRAW_COLORSPACE_MonochromeLinear;
     }
+    private static final int LIBRAW_COLORSPACE_MonochromeGamma = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_MonochromeGamma = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_MonochromeGamma = 12
      * }
      */
     public static int LIBRAW_COLORSPACE_MonochromeGamma() {
-        return (int)12L;
+        return LIBRAW_COLORSPACE_MonochromeGamma;
     }
+    private static final int LIBRAW_COLORSPACE_Unknown = (int)255L;
     /**
-     * {@snippet :
-     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_Unknown = 255;
+     * {@snippet lang=c :
+     * enum LibRaw_colorspace.LIBRAW_COLORSPACE_Unknown = 255
      * }
      */
     public static int LIBRAW_COLORSPACE_Unknown() {
-        return (int)255L;
+        return LIBRAW_COLORSPACE_Unknown;
     }
+    private static final int LIBRAW_CAMERAMAKER_Unknown = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Unknown = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Unknown = 0
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Unknown() {
-        return (int)0L;
+        return LIBRAW_CAMERAMAKER_Unknown;
     }
+    private static final int LIBRAW_CAMERAMAKER_Agfa = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Agfa = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Agfa = 1
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Agfa() {
-        return (int)1L;
+        return LIBRAW_CAMERAMAKER_Agfa;
     }
+    private static final int LIBRAW_CAMERAMAKER_Alcatel = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Alcatel = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Alcatel = 2
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Alcatel() {
-        return (int)2L;
+        return LIBRAW_CAMERAMAKER_Alcatel;
     }
+    private static final int LIBRAW_CAMERAMAKER_Apple = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Apple = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Apple = 3
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Apple() {
-        return (int)3L;
+        return LIBRAW_CAMERAMAKER_Apple;
     }
+    private static final int LIBRAW_CAMERAMAKER_Aptina = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Aptina = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Aptina = 4
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Aptina() {
-        return (int)4L;
+        return LIBRAW_CAMERAMAKER_Aptina;
     }
+    private static final int LIBRAW_CAMERAMAKER_AVT = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_AVT = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_AVT = 5
      * }
      */
     public static int LIBRAW_CAMERAMAKER_AVT() {
-        return (int)5L;
+        return LIBRAW_CAMERAMAKER_AVT;
     }
+    private static final int LIBRAW_CAMERAMAKER_Baumer = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Baumer = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Baumer = 6
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Baumer() {
-        return (int)6L;
+        return LIBRAW_CAMERAMAKER_Baumer;
     }
+    private static final int LIBRAW_CAMERAMAKER_Broadcom = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Broadcom = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Broadcom = 7
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Broadcom() {
-        return (int)7L;
+        return LIBRAW_CAMERAMAKER_Broadcom;
     }
+    private static final int LIBRAW_CAMERAMAKER_Canon = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Canon = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Canon = 8
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Canon() {
-        return (int)8L;
+        return LIBRAW_CAMERAMAKER_Canon;
     }
+    private static final int LIBRAW_CAMERAMAKER_Casio = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Casio = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Casio = 9
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Casio() {
-        return (int)9L;
+        return LIBRAW_CAMERAMAKER_Casio;
     }
+    private static final int LIBRAW_CAMERAMAKER_CINE = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_CINE = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_CINE = 10
      * }
      */
     public static int LIBRAW_CAMERAMAKER_CINE() {
-        return (int)10L;
+        return LIBRAW_CAMERAMAKER_CINE;
     }
+    private static final int LIBRAW_CAMERAMAKER_Clauss = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Clauss = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Clauss = 11
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Clauss() {
-        return (int)11L;
+        return LIBRAW_CAMERAMAKER_Clauss;
     }
+    private static final int LIBRAW_CAMERAMAKER_Contax = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Contax = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Contax = 12
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Contax() {
-        return (int)12L;
+        return LIBRAW_CAMERAMAKER_Contax;
     }
+    private static final int LIBRAW_CAMERAMAKER_Creative = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Creative = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Creative = 13
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Creative() {
-        return (int)13L;
+        return LIBRAW_CAMERAMAKER_Creative;
     }
+    private static final int LIBRAW_CAMERAMAKER_DJI = (int)14L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_DJI = 14;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_DJI = 14
      * }
      */
     public static int LIBRAW_CAMERAMAKER_DJI() {
-        return (int)14L;
+        return LIBRAW_CAMERAMAKER_DJI;
     }
+    private static final int LIBRAW_CAMERAMAKER_DXO = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_DXO = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_DXO = 15
      * }
      */
     public static int LIBRAW_CAMERAMAKER_DXO() {
-        return (int)15L;
+        return LIBRAW_CAMERAMAKER_DXO;
     }
+    private static final int LIBRAW_CAMERAMAKER_Epson = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Epson = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Epson = 16
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Epson() {
-        return (int)16L;
+        return LIBRAW_CAMERAMAKER_Epson;
     }
+    private static final int LIBRAW_CAMERAMAKER_Foculus = (int)17L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Foculus = 17;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Foculus = 17
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Foculus() {
-        return (int)17L;
+        return LIBRAW_CAMERAMAKER_Foculus;
     }
+    private static final int LIBRAW_CAMERAMAKER_Fujifilm = (int)18L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Fujifilm = 18;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Fujifilm = 18
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Fujifilm() {
-        return (int)18L;
+        return LIBRAW_CAMERAMAKER_Fujifilm;
     }
+    private static final int LIBRAW_CAMERAMAKER_Generic = (int)19L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Generic = 19;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Generic = 19
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Generic() {
-        return (int)19L;
+        return LIBRAW_CAMERAMAKER_Generic;
     }
+    private static final int LIBRAW_CAMERAMAKER_Gione = (int)20L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Gione = 20;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Gione = 20
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Gione() {
-        return (int)20L;
+        return LIBRAW_CAMERAMAKER_Gione;
     }
+    private static final int LIBRAW_CAMERAMAKER_GITUP = (int)21L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_GITUP = 21;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_GITUP = 21
      * }
      */
     public static int LIBRAW_CAMERAMAKER_GITUP() {
-        return (int)21L;
+        return LIBRAW_CAMERAMAKER_GITUP;
     }
+    private static final int LIBRAW_CAMERAMAKER_Google = (int)22L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Google = 22;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Google = 22
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Google() {
-        return (int)22L;
+        return LIBRAW_CAMERAMAKER_Google;
     }
+    private static final int LIBRAW_CAMERAMAKER_GoPro = (int)23L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_GoPro = 23;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_GoPro = 23
      * }
      */
     public static int LIBRAW_CAMERAMAKER_GoPro() {
-        return (int)23L;
+        return LIBRAW_CAMERAMAKER_GoPro;
     }
+    private static final int LIBRAW_CAMERAMAKER_Hasselblad = (int)24L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Hasselblad = 24;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Hasselblad = 24
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Hasselblad() {
-        return (int)24L;
+        return LIBRAW_CAMERAMAKER_Hasselblad;
     }
+    private static final int LIBRAW_CAMERAMAKER_HTC = (int)25L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_HTC = 25;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_HTC = 25
      * }
      */
     public static int LIBRAW_CAMERAMAKER_HTC() {
-        return (int)25L;
+        return LIBRAW_CAMERAMAKER_HTC;
     }
+    private static final int LIBRAW_CAMERAMAKER_I_Mobile = (int)26L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_I_Mobile = 26;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_I_Mobile = 26
      * }
      */
     public static int LIBRAW_CAMERAMAKER_I_Mobile() {
-        return (int)26L;
+        return LIBRAW_CAMERAMAKER_I_Mobile;
     }
+    private static final int LIBRAW_CAMERAMAKER_Imacon = (int)27L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Imacon = 27;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Imacon = 27
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Imacon() {
-        return (int)27L;
+        return LIBRAW_CAMERAMAKER_Imacon;
     }
+    private static final int LIBRAW_CAMERAMAKER_JK_Imaging = (int)28L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_JK_Imaging = 28;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_JK_Imaging = 28
      * }
      */
     public static int LIBRAW_CAMERAMAKER_JK_Imaging() {
-        return (int)28L;
+        return LIBRAW_CAMERAMAKER_JK_Imaging;
     }
+    private static final int LIBRAW_CAMERAMAKER_Kodak = (int)29L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Kodak = 29;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Kodak = 29
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Kodak() {
-        return (int)29L;
+        return LIBRAW_CAMERAMAKER_Kodak;
     }
+    private static final int LIBRAW_CAMERAMAKER_Konica = (int)30L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Konica = 30;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Konica = 30
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Konica() {
-        return (int)30L;
+        return LIBRAW_CAMERAMAKER_Konica;
     }
+    private static final int LIBRAW_CAMERAMAKER_Leaf = (int)31L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Leaf = 31;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Leaf = 31
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Leaf() {
-        return (int)31L;
+        return LIBRAW_CAMERAMAKER_Leaf;
     }
+    private static final int LIBRAW_CAMERAMAKER_Leica = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Leica = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Leica = 32
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Leica() {
-        return (int)32L;
+        return LIBRAW_CAMERAMAKER_Leica;
     }
+    private static final int LIBRAW_CAMERAMAKER_Lenovo = (int)33L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Lenovo = 33;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Lenovo = 33
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Lenovo() {
-        return (int)33L;
+        return LIBRAW_CAMERAMAKER_Lenovo;
     }
+    private static final int LIBRAW_CAMERAMAKER_LG = (int)34L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_LG = 34;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_LG = 34
      * }
      */
     public static int LIBRAW_CAMERAMAKER_LG() {
-        return (int)34L;
+        return LIBRAW_CAMERAMAKER_LG;
     }
+    private static final int LIBRAW_CAMERAMAKER_Logitech = (int)35L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Logitech = 35;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Logitech = 35
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Logitech() {
-        return (int)35L;
+        return LIBRAW_CAMERAMAKER_Logitech;
     }
+    private static final int LIBRAW_CAMERAMAKER_Mamiya = (int)36L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Mamiya = 36;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Mamiya = 36
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Mamiya() {
-        return (int)36L;
+        return LIBRAW_CAMERAMAKER_Mamiya;
     }
+    private static final int LIBRAW_CAMERAMAKER_Matrix = (int)37L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Matrix = 37;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Matrix = 37
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Matrix() {
-        return (int)37L;
+        return LIBRAW_CAMERAMAKER_Matrix;
     }
+    private static final int LIBRAW_CAMERAMAKER_Meizu = (int)38L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Meizu = 38;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Meizu = 38
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Meizu() {
-        return (int)38L;
+        return LIBRAW_CAMERAMAKER_Meizu;
     }
+    private static final int LIBRAW_CAMERAMAKER_Micron = (int)39L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Micron = 39;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Micron = 39
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Micron() {
-        return (int)39L;
+        return LIBRAW_CAMERAMAKER_Micron;
     }
+    private static final int LIBRAW_CAMERAMAKER_Minolta = (int)40L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Minolta = 40;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Minolta = 40
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Minolta() {
-        return (int)40L;
+        return LIBRAW_CAMERAMAKER_Minolta;
     }
+    private static final int LIBRAW_CAMERAMAKER_Motorola = (int)41L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Motorola = 41;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Motorola = 41
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Motorola() {
-        return (int)41L;
+        return LIBRAW_CAMERAMAKER_Motorola;
     }
+    private static final int LIBRAW_CAMERAMAKER_NGM = (int)42L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_NGM = 42;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_NGM = 42
      * }
      */
     public static int LIBRAW_CAMERAMAKER_NGM() {
-        return (int)42L;
+        return LIBRAW_CAMERAMAKER_NGM;
     }
+    private static final int LIBRAW_CAMERAMAKER_Nikon = (int)43L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Nikon = 43;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Nikon = 43
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Nikon() {
-        return (int)43L;
+        return LIBRAW_CAMERAMAKER_Nikon;
     }
+    private static final int LIBRAW_CAMERAMAKER_Nokia = (int)44L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Nokia = 44;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Nokia = 44
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Nokia() {
-        return (int)44L;
+        return LIBRAW_CAMERAMAKER_Nokia;
     }
+    private static final int LIBRAW_CAMERAMAKER_Olympus = (int)45L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Olympus = 45;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Olympus = 45
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Olympus() {
-        return (int)45L;
+        return LIBRAW_CAMERAMAKER_Olympus;
     }
+    private static final int LIBRAW_CAMERAMAKER_OmniVison = (int)46L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_OmniVison = 46;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_OmniVison = 46
      * }
      */
     public static int LIBRAW_CAMERAMAKER_OmniVison() {
-        return (int)46L;
+        return LIBRAW_CAMERAMAKER_OmniVison;
     }
+    private static final int LIBRAW_CAMERAMAKER_Panasonic = (int)47L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Panasonic = 47;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Panasonic = 47
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Panasonic() {
-        return (int)47L;
+        return LIBRAW_CAMERAMAKER_Panasonic;
     }
+    private static final int LIBRAW_CAMERAMAKER_Parrot = (int)48L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Parrot = 48;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Parrot = 48
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Parrot() {
-        return (int)48L;
+        return LIBRAW_CAMERAMAKER_Parrot;
     }
+    private static final int LIBRAW_CAMERAMAKER_Pentax = (int)49L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Pentax = 49;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Pentax = 49
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Pentax() {
-        return (int)49L;
+        return LIBRAW_CAMERAMAKER_Pentax;
     }
+    private static final int LIBRAW_CAMERAMAKER_PhaseOne = (int)50L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_PhaseOne = 50;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_PhaseOne = 50
      * }
      */
     public static int LIBRAW_CAMERAMAKER_PhaseOne() {
-        return (int)50L;
+        return LIBRAW_CAMERAMAKER_PhaseOne;
     }
+    private static final int LIBRAW_CAMERAMAKER_PhotoControl = (int)51L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_PhotoControl = 51;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_PhotoControl = 51
      * }
      */
     public static int LIBRAW_CAMERAMAKER_PhotoControl() {
-        return (int)51L;
+        return LIBRAW_CAMERAMAKER_PhotoControl;
     }
+    private static final int LIBRAW_CAMERAMAKER_Photron = (int)52L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Photron = 52;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Photron = 52
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Photron() {
-        return (int)52L;
+        return LIBRAW_CAMERAMAKER_Photron;
     }
+    private static final int LIBRAW_CAMERAMAKER_Pixelink = (int)53L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Pixelink = 53;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Pixelink = 53
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Pixelink() {
-        return (int)53L;
+        return LIBRAW_CAMERAMAKER_Pixelink;
     }
+    private static final int LIBRAW_CAMERAMAKER_Polaroid = (int)54L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Polaroid = 54;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Polaroid = 54
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Polaroid() {
-        return (int)54L;
+        return LIBRAW_CAMERAMAKER_Polaroid;
     }
+    private static final int LIBRAW_CAMERAMAKER_RED = (int)55L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_RED = 55;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_RED = 55
      * }
      */
     public static int LIBRAW_CAMERAMAKER_RED() {
-        return (int)55L;
+        return LIBRAW_CAMERAMAKER_RED;
     }
+    private static final int LIBRAW_CAMERAMAKER_Ricoh = (int)56L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Ricoh = 56;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Ricoh = 56
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Ricoh() {
-        return (int)56L;
+        return LIBRAW_CAMERAMAKER_Ricoh;
     }
+    private static final int LIBRAW_CAMERAMAKER_Rollei = (int)57L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Rollei = 57;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Rollei = 57
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Rollei() {
-        return (int)57L;
+        return LIBRAW_CAMERAMAKER_Rollei;
     }
+    private static final int LIBRAW_CAMERAMAKER_RoverShot = (int)58L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_RoverShot = 58;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_RoverShot = 58
      * }
      */
     public static int LIBRAW_CAMERAMAKER_RoverShot() {
-        return (int)58L;
+        return LIBRAW_CAMERAMAKER_RoverShot;
     }
+    private static final int LIBRAW_CAMERAMAKER_Samsung = (int)59L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Samsung = 59;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Samsung = 59
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Samsung() {
-        return (int)59L;
+        return LIBRAW_CAMERAMAKER_Samsung;
     }
+    private static final int LIBRAW_CAMERAMAKER_Sigma = (int)60L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Sigma = 60;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Sigma = 60
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Sigma() {
-        return (int)60L;
+        return LIBRAW_CAMERAMAKER_Sigma;
     }
+    private static final int LIBRAW_CAMERAMAKER_Sinar = (int)61L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Sinar = 61;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Sinar = 61
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Sinar() {
-        return (int)61L;
+        return LIBRAW_CAMERAMAKER_Sinar;
     }
+    private static final int LIBRAW_CAMERAMAKER_SMaL = (int)62L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_SMaL = 62;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_SMaL = 62
      * }
      */
     public static int LIBRAW_CAMERAMAKER_SMaL() {
-        return (int)62L;
+        return LIBRAW_CAMERAMAKER_SMaL;
     }
+    private static final int LIBRAW_CAMERAMAKER_Sony = (int)63L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Sony = 63;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Sony = 63
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Sony() {
-        return (int)63L;
+        return LIBRAW_CAMERAMAKER_Sony;
     }
+    private static final int LIBRAW_CAMERAMAKER_ST_Micro = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_ST_Micro = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_ST_Micro = 64
      * }
      */
     public static int LIBRAW_CAMERAMAKER_ST_Micro() {
-        return (int)64L;
+        return LIBRAW_CAMERAMAKER_ST_Micro;
     }
+    private static final int LIBRAW_CAMERAMAKER_THL = (int)65L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_THL = 65;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_THL = 65
      * }
      */
     public static int LIBRAW_CAMERAMAKER_THL() {
-        return (int)65L;
+        return LIBRAW_CAMERAMAKER_THL;
     }
+    private static final int LIBRAW_CAMERAMAKER_VLUU = (int)66L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_VLUU = 66;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_VLUU = 66
      * }
      */
     public static int LIBRAW_CAMERAMAKER_VLUU() {
-        return (int)66L;
+        return LIBRAW_CAMERAMAKER_VLUU;
     }
+    private static final int LIBRAW_CAMERAMAKER_Xiaomi = (int)67L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Xiaomi = 67;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Xiaomi = 67
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Xiaomi() {
-        return (int)67L;
+        return LIBRAW_CAMERAMAKER_Xiaomi;
     }
+    private static final int LIBRAW_CAMERAMAKER_XIAOYI = (int)68L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_XIAOYI = 68;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_XIAOYI = 68
      * }
      */
     public static int LIBRAW_CAMERAMAKER_XIAOYI() {
-        return (int)68L;
+        return LIBRAW_CAMERAMAKER_XIAOYI;
     }
+    private static final int LIBRAW_CAMERAMAKER_YI = (int)69L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_YI = 69;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_YI = 69
      * }
      */
     public static int LIBRAW_CAMERAMAKER_YI() {
-        return (int)69L;
+        return LIBRAW_CAMERAMAKER_YI;
     }
+    private static final int LIBRAW_CAMERAMAKER_Yuneec = (int)70L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Yuneec = 70;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Yuneec = 70
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Yuneec() {
-        return (int)70L;
+        return LIBRAW_CAMERAMAKER_Yuneec;
     }
+    private static final int LIBRAW_CAMERAMAKER_Zeiss = (int)71L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Zeiss = 71;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_Zeiss = 71
      * }
      */
     public static int LIBRAW_CAMERAMAKER_Zeiss() {
-        return (int)71L;
+        return LIBRAW_CAMERAMAKER_Zeiss;
     }
+    private static final int LIBRAW_CAMERAMAKER_OnePlus = (int)72L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_OnePlus = 72;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_OnePlus = 72
      * }
      */
     public static int LIBRAW_CAMERAMAKER_OnePlus() {
-        return (int)72L;
+        return LIBRAW_CAMERAMAKER_OnePlus;
     }
+    private static final int LIBRAW_CAMERAMAKER_ISG = (int)73L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_ISG = 73;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_ISG = 73
      * }
      */
     public static int LIBRAW_CAMERAMAKER_ISG() {
-        return (int)73L;
+        return LIBRAW_CAMERAMAKER_ISG;
     }
+    private static final int LIBRAW_CAMERAMAKER_VIVO = (int)74L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_VIVO = 74;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_VIVO = 74
      * }
      */
     public static int LIBRAW_CAMERAMAKER_VIVO() {
-        return (int)74L;
+        return LIBRAW_CAMERAMAKER_VIVO;
     }
+    private static final int LIBRAW_CAMERAMAKER_HMD_Global = (int)75L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_HMD_Global = 75;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_HMD_Global = 75
      * }
      */
     public static int LIBRAW_CAMERAMAKER_HMD_Global() {
-        return (int)75L;
+        return LIBRAW_CAMERAMAKER_HMD_Global;
     }
+    private static final int LIBRAW_CAMERAMAKER_HUAWEI = (int)76L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_HUAWEI = 76;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_HUAWEI = 76
      * }
      */
     public static int LIBRAW_CAMERAMAKER_HUAWEI() {
-        return (int)76L;
+        return LIBRAW_CAMERAMAKER_HUAWEI;
     }
+    private static final int LIBRAW_CAMERAMAKER_RaspberryPi = (int)77L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_RaspberryPi = 77;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_RaspberryPi = 77
      * }
      */
     public static int LIBRAW_CAMERAMAKER_RaspberryPi() {
-        return (int)77L;
+        return LIBRAW_CAMERAMAKER_RaspberryPi;
     }
+    private static final int LIBRAW_CAMERAMAKER_OmDigital = (int)78L;
     /**
-     * {@snippet :
-     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_TheLastOne = 78;
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_OmDigital = 78
+     * }
+     */
+    public static int LIBRAW_CAMERAMAKER_OmDigital() {
+        return LIBRAW_CAMERAMAKER_OmDigital;
+    }
+    private static final int LIBRAW_CAMERAMAKER_TheLastOne = (int)79L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_cameramaker_index.LIBRAW_CAMERAMAKER_TheLastOne = 79
      * }
      */
     public static int LIBRAW_CAMERAMAKER_TheLastOne() {
-        return (int)78L;
+        return LIBRAW_CAMERAMAKER_TheLastOne;
     }
+    private static final int LIBRAW_MOUNT_Unknown = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Unknown = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Unknown = 0
      * }
      */
     public static int LIBRAW_MOUNT_Unknown() {
-        return (int)0L;
+        return LIBRAW_MOUNT_Unknown;
     }
+    private static final int LIBRAW_MOUNT_Alpa = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Alpa = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Alpa = 1
      * }
      */
     public static int LIBRAW_MOUNT_Alpa() {
-        return (int)1L;
+        return LIBRAW_MOUNT_Alpa;
     }
+    private static final int LIBRAW_MOUNT_C = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_C = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_C = 2
      * }
      */
     public static int LIBRAW_MOUNT_C() {
-        return (int)2L;
+        return LIBRAW_MOUNT_C;
     }
+    private static final int LIBRAW_MOUNT_Canon_EF_M = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_EF_M = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_EF_M = 3
      * }
      */
     public static int LIBRAW_MOUNT_Canon_EF_M() {
-        return (int)3L;
+        return LIBRAW_MOUNT_Canon_EF_M;
     }
+    private static final int LIBRAW_MOUNT_Canon_EF_S = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_EF_S = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_EF_S = 4
      * }
      */
     public static int LIBRAW_MOUNT_Canon_EF_S() {
-        return (int)4L;
+        return LIBRAW_MOUNT_Canon_EF_S;
     }
+    private static final int LIBRAW_MOUNT_Canon_EF = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_EF = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_EF = 5
      * }
      */
     public static int LIBRAW_MOUNT_Canon_EF() {
-        return (int)5L;
+        return LIBRAW_MOUNT_Canon_EF;
     }
+    private static final int LIBRAW_MOUNT_Canon_RF = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_RF = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Canon_RF = 6
      * }
      */
     public static int LIBRAW_MOUNT_Canon_RF() {
-        return (int)6L;
+        return LIBRAW_MOUNT_Canon_RF;
     }
+    private static final int LIBRAW_MOUNT_Contax_N = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Contax_N = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Contax_N = 7
      * }
      */
     public static int LIBRAW_MOUNT_Contax_N() {
-        return (int)7L;
+        return LIBRAW_MOUNT_Contax_N;
     }
+    private static final int LIBRAW_MOUNT_Contax645 = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Contax645 = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Contax645 = 8
      * }
      */
     public static int LIBRAW_MOUNT_Contax645() {
-        return (int)8L;
+        return LIBRAW_MOUNT_Contax645;
     }
+    private static final int LIBRAW_MOUNT_FT = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_FT = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_FT = 9
      * }
      */
     public static int LIBRAW_MOUNT_FT() {
-        return (int)9L;
+        return LIBRAW_MOUNT_FT;
     }
+    private static final int LIBRAW_MOUNT_mFT = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_mFT = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_mFT = 10
      * }
      */
     public static int LIBRAW_MOUNT_mFT() {
-        return (int)10L;
+        return LIBRAW_MOUNT_mFT;
     }
+    private static final int LIBRAW_MOUNT_Fuji_GF = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Fuji_GF = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Fuji_GF = 11
      * }
      */
     public static int LIBRAW_MOUNT_Fuji_GF() {
-        return (int)11L;
+        return LIBRAW_MOUNT_Fuji_GF;
     }
+    private static final int LIBRAW_MOUNT_Fuji_GX = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Fuji_GX = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Fuji_GX = 12
      * }
      */
     public static int LIBRAW_MOUNT_Fuji_GX() {
-        return (int)12L;
+        return LIBRAW_MOUNT_Fuji_GX;
     }
+    private static final int LIBRAW_MOUNT_Fuji_X = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Fuji_X = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Fuji_X = 13
      * }
      */
     public static int LIBRAW_MOUNT_Fuji_X() {
-        return (int)13L;
+        return LIBRAW_MOUNT_Fuji_X;
     }
+    private static final int LIBRAW_MOUNT_Hasselblad_H = (int)14L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Hasselblad_H = 14;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Hasselblad_H = 14
      * }
      */
     public static int LIBRAW_MOUNT_Hasselblad_H() {
-        return (int)14L;
+        return LIBRAW_MOUNT_Hasselblad_H;
     }
+    private static final int LIBRAW_MOUNT_Hasselblad_V = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Hasselblad_V = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Hasselblad_V = 15
      * }
      */
     public static int LIBRAW_MOUNT_Hasselblad_V() {
-        return (int)15L;
+        return LIBRAW_MOUNT_Hasselblad_V;
     }
+    private static final int LIBRAW_MOUNT_Hasselblad_XCD = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Hasselblad_XCD = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Hasselblad_XCD = 16
      * }
      */
     public static int LIBRAW_MOUNT_Hasselblad_XCD() {
-        return (int)16L;
+        return LIBRAW_MOUNT_Hasselblad_XCD;
     }
+    private static final int LIBRAW_MOUNT_Leica_M = (int)17L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_M = 17;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_M = 17
      * }
      */
     public static int LIBRAW_MOUNT_Leica_M() {
-        return (int)17L;
+        return LIBRAW_MOUNT_Leica_M;
     }
+    private static final int LIBRAW_MOUNT_Leica_R = (int)18L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_R = 18;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_R = 18
      * }
      */
     public static int LIBRAW_MOUNT_Leica_R() {
-        return (int)18L;
+        return LIBRAW_MOUNT_Leica_R;
     }
+    private static final int LIBRAW_MOUNT_Leica_S = (int)19L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_S = 19;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_S = 19
      * }
      */
     public static int LIBRAW_MOUNT_Leica_S() {
-        return (int)19L;
+        return LIBRAW_MOUNT_Leica_S;
     }
+    private static final int LIBRAW_MOUNT_Leica_SL = (int)20L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_SL = 20;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_SL = 20
      * }
      */
     public static int LIBRAW_MOUNT_Leica_SL() {
-        return (int)20L;
+        return LIBRAW_MOUNT_Leica_SL;
     }
+    private static final int LIBRAW_MOUNT_Leica_TL = (int)21L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_TL = 21;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Leica_TL = 21
      * }
      */
     public static int LIBRAW_MOUNT_Leica_TL() {
-        return (int)21L;
+        return LIBRAW_MOUNT_Leica_TL;
     }
+    private static final int LIBRAW_MOUNT_LPS_L = (int)22L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_LPS_L = 22;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_LPS_L = 22
      * }
      */
     public static int LIBRAW_MOUNT_LPS_L() {
-        return (int)22L;
+        return LIBRAW_MOUNT_LPS_L;
     }
+    private static final int LIBRAW_MOUNT_Mamiya67 = (int)23L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Mamiya67 = 23;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Mamiya67 = 23
      * }
      */
     public static int LIBRAW_MOUNT_Mamiya67() {
-        return (int)23L;
+        return LIBRAW_MOUNT_Mamiya67;
     }
+    private static final int LIBRAW_MOUNT_Mamiya645 = (int)24L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Mamiya645 = 24;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Mamiya645 = 24
      * }
      */
     public static int LIBRAW_MOUNT_Mamiya645() {
-        return (int)24L;
+        return LIBRAW_MOUNT_Mamiya645;
     }
+    private static final int LIBRAW_MOUNT_Minolta_A = (int)25L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Minolta_A = 25;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Minolta_A = 25
      * }
      */
     public static int LIBRAW_MOUNT_Minolta_A() {
-        return (int)25L;
+        return LIBRAW_MOUNT_Minolta_A;
     }
+    private static final int LIBRAW_MOUNT_Nikon_CX = (int)26L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Nikon_CX = 26;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Nikon_CX = 26
      * }
      */
     public static int LIBRAW_MOUNT_Nikon_CX() {
-        return (int)26L;
+        return LIBRAW_MOUNT_Nikon_CX;
     }
+    private static final int LIBRAW_MOUNT_Nikon_F = (int)27L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Nikon_F = 27;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Nikon_F = 27
      * }
      */
     public static int LIBRAW_MOUNT_Nikon_F() {
-        return (int)27L;
+        return LIBRAW_MOUNT_Nikon_F;
     }
+    private static final int LIBRAW_MOUNT_Nikon_Z = (int)28L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Nikon_Z = 28;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Nikon_Z = 28
      * }
      */
     public static int LIBRAW_MOUNT_Nikon_Z() {
-        return (int)28L;
+        return LIBRAW_MOUNT_Nikon_Z;
     }
+    private static final int LIBRAW_MOUNT_PhaseOne_iXM_MV = (int)29L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_PhaseOne_iXM_MV = 29;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_PhaseOne_iXM_MV = 29
      * }
      */
     public static int LIBRAW_MOUNT_PhaseOne_iXM_MV() {
-        return (int)29L;
+        return LIBRAW_MOUNT_PhaseOne_iXM_MV;
     }
+    private static final int LIBRAW_MOUNT_PhaseOne_iXM_RS = (int)30L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_PhaseOne_iXM_RS = 30;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_PhaseOne_iXM_RS = 30
      * }
      */
     public static int LIBRAW_MOUNT_PhaseOne_iXM_RS() {
-        return (int)30L;
+        return LIBRAW_MOUNT_PhaseOne_iXM_RS;
     }
+    private static final int LIBRAW_MOUNT_PhaseOne_iXM = (int)31L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_PhaseOne_iXM = 31;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_PhaseOne_iXM = 31
      * }
      */
     public static int LIBRAW_MOUNT_PhaseOne_iXM() {
-        return (int)31L;
+        return LIBRAW_MOUNT_PhaseOne_iXM;
     }
+    private static final int LIBRAW_MOUNT_Pentax_645 = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Pentax_645 = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Pentax_645 = 32
      * }
      */
     public static int LIBRAW_MOUNT_Pentax_645() {
-        return (int)32L;
+        return LIBRAW_MOUNT_Pentax_645;
     }
+    private static final int LIBRAW_MOUNT_Pentax_K = (int)33L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Pentax_K = 33;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Pentax_K = 33
      * }
      */
     public static int LIBRAW_MOUNT_Pentax_K() {
-        return (int)33L;
+        return LIBRAW_MOUNT_Pentax_K;
     }
+    private static final int LIBRAW_MOUNT_Pentax_Q = (int)34L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Pentax_Q = 34;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Pentax_Q = 34
      * }
      */
     public static int LIBRAW_MOUNT_Pentax_Q() {
-        return (int)34L;
+        return LIBRAW_MOUNT_Pentax_Q;
     }
+    private static final int LIBRAW_MOUNT_RicohModule = (int)35L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_RicohModule = 35;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_RicohModule = 35
      * }
      */
     public static int LIBRAW_MOUNT_RicohModule() {
-        return (int)35L;
+        return LIBRAW_MOUNT_RicohModule;
     }
+    private static final int LIBRAW_MOUNT_Rollei_bayonet = (int)36L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Rollei_bayonet = 36;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Rollei_bayonet = 36
      * }
      */
     public static int LIBRAW_MOUNT_Rollei_bayonet() {
-        return (int)36L;
+        return LIBRAW_MOUNT_Rollei_bayonet;
     }
+    private static final int LIBRAW_MOUNT_Samsung_NX_M = (int)37L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Samsung_NX_M = 37;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Samsung_NX_M = 37
      * }
      */
     public static int LIBRAW_MOUNT_Samsung_NX_M() {
-        return (int)37L;
+        return LIBRAW_MOUNT_Samsung_NX_M;
     }
+    private static final int LIBRAW_MOUNT_Samsung_NX = (int)38L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Samsung_NX = 38;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Samsung_NX = 38
      * }
      */
     public static int LIBRAW_MOUNT_Samsung_NX() {
-        return (int)38L;
+        return LIBRAW_MOUNT_Samsung_NX;
     }
+    private static final int LIBRAW_MOUNT_Sigma_X3F = (int)39L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Sigma_X3F = 39;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Sigma_X3F = 39
      * }
      */
     public static int LIBRAW_MOUNT_Sigma_X3F() {
-        return (int)39L;
+        return LIBRAW_MOUNT_Sigma_X3F;
     }
+    private static final int LIBRAW_MOUNT_Sony_E = (int)40L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Sony_E = 40;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_Sony_E = 40
      * }
      */
     public static int LIBRAW_MOUNT_Sony_E() {
-        return (int)40L;
+        return LIBRAW_MOUNT_Sony_E;
     }
+    private static final int LIBRAW_MOUNT_LF = (int)41L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_LF = 41;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_LF = 41
      * }
      */
     public static int LIBRAW_MOUNT_LF() {
-        return (int)41L;
+        return LIBRAW_MOUNT_LF;
     }
+    private static final int LIBRAW_MOUNT_DigitalBack = (int)42L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_DigitalBack = 42;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_DigitalBack = 42
      * }
      */
     public static int LIBRAW_MOUNT_DigitalBack() {
-        return (int)42L;
+        return LIBRAW_MOUNT_DigitalBack;
     }
+    private static final int LIBRAW_MOUNT_FixedLens = (int)43L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_FixedLens = 43;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_FixedLens = 43
      * }
      */
     public static int LIBRAW_MOUNT_FixedLens() {
-        return (int)43L;
+        return LIBRAW_MOUNT_FixedLens;
     }
+    private static final int LIBRAW_MOUNT_IL_UM = (int)44L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_IL_UM = 44;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_IL_UM = 44
      * }
      */
     public static int LIBRAW_MOUNT_IL_UM() {
-        return (int)44L;
+        return LIBRAW_MOUNT_IL_UM;
     }
+    private static final int LIBRAW_MOUNT_TheLastOne = (int)45L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_TheLastOne = 45;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_mounts.LIBRAW_MOUNT_TheLastOne = 45
      * }
      */
     public static int LIBRAW_MOUNT_TheLastOne() {
-        return (int)45L;
+        return LIBRAW_MOUNT_TheLastOne;
     }
+    private static final int LIBRAW_FORMAT_Unknown = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_Unknown = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_Unknown = 0
      * }
      */
     public static int LIBRAW_FORMAT_Unknown() {
-        return (int)0L;
+        return LIBRAW_FORMAT_Unknown;
     }
+    private static final int LIBRAW_FORMAT_APSC = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_APSC = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_APSC = 1
      * }
      */
     public static int LIBRAW_FORMAT_APSC() {
-        return (int)1L;
+        return LIBRAW_FORMAT_APSC;
     }
+    private static final int LIBRAW_FORMAT_FF = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_FF = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_FF = 2
      * }
      */
     public static int LIBRAW_FORMAT_FF() {
-        return (int)2L;
+        return LIBRAW_FORMAT_FF;
     }
+    private static final int LIBRAW_FORMAT_MF = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_MF = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_MF = 3
      * }
      */
     public static int LIBRAW_FORMAT_MF() {
-        return (int)3L;
+        return LIBRAW_FORMAT_MF;
     }
+    private static final int LIBRAW_FORMAT_APSH = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_APSH = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_APSH = 4
      * }
      */
     public static int LIBRAW_FORMAT_APSH() {
-        return (int)4L;
+        return LIBRAW_FORMAT_APSH;
     }
+    private static final int LIBRAW_FORMAT_1INCH = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_1INCH = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_1INCH = 5
      * }
      */
     public static int LIBRAW_FORMAT_1INCH() {
-        return (int)5L;
+        return LIBRAW_FORMAT_1INCH;
     }
+    private static final int LIBRAW_FORMAT_1div2p3INCH = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_1div2p3INCH = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_1div2p3INCH = 6
      * }
      */
     public static int LIBRAW_FORMAT_1div2p3INCH() {
-        return (int)6L;
+        return LIBRAW_FORMAT_1div2p3INCH;
     }
+    private static final int LIBRAW_FORMAT_1div1p7INCH = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_1div1p7INCH = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_1div1p7INCH = 7
      * }
      */
     public static int LIBRAW_FORMAT_1div1p7INCH() {
-        return (int)7L;
+        return LIBRAW_FORMAT_1div1p7INCH;
     }
+    private static final int LIBRAW_FORMAT_FT = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_FT = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_FT = 8
      * }
      */
     public static int LIBRAW_FORMAT_FT() {
-        return (int)8L;
+        return LIBRAW_FORMAT_FT;
     }
+    private static final int LIBRAW_FORMAT_CROP645 = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_CROP645 = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_CROP645 = 9
      * }
      */
     public static int LIBRAW_FORMAT_CROP645() {
-        return (int)9L;
+        return LIBRAW_FORMAT_CROP645;
     }
+    private static final int LIBRAW_FORMAT_LeicaS = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_LeicaS = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_LeicaS = 10
      * }
      */
     public static int LIBRAW_FORMAT_LeicaS() {
-        return (int)10L;
+        return LIBRAW_FORMAT_LeicaS;
     }
+    private static final int LIBRAW_FORMAT_645 = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_645 = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_645 = 11
      * }
      */
     public static int LIBRAW_FORMAT_645() {
-        return (int)11L;
+        return LIBRAW_FORMAT_645;
     }
+    private static final int LIBRAW_FORMAT_66 = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_66 = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_66 = 12
      * }
      */
     public static int LIBRAW_FORMAT_66() {
-        return (int)12L;
+        return LIBRAW_FORMAT_66;
     }
+    private static final int LIBRAW_FORMAT_69 = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_69 = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_69 = 13
      * }
      */
     public static int LIBRAW_FORMAT_69() {
-        return (int)13L;
+        return LIBRAW_FORMAT_69;
     }
+    private static final int LIBRAW_FORMAT_LF = (int)14L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_LF = 14;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_LF = 14
      * }
      */
     public static int LIBRAW_FORMAT_LF() {
-        return (int)14L;
+        return LIBRAW_FORMAT_LF;
     }
+    private static final int LIBRAW_FORMAT_Leica_DMR = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_Leica_DMR = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_Leica_DMR = 15
      * }
      */
     public static int LIBRAW_FORMAT_Leica_DMR() {
-        return (int)15L;
+        return LIBRAW_FORMAT_Leica_DMR;
     }
+    private static final int LIBRAW_FORMAT_67 = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_67 = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_67 = 16
      * }
      */
     public static int LIBRAW_FORMAT_67() {
-        return (int)16L;
+        return LIBRAW_FORMAT_67;
     }
+    private static final int LIBRAW_FORMAT_SigmaAPSC = (int)17L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_SigmaAPSC = 17;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_SigmaAPSC = 17
      * }
      */
     public static int LIBRAW_FORMAT_SigmaAPSC() {
-        return (int)17L;
+        return LIBRAW_FORMAT_SigmaAPSC;
     }
+    private static final int LIBRAW_FORMAT_SigmaMerrill = (int)18L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_SigmaMerrill = 18;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_SigmaMerrill = 18
      * }
      */
     public static int LIBRAW_FORMAT_SigmaMerrill() {
-        return (int)18L;
+        return LIBRAW_FORMAT_SigmaMerrill;
     }
+    private static final int LIBRAW_FORMAT_SigmaAPSH = (int)19L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_SigmaAPSH = 19;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_SigmaAPSH = 19
      * }
      */
     public static int LIBRAW_FORMAT_SigmaAPSH() {
-        return (int)19L;
+        return LIBRAW_FORMAT_SigmaAPSH;
     }
+    private static final int LIBRAW_FORMAT_3648 = (int)20L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_3648 = 20;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_3648 = 20
      * }
      */
     public static int LIBRAW_FORMAT_3648() {
-        return (int)20L;
+        return LIBRAW_FORMAT_3648;
     }
+    private static final int LIBRAW_FORMAT_68 = (int)21L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_68 = 21;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_68 = 21
      * }
      */
     public static int LIBRAW_FORMAT_68() {
-        return (int)21L;
+        return LIBRAW_FORMAT_68;
     }
+    private static final int LIBRAW_FORMAT_TheLastOne = (int)22L;
     /**
-     * {@snippet :
-     * enum LibRaw_camera_formats.LIBRAW_FORMAT_TheLastOne = 22;
+     * {@snippet lang=c :
+     * enum LibRaw_camera_formats.LIBRAW_FORMAT_TheLastOne = 22
      * }
      */
     public static int LIBRAW_FORMAT_TheLastOne() {
-        return (int)22L;
+        return LIBRAW_FORMAT_TheLastOne;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_UNKNOWN = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_UNKNOWN = 0;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_UNKNOWN = 0
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_UNKNOWN() {
-        return (int)0L;
+        return LIBRAW_IMAGE_ASPECT_UNKNOWN;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_OTHER = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_OTHER = 1;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_OTHER = 1
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_OTHER() {
-        return (int)1L;
+        return LIBRAW_IMAGE_ASPECT_OTHER;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_MINIMAL_REAL_ASPECT_VALUE = (int)99L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_MINIMAL_REAL_ASPECT_VALUE = 99;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_MINIMAL_REAL_ASPECT_VALUE = 99
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_MINIMAL_REAL_ASPECT_VALUE() {
-        return (int)99L;
+        return LIBRAW_IMAGE_ASPECT_MINIMAL_REAL_ASPECT_VALUE;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_MAXIMAL_REAL_ASPECT_VALUE = (int)10000L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_MAXIMAL_REAL_ASPECT_VALUE = 10000;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_MAXIMAL_REAL_ASPECT_VALUE = 10000
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_MAXIMAL_REAL_ASPECT_VALUE() {
-        return (int)10000L;
+        return LIBRAW_IMAGE_ASPECT_MAXIMAL_REAL_ASPECT_VALUE;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_3to2 = (int)1500L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_3to2 = 1500;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_3to2 = 1500
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_3to2() {
-        return (int)1500L;
+        return LIBRAW_IMAGE_ASPECT_3to2;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_1to1 = (int)1000L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_1to1 = 1000;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_1to1 = 1000
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_1to1() {
-        return (int)1000L;
+        return LIBRAW_IMAGE_ASPECT_1to1;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_4to3 = (int)1333L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_4to3 = 1333;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_4to3 = 1333
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_4to3() {
-        return (int)1333L;
+        return LIBRAW_IMAGE_ASPECT_4to3;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_16to9 = (int)1777L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_16to9 = 1777;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_16to9 = 1777
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_16to9() {
-        return (int)1777L;
+        return LIBRAW_IMAGE_ASPECT_16to9;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_5to4 = (int)1250L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_5to4 = 1250;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_5to4 = 1250
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_5to4() {
-        return (int)1250L;
+        return LIBRAW_IMAGE_ASPECT_5to4;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_7to6 = (int)1166L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_7to6 = 1166;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_7to6 = 1166
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_7to6() {
-        return (int)1166L;
+        return LIBRAW_IMAGE_ASPECT_7to6;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_6to5 = (int)1200L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_6to5 = 1200;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_6to5 = 1200
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_6to5() {
-        return (int)1200L;
+        return LIBRAW_IMAGE_ASPECT_6to5;
     }
+    private static final int LIBRAW_IMAGE_ASPECT_7to5 = (int)1400L;
     /**
-     * {@snippet :
-     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_7to5 = 1400;
+     * {@snippet lang=c :
+     * enum LibRawImageAspects.LIBRAW_IMAGE_ASPECT_7to5 = 1400
      * }
      */
     public static int LIBRAW_IMAGE_ASPECT_7to5() {
-        return (int)1400L;
+        return LIBRAW_IMAGE_ASPECT_7to5;
     }
+    private static final int LIBRAW_FT_UNDEFINED = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_lens_focal_types.LIBRAW_FT_UNDEFINED = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_lens_focal_types.LIBRAW_FT_UNDEFINED = 0
      * }
      */
     public static int LIBRAW_FT_UNDEFINED() {
-        return (int)0L;
+        return LIBRAW_FT_UNDEFINED;
     }
+    private static final int LIBRAW_FT_PRIME_LENS = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_lens_focal_types.LIBRAW_FT_PRIME_LENS = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_lens_focal_types.LIBRAW_FT_PRIME_LENS = 1
      * }
      */
     public static int LIBRAW_FT_PRIME_LENS() {
-        return (int)1L;
+        return LIBRAW_FT_PRIME_LENS;
     }
+    private static final int LIBRAW_FT_ZOOM_LENS = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_lens_focal_types.LIBRAW_FT_ZOOM_LENS = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_lens_focal_types.LIBRAW_FT_ZOOM_LENS = 2
      * }
      */
     public static int LIBRAW_FT_ZOOM_LENS() {
-        return (int)2L;
+        return LIBRAW_FT_ZOOM_LENS;
     }
+    private static final int LIBRAW_FT_ZOOM_LENS_CONSTANT_APERTURE = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_lens_focal_types.LIBRAW_FT_ZOOM_LENS_CONSTANT_APERTURE = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_lens_focal_types.LIBRAW_FT_ZOOM_LENS_CONSTANT_APERTURE = 3
      * }
      */
     public static int LIBRAW_FT_ZOOM_LENS_CONSTANT_APERTURE() {
-        return (int)3L;
+        return LIBRAW_FT_ZOOM_LENS_CONSTANT_APERTURE;
     }
+    private static final int LIBRAW_FT_ZOOM_LENS_VARIABLE_APERTURE = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_lens_focal_types.LIBRAW_FT_ZOOM_LENS_VARIABLE_APERTURE = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_lens_focal_types.LIBRAW_FT_ZOOM_LENS_VARIABLE_APERTURE = 4
      * }
      */
     public static int LIBRAW_FT_ZOOM_LENS_VARIABLE_APERTURE() {
-        return (int)4L;
+        return LIBRAW_FT_ZOOM_LENS_VARIABLE_APERTURE;
     }
+    private static final int LIBRAW_Canon_RecordMode_UNDEFINED = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_UNDEFINED = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_UNDEFINED = 0
      * }
      */
     public static int LIBRAW_Canon_RecordMode_UNDEFINED() {
-        return (int)0L;
+        return LIBRAW_Canon_RecordMode_UNDEFINED;
     }
+    private static final int LIBRAW_Canon_RecordMode_JPEG = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_JPEG = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_JPEG = 1
      * }
      */
     public static int LIBRAW_Canon_RecordMode_JPEG() {
-        return (int)1L;
+        return LIBRAW_Canon_RecordMode_JPEG;
     }
+    private static final int LIBRAW_Canon_RecordMode_CRW_THM = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CRW_THM = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CRW_THM = 2
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CRW_THM() {
-        return (int)2L;
+        return LIBRAW_Canon_RecordMode_CRW_THM;
     }
+    private static final int LIBRAW_Canon_RecordMode_AVI_THM = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_AVI_THM = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_AVI_THM = 3
      * }
      */
     public static int LIBRAW_Canon_RecordMode_AVI_THM() {
-        return (int)3L;
+        return LIBRAW_Canon_RecordMode_AVI_THM;
     }
+    private static final int LIBRAW_Canon_RecordMode_TIF = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_TIF = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_TIF = 4
      * }
      */
     public static int LIBRAW_Canon_RecordMode_TIF() {
-        return (int)4L;
+        return LIBRAW_Canon_RecordMode_TIF;
     }
+    private static final int LIBRAW_Canon_RecordMode_TIF_JPEG = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_TIF_JPEG = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_TIF_JPEG = 5
      * }
      */
     public static int LIBRAW_Canon_RecordMode_TIF_JPEG() {
-        return (int)5L;
+        return LIBRAW_Canon_RecordMode_TIF_JPEG;
     }
+    private static final int LIBRAW_Canon_RecordMode_CR2 = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR2 = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR2 = 6
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CR2() {
-        return (int)6L;
+        return LIBRAW_Canon_RecordMode_CR2;
     }
+    private static final int LIBRAW_Canon_RecordMode_CR2_JPEG = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR2_JPEG = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR2_JPEG = 7
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CR2_JPEG() {
-        return (int)7L;
+        return LIBRAW_Canon_RecordMode_CR2_JPEG;
     }
+    private static final int LIBRAW_Canon_RecordMode_UNKNOWN = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_UNKNOWN = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_UNKNOWN = 8
      * }
      */
     public static int LIBRAW_Canon_RecordMode_UNKNOWN() {
-        return (int)8L;
+        return LIBRAW_Canon_RecordMode_UNKNOWN;
     }
+    private static final int LIBRAW_Canon_RecordMode_MOV = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_MOV = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_MOV = 9
      * }
      */
     public static int LIBRAW_Canon_RecordMode_MOV() {
-        return (int)9L;
+        return LIBRAW_Canon_RecordMode_MOV;
     }
+    private static final int LIBRAW_Canon_RecordMode_MP4 = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_MP4 = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_MP4 = 10
      * }
      */
     public static int LIBRAW_Canon_RecordMode_MP4() {
-        return (int)10L;
+        return LIBRAW_Canon_RecordMode_MP4;
     }
+    private static final int LIBRAW_Canon_RecordMode_CRM = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CRM = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CRM = 11
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CRM() {
-        return (int)11L;
+        return LIBRAW_Canon_RecordMode_CRM;
     }
+    private static final int LIBRAW_Canon_RecordMode_CR3 = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR3 = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR3 = 12
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CR3() {
-        return (int)12L;
+        return LIBRAW_Canon_RecordMode_CR3;
     }
+    private static final int LIBRAW_Canon_RecordMode_CR3_JPEG = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR3_JPEG = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR3_JPEG = 13
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CR3_JPEG() {
-        return (int)13L;
+        return LIBRAW_Canon_RecordMode_CR3_JPEG;
     }
+    private static final int LIBRAW_Canon_RecordMode_HEIF = (int)14L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_HEIF = 14;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_HEIF = 14
      * }
      */
     public static int LIBRAW_Canon_RecordMode_HEIF() {
-        return (int)14L;
+        return LIBRAW_Canon_RecordMode_HEIF;
     }
+    private static final int LIBRAW_Canon_RecordMode_CR3_HEIF = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR3_HEIF = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_CR3_HEIF = 15
      * }
      */
     public static int LIBRAW_Canon_RecordMode_CR3_HEIF() {
-        return (int)15L;
+        return LIBRAW_Canon_RecordMode_CR3_HEIF;
     }
+    private static final int LIBRAW_Canon_RecordMode_TheLastOne = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_TheLastOne = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_Canon_RecordModes.LIBRAW_Canon_RecordMode_TheLastOne = 16
      * }
      */
     public static int LIBRAW_Canon_RecordMode_TheLastOne() {
-        return (int)16L;
+        return LIBRAW_Canon_RecordMode_TheLastOne;
     }
+    private static final int LIBRAW_MINOLTA_UNPACKED = (int)82L;
     /**
-     * {@snippet :
-     * enum LibRaw_minolta_storagemethods.LIBRAW_MINOLTA_UNPACKED = 82;
+     * {@snippet lang=c :
+     * enum LibRaw_minolta_storagemethods.LIBRAW_MINOLTA_UNPACKED = 82
      * }
      */
     public static int LIBRAW_MINOLTA_UNPACKED() {
-        return (int)82L;
+        return LIBRAW_MINOLTA_UNPACKED;
     }
+    private static final int LIBRAW_MINOLTA_PACKED = (int)89L;
     /**
-     * {@snippet :
-     * enum LibRaw_minolta_storagemethods.LIBRAW_MINOLTA_PACKED = 89;
+     * {@snippet lang=c :
+     * enum LibRaw_minolta_storagemethods.LIBRAW_MINOLTA_PACKED = 89
      * }
      */
     public static int LIBRAW_MINOLTA_PACKED() {
-        return (int)89L;
+        return LIBRAW_MINOLTA_PACKED;
     }
+    private static final int LIBRAW_MINOLTA_RGGB = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_minolta_bayerpatterns.LIBRAW_MINOLTA_RGGB = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_minolta_bayerpatterns.LIBRAW_MINOLTA_RGGB = 1
      * }
      */
     public static int LIBRAW_MINOLTA_RGGB() {
-        return (int)1L;
+        return LIBRAW_MINOLTA_RGGB;
     }
+    private static final int LIBRAW_MINOLTA_G2BRG1 = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_minolta_bayerpatterns.LIBRAW_MINOLTA_G2BRG1 = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_minolta_bayerpatterns.LIBRAW_MINOLTA_G2BRG1 = 4
      * }
      */
     public static int LIBRAW_MINOLTA_G2BRG1() {
-        return (int)4L;
+        return LIBRAW_MINOLTA_G2BRG1;
     }
+    private static final int LIBRAW_SONY_DSC = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_DSC = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_DSC = 1
      * }
      */
     public static int LIBRAW_SONY_DSC() {
-        return (int)1L;
+        return LIBRAW_SONY_DSC;
     }
+    private static final int LIBRAW_SONY_DSLR = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_DSLR = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_DSLR = 2
      * }
      */
     public static int LIBRAW_SONY_DSLR() {
-        return (int)2L;
+        return LIBRAW_SONY_DSLR;
     }
+    private static final int LIBRAW_SONY_NEX = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_NEX = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_NEX = 3
      * }
      */
     public static int LIBRAW_SONY_NEX() {
-        return (int)3L;
+        return LIBRAW_SONY_NEX;
     }
+    private static final int LIBRAW_SONY_SLT = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_SLT = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_SLT = 4
      * }
      */
     public static int LIBRAW_SONY_SLT() {
-        return (int)4L;
+        return LIBRAW_SONY_SLT;
     }
+    private static final int LIBRAW_SONY_ILCE = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_ILCE = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_ILCE = 5
      * }
      */
     public static int LIBRAW_SONY_ILCE() {
-        return (int)5L;
+        return LIBRAW_SONY_ILCE;
     }
+    private static final int LIBRAW_SONY_ILCA = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_ILCA = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_ILCA = 6
      * }
      */
     public static int LIBRAW_SONY_ILCA() {
-        return (int)6L;
+        return LIBRAW_SONY_ILCA;
     }
+    private static final int LIBRAW_SONY_CameraType_UNKNOWN = (int)65535L;
     /**
-     * {@snippet :
-     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_CameraType_UNKNOWN = 65535;
+     * {@snippet lang=c :
+     * enum LibRaw_sony_cameratypes.LIBRAW_SONY_CameraType_UNKNOWN = 65535
      * }
      */
     public static int LIBRAW_SONY_CameraType_UNKNOWN() {
-        return (int)65535L;
+        return LIBRAW_SONY_CameraType_UNKNOWN;
     }
+    private static final int LIBRAW_SONY_Tag2010None = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010None = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010None = 0
      * }
      */
     public static int LIBRAW_SONY_Tag2010None() {
-        return (int)0L;
+        return LIBRAW_SONY_Tag2010None;
     }
+    private static final int LIBRAW_SONY_Tag2010a = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010a = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010a = 1
      * }
      */
     public static int LIBRAW_SONY_Tag2010a() {
-        return (int)1L;
+        return LIBRAW_SONY_Tag2010a;
     }
+    private static final int LIBRAW_SONY_Tag2010b = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010b = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010b = 2
      * }
      */
     public static int LIBRAW_SONY_Tag2010b() {
-        return (int)2L;
+        return LIBRAW_SONY_Tag2010b;
     }
+    private static final int LIBRAW_SONY_Tag2010c = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010c = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010c = 3
      * }
      */
     public static int LIBRAW_SONY_Tag2010c() {
-        return (int)3L;
+        return LIBRAW_SONY_Tag2010c;
     }
+    private static final int LIBRAW_SONY_Tag2010d = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010d = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010d = 4
      * }
      */
     public static int LIBRAW_SONY_Tag2010d() {
-        return (int)4L;
+        return LIBRAW_SONY_Tag2010d;
     }
+    private static final int LIBRAW_SONY_Tag2010e = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010e = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010e = 5
      * }
      */
     public static int LIBRAW_SONY_Tag2010e() {
-        return (int)5L;
+        return LIBRAW_SONY_Tag2010e;
     }
+    private static final int LIBRAW_SONY_Tag2010f = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010f = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010f = 6
      * }
      */
     public static int LIBRAW_SONY_Tag2010f() {
-        return (int)6L;
+        return LIBRAW_SONY_Tag2010f;
     }
+    private static final int LIBRAW_SONY_Tag2010g = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010g = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010g = 7
      * }
      */
     public static int LIBRAW_SONY_Tag2010g() {
-        return (int)7L;
+        return LIBRAW_SONY_Tag2010g;
     }
+    private static final int LIBRAW_SONY_Tag2010h = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010h = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010h = 8
      * }
      */
     public static int LIBRAW_SONY_Tag2010h() {
-        return (int)8L;
+        return LIBRAW_SONY_Tag2010h;
     }
+    private static final int LIBRAW_SONY_Tag2010i = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010i = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x2010_Type.LIBRAW_SONY_Tag2010i = 9
      * }
      */
     public static int LIBRAW_SONY_Tag2010i() {
-        return (int)9L;
+        return LIBRAW_SONY_Tag2010i;
     }
+    private static final int LIBRAW_SONY_Tag9050None = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050None = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050None = 0
      * }
      */
     public static int LIBRAW_SONY_Tag9050None() {
-        return (int)0L;
+        return LIBRAW_SONY_Tag9050None;
     }
+    private static final int LIBRAW_SONY_Tag9050a = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050a = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050a = 1
      * }
      */
     public static int LIBRAW_SONY_Tag9050a() {
-        return (int)1L;
+        return LIBRAW_SONY_Tag9050a;
     }
+    private static final int LIBRAW_SONY_Tag9050b = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050b = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050b = 2
      * }
      */
     public static int LIBRAW_SONY_Tag9050b() {
-        return (int)2L;
+        return LIBRAW_SONY_Tag9050b;
     }
+    private static final int LIBRAW_SONY_Tag9050c = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050c = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_Sony_0x9050_Type.LIBRAW_SONY_Tag9050c = 3
      * }
      */
     public static int LIBRAW_SONY_Tag9050c() {
-        return (int)3L;
+        return LIBRAW_SONY_Tag9050c;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_MF = (int)0L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_MF = 0;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_MF = 0
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_MF() {
-        return (int)0L;
+        return LIBRAW_SONY_FOCUSMODE_MF;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_AF_S = (int)2L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_S = 2;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_S = 2
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_AF_S() {
-        return (int)2L;
+        return LIBRAW_SONY_FOCUSMODE_AF_S;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_AF_C = (int)3L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_C = 3;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_C = 3
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_AF_C() {
-        return (int)3L;
+        return LIBRAW_SONY_FOCUSMODE_AF_C;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_AF_A = (int)4L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_A = 4;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_A = 4
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_AF_A() {
-        return (int)4L;
+        return LIBRAW_SONY_FOCUSMODE_AF_A;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_DMF = (int)6L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_DMF = 6;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_DMF = 6
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_DMF() {
-        return (int)6L;
+        return LIBRAW_SONY_FOCUSMODE_DMF;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_AF_D = (int)7L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_D = 7;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF_D = 7
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_AF_D() {
-        return (int)7L;
+        return LIBRAW_SONY_FOCUSMODE_AF_D;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_AF = (int)101L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF = 101;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_AF = 101
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_AF() {
-        return (int)101L;
+        return LIBRAW_SONY_FOCUSMODE_AF;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_PERMANENT_AF = (int)104L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_PERMANENT_AF = 104;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_PERMANENT_AF = 104
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_PERMANENT_AF() {
-        return (int)104L;
+        return LIBRAW_SONY_FOCUSMODE_PERMANENT_AF;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_SEMI_MF = (int)105L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_SEMI_MF = 105;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_SEMI_MF = 105
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_SEMI_MF() {
-        return (int)105L;
+        return LIBRAW_SONY_FOCUSMODE_SEMI_MF;
     }
+    private static final int LIBRAW_SONY_FOCUSMODE_UNKNOWN = (int)-1L;
     /**
-     * {@snippet :
-     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_UNKNOWN = -1;
+     * {@snippet lang=c :
+     * enum LIBRAW_SONY_FOCUSMODEmodes.LIBRAW_SONY_FOCUSMODE_UNKNOWN = -1
      * }
      */
     public static int LIBRAW_SONY_FOCUSMODE_UNKNOWN() {
-        return (int)-1L;
+        return LIBRAW_SONY_FOCUSMODE_UNKNOWN;
     }
+    private static final int LIBRAW_Kodak_UnknownSensor = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_UnknownSensor = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_UnknownSensor = 0
      * }
      */
     public static int LIBRAW_Kodak_UnknownSensor() {
-        return (int)0L;
+        return LIBRAW_Kodak_UnknownSensor;
     }
+    private static final int LIBRAW_Kodak_M1 = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M1 = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M1 = 1
      * }
      */
     public static int LIBRAW_Kodak_M1() {
-        return (int)1L;
+        return LIBRAW_Kodak_M1;
     }
+    private static final int LIBRAW_Kodak_M15 = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M15 = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M15 = 2
      * }
      */
     public static int LIBRAW_Kodak_M15() {
-        return (int)2L;
+        return LIBRAW_Kodak_M15;
     }
+    private static final int LIBRAW_Kodak_M16 = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M16 = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M16 = 3
      * }
      */
     public static int LIBRAW_Kodak_M16() {
-        return (int)3L;
+        return LIBRAW_Kodak_M16;
     }
+    private static final int LIBRAW_Kodak_M17 = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M17 = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M17 = 4
      * }
      */
     public static int LIBRAW_Kodak_M17() {
-        return (int)4L;
+        return LIBRAW_Kodak_M17;
     }
+    private static final int LIBRAW_Kodak_M2 = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M2 = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M2 = 5
      * }
      */
     public static int LIBRAW_Kodak_M2() {
-        return (int)5L;
+        return LIBRAW_Kodak_M2;
     }
+    private static final int LIBRAW_Kodak_M23 = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M23 = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M23 = 6
      * }
      */
     public static int LIBRAW_Kodak_M23() {
-        return (int)6L;
+        return LIBRAW_Kodak_M23;
     }
+    private static final int LIBRAW_Kodak_M24 = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M24 = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M24 = 7
      * }
      */
     public static int LIBRAW_Kodak_M24() {
-        return (int)7L;
+        return LIBRAW_Kodak_M24;
     }
+    private static final int LIBRAW_Kodak_M3 = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M3 = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M3 = 8
      * }
      */
     public static int LIBRAW_Kodak_M3() {
-        return (int)8L;
+        return LIBRAW_Kodak_M3;
     }
+    private static final int LIBRAW_Kodak_M5 = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M5 = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M5 = 9
      * }
      */
     public static int LIBRAW_Kodak_M5() {
-        return (int)9L;
+        return LIBRAW_Kodak_M5;
     }
+    private static final int LIBRAW_Kodak_M6 = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M6 = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M6 = 10
      * }
      */
     public static int LIBRAW_Kodak_M6() {
-        return (int)10L;
+        return LIBRAW_Kodak_M6;
     }
+    private static final int LIBRAW_Kodak_C14 = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_C14 = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_C14 = 11
      * }
      */
     public static int LIBRAW_Kodak_C14() {
-        return (int)11L;
+        return LIBRAW_Kodak_C14;
     }
+    private static final int LIBRAW_Kodak_X14 = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_X14 = 12;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_X14 = 12
      * }
      */
     public static int LIBRAW_Kodak_X14() {
-        return (int)12L;
+        return LIBRAW_Kodak_X14;
     }
+    private static final int LIBRAW_Kodak_M11 = (int)13L;
     /**
-     * {@snippet :
-     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M11 = 13;
+     * {@snippet lang=c :
+     * enum LibRaw_KodakSensors.LIBRAW_Kodak_M11 = 13
      * }
      */
     public static int LIBRAW_Kodak_M11() {
-        return (int)13L;
+        return LIBRAW_Kodak_M11;
     }
+    private static final int LIBRAW_HF_Unknown = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_Unknown = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_Unknown = 0
      * }
      */
     public static int LIBRAW_HF_Unknown() {
-        return (int)0L;
+        return LIBRAW_HF_Unknown;
     }
+    private static final int LIBRAW_HF_3FR = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_3FR = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_3FR = 1
      * }
      */
     public static int LIBRAW_HF_3FR() {
-        return (int)1L;
+        return LIBRAW_HF_3FR;
     }
+    private static final int LIBRAW_HF_FFF = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_FFF = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_FFF = 2
      * }
      */
     public static int LIBRAW_HF_FFF() {
-        return (int)2L;
+        return LIBRAW_HF_FFF;
     }
+    private static final int LIBRAW_HF_Imacon = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_Imacon = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_Imacon = 3
      * }
      */
     public static int LIBRAW_HF_Imacon() {
-        return (int)3L;
+        return LIBRAW_HF_Imacon;
     }
+    private static final int LIBRAW_HF_HasselbladDNG = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_HasselbladDNG = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_HasselbladDNG = 4
      * }
      */
     public static int LIBRAW_HF_HasselbladDNG() {
-        return (int)4L;
+        return LIBRAW_HF_HasselbladDNG;
     }
+    private static final int LIBRAW_HF_AdobeDNG = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_AdobeDNG = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_AdobeDNG = 5
      * }
      */
     public static int LIBRAW_HF_AdobeDNG() {
-        return (int)5L;
+        return LIBRAW_HF_AdobeDNG;
     }
+    private static final int LIBRAW_HF_AdobeDNG_fromPhocusDNG = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_AdobeDNG_fromPhocusDNG = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_HasselbladFormatCodes.LIBRAW_HF_AdobeDNG_fromPhocusDNG = 6
      * }
      */
     public static int LIBRAW_HF_AdobeDNG_fromPhocusDNG() {
-        return (int)6L;
+        return LIBRAW_HF_AdobeDNG_fromPhocusDNG;
     }
+    private static final int LIBRAW_RAWSPECIAL_SONYARW2_NONE = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_NONE = 0
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SONYARW2_NONE() {
-        return (int)0L;
+        return LIBRAW_RAWSPECIAL_SONYARW2_NONE;
     }
+    private static final int LIBRAW_RAWSPECIAL_SONYARW2_BASEONLY = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_BASEONLY = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_BASEONLY = 1
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SONYARW2_BASEONLY() {
-        return (int)1L;
+        return LIBRAW_RAWSPECIAL_SONYARW2_BASEONLY;
     }
+    private static final int LIBRAW_RAWSPECIAL_SONYARW2_DELTAONLY = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_DELTAONLY = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_DELTAONLY = 2
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SONYARW2_DELTAONLY() {
-        return (int)2L;
+        return LIBRAW_RAWSPECIAL_SONYARW2_DELTAONLY;
     }
+    private static final int LIBRAW_RAWSPECIAL_SONYARW2_DELTAZEROBASE = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_DELTAZEROBASE = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_DELTAZEROBASE = 4
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SONYARW2_DELTAZEROBASE() {
-        return (int)4L;
+        return LIBRAW_RAWSPECIAL_SONYARW2_DELTAZEROBASE;
     }
+    private static final int LIBRAW_RAWSPECIAL_SONYARW2_DELTATOVALUE = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_DELTATOVALUE = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_DELTATOVALUE = 8
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SONYARW2_DELTATOVALUE() {
-        return (int)8L;
+        return LIBRAW_RAWSPECIAL_SONYARW2_DELTATOVALUE;
     }
+    private static final int LIBRAW_RAWSPECIAL_SONYARW2_ALLFLAGS = (int)15L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_ALLFLAGS = 15;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SONYARW2_ALLFLAGS = 15
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SONYARW2_ALLFLAGS() {
-        return (int)15L;
+        return LIBRAW_RAWSPECIAL_SONYARW2_ALLFLAGS;
     }
+    private static final int LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATERG = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATERG = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATERG = 16
      * }
      */
     public static int LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATERG() {
-        return (int)16L;
+        return LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATERG;
     }
+    private static final int LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATEAF = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATEAF = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATEAF = 32
      * }
      */
     public static int LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATEAF() {
-        return (int)32L;
+        return LIBRAW_RAWSPECIAL_NODP2Q_INTERPOLATEAF;
     }
+    private static final int LIBRAW_RAWSPECIAL_SRAW_NO_RGB = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SRAW_NO_RGB = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SRAW_NO_RGB = 64
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SRAW_NO_RGB() {
-        return (int)64L;
+        return LIBRAW_RAWSPECIAL_SRAW_NO_RGB;
     }
+    private static final int LIBRAW_RAWSPECIAL_SRAW_NO_INTERPOLATE = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SRAW_NO_INTERPOLATE = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspecial_t.LIBRAW_RAWSPECIAL_SRAW_NO_INTERPOLATE = 128
      * }
      */
     public static int LIBRAW_RAWSPECIAL_SRAW_NO_INTERPOLATE() {
-        return (int)128L;
+        return LIBRAW_RAWSPECIAL_SRAW_NO_INTERPOLATE;
     }
+    private static final int LIBRAW_RAWSPEEDV1_USE = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_PENTAX_PS_ALLFRAMES = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_rawspeed_bits_t.LIBRAW_RAWSPEEDV1_USE = 1
+     * }
+     */
+    public static int LIBRAW_RAWSPEEDV1_USE() {
+        return LIBRAW_RAWSPEEDV1_USE;
+    }
+    private static final int LIBRAW_RAWSPEEDV1_FAILONUNKNOWN = (int)2L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_rawspeed_bits_t.LIBRAW_RAWSPEEDV1_FAILONUNKNOWN = 2
+     * }
+     */
+    public static int LIBRAW_RAWSPEEDV1_FAILONUNKNOWN() {
+        return LIBRAW_RAWSPEEDV1_FAILONUNKNOWN;
+    }
+    private static final int LIBRAW_RAWSPEEDV1_IGNOREERRORS = (int)4L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_rawspeed_bits_t.LIBRAW_RAWSPEEDV1_IGNOREERRORS = 4
+     * }
+     */
+    public static int LIBRAW_RAWSPEEDV1_IGNOREERRORS() {
+        return LIBRAW_RAWSPEEDV1_IGNOREERRORS;
+    }
+    private static final int LIBRAW_RAWSPEEDV3_USE = (int)256L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_rawspeed_bits_t.LIBRAW_RAWSPEEDV3_USE = 256
+     * }
+     */
+    public static int LIBRAW_RAWSPEEDV3_USE() {
+        return LIBRAW_RAWSPEEDV3_USE;
+    }
+    private static final int LIBRAW_RAWSPEEDV3_FAILONUNKNOWN = (int)512L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_rawspeed_bits_t.LIBRAW_RAWSPEEDV3_FAILONUNKNOWN = 512
+     * }
+     */
+    public static int LIBRAW_RAWSPEEDV3_FAILONUNKNOWN() {
+        return LIBRAW_RAWSPEEDV3_FAILONUNKNOWN;
+    }
+    private static final int LIBRAW_RAWSPEEDV3_IGNOREERRORS = (int)1024L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_rawspeed_bits_t.LIBRAW_RAWSPEEDV3_IGNOREERRORS = 1024
+     * }
+     */
+    public static int LIBRAW_RAWSPEEDV3_IGNOREERRORS() {
+        return LIBRAW_RAWSPEEDV3_IGNOREERRORS;
+    }
+    private static final int LIBRAW_RAWOPTIONS_PENTAX_PS_ALLFRAMES = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_PENTAX_PS_ALLFRAMES = 1
      * }
      */
     public static int LIBRAW_RAWOPTIONS_PENTAX_PS_ALLFRAMES() {
-        return (int)1L;
+        return LIBRAW_RAWOPTIONS_PENTAX_PS_ALLFRAMES;
     }
+    private static final int LIBRAW_RAWOPTIONS_CONVERTFLOAT_TO_INT = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CONVERTFLOAT_TO_INT = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CONVERTFLOAT_TO_INT = 2
      * }
      */
     public static int LIBRAW_RAWOPTIONS_CONVERTFLOAT_TO_INT() {
-        return (int)2L;
+        return LIBRAW_RAWOPTIONS_CONVERTFLOAT_TO_INT;
     }
+    private static final int LIBRAW_RAWOPTIONS_ARQ_SKIP_CHANNEL_SWAP = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_ARQ_SKIP_CHANNEL_SWAP = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_ARQ_SKIP_CHANNEL_SWAP = 4
      * }
      */
     public static int LIBRAW_RAWOPTIONS_ARQ_SKIP_CHANNEL_SWAP() {
-        return (int)4L;
+        return LIBRAW_RAWOPTIONS_ARQ_SKIP_CHANNEL_SWAP;
     }
+    private static final int LIBRAW_RAWOPTIONS_NO_ROTATE_FOR_KODAK_THUMBNAILS = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_NO_ROTATE_FOR_KODAK_THUMBNAILS = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_NO_ROTATE_FOR_KODAK_THUMBNAILS = 8
      * }
      */
     public static int LIBRAW_RAWOPTIONS_NO_ROTATE_FOR_KODAK_THUMBNAILS() {
-        return (int)8L;
+        return LIBRAW_RAWOPTIONS_NO_ROTATE_FOR_KODAK_THUMBNAILS;
     }
+    private static final int LIBRAW_RAWOPTIONS_USE_PPM16_THUMBS = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_USE_PPM16_THUMBS = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_USE_PPM16_THUMBS = 32
      * }
      */
     public static int LIBRAW_RAWOPTIONS_USE_PPM16_THUMBS() {
-        return (int)32L;
+        return LIBRAW_RAWOPTIONS_USE_PPM16_THUMBS;
     }
+    private static final int LIBRAW_RAWOPTIONS_DONT_CHECK_DNG_ILLUMINANT = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DONT_CHECK_DNG_ILLUMINANT = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DONT_CHECK_DNG_ILLUMINANT = 64
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DONT_CHECK_DNG_ILLUMINANT() {
-        return (int)64L;
+        return LIBRAW_RAWOPTIONS_DONT_CHECK_DNG_ILLUMINANT;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNGSDK_ZEROCOPY = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNGSDK_ZEROCOPY = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNGSDK_ZEROCOPY = 128
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNGSDK_ZEROCOPY() {
-        return (int)128L;
+        return LIBRAW_RAWOPTIONS_DNGSDK_ZEROCOPY;
     }
+    private static final int LIBRAW_RAWOPTIONS_ZEROFILTERS_FOR_MONOCHROMETIFFS = (int)256L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_ZEROFILTERS_FOR_MONOCHROMETIFFS = 256;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_ZEROFILTERS_FOR_MONOCHROMETIFFS = 256
      * }
      */
     public static int LIBRAW_RAWOPTIONS_ZEROFILTERS_FOR_MONOCHROMETIFFS() {
-        return (int)256L;
+        return LIBRAW_RAWOPTIONS_ZEROFILTERS_FOR_MONOCHROMETIFFS;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_ADD_ENHANCED = (int)512L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ADD_ENHANCED = 512;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ADD_ENHANCED = 512
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_ADD_ENHANCED() {
-        return (int)512L;
+        return LIBRAW_RAWOPTIONS_DNG_ADD_ENHANCED;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_ADD_PREVIEWS = (int)1024L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ADD_PREVIEWS = 1024;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ADD_PREVIEWS = 1024
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_ADD_PREVIEWS() {
-        return (int)1024L;
+        return LIBRAW_RAWOPTIONS_DNG_ADD_PREVIEWS;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE = (int)2048L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE = 2048;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE = 2048
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE() {
-        return (int)2048L;
+        return LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_STAGE2 = (int)4096L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_STAGE2 = 4096;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_STAGE2 = 4096
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_STAGE2() {
-        return (int)4096L;
+        return LIBRAW_RAWOPTIONS_DNG_STAGE2;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_STAGE3 = (int)8192L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_STAGE3 = 8192;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_STAGE3 = 8192
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_STAGE3() {
-        return (int)8192L;
+        return LIBRAW_RAWOPTIONS_DNG_STAGE3;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE = (int)16384L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE = 16384;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE = 16384
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE() {
-        return (int)16384L;
+        return LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_DISABLEWBADJUST = (int)32768L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_DISABLEWBADJUST = 32768;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_DISABLEWBADJUST = 32768
      * }
      */
     public static int LIBRAW_RAWOPTIONS_DNG_DISABLEWBADJUST() {
-        return (int)32768L;
+        return LIBRAW_RAWOPTIONS_DNG_DISABLEWBADJUST;
     }
+    private static final int LIBRAW_RAWOPTIONS_PROVIDE_NONSTANDARD_WB = (int)65536L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_PROVIDE_NONSTANDARD_WB = 65536;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_PROVIDE_NONSTANDARD_WB = 65536
      * }
      */
     public static int LIBRAW_RAWOPTIONS_PROVIDE_NONSTANDARD_WB() {
-        return (int)65536L;
+        return LIBRAW_RAWOPTIONS_PROVIDE_NONSTANDARD_WB;
     }
+    private static final int LIBRAW_RAWOPTIONS_CAMERAWB_FALLBACK_TO_DAYLIGHT = (int)131072L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CAMERAWB_FALLBACK_TO_DAYLIGHT = 131072;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CAMERAWB_FALLBACK_TO_DAYLIGHT = 131072
      * }
      */
     public static int LIBRAW_RAWOPTIONS_CAMERAWB_FALLBACK_TO_DAYLIGHT() {
-        return (int)131072L;
+        return LIBRAW_RAWOPTIONS_CAMERAWB_FALLBACK_TO_DAYLIGHT;
     }
+    private static final int LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_KNOWN_VENDORS = (int)262144L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_KNOWN_VENDORS = 262144;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_KNOWN_VENDORS = 262144
      * }
      */
     public static int LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_KNOWN_VENDORS() {
-        return (int)262144L;
+        return LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_KNOWN_VENDORS;
     }
+    private static final int LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_ALL_VENDORS = (int)524288L;
     /**
-     * {@snippet :
-     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_ALL_VENDORS = 524288;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_ALL_VENDORS = 524288
      * }
      */
     public static int LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_ALL_VENDORS() {
-        return (int)524288L;
+        return LIBRAW_RAWOPTIONS_CHECK_THUMBNAILS_ALL_VENDORS;
     }
+    private static final int LIBRAW_RAWOPTIONS_DNG_STAGE2_IFPRESENT = (int)1048576L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_HASCURVE = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_STAGE2_IFPRESENT = 1048576
+     * }
+     */
+    public static int LIBRAW_RAWOPTIONS_DNG_STAGE2_IFPRESENT() {
+        return LIBRAW_RAWOPTIONS_DNG_STAGE2_IFPRESENT;
+    }
+    private static final int LIBRAW_RAWOPTIONS_DNG_STAGE3_IFPRESENT = (int)2097152L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_STAGE3_IFPRESENT = 2097152
+     * }
+     */
+    public static int LIBRAW_RAWOPTIONS_DNG_STAGE3_IFPRESENT() {
+        return LIBRAW_RAWOPTIONS_DNG_STAGE3_IFPRESENT;
+    }
+    private static final int LIBRAW_RAWOPTIONS_DNG_ADD_MASKS = (int)4194304L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_DNG_ADD_MASKS = 4194304
+     * }
+     */
+    public static int LIBRAW_RAWOPTIONS_DNG_ADD_MASKS() {
+        return LIBRAW_RAWOPTIONS_DNG_ADD_MASKS;
+    }
+    private static final int LIBRAW_RAWOPTIONS_CANON_IGNORE_MAKERNOTES_ROTATION = (int)8388608L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_processing_options.LIBRAW_RAWOPTIONS_CANON_IGNORE_MAKERNOTES_ROTATION = 8388608
+     * }
+     */
+    public static int LIBRAW_RAWOPTIONS_CANON_IGNORE_MAKERNOTES_ROTATION() {
+        return LIBRAW_RAWOPTIONS_CANON_IGNORE_MAKERNOTES_ROTATION;
+    }
+    private static final int LIBRAW_DECODER_HASCURVE = (int)16L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_HASCURVE = 16
      * }
      */
     public static int LIBRAW_DECODER_HASCURVE() {
-        return (int)16L;
+        return LIBRAW_DECODER_HASCURVE;
     }
+    private static final int LIBRAW_DECODER_SONYARW2 = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_SONYARW2 = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_SONYARW2 = 32
      * }
      */
     public static int LIBRAW_DECODER_SONYARW2() {
-        return (int)32L;
+        return LIBRAW_DECODER_SONYARW2;
     }
+    private static final int LIBRAW_DECODER_TRYRAWSPEED = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_TRYRAWSPEED = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_TRYRAWSPEED = 64
      * }
      */
     public static int LIBRAW_DECODER_TRYRAWSPEED() {
-        return (int)64L;
+        return LIBRAW_DECODER_TRYRAWSPEED;
     }
+    private static final int LIBRAW_DECODER_OWNALLOC = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_OWNALLOC = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_OWNALLOC = 128
      * }
      */
     public static int LIBRAW_DECODER_OWNALLOC() {
-        return (int)128L;
+        return LIBRAW_DECODER_OWNALLOC;
     }
+    private static final int LIBRAW_DECODER_FIXEDMAXC = (int)256L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_FIXEDMAXC = 256;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_FIXEDMAXC = 256
      * }
      */
     public static int LIBRAW_DECODER_FIXEDMAXC() {
-        return (int)256L;
+        return LIBRAW_DECODER_FIXEDMAXC;
     }
+    private static final int LIBRAW_DECODER_ADOBECOPYPIXEL = (int)512L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_ADOBECOPYPIXEL = 512;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_ADOBECOPYPIXEL = 512
      * }
      */
     public static int LIBRAW_DECODER_ADOBECOPYPIXEL() {
-        return (int)512L;
+        return LIBRAW_DECODER_ADOBECOPYPIXEL;
     }
+    private static final int LIBRAW_DECODER_LEGACY_WITH_MARGINS = (int)1024L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_LEGACY_WITH_MARGINS = 1024;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_LEGACY_WITH_MARGINS = 1024
      * }
      */
     public static int LIBRAW_DECODER_LEGACY_WITH_MARGINS() {
-        return (int)1024L;
+        return LIBRAW_DECODER_LEGACY_WITH_MARGINS;
     }
+    private static final int LIBRAW_DECODER_3CHANNEL = (int)2048L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_3CHANNEL = 2048;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_3CHANNEL = 2048
      * }
      */
     public static int LIBRAW_DECODER_3CHANNEL() {
-        return (int)2048L;
+        return LIBRAW_DECODER_3CHANNEL;
     }
+    private static final int LIBRAW_DECODER_SINAR4SHOT = (int)2048L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_SINAR4SHOT = 2048;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_SINAR4SHOT = 2048
      * }
      */
     public static int LIBRAW_DECODER_SINAR4SHOT() {
-        return (int)2048L;
+        return LIBRAW_DECODER_SINAR4SHOT;
     }
+    private static final int LIBRAW_DECODER_FLATDATA = (int)4096L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_FLATDATA = 4096;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_FLATDATA = 4096
      * }
      */
     public static int LIBRAW_DECODER_FLATDATA() {
-        return (int)4096L;
+        return LIBRAW_DECODER_FLATDATA;
     }
+    private static final int LIBRAW_DECODER_FLAT_BG2_SWAPPED = (int)8192L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_FLAT_BG2_SWAPPED = 8192;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_FLAT_BG2_SWAPPED = 8192
      * }
      */
     public static int LIBRAW_DECODER_FLAT_BG2_SWAPPED() {
-        return (int)8192L;
+        return LIBRAW_DECODER_FLAT_BG2_SWAPPED;
     }
+    private static final int LIBRAW_DECODER_UNSUPPORTED_FORMAT = (int)16384L;
     /**
-     * {@snippet :
-     * enum LibRaw_decoder_flags.LIBRAW_DECODER_NOTSET = 32768;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_UNSUPPORTED_FORMAT = 16384
+     * }
+     */
+    public static int LIBRAW_DECODER_UNSUPPORTED_FORMAT() {
+        return LIBRAW_DECODER_UNSUPPORTED_FORMAT;
+    }
+    private static final int LIBRAW_DECODER_NOTSET = (int)32768L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_NOTSET = 32768
      * }
      */
     public static int LIBRAW_DECODER_NOTSET() {
-        return (int)32768L;
+        return LIBRAW_DECODER_NOTSET;
     }
+    private static final int LIBRAW_DECODER_TRYRAWSPEED3 = (int)65536L;
     /**
-     * {@snippet :
-     * enum LibRaw_constructor_flags.LIBRAW_OPTIONS_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_decoder_flags.LIBRAW_DECODER_TRYRAWSPEED3 = 65536
+     * }
+     */
+    public static int LIBRAW_DECODER_TRYRAWSPEED3() {
+        return LIBRAW_DECODER_TRYRAWSPEED3;
+    }
+    private static final int LIBRAW_OPTIONS_NONE = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_constructor_flags.LIBRAW_OPTIONS_NONE = 0
      * }
      */
     public static int LIBRAW_OPTIONS_NONE() {
-        return (int)0L;
+        return LIBRAW_OPTIONS_NONE;
     }
+    private static final int LIBRAW_OPTIONS_NO_DATAERR_CALLBACK = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_constructor_flags.LIBRAW_OPTIONS_NO_MEMERR_CALLBACK = 1;
-     * }
-     */
-    public static int LIBRAW_OPTIONS_NO_MEMERR_CALLBACK() {
-        return (int)1L;
-    }
-    /**
-     * {@snippet :
-     * enum LibRaw_constructor_flags.LIBRAW_OPTIONS_NO_DATAERR_CALLBACK = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_constructor_flags.LIBRAW_OPTIONS_NO_DATAERR_CALLBACK = 2
      * }
      */
     public static int LIBRAW_OPTIONS_NO_DATAERR_CALLBACK() {
-        return (int)2L;
+        return LIBRAW_OPTIONS_NO_DATAERR_CALLBACK;
     }
+    private static final int LIBRAW_OPIONS_NO_DATAERR_CALLBACK = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_constructor_flags.LIBRAW_OPIONS_NO_MEMERR_CALLBACK = 1;
-     * }
-     */
-    public static int LIBRAW_OPIONS_NO_MEMERR_CALLBACK() {
-        return (int)1L;
-    }
-    /**
-     * {@snippet :
-     * enum LibRaw_constructor_flags.LIBRAW_OPIONS_NO_DATAERR_CALLBACK = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_constructor_flags.LIBRAW_OPIONS_NO_DATAERR_CALLBACK = 2
      * }
      */
     public static int LIBRAW_OPIONS_NO_DATAERR_CALLBACK() {
-        return (int)2L;
+        return LIBRAW_OPIONS_NO_DATAERR_CALLBACK;
     }
+    private static final int LIBRAW_WARN_NONE = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_NONE = 0
      * }
      */
     public static int LIBRAW_WARN_NONE() {
-        return (int)0L;
+        return LIBRAW_WARN_NONE;
     }
+    private static final int LIBRAW_WARN_BAD_CAMERA_WB = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_BAD_CAMERA_WB = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_BAD_CAMERA_WB = 4
      * }
      */
     public static int LIBRAW_WARN_BAD_CAMERA_WB() {
-        return (int)4L;
+        return LIBRAW_WARN_BAD_CAMERA_WB;
     }
+    private static final int LIBRAW_WARN_NO_METADATA = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_NO_METADATA = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_NO_METADATA = 8
      * }
      */
     public static int LIBRAW_WARN_NO_METADATA() {
-        return (int)8L;
+        return LIBRAW_WARN_NO_METADATA;
     }
+    private static final int LIBRAW_WARN_NO_JPEGLIB = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_NO_JPEGLIB = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_NO_JPEGLIB = 16
      * }
      */
     public static int LIBRAW_WARN_NO_JPEGLIB() {
-        return (int)16L;
+        return LIBRAW_WARN_NO_JPEGLIB;
     }
+    private static final int LIBRAW_WARN_NO_EMBEDDED_PROFILE = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_NO_EMBEDDED_PROFILE = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_NO_EMBEDDED_PROFILE = 32
      * }
      */
     public static int LIBRAW_WARN_NO_EMBEDDED_PROFILE() {
-        return (int)32L;
+        return LIBRAW_WARN_NO_EMBEDDED_PROFILE;
     }
+    private static final int LIBRAW_WARN_NO_INPUT_PROFILE = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_NO_INPUT_PROFILE = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_NO_INPUT_PROFILE = 64
      * }
      */
     public static int LIBRAW_WARN_NO_INPUT_PROFILE() {
-        return (int)64L;
+        return LIBRAW_WARN_NO_INPUT_PROFILE;
     }
+    private static final int LIBRAW_WARN_BAD_OUTPUT_PROFILE = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_BAD_OUTPUT_PROFILE = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_BAD_OUTPUT_PROFILE = 128
      * }
      */
     public static int LIBRAW_WARN_BAD_OUTPUT_PROFILE() {
-        return (int)128L;
+        return LIBRAW_WARN_BAD_OUTPUT_PROFILE;
     }
+    private static final int LIBRAW_WARN_NO_BADPIXELMAP = (int)256L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_NO_BADPIXELMAP = 256;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_NO_BADPIXELMAP = 256
      * }
      */
     public static int LIBRAW_WARN_NO_BADPIXELMAP() {
-        return (int)256L;
+        return LIBRAW_WARN_NO_BADPIXELMAP;
     }
+    private static final int LIBRAW_WARN_BAD_DARKFRAME_FILE = (int)512L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_BAD_DARKFRAME_FILE = 512;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_BAD_DARKFRAME_FILE = 512
      * }
      */
     public static int LIBRAW_WARN_BAD_DARKFRAME_FILE() {
-        return (int)512L;
+        return LIBRAW_WARN_BAD_DARKFRAME_FILE;
     }
+    private static final int LIBRAW_WARN_BAD_DARKFRAME_DIM = (int)1024L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_BAD_DARKFRAME_DIM = 1024;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_BAD_DARKFRAME_DIM = 1024
      * }
      */
     public static int LIBRAW_WARN_BAD_DARKFRAME_DIM() {
-        return (int)1024L;
+        return LIBRAW_WARN_BAD_DARKFRAME_DIM;
     }
+    private static final int LIBRAW_WARN_RAWSPEED_PROBLEM = (int)4096L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED_PROBLEM = 4096;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED_PROBLEM = 4096
      * }
      */
     public static int LIBRAW_WARN_RAWSPEED_PROBLEM() {
-        return (int)4096L;
+        return LIBRAW_WARN_RAWSPEED_PROBLEM;
     }
+    private static final int LIBRAW_WARN_RAWSPEED_UNSUPPORTED = (int)8192L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED_UNSUPPORTED = 8192;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED_UNSUPPORTED = 8192
      * }
      */
     public static int LIBRAW_WARN_RAWSPEED_UNSUPPORTED() {
-        return (int)8192L;
+        return LIBRAW_WARN_RAWSPEED_UNSUPPORTED;
     }
+    private static final int LIBRAW_WARN_RAWSPEED_PROCESSED = (int)16384L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED_PROCESSED = 16384;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED_PROCESSED = 16384
      * }
      */
     public static int LIBRAW_WARN_RAWSPEED_PROCESSED() {
-        return (int)16384L;
+        return LIBRAW_WARN_RAWSPEED_PROCESSED;
     }
+    private static final int LIBRAW_WARN_FALLBACK_TO_AHD = (int)32768L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_FALLBACK_TO_AHD = 32768;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_FALLBACK_TO_AHD = 32768
      * }
      */
     public static int LIBRAW_WARN_FALLBACK_TO_AHD() {
-        return (int)32768L;
+        return LIBRAW_WARN_FALLBACK_TO_AHD;
     }
+    private static final int LIBRAW_WARN_PARSEFUJI_PROCESSED = (int)65536L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_PARSEFUJI_PROCESSED = 65536;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_PARSEFUJI_PROCESSED = 65536
      * }
      */
     public static int LIBRAW_WARN_PARSEFUJI_PROCESSED() {
-        return (int)65536L;
+        return LIBRAW_WARN_PARSEFUJI_PROCESSED;
     }
+    private static final int LIBRAW_WARN_DNGSDK_PROCESSED = (int)131072L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_DNGSDK_PROCESSED = 131072;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_DNGSDK_PROCESSED = 131072
      * }
      */
     public static int LIBRAW_WARN_DNGSDK_PROCESSED() {
-        return (int)131072L;
+        return LIBRAW_WARN_DNGSDK_PROCESSED;
     }
+    private static final int LIBRAW_WARN_DNG_IMAGES_REORDERED = (int)262144L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_DNG_IMAGES_REORDERED = 262144;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_DNG_IMAGES_REORDERED = 262144
      * }
      */
     public static int LIBRAW_WARN_DNG_IMAGES_REORDERED() {
-        return (int)262144L;
+        return LIBRAW_WARN_DNG_IMAGES_REORDERED;
     }
+    private static final int LIBRAW_WARN_DNG_STAGE2_APPLIED = (int)524288L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_DNG_STAGE2_APPLIED = 524288;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_DNG_STAGE2_APPLIED = 524288
      * }
      */
     public static int LIBRAW_WARN_DNG_STAGE2_APPLIED() {
-        return (int)524288L;
+        return LIBRAW_WARN_DNG_STAGE2_APPLIED;
     }
+    private static final int LIBRAW_WARN_DNG_STAGE3_APPLIED = (int)1048576L;
     /**
-     * {@snippet :
-     * enum LibRaw_warnings.LIBRAW_WARN_DNG_STAGE3_APPLIED = 1048576;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_DNG_STAGE3_APPLIED = 1048576
      * }
      */
     public static int LIBRAW_WARN_DNG_STAGE3_APPLIED() {
-        return (int)1048576L;
+        return LIBRAW_WARN_DNG_STAGE3_APPLIED;
     }
+    private static final int LIBRAW_WARN_RAWSPEED3_PROBLEM = (int)2097152L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_NONE = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED3_PROBLEM = 2097152
+     * }
+     */
+    public static int LIBRAW_WARN_RAWSPEED3_PROBLEM() {
+        return LIBRAW_WARN_RAWSPEED3_PROBLEM;
+    }
+    private static final int LIBRAW_WARN_RAWSPEED3_UNSUPPORTED = (int)4194304L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED3_UNSUPPORTED = 4194304
+     * }
+     */
+    public static int LIBRAW_WARN_RAWSPEED3_UNSUPPORTED() {
+        return LIBRAW_WARN_RAWSPEED3_UNSUPPORTED;
+    }
+    private static final int LIBRAW_WARN_RAWSPEED3_PROCESSED = (int)8388608L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED3_PROCESSED = 8388608
+     * }
+     */
+    public static int LIBRAW_WARN_RAWSPEED3_PROCESSED() {
+        return LIBRAW_WARN_RAWSPEED3_PROCESSED;
+    }
+    private static final int LIBRAW_WARN_RAWSPEED3_NOTLISTED = (int)16777216L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_warnings.LIBRAW_WARN_RAWSPEED3_NOTLISTED = 16777216
+     * }
+     */
+    public static int LIBRAW_WARN_RAWSPEED3_NOTLISTED() {
+        return LIBRAW_WARN_RAWSPEED3_NOTLISTED;
+    }
+    private static final int LIBRAW_EXCEPTION_NONE = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_NONE = 0
      * }
      */
     public static int LIBRAW_EXCEPTION_NONE() {
-        return (int)0L;
+        return LIBRAW_EXCEPTION_NONE;
     }
+    private static final int LIBRAW_EXCEPTION_ALLOC = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_ALLOC = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_ALLOC = 1
      * }
      */
     public static int LIBRAW_EXCEPTION_ALLOC() {
-        return (int)1L;
+        return LIBRAW_EXCEPTION_ALLOC;
     }
+    private static final int LIBRAW_EXCEPTION_DECODE_RAW = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_DECODE_RAW = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_DECODE_RAW = 2
      * }
      */
     public static int LIBRAW_EXCEPTION_DECODE_RAW() {
-        return (int)2L;
+        return LIBRAW_EXCEPTION_DECODE_RAW;
     }
+    private static final int LIBRAW_EXCEPTION_DECODE_JPEG = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_DECODE_JPEG = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_DECODE_JPEG = 3
      * }
      */
     public static int LIBRAW_EXCEPTION_DECODE_JPEG() {
-        return (int)3L;
+        return LIBRAW_EXCEPTION_DECODE_JPEG;
     }
+    private static final int LIBRAW_EXCEPTION_IO_EOF = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_IO_EOF = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_IO_EOF = 4
      * }
      */
     public static int LIBRAW_EXCEPTION_IO_EOF() {
-        return (int)4L;
+        return LIBRAW_EXCEPTION_IO_EOF;
     }
+    private static final int LIBRAW_EXCEPTION_IO_CORRUPT = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_IO_CORRUPT = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_IO_CORRUPT = 5
      * }
      */
     public static int LIBRAW_EXCEPTION_IO_CORRUPT() {
-        return (int)5L;
+        return LIBRAW_EXCEPTION_IO_CORRUPT;
     }
+    private static final int LIBRAW_EXCEPTION_CANCELLED_BY_CALLBACK = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_CANCELLED_BY_CALLBACK = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_CANCELLED_BY_CALLBACK = 6
      * }
      */
     public static int LIBRAW_EXCEPTION_CANCELLED_BY_CALLBACK() {
-        return (int)6L;
+        return LIBRAW_EXCEPTION_CANCELLED_BY_CALLBACK;
     }
+    private static final int LIBRAW_EXCEPTION_BAD_CROP = (int)7L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_BAD_CROP = 7;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_BAD_CROP = 7
      * }
      */
     public static int LIBRAW_EXCEPTION_BAD_CROP() {
-        return (int)7L;
+        return LIBRAW_EXCEPTION_BAD_CROP;
     }
+    private static final int LIBRAW_EXCEPTION_IO_BADFILE = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_IO_BADFILE = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_IO_BADFILE = 8
      * }
      */
     public static int LIBRAW_EXCEPTION_IO_BADFILE() {
-        return (int)8L;
+        return LIBRAW_EXCEPTION_IO_BADFILE;
     }
+    private static final int LIBRAW_EXCEPTION_DECODE_JPEG2000 = (int)9L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_DECODE_JPEG2000 = 9;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_DECODE_JPEG2000 = 9
      * }
      */
     public static int LIBRAW_EXCEPTION_DECODE_JPEG2000() {
-        return (int)9L;
+        return LIBRAW_EXCEPTION_DECODE_JPEG2000;
     }
+    private static final int LIBRAW_EXCEPTION_TOOBIG = (int)10L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_TOOBIG = 10;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_TOOBIG = 10
      * }
      */
     public static int LIBRAW_EXCEPTION_TOOBIG() {
-        return (int)10L;
+        return LIBRAW_EXCEPTION_TOOBIG;
     }
+    private static final int LIBRAW_EXCEPTION_MEMPOOL = (int)11L;
     /**
-     * {@snippet :
-     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_MEMPOOL = 11;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_MEMPOOL = 11
      * }
      */
     public static int LIBRAW_EXCEPTION_MEMPOOL() {
-        return (int)11L;
+        return LIBRAW_EXCEPTION_MEMPOOL;
     }
+    private static final int LIBRAW_EXCEPTION_UNSUPPORTED_FORMAT = (int)12L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_START = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_exceptions.LIBRAW_EXCEPTION_UNSUPPORTED_FORMAT = 12
+     * }
+     */
+    public static int LIBRAW_EXCEPTION_UNSUPPORTED_FORMAT() {
+        return LIBRAW_EXCEPTION_UNSUPPORTED_FORMAT;
+    }
+    private static final int LIBRAW_PROGRESS_START = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_START = 0
      * }
      */
     public static int LIBRAW_PROGRESS_START() {
-        return (int)0L;
+        return LIBRAW_PROGRESS_START;
     }
+    private static final int LIBRAW_PROGRESS_OPEN = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_OPEN = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_OPEN = 1
      * }
      */
     public static int LIBRAW_PROGRESS_OPEN() {
-        return (int)1L;
+        return LIBRAW_PROGRESS_OPEN;
     }
+    private static final int LIBRAW_PROGRESS_IDENTIFY = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_IDENTIFY = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_IDENTIFY = 2
      * }
      */
     public static int LIBRAW_PROGRESS_IDENTIFY() {
-        return (int)2L;
+        return LIBRAW_PROGRESS_IDENTIFY;
     }
+    private static final int LIBRAW_PROGRESS_SIZE_ADJUST = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_SIZE_ADJUST = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_SIZE_ADJUST = 4
      * }
      */
     public static int LIBRAW_PROGRESS_SIZE_ADJUST() {
-        return (int)4L;
+        return LIBRAW_PROGRESS_SIZE_ADJUST;
     }
+    private static final int LIBRAW_PROGRESS_LOAD_RAW = (int)8L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_LOAD_RAW = 8;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_LOAD_RAW = 8
      * }
      */
     public static int LIBRAW_PROGRESS_LOAD_RAW() {
-        return (int)8L;
+        return LIBRAW_PROGRESS_LOAD_RAW;
     }
+    private static final int LIBRAW_PROGRESS_RAW2_IMAGE = (int)16L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_RAW2_IMAGE = 16;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_RAW2_IMAGE = 16
      * }
      */
     public static int LIBRAW_PROGRESS_RAW2_IMAGE() {
-        return (int)16L;
+        return LIBRAW_PROGRESS_RAW2_IMAGE;
     }
+    private static final int LIBRAW_PROGRESS_REMOVE_ZEROES = (int)32L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_REMOVE_ZEROES = 32;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_REMOVE_ZEROES = 32
      * }
      */
     public static int LIBRAW_PROGRESS_REMOVE_ZEROES() {
-        return (int)32L;
+        return LIBRAW_PROGRESS_REMOVE_ZEROES;
     }
+    private static final int LIBRAW_PROGRESS_BAD_PIXELS = (int)64L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_BAD_PIXELS = 64;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_BAD_PIXELS = 64
      * }
      */
     public static int LIBRAW_PROGRESS_BAD_PIXELS() {
-        return (int)64L;
+        return LIBRAW_PROGRESS_BAD_PIXELS;
     }
+    private static final int LIBRAW_PROGRESS_DARK_FRAME = (int)128L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_DARK_FRAME = 128;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_DARK_FRAME = 128
      * }
      */
     public static int LIBRAW_PROGRESS_DARK_FRAME() {
-        return (int)128L;
+        return LIBRAW_PROGRESS_DARK_FRAME;
     }
+    private static final int LIBRAW_PROGRESS_FOVEON_INTERPOLATE = (int)256L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_FOVEON_INTERPOLATE = 256;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_FOVEON_INTERPOLATE = 256
      * }
      */
     public static int LIBRAW_PROGRESS_FOVEON_INTERPOLATE() {
-        return (int)256L;
+        return LIBRAW_PROGRESS_FOVEON_INTERPOLATE;
     }
+    private static final int LIBRAW_PROGRESS_SCALE_COLORS = (int)512L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_SCALE_COLORS = 512;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_SCALE_COLORS = 512
      * }
      */
     public static int LIBRAW_PROGRESS_SCALE_COLORS() {
-        return (int)512L;
+        return LIBRAW_PROGRESS_SCALE_COLORS;
     }
+    private static final int LIBRAW_PROGRESS_PRE_INTERPOLATE = (int)1024L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_PRE_INTERPOLATE = 1024;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_PRE_INTERPOLATE = 1024
      * }
      */
     public static int LIBRAW_PROGRESS_PRE_INTERPOLATE() {
-        return (int)1024L;
+        return LIBRAW_PROGRESS_PRE_INTERPOLATE;
     }
+    private static final int LIBRAW_PROGRESS_INTERPOLATE = (int)2048L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_INTERPOLATE = 2048;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_INTERPOLATE = 2048
      * }
      */
     public static int LIBRAW_PROGRESS_INTERPOLATE() {
-        return (int)2048L;
+        return LIBRAW_PROGRESS_INTERPOLATE;
     }
+    private static final int LIBRAW_PROGRESS_MIX_GREEN = (int)4096L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_MIX_GREEN = 4096;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_MIX_GREEN = 4096
      * }
      */
     public static int LIBRAW_PROGRESS_MIX_GREEN() {
-        return (int)4096L;
+        return LIBRAW_PROGRESS_MIX_GREEN;
     }
+    private static final int LIBRAW_PROGRESS_MEDIAN_FILTER = (int)8192L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_MEDIAN_FILTER = 8192;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_MEDIAN_FILTER = 8192
      * }
      */
     public static int LIBRAW_PROGRESS_MEDIAN_FILTER() {
-        return (int)8192L;
+        return LIBRAW_PROGRESS_MEDIAN_FILTER;
     }
+    private static final int LIBRAW_PROGRESS_HIGHLIGHTS = (int)16384L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_HIGHLIGHTS = 16384;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_HIGHLIGHTS = 16384
      * }
      */
     public static int LIBRAW_PROGRESS_HIGHLIGHTS() {
-        return (int)16384L;
+        return LIBRAW_PROGRESS_HIGHLIGHTS;
     }
+    private static final int LIBRAW_PROGRESS_FUJI_ROTATE = (int)32768L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_FUJI_ROTATE = 32768;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_FUJI_ROTATE = 32768
      * }
      */
     public static int LIBRAW_PROGRESS_FUJI_ROTATE() {
-        return (int)32768L;
+        return LIBRAW_PROGRESS_FUJI_ROTATE;
     }
+    private static final int LIBRAW_PROGRESS_FLIP = (int)65536L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_FLIP = 65536;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_FLIP = 65536
      * }
      */
     public static int LIBRAW_PROGRESS_FLIP() {
-        return (int)65536L;
+        return LIBRAW_PROGRESS_FLIP;
     }
+    private static final int LIBRAW_PROGRESS_APPLY_PROFILE = (int)131072L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_APPLY_PROFILE = 131072;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_APPLY_PROFILE = 131072
      * }
      */
     public static int LIBRAW_PROGRESS_APPLY_PROFILE() {
-        return (int)131072L;
+        return LIBRAW_PROGRESS_APPLY_PROFILE;
     }
+    private static final int LIBRAW_PROGRESS_CONVERT_RGB = (int)262144L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_CONVERT_RGB = 262144;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_CONVERT_RGB = 262144
      * }
      */
     public static int LIBRAW_PROGRESS_CONVERT_RGB() {
-        return (int)262144L;
+        return LIBRAW_PROGRESS_CONVERT_RGB;
     }
+    private static final int LIBRAW_PROGRESS_STRETCH = (int)524288L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STRETCH = 524288;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STRETCH = 524288
      * }
      */
     public static int LIBRAW_PROGRESS_STRETCH() {
-        return (int)524288L;
+        return LIBRAW_PROGRESS_STRETCH;
     }
+    private static final int LIBRAW_PROGRESS_STAGE20 = (int)1048576L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE20 = 1048576;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE20 = 1048576
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE20() {
-        return (int)1048576L;
+        return LIBRAW_PROGRESS_STAGE20;
     }
+    private static final int LIBRAW_PROGRESS_STAGE21 = (int)2097152L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE21 = 2097152;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE21 = 2097152
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE21() {
-        return (int)2097152L;
+        return LIBRAW_PROGRESS_STAGE21;
     }
+    private static final int LIBRAW_PROGRESS_STAGE22 = (int)4194304L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE22 = 4194304;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE22 = 4194304
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE22() {
-        return (int)4194304L;
+        return LIBRAW_PROGRESS_STAGE22;
     }
+    private static final int LIBRAW_PROGRESS_STAGE23 = (int)8388608L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE23 = 8388608;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE23 = 8388608
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE23() {
-        return (int)8388608L;
+        return LIBRAW_PROGRESS_STAGE23;
     }
+    private static final int LIBRAW_PROGRESS_STAGE24 = (int)16777216L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE24 = 16777216;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE24 = 16777216
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE24() {
-        return (int)16777216L;
+        return LIBRAW_PROGRESS_STAGE24;
     }
+    private static final int LIBRAW_PROGRESS_STAGE25 = (int)33554432L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE25 = 33554432;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE25 = 33554432
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE25() {
-        return (int)33554432L;
+        return LIBRAW_PROGRESS_STAGE25;
     }
+    private static final int LIBRAW_PROGRESS_STAGE26 = (int)67108864L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE26 = 67108864;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE26 = 67108864
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE26() {
-        return (int)67108864L;
+        return LIBRAW_PROGRESS_STAGE26;
     }
+    private static final int LIBRAW_PROGRESS_STAGE27 = (int)134217728L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE27 = 134217728;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_STAGE27 = 134217728
      * }
      */
     public static int LIBRAW_PROGRESS_STAGE27() {
-        return (int)134217728L;
+        return LIBRAW_PROGRESS_STAGE27;
     }
+    private static final int LIBRAW_PROGRESS_THUMB_LOAD = (int)268435456L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_THUMB_LOAD = 268435456;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_THUMB_LOAD = 268435456
      * }
      */
     public static int LIBRAW_PROGRESS_THUMB_LOAD() {
-        return (int)268435456L;
+        return LIBRAW_PROGRESS_THUMB_LOAD;
     }
+    private static final int LIBRAW_PROGRESS_TRESERVED1 = (int)536870912L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_TRESERVED1 = 536870912;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_TRESERVED1 = 536870912
      * }
      */
     public static int LIBRAW_PROGRESS_TRESERVED1() {
-        return (int)536870912L;
+        return LIBRAW_PROGRESS_TRESERVED1;
     }
+    private static final int LIBRAW_PROGRESS_TRESERVED2 = (int)1073741824L;
     /**
-     * {@snippet :
-     * enum LibRaw_progress.LIBRAW_PROGRESS_TRESERVED2 = 1073741824;
+     * {@snippet lang=c :
+     * enum LibRaw_progress.LIBRAW_PROGRESS_TRESERVED2 = 1073741824
      * }
      */
     public static int LIBRAW_PROGRESS_TRESERVED2() {
-        return (int)1073741824L;
+        return LIBRAW_PROGRESS_TRESERVED2;
     }
+    private static final int LIBRAW_SUCCESS = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_SUCCESS = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_SUCCESS = 0
      * }
      */
     public static int LIBRAW_SUCCESS() {
-        return (int)0L;
+        return LIBRAW_SUCCESS;
     }
+    private static final int LIBRAW_UNSPECIFIED_ERROR = (int)-1L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_UNSPECIFIED_ERROR = -1;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_UNSPECIFIED_ERROR = -1
      * }
      */
     public static int LIBRAW_UNSPECIFIED_ERROR() {
-        return (int)-1L;
+        return LIBRAW_UNSPECIFIED_ERROR;
     }
+    private static final int LIBRAW_FILE_UNSUPPORTED = (int)-2L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_FILE_UNSUPPORTED = -2;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_FILE_UNSUPPORTED = -2
      * }
      */
     public static int LIBRAW_FILE_UNSUPPORTED() {
-        return (int)-2L;
+        return LIBRAW_FILE_UNSUPPORTED;
     }
+    private static final int LIBRAW_REQUEST_FOR_NONEXISTENT_IMAGE = (int)-3L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_REQUEST_FOR_NONEXISTENT_IMAGE = -3;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_REQUEST_FOR_NONEXISTENT_IMAGE = -3
      * }
      */
     public static int LIBRAW_REQUEST_FOR_NONEXISTENT_IMAGE() {
-        return (int)-3L;
+        return LIBRAW_REQUEST_FOR_NONEXISTENT_IMAGE;
     }
+    private static final int LIBRAW_OUT_OF_ORDER_CALL = (int)-4L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_OUT_OF_ORDER_CALL = -4;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_OUT_OF_ORDER_CALL = -4
      * }
      */
     public static int LIBRAW_OUT_OF_ORDER_CALL() {
-        return (int)-4L;
+        return LIBRAW_OUT_OF_ORDER_CALL;
     }
+    private static final int LIBRAW_NO_THUMBNAIL = (int)-5L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_NO_THUMBNAIL = -5;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_NO_THUMBNAIL = -5
      * }
      */
     public static int LIBRAW_NO_THUMBNAIL() {
-        return (int)-5L;
+        return LIBRAW_NO_THUMBNAIL;
     }
+    private static final int LIBRAW_UNSUPPORTED_THUMBNAIL = (int)-6L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_UNSUPPORTED_THUMBNAIL = -6;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_UNSUPPORTED_THUMBNAIL = -6
      * }
      */
     public static int LIBRAW_UNSUPPORTED_THUMBNAIL() {
-        return (int)-6L;
+        return LIBRAW_UNSUPPORTED_THUMBNAIL;
     }
+    private static final int LIBRAW_INPUT_CLOSED = (int)-7L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_INPUT_CLOSED = -7;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_INPUT_CLOSED = -7
      * }
      */
     public static int LIBRAW_INPUT_CLOSED() {
-        return (int)-7L;
+        return LIBRAW_INPUT_CLOSED;
     }
+    private static final int LIBRAW_NOT_IMPLEMENTED = (int)-8L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_NOT_IMPLEMENTED = -8;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_NOT_IMPLEMENTED = -8
      * }
      */
     public static int LIBRAW_NOT_IMPLEMENTED() {
-        return (int)-8L;
+        return LIBRAW_NOT_IMPLEMENTED;
     }
+    private static final int LIBRAW_REQUEST_FOR_NONEXISTENT_THUMBNAIL = (int)-9L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_UNSUFFICIENT_MEMORY = -100007;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_REQUEST_FOR_NONEXISTENT_THUMBNAIL = -9
+     * }
+     */
+    public static int LIBRAW_REQUEST_FOR_NONEXISTENT_THUMBNAIL() {
+        return LIBRAW_REQUEST_FOR_NONEXISTENT_THUMBNAIL;
+    }
+    private static final int LIBRAW_UNSUFFICIENT_MEMORY = (int)-100007L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_UNSUFFICIENT_MEMORY = -100007
      * }
      */
     public static int LIBRAW_UNSUFFICIENT_MEMORY() {
-        return (int)-100007L;
+        return LIBRAW_UNSUFFICIENT_MEMORY;
     }
+    private static final int LIBRAW_DATA_ERROR = (int)-100008L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_DATA_ERROR = -100008;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_DATA_ERROR = -100008
      * }
      */
     public static int LIBRAW_DATA_ERROR() {
-        return (int)-100008L;
+        return LIBRAW_DATA_ERROR;
     }
+    private static final int LIBRAW_IO_ERROR = (int)-100009L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_IO_ERROR = -100009;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_IO_ERROR = -100009
      * }
      */
     public static int LIBRAW_IO_ERROR() {
-        return (int)-100009L;
+        return LIBRAW_IO_ERROR;
     }
+    private static final int LIBRAW_CANCELLED_BY_CALLBACK = (int)-100010L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_CANCELLED_BY_CALLBACK = -100010;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_CANCELLED_BY_CALLBACK = -100010
      * }
      */
     public static int LIBRAW_CANCELLED_BY_CALLBACK() {
-        return (int)-100010L;
+        return LIBRAW_CANCELLED_BY_CALLBACK;
     }
+    private static final int LIBRAW_BAD_CROP = (int)-100011L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_BAD_CROP = -100011;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_BAD_CROP = -100011
      * }
      */
     public static int LIBRAW_BAD_CROP() {
-        return (int)-100011L;
+        return LIBRAW_BAD_CROP;
     }
+    private static final int LIBRAW_TOO_BIG = (int)-100012L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_TOO_BIG = -100012;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_TOO_BIG = -100012
      * }
      */
     public static int LIBRAW_TOO_BIG() {
-        return (int)-100012L;
+        return LIBRAW_TOO_BIG;
     }
+    private static final int LIBRAW_MEMPOOL_OVERFLOW = (int)-100013L;
     /**
-     * {@snippet :
-     * enum LibRaw_errors.LIBRAW_MEMPOOL_OVERFLOW = -100013;
+     * {@snippet lang=c :
+     * enum LibRaw_errors.LIBRAW_MEMPOOL_OVERFLOW = -100013
      * }
      */
     public static int LIBRAW_MEMPOOL_OVERFLOW() {
-        return (int)-100013L;
+        return LIBRAW_MEMPOOL_OVERFLOW;
     }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_UNKNOWN = (int)0L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_UNKNOWN = 0;
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_UNKNOWN = 0
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_UNKNOWN() {
+        return LIBRAW_INTERNAL_THUMBNAIL_UNKNOWN;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_KODAK_THUMB = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_KODAK_THUMB = 1
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_KODAK_THUMB() {
+        return LIBRAW_INTERNAL_THUMBNAIL_KODAK_THUMB;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_KODAK_YCBCR = (int)2L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_KODAK_YCBCR = 2
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_KODAK_YCBCR() {
+        return LIBRAW_INTERNAL_THUMBNAIL_KODAK_YCBCR;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_KODAK_RGB = (int)3L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_KODAK_RGB = 3
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_KODAK_RGB() {
+        return LIBRAW_INTERNAL_THUMBNAIL_KODAK_RGB;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_JPEG = (int)4L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_JPEG = 4
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_JPEG() {
+        return LIBRAW_INTERNAL_THUMBNAIL_JPEG;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_LAYER = (int)5L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_LAYER = 5
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_LAYER() {
+        return LIBRAW_INTERNAL_THUMBNAIL_LAYER;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_ROLLEI = (int)6L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_ROLLEI = 6
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_ROLLEI() {
+        return LIBRAW_INTERNAL_THUMBNAIL_ROLLEI;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_PPM = (int)7L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_PPM = 7
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_PPM() {
+        return LIBRAW_INTERNAL_THUMBNAIL_PPM;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_PPM16 = (int)8L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_PPM16 = 8
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_PPM16() {
+        return LIBRAW_INTERNAL_THUMBNAIL_PPM16;
+    }
+    private static final int LIBRAW_INTERNAL_THUMBNAIL_X3F = (int)9L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats.LIBRAW_INTERNAL_THUMBNAIL_X3F = 9
+     * }
+     */
+    public static int LIBRAW_INTERNAL_THUMBNAIL_X3F() {
+        return LIBRAW_INTERNAL_THUMBNAIL_X3F;
+    }
+    private static final int LIBRAW_THUMBNAIL_UNKNOWN = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_UNKNOWN = 0
      * }
      */
     public static int LIBRAW_THUMBNAIL_UNKNOWN() {
-        return (int)0L;
+        return LIBRAW_THUMBNAIL_UNKNOWN;
     }
+    private static final int LIBRAW_THUMBNAIL_JPEG = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_JPEG = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_JPEG = 1
      * }
      */
     public static int LIBRAW_THUMBNAIL_JPEG() {
-        return (int)1L;
+        return LIBRAW_THUMBNAIL_JPEG;
     }
+    private static final int LIBRAW_THUMBNAIL_BITMAP = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_BITMAP = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_BITMAP = 2
      * }
      */
     public static int LIBRAW_THUMBNAIL_BITMAP() {
-        return (int)2L;
+        return LIBRAW_THUMBNAIL_BITMAP;
     }
+    private static final int LIBRAW_THUMBNAIL_BITMAP16 = (int)3L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_BITMAP16 = 3;
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_BITMAP16 = 3
      * }
      */
     public static int LIBRAW_THUMBNAIL_BITMAP16() {
-        return (int)3L;
+        return LIBRAW_THUMBNAIL_BITMAP16;
     }
+    private static final int LIBRAW_THUMBNAIL_LAYER = (int)4L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_LAYER = 4;
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_LAYER = 4
      * }
      */
     public static int LIBRAW_THUMBNAIL_LAYER() {
-        return (int)4L;
+        return LIBRAW_THUMBNAIL_LAYER;
     }
+    private static final int LIBRAW_THUMBNAIL_ROLLEI = (int)5L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_ROLLEI = 5;
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_ROLLEI = 5
      * }
      */
     public static int LIBRAW_THUMBNAIL_ROLLEI() {
-        return (int)5L;
+        return LIBRAW_THUMBNAIL_ROLLEI;
     }
+    private static final int LIBRAW_THUMBNAIL_H265 = (int)6L;
     /**
-     * {@snippet :
-     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_H265 = 6;
+     * {@snippet lang=c :
+     * enum LibRaw_thumbnail_formats.LIBRAW_THUMBNAIL_H265 = 6
      * }
      */
     public static int LIBRAW_THUMBNAIL_H265() {
-        return (int)6L;
+        return LIBRAW_THUMBNAIL_H265;
     }
+    private static final int LIBRAW_IMAGE_JPEG = (int)1L;
     /**
-     * {@snippet :
-     * enum LibRaw_image_formats.LIBRAW_IMAGE_JPEG = 1;
+     * {@snippet lang=c :
+     * enum LibRaw_image_formats.LIBRAW_IMAGE_JPEG = 1
      * }
      */
     public static int LIBRAW_IMAGE_JPEG() {
-        return (int)1L;
+        return LIBRAW_IMAGE_JPEG;
     }
+    private static final int LIBRAW_IMAGE_BITMAP = (int)2L;
     /**
-     * {@snippet :
-     * enum LibRaw_image_formats.LIBRAW_IMAGE_BITMAP = 2;
+     * {@snippet lang=c :
+     * enum LibRaw_image_formats.LIBRAW_IMAGE_BITMAP = 2
      * }
      */
     public static int LIBRAW_IMAGE_BITMAP() {
-        return (int)2L;
+        return LIBRAW_IMAGE_BITMAP;
     }
     /**
-     * {@snippet :
-     * typedef long long INT64;
+     * {@snippet lang=c :
+     * typedef long long INT64
      * }
      */
-    public static final OfLong INT64 = JAVA_LONG;
+    public static final OfLong INT64 = libraw_h.C_LONG_LONG;
     /**
-     * {@snippet :
-     * typedef unsigned long long UINT64;
+     * {@snippet lang=c :
+     * typedef unsigned long long UINT64
      * }
      */
-    public static final OfLong UINT64 = JAVA_LONG;
+    public static final OfLong UINT64 = libraw_h.C_LONG_LONG;
     /**
-     * {@snippet :
-     * typedef unsigned char uchar;
+     * {@snippet lang=c :
+     * typedef unsigned char uchar
      * }
      */
-    public static final OfByte uchar = JAVA_BYTE;
+    public static final OfByte uchar = libraw_h.C_CHAR;
     /**
-     * {@snippet :
-     * typedef unsigned short ushort;
+     * {@snippet lang=c :
+     * typedef unsigned short ushort
      * }
      */
-    public static final OfShort ushort = JAVA_SHORT;
-    public static MethodHandle default_memory_callback$MH() {
-        return RuntimeHelper.requireNonNull(constants$2.const$3,"default_memory_callback");
+    public static final OfShort ushort = libraw_h.C_SHORT;
+
+    private static class default_data_callback {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("default_data_callback"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void default_data_callback(void *data, const char *file, const int offset)
+     * }
+     */
+    public static FunctionDescriptor default_data_callback$descriptor() {
+        return default_data_callback.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void default_data_callback(void *data, const char *file, const int offset)
+     * }
+     */
+    public static MethodHandle default_data_callback$handle() {
+        return default_data_callback.HANDLE;
     }
     /**
-     * {@snippet :
-     * void default_memory_callback(void* data, char* file, char* where);
-     * }
-     */
-    public static void default_memory_callback(MemorySegment data, MemorySegment file, MemorySegment where) {
-        var mh$ = default_memory_callback$MH();
-        try {
-            mh$.invokeExact(data, file, where);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
-        }
-    }
-    public static MethodHandle default_data_callback$MH() {
-        return RuntimeHelper.requireNonNull(constants$3.const$1,"default_data_callback");
-    }
-    /**
-     * {@snippet :
-     * void default_data_callback(void* data, char* file, int offset);
+     * {@snippet lang=c :
+     * void default_data_callback(void *data, const char *file, const int offset)
      * }
      */
     public static void default_data_callback(MemorySegment data, MemorySegment file, int offset) {
-        var mh$ = default_data_callback$MH();
+        var mh$ = default_data_callback.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("default_data_callback", data, file, offset);
+            }
             mh$.invokeExact(data, file, offset);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_strerror$MH() {
-        return RuntimeHelper.requireNonNull(constants$115.const$6,"libraw_strerror");
+
+    private static class libraw_strerror {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_strerror"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const char *libraw_strerror(int errorcode)
+     * }
+     */
+    public static FunctionDescriptor libraw_strerror$descriptor() {
+        return libraw_strerror.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const char *libraw_strerror(int errorcode)
+     * }
+     */
+    public static MethodHandle libraw_strerror$handle() {
+        return libraw_strerror.HANDLE;
     }
     /**
-     * {@snippet :
-     * char* libraw_strerror(int errorcode);
+     * {@snippet lang=c :
+     * const char *libraw_strerror(int errorcode)
      * }
      */
     public static MemorySegment libraw_strerror(int errorcode) {
-        var mh$ = libraw_strerror$MH();
+        var mh$ = libraw_strerror.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(errorcode);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_strerror", errorcode);
+            }
+            return (MemorySegment)mh$.invokeExact(errorcode);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_strprogress$MH() {
-        return RuntimeHelper.requireNonNull(constants$116.const$0,"libraw_strprogress");
+
+    private static class libraw_strprogress {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_strprogress"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const char *libraw_strprogress(enum LibRaw_progress)
+     * }
+     */
+    public static FunctionDescriptor libraw_strprogress$descriptor() {
+        return libraw_strprogress.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const char *libraw_strprogress(enum LibRaw_progress)
+     * }
+     */
+    public static MethodHandle libraw_strprogress$handle() {
+        return libraw_strprogress.HANDLE;
     }
     /**
-     * {@snippet :
-     * char* libraw_strprogress(enum LibRaw_progress);
+     * {@snippet lang=c :
+     * const char *libraw_strprogress(enum LibRaw_progress)
      * }
      */
     public static MemorySegment libraw_strprogress(int x0) {
-        var mh$ = libraw_strprogress$MH();
+        var mh$ = libraw_strprogress.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(x0);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_strprogress", x0);
+            }
+            return (MemorySegment)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_init$MH() {
-        return RuntimeHelper.requireNonNull(constants$116.const$1,"libraw_init");
+
+    private static class libraw_init {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_init"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * libraw_data_t *libraw_init(unsigned int flags)
+     * }
+     */
+    public static FunctionDescriptor libraw_init$descriptor() {
+        return libraw_init.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * libraw_data_t *libraw_init(unsigned int flags)
+     * }
+     */
+    public static MethodHandle libraw_init$handle() {
+        return libraw_init.HANDLE;
     }
     /**
-     * {@snippet :
-     * struct libraw_data_t* libraw_init(unsigned int flags);
+     * {@snippet lang=c :
+     * libraw_data_t *libraw_init(unsigned int flags)
      * }
      */
     public static MemorySegment libraw_init(int flags) {
-        var mh$ = libraw_init$MH();
+        var mh$ = libraw_init.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(flags);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_init", flags);
+            }
+            return (MemorySegment)mh$.invokeExact(flags);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_open_file$MH() {
-        return RuntimeHelper.requireNonNull(constants$116.const$3,"libraw_open_file");
+
+    private static class libraw_open_file {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_open_file"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_open_file(libraw_data_t *, const char *)
+     * }
+     */
+    public static FunctionDescriptor libraw_open_file$descriptor() {
+        return libraw_open_file.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_open_file(libraw_data_t *, const char *)
+     * }
+     */
+    public static MethodHandle libraw_open_file$handle() {
+        return libraw_open_file.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_open_file(struct libraw_data_t*, char*);
+     * {@snippet lang=c :
+     * int libraw_open_file(libraw_data_t *, const char *)
      * }
      */
     public static int libraw_open_file(MemorySegment x0, MemorySegment x1) {
-        var mh$ = libraw_open_file$MH();
+        var mh$ = libraw_open_file.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_open_file", x0, x1);
+            }
             return (int)mh$.invokeExact(x0, x1);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_open_wfile$MH() {
-        return RuntimeHelper.requireNonNull(constants$116.const$4,"libraw_open_wfile");
+
+    private static class libraw_open_wfile {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_open_wfile"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_open_wfile(libraw_data_t *, const wchar_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_open_wfile$descriptor() {
+        return libraw_open_wfile.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_open_wfile(libraw_data_t *, const wchar_t *)
+     * }
+     */
+    public static MethodHandle libraw_open_wfile$handle() {
+        return libraw_open_wfile.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_open_wfile(struct libraw_data_t*, unsigned short*);
+     * {@snippet lang=c :
+     * int libraw_open_wfile(libraw_data_t *, const wchar_t *)
      * }
      */
     public static int libraw_open_wfile(MemorySegment x0, MemorySegment x1) {
-        var mh$ = libraw_open_wfile$MH();
+        var mh$ = libraw_open_wfile.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_open_wfile", x0, x1);
+            }
             return (int)mh$.invokeExact(x0, x1);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_open_buffer$MH() {
-        return RuntimeHelper.requireNonNull(constants$116.const$6,"libraw_open_buffer");
+
+    private static class libraw_open_buffer {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_LONG_LONG
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_open_buffer"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_open_buffer(libraw_data_t *, const void *buffer, size_t size)
+     * }
+     */
+    public static FunctionDescriptor libraw_open_buffer$descriptor() {
+        return libraw_open_buffer.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_open_buffer(libraw_data_t *, const void *buffer, size_t size)
+     * }
+     */
+    public static MethodHandle libraw_open_buffer$handle() {
+        return libraw_open_buffer.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_open_buffer(struct libraw_data_t*, void* buffer, unsigned long long size);
+     * {@snippet lang=c :
+     * int libraw_open_buffer(libraw_data_t *, const void *buffer, size_t size)
      * }
      */
     public static int libraw_open_buffer(MemorySegment x0, MemorySegment buffer, long size) {
-        var mh$ = libraw_open_buffer$MH();
+        var mh$ = libraw_open_buffer.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_open_buffer", x0, buffer, size);
+            }
             return (int)mh$.invokeExact(x0, buffer, size);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_open_bayer$MH() {
-        return RuntimeHelper.requireNonNull(constants$117.const$1,"libraw_open_bayer");
+
+    private static class libraw_open_bayer {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT,
+            libraw_h.C_SHORT,
+            libraw_h.C_SHORT,
+            libraw_h.C_SHORT,
+            libraw_h.C_SHORT,
+            libraw_h.C_SHORT,
+            libraw_h.C_SHORT,
+            libraw_h.C_CHAR,
+            libraw_h.C_CHAR,
+            libraw_h.C_INT,
+            libraw_h.C_INT,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_open_bayer"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_open_bayer(libraw_data_t *lr, unsigned char *data, unsigned int datalen, ushort _raw_width, ushort _raw_height, ushort _left_margin, ushort _top_margin, ushort _right_margin, ushort _bottom_margin, unsigned char procflags, unsigned char bayer_battern, unsigned int unused_bits, unsigned int otherflags, unsigned int black_level)
+     * }
+     */
+    public static FunctionDescriptor libraw_open_bayer$descriptor() {
+        return libraw_open_bayer.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_open_bayer(libraw_data_t *lr, unsigned char *data, unsigned int datalen, ushort _raw_width, ushort _raw_height, ushort _left_margin, ushort _top_margin, ushort _right_margin, ushort _bottom_margin, unsigned char procflags, unsigned char bayer_battern, unsigned int unused_bits, unsigned int otherflags, unsigned int black_level)
+     * }
+     */
+    public static MethodHandle libraw_open_bayer$handle() {
+        return libraw_open_bayer.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_open_bayer(struct libraw_data_t* lr, unsigned char* data, unsigned int datalen, unsigned short _raw_width, unsigned short _raw_height, unsigned short _left_margin, unsigned short _top_margin, unsigned short _right_margin, unsigned short _bottom_margin, unsigned char procflags, unsigned char bayer_battern, unsigned int unused_bits, unsigned int otherflags, unsigned int black_level);
+     * {@snippet lang=c :
+     * int libraw_open_bayer(libraw_data_t *lr, unsigned char *data, unsigned int datalen, ushort _raw_width, ushort _raw_height, ushort _left_margin, ushort _top_margin, ushort _right_margin, ushort _bottom_margin, unsigned char procflags, unsigned char bayer_battern, unsigned int unused_bits, unsigned int otherflags, unsigned int black_level)
      * }
      */
     public static int libraw_open_bayer(MemorySegment lr, MemorySegment data, int datalen, short _raw_width, short _raw_height, short _left_margin, short _top_margin, short _right_margin, short _bottom_margin, byte procflags, byte bayer_battern, int unused_bits, int otherflags, int black_level) {
-        var mh$ = libraw_open_bayer$MH();
+        var mh$ = libraw_open_bayer.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_open_bayer", lr, data, datalen, _raw_width, _raw_height, _left_margin, _top_margin, _right_margin, _bottom_margin, procflags, bayer_battern, unused_bits, otherflags, black_level);
+            }
             return (int)mh$.invokeExact(lr, data, datalen, _raw_width, _raw_height, _left_margin, _top_margin, _right_margin, _bottom_margin, procflags, bayer_battern, unused_bits, otherflags, black_level);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_unpack$MH() {
-        return RuntimeHelper.requireNonNull(constants$117.const$2,"libraw_unpack");
+
+    private static class libraw_unpack {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_unpack"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_unpack(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_unpack$descriptor() {
+        return libraw_unpack.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_unpack(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_unpack$handle() {
+        return libraw_unpack.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_unpack(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * int libraw_unpack(libraw_data_t *)
      * }
      */
     public static int libraw_unpack(MemorySegment x0) {
-        var mh$ = libraw_unpack$MH();
+        var mh$ = libraw_unpack.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_unpack", x0);
+            }
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_unpack_thumb$MH() {
-        return RuntimeHelper.requireNonNull(constants$117.const$3,"libraw_unpack_thumb");
+
+    private static class libraw_unpack_thumb {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_unpack_thumb"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_unpack_thumb$descriptor() {
+        return libraw_unpack_thumb.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_unpack_thumb$handle() {
+        return libraw_unpack_thumb.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_unpack_thumb(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb(libraw_data_t *)
      * }
      */
     public static int libraw_unpack_thumb(MemorySegment x0) {
-        var mh$ = libraw_unpack_thumb$MH();
+        var mh$ = libraw_unpack_thumb.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_unpack_thumb", x0);
+            }
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_recycle_datastream$MH() {
-        return RuntimeHelper.requireNonNull(constants$117.const$4,"libraw_recycle_datastream");
+
+    private static class libraw_unpack_thumb_ex {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_unpack_thumb_ex"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb_ex(libraw_data_t *, int)
+     * }
+     */
+    public static FunctionDescriptor libraw_unpack_thumb_ex$descriptor() {
+        return libraw_unpack_thumb_ex.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb_ex(libraw_data_t *, int)
+     * }
+     */
+    public static MethodHandle libraw_unpack_thumb_ex$handle() {
+        return libraw_unpack_thumb_ex.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_recycle_datastream(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb_ex(libraw_data_t *, int)
+     * }
+     */
+    public static int libraw_unpack_thumb_ex(MemorySegment x0, int x1) {
+        var mh$ = libraw_unpack_thumb_ex.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_unpack_thumb_ex", x0, x1);
+            }
+            return (int)mh$.invokeExact(x0, x1);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class libraw_recycle_datastream {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_recycle_datastream"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_recycle_datastream(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_recycle_datastream$descriptor() {
+        return libraw_recycle_datastream.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_recycle_datastream(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_recycle_datastream$handle() {
+        return libraw_recycle_datastream.HANDLE;
+    }
+    /**
+     * {@snippet lang=c :
+     * void libraw_recycle_datastream(libraw_data_t *)
      * }
      */
     public static void libraw_recycle_datastream(MemorySegment x0) {
-        var mh$ = libraw_recycle_datastream$MH();
+        var mh$ = libraw_recycle_datastream.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_recycle_datastream", x0);
+            }
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_recycle$MH() {
-        return RuntimeHelper.requireNonNull(constants$117.const$5,"libraw_recycle");
+
+    private static class libraw_recycle {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_recycle"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_recycle(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_recycle$descriptor() {
+        return libraw_recycle.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_recycle(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_recycle$handle() {
+        return libraw_recycle.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_recycle(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * void libraw_recycle(libraw_data_t *)
      * }
      */
     public static void libraw_recycle(MemorySegment x0) {
-        var mh$ = libraw_recycle$MH();
+        var mh$ = libraw_recycle.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_recycle", x0);
+            }
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_close$MH() {
-        return RuntimeHelper.requireNonNull(constants$118.const$0,"libraw_close");
+
+    private static class libraw_close {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_close"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_close(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_close$descriptor() {
+        return libraw_close.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_close(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_close$handle() {
+        return libraw_close.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_close(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * void libraw_close(libraw_data_t *)
      * }
      */
     public static void libraw_close(MemorySegment x0) {
-        var mh$ = libraw_close$MH();
+        var mh$ = libraw_close.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_close", x0);
+            }
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_subtract_black$MH() {
-        return RuntimeHelper.requireNonNull(constants$118.const$1,"libraw_subtract_black");
+
+    private static class libraw_subtract_black {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_subtract_black"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_subtract_black(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_subtract_black$descriptor() {
+        return libraw_subtract_black.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_subtract_black(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_subtract_black$handle() {
+        return libraw_subtract_black.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_subtract_black(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * void libraw_subtract_black(libraw_data_t *)
      * }
      */
     public static void libraw_subtract_black(MemorySegment x0) {
-        var mh$ = libraw_subtract_black$MH();
+        var mh$ = libraw_subtract_black.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_subtract_black", x0);
+            }
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_raw2image$MH() {
-        return RuntimeHelper.requireNonNull(constants$118.const$2,"libraw_raw2image");
+
+    private static class libraw_raw2image {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_raw2image"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_raw2image(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_raw2image$descriptor() {
+        return libraw_raw2image.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_raw2image(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_raw2image$handle() {
+        return libraw_raw2image.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_raw2image(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * int libraw_raw2image(libraw_data_t *)
      * }
      */
     public static int libraw_raw2image(MemorySegment x0) {
-        var mh$ = libraw_raw2image$MH();
+        var mh$ = libraw_raw2image.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_raw2image", x0);
+            }
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_free_image$MH() {
-        return RuntimeHelper.requireNonNull(constants$118.const$3,"libraw_free_image");
+
+    private static class libraw_free_image {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_free_image"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_free_image(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_free_image$descriptor() {
+        return libraw_free_image.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_free_image(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_free_image$handle() {
+        return libraw_free_image.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_free_image(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * void libraw_free_image(libraw_data_t *)
      * }
      */
     public static void libraw_free_image(MemorySegment x0) {
-        var mh$ = libraw_free_image$MH();
+        var mh$ = libraw_free_image.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_free_image", x0);
+            }
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_version$MH() {
-        return RuntimeHelper.requireNonNull(constants$118.const$5,"libraw_version");
-    }
+
     /**
-     * {@snippet :
-     * char* libraw_version(,...);
+     * Variadic invoker class for:
+     * {@snippet lang=c :
+     * const char *libraw_version()
      * }
      */
-    public static MemorySegment libraw_version(Object... x0) {
-        var mh$ = libraw_version$MH();
-        try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(x0);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+    public static class libraw_version {
+        private static final FunctionDescriptor BASE_DESC = FunctionDescriptor.of(
+                libraw_h.C_POINTER        );
+        private static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_version");
+
+        private final MethodHandle handle;
+        private final FunctionDescriptor descriptor;
+        private final MethodHandle spreader;
+
+        private libraw_version(MethodHandle handle, FunctionDescriptor descriptor, MethodHandle spreader) {
+            this.handle = handle;
+            this.descriptor = descriptor;
+            this.spreader = spreader;
+        }
+
+        /**
+         * Variadic invoker factory for:
+         * {@snippet lang=c :
+         * const char *libraw_version()
+         * }
+         */
+        public static libraw_version makeInvoker(MemoryLayout... layouts) {
+            FunctionDescriptor desc$ = BASE_DESC.appendArgumentLayouts(layouts);
+            Linker.Option fva$ = Linker.Option.firstVariadicArg(BASE_DESC.argumentLayouts().size());
+            var mh$ = Linker.nativeLinker().downcallHandle(ADDR, desc$, fva$);
+            var spreader$ = mh$.asSpreader(Object[].class, layouts.length);
+            return new libraw_version(mh$, desc$, spreader$);
+        }
+
+        /**
+         * {@return the specialized method handle}
+         */
+        public MethodHandle handle() {
+            return handle;
+        }
+
+        /**
+         * {@return the specialized descriptor}
+         */
+        public FunctionDescriptor descriptor() {
+            return descriptor;
+        }
+
+        public MemorySegment apply(Object... x0) {
+            try {
+                if (TRACE_DOWNCALLS) {
+                    traceDowncall("libraw_version", x0);
+                }
+                return (MemorySegment)spreader.invokeExact(x0);
+            } catch(IllegalArgumentException | ClassCastException ex$)  {
+                throw ex$; // rethrow IAE from passing wrong number/type of args
+            } catch (Throwable ex$) {
+               throw new AssertionError("should not reach here", ex$);
+            }
         }
     }
-    public static MethodHandle libraw_versionNumber$MH() {
-        return RuntimeHelper.requireNonNull(constants$119.const$1,"libraw_versionNumber");
-    }
+
     /**
-     * {@snippet :
-     * int libraw_versionNumber(,...);
+     * Variadic invoker class for:
+     * {@snippet lang=c :
+     * int libraw_versionNumber()
      * }
      */
-    public static int libraw_versionNumber(Object... x0) {
-        var mh$ = libraw_versionNumber$MH();
-        try {
-            return (int)mh$.invokeExact(x0);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+    public static class libraw_versionNumber {
+        private static final FunctionDescriptor BASE_DESC = FunctionDescriptor.of(
+                libraw_h.C_INT        );
+        private static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_versionNumber");
+
+        private final MethodHandle handle;
+        private final FunctionDescriptor descriptor;
+        private final MethodHandle spreader;
+
+        private libraw_versionNumber(MethodHandle handle, FunctionDescriptor descriptor, MethodHandle spreader) {
+            this.handle = handle;
+            this.descriptor = descriptor;
+            this.spreader = spreader;
+        }
+
+        /**
+         * Variadic invoker factory for:
+         * {@snippet lang=c :
+         * int libraw_versionNumber()
+         * }
+         */
+        public static libraw_versionNumber makeInvoker(MemoryLayout... layouts) {
+            FunctionDescriptor desc$ = BASE_DESC.appendArgumentLayouts(layouts);
+            Linker.Option fva$ = Linker.Option.firstVariadicArg(BASE_DESC.argumentLayouts().size());
+            var mh$ = Linker.nativeLinker().downcallHandle(ADDR, desc$, fva$);
+            var spreader$ = mh$.asSpreader(Object[].class, layouts.length);
+            return new libraw_versionNumber(mh$, desc$, spreader$);
+        }
+
+        /**
+         * {@return the specialized method handle}
+         */
+        public MethodHandle handle() {
+            return handle;
+        }
+
+        /**
+         * {@return the specialized descriptor}
+         */
+        public FunctionDescriptor descriptor() {
+            return descriptor;
+        }
+
+        public int apply(Object... x0) {
+            try {
+                if (TRACE_DOWNCALLS) {
+                    traceDowncall("libraw_versionNumber", x0);
+                }
+                return (int)spreader.invokeExact(x0);
+            } catch(IllegalArgumentException | ClassCastException ex$)  {
+                throw ex$; // rethrow IAE from passing wrong number/type of args
+            } catch (Throwable ex$) {
+               throw new AssertionError("should not reach here", ex$);
+            }
         }
     }
-    public static MethodHandle libraw_cameraList$MH() {
-        return RuntimeHelper.requireNonNull(constants$119.const$2,"libraw_cameraList");
-    }
+
     /**
-     * {@snippet :
-     * char** libraw_cameraList(,...);
+     * Variadic invoker class for:
+     * {@snippet lang=c :
+     * const char **libraw_cameraList()
      * }
      */
-    public static MemorySegment libraw_cameraList(Object... x0) {
-        var mh$ = libraw_cameraList$MH();
-        try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(x0);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+    public static class libraw_cameraList {
+        private static final FunctionDescriptor BASE_DESC = FunctionDescriptor.of(
+                libraw_h.C_POINTER        );
+        private static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_cameraList");
+
+        private final MethodHandle handle;
+        private final FunctionDescriptor descriptor;
+        private final MethodHandle spreader;
+
+        private libraw_cameraList(MethodHandle handle, FunctionDescriptor descriptor, MethodHandle spreader) {
+            this.handle = handle;
+            this.descriptor = descriptor;
+            this.spreader = spreader;
+        }
+
+        /**
+         * Variadic invoker factory for:
+         * {@snippet lang=c :
+         * const char **libraw_cameraList()
+         * }
+         */
+        public static libraw_cameraList makeInvoker(MemoryLayout... layouts) {
+            FunctionDescriptor desc$ = BASE_DESC.appendArgumentLayouts(layouts);
+            Linker.Option fva$ = Linker.Option.firstVariadicArg(BASE_DESC.argumentLayouts().size());
+            var mh$ = Linker.nativeLinker().downcallHandle(ADDR, desc$, fva$);
+            var spreader$ = mh$.asSpreader(Object[].class, layouts.length);
+            return new libraw_cameraList(mh$, desc$, spreader$);
+        }
+
+        /**
+         * {@return the specialized method handle}
+         */
+        public MethodHandle handle() {
+            return handle;
+        }
+
+        /**
+         * {@return the specialized descriptor}
+         */
+        public FunctionDescriptor descriptor() {
+            return descriptor;
+        }
+
+        public MemorySegment apply(Object... x0) {
+            try {
+                if (TRACE_DOWNCALLS) {
+                    traceDowncall("libraw_cameraList", x0);
+                }
+                return (MemorySegment)spreader.invokeExact(x0);
+            } catch(IllegalArgumentException | ClassCastException ex$)  {
+                throw ex$; // rethrow IAE from passing wrong number/type of args
+            } catch (Throwable ex$) {
+               throw new AssertionError("should not reach here", ex$);
+            }
         }
     }
-    public static MethodHandle libraw_cameraCount$MH() {
-        return RuntimeHelper.requireNonNull(constants$119.const$3,"libraw_cameraCount");
-    }
+
     /**
-     * {@snippet :
-     * int libraw_cameraCount(,...);
+     * Variadic invoker class for:
+     * {@snippet lang=c :
+     * int libraw_cameraCount()
      * }
      */
-    public static int libraw_cameraCount(Object... x0) {
-        var mh$ = libraw_cameraCount$MH();
-        try {
-            return (int)mh$.invokeExact(x0);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+    public static class libraw_cameraCount {
+        private static final FunctionDescriptor BASE_DESC = FunctionDescriptor.of(
+                libraw_h.C_INT        );
+        private static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_cameraCount");
+
+        private final MethodHandle handle;
+        private final FunctionDescriptor descriptor;
+        private final MethodHandle spreader;
+
+        private libraw_cameraCount(MethodHandle handle, FunctionDescriptor descriptor, MethodHandle spreader) {
+            this.handle = handle;
+            this.descriptor = descriptor;
+            this.spreader = spreader;
+        }
+
+        /**
+         * Variadic invoker factory for:
+         * {@snippet lang=c :
+         * int libraw_cameraCount()
+         * }
+         */
+        public static libraw_cameraCount makeInvoker(MemoryLayout... layouts) {
+            FunctionDescriptor desc$ = BASE_DESC.appendArgumentLayouts(layouts);
+            Linker.Option fva$ = Linker.Option.firstVariadicArg(BASE_DESC.argumentLayouts().size());
+            var mh$ = Linker.nativeLinker().downcallHandle(ADDR, desc$, fva$);
+            var spreader$ = mh$.asSpreader(Object[].class, layouts.length);
+            return new libraw_cameraCount(mh$, desc$, spreader$);
+        }
+
+        /**
+         * {@return the specialized method handle}
+         */
+        public MethodHandle handle() {
+            return handle;
+        }
+
+        /**
+         * {@return the specialized descriptor}
+         */
+        public FunctionDescriptor descriptor() {
+            return descriptor;
+        }
+
+        public int apply(Object... x0) {
+            try {
+                if (TRACE_DOWNCALLS) {
+                    traceDowncall("libraw_cameraCount", x0);
+                }
+                return (int)spreader.invokeExact(x0);
+            } catch(IllegalArgumentException | ClassCastException ex$)  {
+                throw ex$; // rethrow IAE from passing wrong number/type of args
+            } catch (Throwable ex$) {
+               throw new AssertionError("should not reach here", ex$);
+            }
         }
     }
-    public static MethodHandle libraw_set_memerror_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$119.const$5,"libraw_set_memerror_handler");
+
+    private static class libraw_set_exifparser_handler {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_exifparser_handler"),
+                    DESC);
     }
+
     /**
-     * {@snippet :
-     * void libraw_set_memerror_handler(struct libraw_data_t*, void (*cb)(void*,char*,char*), void* datap);
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_exifparser_handler(libraw_data_t *, exif_parser_callback cb, void *datap)
      * }
      */
-    public static void libraw_set_memerror_handler(MemorySegment x0, MemorySegment cb, MemorySegment datap) {
-        var mh$ = libraw_set_memerror_handler$MH();
-        try {
-            mh$.invokeExact(x0, cb, datap);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
-        }
+    public static FunctionDescriptor libraw_set_exifparser_handler$descriptor() {
+        return libraw_set_exifparser_handler.DESC;
     }
-    public static MethodHandle libraw_set_exifparser_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$120.const$1,"libraw_set_exifparser_handler");
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_exifparser_handler(libraw_data_t *, exif_parser_callback cb, void *datap)
+     * }
+     */
+    public static MethodHandle libraw_set_exifparser_handler$handle() {
+        return libraw_set_exifparser_handler.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_exifparser_handler(struct libraw_data_t*, void (*cb)(void*,int,int,int,unsigned int,void*,long long), void* datap);
+     * {@snippet lang=c :
+     * void libraw_set_exifparser_handler(libraw_data_t *, exif_parser_callback cb, void *datap)
      * }
      */
     public static void libraw_set_exifparser_handler(MemorySegment x0, MemorySegment cb, MemorySegment datap) {
-        var mh$ = libraw_set_exifparser_handler$MH();
+        var mh$ = libraw_set_exifparser_handler.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_exifparser_handler", x0, cb, datap);
+            }
             mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_dataerror_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$120.const$3,"libraw_set_dataerror_handler");
+
+    private static class libraw_set_dataerror_handler {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_dataerror_handler"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_dataerror_handler(libraw_data_t *, data_callback func, void *datap)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_dataerror_handler$descriptor() {
+        return libraw_set_dataerror_handler.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_dataerror_handler(libraw_data_t *, data_callback func, void *datap)
+     * }
+     */
+    public static MethodHandle libraw_set_dataerror_handler$handle() {
+        return libraw_set_dataerror_handler.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_dataerror_handler(struct libraw_data_t*, void (*func)(void*,char*,int), void* datap);
+     * {@snippet lang=c :
+     * void libraw_set_dataerror_handler(libraw_data_t *, data_callback func, void *datap)
      * }
      */
     public static void libraw_set_dataerror_handler(MemorySegment x0, MemorySegment func, MemorySegment datap) {
-        var mh$ = libraw_set_dataerror_handler$MH();
+        var mh$ = libraw_set_dataerror_handler.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_dataerror_handler", x0, func, datap);
+            }
             mh$.invokeExact(x0, func, datap);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_progress_handler$MH() {
-        return RuntimeHelper.requireNonNull(constants$120.const$5,"libraw_set_progress_handler");
+
+    private static class libraw_set_progress_handler {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_progress_handler"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_progress_handler(libraw_data_t *, progress_callback cb, void *datap)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_progress_handler$descriptor() {
+        return libraw_set_progress_handler.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_progress_handler(libraw_data_t *, progress_callback cb, void *datap)
+     * }
+     */
+    public static MethodHandle libraw_set_progress_handler$handle() {
+        return libraw_set_progress_handler.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_progress_handler(struct libraw_data_t*, int (*cb)(void*,enum LibRaw_progress,int,int), void* datap);
+     * {@snippet lang=c :
+     * void libraw_set_progress_handler(libraw_data_t *, progress_callback cb, void *datap)
      * }
      */
     public static void libraw_set_progress_handler(MemorySegment x0, MemorySegment cb, MemorySegment datap) {
-        var mh$ = libraw_set_progress_handler$MH();
+        var mh$ = libraw_set_progress_handler.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_progress_handler", x0, cb, datap);
+            }
             mh$.invokeExact(x0, cb, datap);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_unpack_function_name$MH() {
-        return RuntimeHelper.requireNonNull(constants$121.const$1,"libraw_unpack_function_name");
+
+    private static class libraw_unpack_function_name {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_unpack_function_name"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const char *libraw_unpack_function_name(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_unpack_function_name$descriptor() {
+        return libraw_unpack_function_name.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const char *libraw_unpack_function_name(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_unpack_function_name$handle() {
+        return libraw_unpack_function_name.HANDLE;
     }
     /**
-     * {@snippet :
-     * char* libraw_unpack_function_name(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * const char *libraw_unpack_function_name(libraw_data_t *lr)
      * }
      */
     public static MemorySegment libraw_unpack_function_name(MemorySegment lr) {
-        var mh$ = libraw_unpack_function_name$MH();
+        var mh$ = libraw_unpack_function_name.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(lr);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_unpack_function_name", lr);
+            }
+            return (MemorySegment)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_decoder_info$MH() {
-        return RuntimeHelper.requireNonNull(constants$121.const$2,"libraw_get_decoder_info");
+
+    private static class libraw_get_decoder_info {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_decoder_info"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_get_decoder_info(libraw_data_t *lr, libraw_decoder_info_t *d)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_decoder_info$descriptor() {
+        return libraw_get_decoder_info.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_get_decoder_info(libraw_data_t *lr, libraw_decoder_info_t *d)
+     * }
+     */
+    public static MethodHandle libraw_get_decoder_info$handle() {
+        return libraw_get_decoder_info.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_get_decoder_info(struct libraw_data_t* lr, struct libraw_decoder_info_t* d);
+     * {@snippet lang=c :
+     * int libraw_get_decoder_info(libraw_data_t *lr, libraw_decoder_info_t *d)
      * }
      */
     public static int libraw_get_decoder_info(MemorySegment lr, MemorySegment d) {
-        var mh$ = libraw_get_decoder_info$MH();
+        var mh$ = libraw_get_decoder_info.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_decoder_info", lr, d);
+            }
             return (int)mh$.invokeExact(lr, d);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_COLOR$MH() {
-        return RuntimeHelper.requireNonNull(constants$121.const$4,"libraw_COLOR");
+
+    private static class libraw_COLOR {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_COLOR"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_COLOR(libraw_data_t *, int row, int col)
+     * }
+     */
+    public static FunctionDescriptor libraw_COLOR$descriptor() {
+        return libraw_COLOR.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_COLOR(libraw_data_t *, int row, int col)
+     * }
+     */
+    public static MethodHandle libraw_COLOR$handle() {
+        return libraw_COLOR.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_COLOR(struct libraw_data_t*, int row, int col);
+     * {@snippet lang=c :
+     * int libraw_COLOR(libraw_data_t *, int row, int col)
      * }
      */
     public static int libraw_COLOR(MemorySegment x0, int row, int col) {
-        var mh$ = libraw_COLOR$MH();
+        var mh$ = libraw_COLOR.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_COLOR", x0, row, col);
+            }
             return (int)mh$.invokeExact(x0, row, col);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_capabilities$MH() {
-        return RuntimeHelper.requireNonNull(constants$121.const$5,"libraw_capabilities");
-    }
+
     /**
-     * {@snippet :
-     * unsigned int libraw_capabilities(,...);
+     * Variadic invoker class for:
+     * {@snippet lang=c :
+     * unsigned int libraw_capabilities()
      * }
      */
-    public static int libraw_capabilities(Object... x0) {
-        var mh$ = libraw_capabilities$MH();
-        try {
-            return (int)mh$.invokeExact(x0);
-        } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+    public static class libraw_capabilities {
+        private static final FunctionDescriptor BASE_DESC = FunctionDescriptor.of(
+                libraw_h.C_INT        );
+        private static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_capabilities");
+
+        private final MethodHandle handle;
+        private final FunctionDescriptor descriptor;
+        private final MethodHandle spreader;
+
+        private libraw_capabilities(MethodHandle handle, FunctionDescriptor descriptor, MethodHandle spreader) {
+            this.handle = handle;
+            this.descriptor = descriptor;
+            this.spreader = spreader;
+        }
+
+        /**
+         * Variadic invoker factory for:
+         * {@snippet lang=c :
+         * unsigned int libraw_capabilities()
+         * }
+         */
+        public static libraw_capabilities makeInvoker(MemoryLayout... layouts) {
+            FunctionDescriptor desc$ = BASE_DESC.appendArgumentLayouts(layouts);
+            Linker.Option fva$ = Linker.Option.firstVariadicArg(BASE_DESC.argumentLayouts().size());
+            var mh$ = Linker.nativeLinker().downcallHandle(ADDR, desc$, fva$);
+            var spreader$ = mh$.asSpreader(Object[].class, layouts.length);
+            return new libraw_capabilities(mh$, desc$, spreader$);
+        }
+
+        /**
+         * {@return the specialized method handle}
+         */
+        public MethodHandle handle() {
+            return handle;
+        }
+
+        /**
+         * {@return the specialized descriptor}
+         */
+        public FunctionDescriptor descriptor() {
+            return descriptor;
+        }
+
+        public int apply(Object... x0) {
+            try {
+                if (TRACE_DOWNCALLS) {
+                    traceDowncall("libraw_capabilities", x0);
+                }
+                return (int)spreader.invokeExact(x0);
+            } catch(IllegalArgumentException | ClassCastException ex$)  {
+                throw ex$; // rethrow IAE from passing wrong number/type of args
+            } catch (Throwable ex$) {
+               throw new AssertionError("should not reach here", ex$);
+            }
         }
     }
-    public static MethodHandle libraw_adjust_sizes_info_only$MH() {
-        return RuntimeHelper.requireNonNull(constants$122.const$0,"libraw_adjust_sizes_info_only");
+
+    private static class libraw_adjust_sizes_info_only {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_adjust_sizes_info_only"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_adjust_sizes_info_only(libraw_data_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_adjust_sizes_info_only$descriptor() {
+        return libraw_adjust_sizes_info_only.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_adjust_sizes_info_only(libraw_data_t *)
+     * }
+     */
+    public static MethodHandle libraw_adjust_sizes_info_only$handle() {
+        return libraw_adjust_sizes_info_only.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_adjust_sizes_info_only(struct libraw_data_t*);
+     * {@snippet lang=c :
+     * int libraw_adjust_sizes_info_only(libraw_data_t *)
      * }
      */
     public static int libraw_adjust_sizes_info_only(MemorySegment x0) {
-        var mh$ = libraw_adjust_sizes_info_only$MH();
+        var mh$ = libraw_adjust_sizes_info_only.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_adjust_sizes_info_only", x0);
+            }
             return (int)mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_dcraw_ppm_tiff_writer$MH() {
-        return RuntimeHelper.requireNonNull(constants$122.const$1,"libraw_dcraw_ppm_tiff_writer");
+
+    private static class libraw_dcraw_ppm_tiff_writer {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_dcraw_ppm_tiff_writer"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_ppm_tiff_writer(libraw_data_t *lr, const char *filename)
+     * }
+     */
+    public static FunctionDescriptor libraw_dcraw_ppm_tiff_writer$descriptor() {
+        return libraw_dcraw_ppm_tiff_writer.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_ppm_tiff_writer(libraw_data_t *lr, const char *filename)
+     * }
+     */
+    public static MethodHandle libraw_dcraw_ppm_tiff_writer$handle() {
+        return libraw_dcraw_ppm_tiff_writer.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_dcraw_ppm_tiff_writer(struct libraw_data_t* lr, char* filename);
+     * {@snippet lang=c :
+     * int libraw_dcraw_ppm_tiff_writer(libraw_data_t *lr, const char *filename)
      * }
      */
     public static int libraw_dcraw_ppm_tiff_writer(MemorySegment lr, MemorySegment filename) {
-        var mh$ = libraw_dcraw_ppm_tiff_writer$MH();
+        var mh$ = libraw_dcraw_ppm_tiff_writer.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_dcraw_ppm_tiff_writer", lr, filename);
+            }
             return (int)mh$.invokeExact(lr, filename);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_dcraw_thumb_writer$MH() {
-        return RuntimeHelper.requireNonNull(constants$122.const$2,"libraw_dcraw_thumb_writer");
+
+    private static class libraw_dcraw_thumb_writer {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_dcraw_thumb_writer"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_thumb_writer(libraw_data_t *lr, const char *fname)
+     * }
+     */
+    public static FunctionDescriptor libraw_dcraw_thumb_writer$descriptor() {
+        return libraw_dcraw_thumb_writer.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_thumb_writer(libraw_data_t *lr, const char *fname)
+     * }
+     */
+    public static MethodHandle libraw_dcraw_thumb_writer$handle() {
+        return libraw_dcraw_thumb_writer.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_dcraw_thumb_writer(struct libraw_data_t* lr, char* fname);
+     * {@snippet lang=c :
+     * int libraw_dcraw_thumb_writer(libraw_data_t *lr, const char *fname)
      * }
      */
     public static int libraw_dcraw_thumb_writer(MemorySegment lr, MemorySegment fname) {
-        var mh$ = libraw_dcraw_thumb_writer$MH();
+        var mh$ = libraw_dcraw_thumb_writer.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_dcraw_thumb_writer", lr, fname);
+            }
             return (int)mh$.invokeExact(lr, fname);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_dcraw_process$MH() {
-        return RuntimeHelper.requireNonNull(constants$122.const$3,"libraw_dcraw_process");
+
+    private static class libraw_dcraw_process {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_dcraw_process"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_process(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_dcraw_process$descriptor() {
+        return libraw_dcraw_process.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_process(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_dcraw_process$handle() {
+        return libraw_dcraw_process.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_dcraw_process(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * int libraw_dcraw_process(libraw_data_t *lr)
      * }
      */
     public static int libraw_dcraw_process(MemorySegment lr) {
-        var mh$ = libraw_dcraw_process$MH();
+        var mh$ = libraw_dcraw_process.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_dcraw_process", lr);
+            }
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_dcraw_make_mem_image$MH() {
-        return RuntimeHelper.requireNonNull(constants$122.const$5,"libraw_dcraw_make_mem_image");
+
+    private static class libraw_dcraw_make_mem_image {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_dcraw_make_mem_image"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_image(libraw_data_t *lr, int *errc)
+     * }
+     */
+    public static FunctionDescriptor libraw_dcraw_make_mem_image$descriptor() {
+        return libraw_dcraw_make_mem_image.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_image(libraw_data_t *lr, int *errc)
+     * }
+     */
+    public static MethodHandle libraw_dcraw_make_mem_image$handle() {
+        return libraw_dcraw_make_mem_image.HANDLE;
     }
     /**
-     * {@snippet :
-     * struct libraw_processed_image_t* libraw_dcraw_make_mem_image(struct libraw_data_t* lr, int* errc);
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_image(libraw_data_t *lr, int *errc)
      * }
      */
     public static MemorySegment libraw_dcraw_make_mem_image(MemorySegment lr, MemorySegment errc) {
-        var mh$ = libraw_dcraw_make_mem_image$MH();
+        var mh$ = libraw_dcraw_make_mem_image.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(lr, errc);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_dcraw_make_mem_image", lr, errc);
+            }
+            return (MemorySegment)mh$.invokeExact(lr, errc);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_dcraw_make_mem_thumb$MH() {
-        return RuntimeHelper.requireNonNull(constants$123.const$0,"libraw_dcraw_make_mem_thumb");
+
+    private static class libraw_dcraw_make_mem_thumb {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_dcraw_make_mem_thumb"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_thumb(libraw_data_t *lr, int *errc)
+     * }
+     */
+    public static FunctionDescriptor libraw_dcraw_make_mem_thumb$descriptor() {
+        return libraw_dcraw_make_mem_thumb.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_thumb(libraw_data_t *lr, int *errc)
+     * }
+     */
+    public static MethodHandle libraw_dcraw_make_mem_thumb$handle() {
+        return libraw_dcraw_make_mem_thumb.HANDLE;
     }
     /**
-     * {@snippet :
-     * struct libraw_processed_image_t* libraw_dcraw_make_mem_thumb(struct libraw_data_t* lr, int* errc);
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_thumb(libraw_data_t *lr, int *errc)
      * }
      */
     public static MemorySegment libraw_dcraw_make_mem_thumb(MemorySegment lr, MemorySegment errc) {
-        var mh$ = libraw_dcraw_make_mem_thumb$MH();
+        var mh$ = libraw_dcraw_make_mem_thumb.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(lr, errc);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_dcraw_make_mem_thumb", lr, errc);
+            }
+            return (MemorySegment)mh$.invokeExact(lr, errc);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_dcraw_clear_mem$MH() {
-        return RuntimeHelper.requireNonNull(constants$123.const$1,"libraw_dcraw_clear_mem");
+
+    private static class libraw_dcraw_clear_mem {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_dcraw_clear_mem"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_dcraw_clear_mem(libraw_processed_image_t *)
+     * }
+     */
+    public static FunctionDescriptor libraw_dcraw_clear_mem$descriptor() {
+        return libraw_dcraw_clear_mem.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_dcraw_clear_mem(libraw_processed_image_t *)
+     * }
+     */
+    public static MethodHandle libraw_dcraw_clear_mem$handle() {
+        return libraw_dcraw_clear_mem.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_dcraw_clear_mem(struct libraw_processed_image_t*);
+     * {@snippet lang=c :
+     * void libraw_dcraw_clear_mem(libraw_processed_image_t *)
      * }
      */
     public static void libraw_dcraw_clear_mem(MemorySegment x0) {
-        var mh$ = libraw_dcraw_clear_mem$MH();
+        var mh$ = libraw_dcraw_clear_mem.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_dcraw_clear_mem", x0);
+            }
             mh$.invokeExact(x0);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_demosaic$MH() {
-        return RuntimeHelper.requireNonNull(constants$123.const$3,"libraw_set_demosaic");
+
+    private static class libraw_set_demosaic {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_demosaic"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_demosaic(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_demosaic$descriptor() {
+        return libraw_set_demosaic.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_demosaic(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_demosaic$handle() {
+        return libraw_set_demosaic.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_demosaic(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_demosaic(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_demosaic(MemorySegment lr, int value) {
-        var mh$ = libraw_set_demosaic$MH();
+        var mh$ = libraw_set_demosaic.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_demosaic", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_output_color$MH() {
-        return RuntimeHelper.requireNonNull(constants$123.const$4,"libraw_set_output_color");
+
+    private static class libraw_set_output_color {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_output_color"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_output_color(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_output_color$descriptor() {
+        return libraw_set_output_color.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_output_color(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_output_color$handle() {
+        return libraw_set_output_color.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_output_color(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_output_color(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_output_color(MemorySegment lr, int value) {
-        var mh$ = libraw_set_output_color$MH();
+        var mh$ = libraw_set_output_color.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_output_color", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_adjust_maximum_thr$MH() {
-        return RuntimeHelper.requireNonNull(constants$123.const$6,"libraw_set_adjust_maximum_thr");
+
+    private static class libraw_set_adjust_maximum_thr {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_FLOAT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_adjust_maximum_thr"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_adjust_maximum_thr(libraw_data_t *lr, float value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_adjust_maximum_thr$descriptor() {
+        return libraw_set_adjust_maximum_thr.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_adjust_maximum_thr(libraw_data_t *lr, float value)
+     * }
+     */
+    public static MethodHandle libraw_set_adjust_maximum_thr$handle() {
+        return libraw_set_adjust_maximum_thr.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_adjust_maximum_thr(struct libraw_data_t* lr, float value);
+     * {@snippet lang=c :
+     * void libraw_set_adjust_maximum_thr(libraw_data_t *lr, float value)
      * }
      */
     public static void libraw_set_adjust_maximum_thr(MemorySegment lr, float value) {
-        var mh$ = libraw_set_adjust_maximum_thr$MH();
+        var mh$ = libraw_set_adjust_maximum_thr.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_adjust_maximum_thr", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_user_mul$MH() {
-        return RuntimeHelper.requireNonNull(constants$124.const$1,"libraw_set_user_mul");
+
+    private static class libraw_set_user_mul {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT,
+            libraw_h.C_FLOAT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_user_mul"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_user_mul(libraw_data_t *lr, int index, float val)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_user_mul$descriptor() {
+        return libraw_set_user_mul.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_user_mul(libraw_data_t *lr, int index, float val)
+     * }
+     */
+    public static MethodHandle libraw_set_user_mul$handle() {
+        return libraw_set_user_mul.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_user_mul(struct libraw_data_t* lr, int index, float val);
+     * {@snippet lang=c :
+     * void libraw_set_user_mul(libraw_data_t *lr, int index, float val)
      * }
      */
     public static void libraw_set_user_mul(MemorySegment lr, int index, float val) {
-        var mh$ = libraw_set_user_mul$MH();
+        var mh$ = libraw_set_user_mul.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_user_mul", lr, index, val);
+            }
             mh$.invokeExact(lr, index, val);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_output_bps$MH() {
-        return RuntimeHelper.requireNonNull(constants$124.const$2,"libraw_set_output_bps");
+
+    private static class libraw_set_output_bps {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_output_bps"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_output_bps(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_output_bps$descriptor() {
+        return libraw_set_output_bps.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_output_bps(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_output_bps$handle() {
+        return libraw_set_output_bps.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_output_bps(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_output_bps(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_output_bps(MemorySegment lr, int value) {
-        var mh$ = libraw_set_output_bps$MH();
+        var mh$ = libraw_set_output_bps.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_output_bps", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_gamma$MH() {
-        return RuntimeHelper.requireNonNull(constants$124.const$3,"libraw_set_gamma");
+
+    private static class libraw_set_gamma {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT,
+            libraw_h.C_FLOAT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_gamma"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_gamma(libraw_data_t *lr, int index, float value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_gamma$descriptor() {
+        return libraw_set_gamma.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_gamma(libraw_data_t *lr, int index, float value)
+     * }
+     */
+    public static MethodHandle libraw_set_gamma$handle() {
+        return libraw_set_gamma.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_gamma(struct libraw_data_t* lr, int index, float value);
+     * {@snippet lang=c :
+     * void libraw_set_gamma(libraw_data_t *lr, int index, float value)
      * }
      */
     public static void libraw_set_gamma(MemorySegment lr, int index, float value) {
-        var mh$ = libraw_set_gamma$MH();
+        var mh$ = libraw_set_gamma.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_gamma", lr, index, value);
+            }
             mh$.invokeExact(lr, index, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_no_auto_bright$MH() {
-        return RuntimeHelper.requireNonNull(constants$124.const$4,"libraw_set_no_auto_bright");
+
+    private static class libraw_set_no_auto_bright {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_no_auto_bright"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_no_auto_bright(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_no_auto_bright$descriptor() {
+        return libraw_set_no_auto_bright.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_no_auto_bright(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_no_auto_bright$handle() {
+        return libraw_set_no_auto_bright.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_no_auto_bright(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_no_auto_bright(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_no_auto_bright(MemorySegment lr, int value) {
-        var mh$ = libraw_set_no_auto_bright$MH();
+        var mh$ = libraw_set_no_auto_bright.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_no_auto_bright", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_bright$MH() {
-        return RuntimeHelper.requireNonNull(constants$124.const$5,"libraw_set_bright");
+
+    private static class libraw_set_bright {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_FLOAT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_bright"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_bright(libraw_data_t *lr, float value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_bright$descriptor() {
+        return libraw_set_bright.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_bright(libraw_data_t *lr, float value)
+     * }
+     */
+    public static MethodHandle libraw_set_bright$handle() {
+        return libraw_set_bright.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_bright(struct libraw_data_t* lr, float value);
+     * {@snippet lang=c :
+     * void libraw_set_bright(libraw_data_t *lr, float value)
      * }
      */
     public static void libraw_set_bright(MemorySegment lr, float value) {
-        var mh$ = libraw_set_bright$MH();
+        var mh$ = libraw_set_bright.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_bright", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_highlight$MH() {
-        return RuntimeHelper.requireNonNull(constants$125.const$0,"libraw_set_highlight");
+
+    private static class libraw_set_highlight {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_highlight"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_highlight(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_highlight$descriptor() {
+        return libraw_set_highlight.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_highlight(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_highlight$handle() {
+        return libraw_set_highlight.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_highlight(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_highlight(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_highlight(MemorySegment lr, int value) {
-        var mh$ = libraw_set_highlight$MH();
+        var mh$ = libraw_set_highlight.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_highlight", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_fbdd_noiserd$MH() {
-        return RuntimeHelper.requireNonNull(constants$125.const$1,"libraw_set_fbdd_noiserd");
+
+    private static class libraw_set_fbdd_noiserd {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_fbdd_noiserd"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_fbdd_noiserd(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_fbdd_noiserd$descriptor() {
+        return libraw_set_fbdd_noiserd.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_fbdd_noiserd(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_fbdd_noiserd$handle() {
+        return libraw_set_fbdd_noiserd.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_fbdd_noiserd(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_fbdd_noiserd(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_fbdd_noiserd(MemorySegment lr, int value) {
-        var mh$ = libraw_set_fbdd_noiserd$MH();
+        var mh$ = libraw_set_fbdd_noiserd.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_fbdd_noiserd", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_raw_height$MH() {
-        return RuntimeHelper.requireNonNull(constants$125.const$2,"libraw_get_raw_height");
+
+    private static class libraw_get_raw_height {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_raw_height"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_get_raw_height(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_raw_height$descriptor() {
+        return libraw_get_raw_height.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_get_raw_height(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_raw_height$handle() {
+        return libraw_get_raw_height.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_get_raw_height(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * int libraw_get_raw_height(libraw_data_t *lr)
      * }
      */
     public static int libraw_get_raw_height(MemorySegment lr) {
-        var mh$ = libraw_get_raw_height$MH();
+        var mh$ = libraw_get_raw_height.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_raw_height", lr);
+            }
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_raw_width$MH() {
-        return RuntimeHelper.requireNonNull(constants$125.const$3,"libraw_get_raw_width");
+
+    private static class libraw_get_raw_width {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_raw_width"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_get_raw_width(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_raw_width$descriptor() {
+        return libraw_get_raw_width.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_get_raw_width(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_raw_width$handle() {
+        return libraw_get_raw_width.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_get_raw_width(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * int libraw_get_raw_width(libraw_data_t *lr)
      * }
      */
     public static int libraw_get_raw_width(MemorySegment lr) {
-        var mh$ = libraw_get_raw_width$MH();
+        var mh$ = libraw_get_raw_width.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_raw_width", lr);
+            }
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_iheight$MH() {
-        return RuntimeHelper.requireNonNull(constants$125.const$4,"libraw_get_iheight");
+
+    private static class libraw_get_iheight {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_iheight"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_get_iheight(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_iheight$descriptor() {
+        return libraw_get_iheight.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_get_iheight(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_iheight$handle() {
+        return libraw_get_iheight.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_get_iheight(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * int libraw_get_iheight(libraw_data_t *lr)
      * }
      */
     public static int libraw_get_iheight(MemorySegment lr) {
-        var mh$ = libraw_get_iheight$MH();
+        var mh$ = libraw_get_iheight.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_iheight", lr);
+            }
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_iwidth$MH() {
-        return RuntimeHelper.requireNonNull(constants$125.const$5,"libraw_get_iwidth");
+
+    private static class libraw_get_iwidth {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_iwidth"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_get_iwidth(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_iwidth$descriptor() {
+        return libraw_get_iwidth.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_get_iwidth(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_iwidth$handle() {
+        return libraw_get_iwidth.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_get_iwidth(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * int libraw_get_iwidth(libraw_data_t *lr)
      * }
      */
     public static int libraw_get_iwidth(MemorySegment lr) {
-        var mh$ = libraw_get_iwidth$MH();
+        var mh$ = libraw_get_iwidth.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_iwidth", lr);
+            }
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_cam_mul$MH() {
-        return RuntimeHelper.requireNonNull(constants$126.const$1,"libraw_get_cam_mul");
+
+    private static class libraw_get_cam_mul {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_FLOAT,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_cam_mul"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * float libraw_get_cam_mul(libraw_data_t *lr, int index)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_cam_mul$descriptor() {
+        return libraw_get_cam_mul.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * float libraw_get_cam_mul(libraw_data_t *lr, int index)
+     * }
+     */
+    public static MethodHandle libraw_get_cam_mul$handle() {
+        return libraw_get_cam_mul.HANDLE;
     }
     /**
-     * {@snippet :
-     * float libraw_get_cam_mul(struct libraw_data_t* lr, int index);
+     * {@snippet lang=c :
+     * float libraw_get_cam_mul(libraw_data_t *lr, int index)
      * }
      */
     public static float libraw_get_cam_mul(MemorySegment lr, int index) {
-        var mh$ = libraw_get_cam_mul$MH();
+        var mh$ = libraw_get_cam_mul.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_cam_mul", lr, index);
+            }
             return (float)mh$.invokeExact(lr, index);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_pre_mul$MH() {
-        return RuntimeHelper.requireNonNull(constants$126.const$2,"libraw_get_pre_mul");
+
+    private static class libraw_get_pre_mul {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_FLOAT,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_pre_mul"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * float libraw_get_pre_mul(libraw_data_t *lr, int index)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_pre_mul$descriptor() {
+        return libraw_get_pre_mul.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * float libraw_get_pre_mul(libraw_data_t *lr, int index)
+     * }
+     */
+    public static MethodHandle libraw_get_pre_mul$handle() {
+        return libraw_get_pre_mul.HANDLE;
     }
     /**
-     * {@snippet :
-     * float libraw_get_pre_mul(struct libraw_data_t* lr, int index);
+     * {@snippet lang=c :
+     * float libraw_get_pre_mul(libraw_data_t *lr, int index)
      * }
      */
     public static float libraw_get_pre_mul(MemorySegment lr, int index) {
-        var mh$ = libraw_get_pre_mul$MH();
+        var mh$ = libraw_get_pre_mul.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_pre_mul", lr, index);
+            }
             return (float)mh$.invokeExact(lr, index);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_rgb_cam$MH() {
-        return RuntimeHelper.requireNonNull(constants$126.const$4,"libraw_get_rgb_cam");
+
+    private static class libraw_get_rgb_cam {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_FLOAT,
+            libraw_h.C_POINTER,
+            libraw_h.C_INT,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_rgb_cam"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * float libraw_get_rgb_cam(libraw_data_t *lr, int index1, int index2)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_rgb_cam$descriptor() {
+        return libraw_get_rgb_cam.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * float libraw_get_rgb_cam(libraw_data_t *lr, int index1, int index2)
+     * }
+     */
+    public static MethodHandle libraw_get_rgb_cam$handle() {
+        return libraw_get_rgb_cam.HANDLE;
     }
     /**
-     * {@snippet :
-     * float libraw_get_rgb_cam(struct libraw_data_t* lr, int index1, int index2);
+     * {@snippet lang=c :
+     * float libraw_get_rgb_cam(libraw_data_t *lr, int index1, int index2)
      * }
      */
     public static float libraw_get_rgb_cam(MemorySegment lr, int index1, int index2) {
-        var mh$ = libraw_get_rgb_cam$MH();
+        var mh$ = libraw_get_rgb_cam.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_rgb_cam", lr, index1, index2);
+            }
             return (float)mh$.invokeExact(lr, index1, index2);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_color_maximum$MH() {
-        return RuntimeHelper.requireNonNull(constants$126.const$5,"libraw_get_color_maximum");
+
+    private static class libraw_get_color_maximum {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_INT,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_color_maximum"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int libraw_get_color_maximum(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_color_maximum$descriptor() {
+        return libraw_get_color_maximum.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int libraw_get_color_maximum(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_color_maximum$handle() {
+        return libraw_get_color_maximum.HANDLE;
     }
     /**
-     * {@snippet :
-     * int libraw_get_color_maximum(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * int libraw_get_color_maximum(libraw_data_t *lr)
      * }
      */
     public static int libraw_get_color_maximum(MemorySegment lr) {
-        var mh$ = libraw_get_color_maximum$MH();
+        var mh$ = libraw_get_color_maximum.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_color_maximum", lr);
+            }
             return (int)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_set_output_tif$MH() {
-        return RuntimeHelper.requireNonNull(constants$127.const$0,"libraw_set_output_tif");
+
+    private static class libraw_set_output_tif {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            libraw_h.C_POINTER,
+            libraw_h.C_INT
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_set_output_tif"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void libraw_set_output_tif(libraw_data_t *lr, int value)
+     * }
+     */
+    public static FunctionDescriptor libraw_set_output_tif$descriptor() {
+        return libraw_set_output_tif.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void libraw_set_output_tif(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MethodHandle libraw_set_output_tif$handle() {
+        return libraw_set_output_tif.HANDLE;
     }
     /**
-     * {@snippet :
-     * void libraw_set_output_tif(struct libraw_data_t* lr, int value);
+     * {@snippet lang=c :
+     * void libraw_set_output_tif(libraw_data_t *lr, int value)
      * }
      */
     public static void libraw_set_output_tif(MemorySegment lr, int value) {
-        var mh$ = libraw_set_output_tif$MH();
+        var mh$ = libraw_set_output_tif.HANDLE;
         try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_set_output_tif", lr, value);
+            }
             mh$.invokeExact(lr, value);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_iparams$MH() {
-        return RuntimeHelper.requireNonNull(constants$127.const$1,"libraw_get_iparams");
+
+    private static class libraw_get_iparams {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_iparams"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * libraw_iparams_t *libraw_get_iparams(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_iparams$descriptor() {
+        return libraw_get_iparams.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * libraw_iparams_t *libraw_get_iparams(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_iparams$handle() {
+        return libraw_get_iparams.HANDLE;
     }
     /**
-     * {@snippet :
-     * struct libraw_iparams_t* libraw_get_iparams(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * libraw_iparams_t *libraw_get_iparams(libraw_data_t *lr)
      * }
      */
     public static MemorySegment libraw_get_iparams(MemorySegment lr) {
-        var mh$ = libraw_get_iparams$MH();
+        var mh$ = libraw_get_iparams.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(lr);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_iparams", lr);
+            }
+            return (MemorySegment)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_lensinfo$MH() {
-        return RuntimeHelper.requireNonNull(constants$127.const$2,"libraw_get_lensinfo");
+
+    private static class libraw_get_lensinfo {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_lensinfo"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * libraw_lensinfo_t *libraw_get_lensinfo(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_lensinfo$descriptor() {
+        return libraw_get_lensinfo.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * libraw_lensinfo_t *libraw_get_lensinfo(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_lensinfo$handle() {
+        return libraw_get_lensinfo.HANDLE;
     }
     /**
-     * {@snippet :
-     * struct libraw_lensinfo_t* libraw_get_lensinfo(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * libraw_lensinfo_t *libraw_get_lensinfo(libraw_data_t *lr)
      * }
      */
     public static MemorySegment libraw_get_lensinfo(MemorySegment lr) {
-        var mh$ = libraw_get_lensinfo$MH();
+        var mh$ = libraw_get_lensinfo.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(lr);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_lensinfo", lr);
+            }
+            return (MemorySegment)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
-    public static MethodHandle libraw_get_imgother$MH() {
-        return RuntimeHelper.requireNonNull(constants$127.const$3,"libraw_get_imgother");
+
+    private static class libraw_get_imgother {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            libraw_h.C_POINTER,
+            libraw_h.C_POINTER
+        );
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
+                    libraw_h.findOrThrow("libraw_get_imgother"),
+                    DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * libraw_imgother_t *libraw_get_imgother(libraw_data_t *lr)
+     * }
+     */
+    public static FunctionDescriptor libraw_get_imgother$descriptor() {
+        return libraw_get_imgother.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * libraw_imgother_t *libraw_get_imgother(libraw_data_t *lr)
+     * }
+     */
+    public static MethodHandle libraw_get_imgother$handle() {
+        return libraw_get_imgother.HANDLE;
     }
     /**
-     * {@snippet :
-     * struct libraw_imgother_t* libraw_get_imgother(struct libraw_data_t* lr);
+     * {@snippet lang=c :
+     * libraw_imgother_t *libraw_get_imgother(libraw_data_t *lr)
      * }
      */
     public static MemorySegment libraw_get_imgother(MemorySegment lr) {
-        var mh$ = libraw_get_imgother$MH();
+        var mh$ = libraw_get_imgother.HANDLE;
         try {
-            return (java.lang.foreign.MemorySegment)mh$.invokeExact(lr);
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("libraw_get_imgother", lr);
+            }
+            return (MemorySegment)mh$.invokeExact(lr);
         } catch (Throwable ex$) {
-            throw new AssertionError("should not reach here", ex$);
+           throw new AssertionError("should not reach here", ex$);
         }
     }
+    private static final MemorySegment NULL = MemorySegment.ofAddress(0L);
     /**
-     * {@snippet :
+     * {@snippet lang=c :
+     * #define NULL (void*) 0
+     * }
+     */
+    public static MemorySegment NULL() {
+        return NULL;
+    }
+    private static final int SCHAR_MIN = (int)-128L;
+    /**
+     * {@snippet lang=c :
      * #define SCHAR_MIN -128
      * }
      */
     public static int SCHAR_MIN() {
-        return (int)-128L;
+        return SCHAR_MIN;
     }
+    private static final int CHAR_MIN = (int)-128L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define CHAR_MIN -128
      * }
      */
     public static int CHAR_MIN() {
-        return (int)-128L;
+        return CHAR_MIN;
     }
+    private static final int CHAR_MAX = (int)127L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define CHAR_MAX 127
      * }
      */
     public static int CHAR_MAX() {
-        return (int)127L;
+        return CHAR_MAX;
     }
+    private static final int SHRT_MIN = (int)-32768L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define SHRT_MIN -32768
      * }
      */
     public static int SHRT_MIN() {
-        return (int)-32768L;
+        return SHRT_MIN;
     }
+    private static final int INT_MIN = (int)-2147483648L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define INT_MIN -2147483648
      * }
      */
     public static int INT_MIN() {
-        return (int)-2147483648L;
+        return INT_MIN;
     }
+    private static final int UINT_MAX = (int)4294967295L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define UINT_MAX 4294967295
      * }
      */
     public static int UINT_MAX() {
-        return (int)4294967295L;
+        return UINT_MAX;
     }
+    private static final int LONG_MIN = (int)-2147483648L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LONG_MIN -2147483648
      * }
      */
     public static int LONG_MIN() {
-        return (int)-2147483648L;
+        return LONG_MIN;
     }
+    private static final int LONG_MAX = (int)2147483647L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LONG_MAX 2147483647
      * }
      */
     public static int LONG_MAX() {
-        return (int)2147483647L;
+        return LONG_MAX;
     }
+    private static final int ULONG_MAX = (int)4294967295L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define ULONG_MAX 4294967295
      * }
      */
     public static int ULONG_MAX() {
-        return (int)4294967295L;
+        return ULONG_MAX;
     }
+    private static final long LLONG_MAX = 9223372036854775807L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LLONG_MAX 9223372036854775807
      * }
      */
     public static long LLONG_MAX() {
-        return 9223372036854775807L;
+        return LLONG_MAX;
     }
+    private static final long LLONG_MIN = -9223372036854775808L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LLONG_MIN -9223372036854775808
      * }
      */
     public static long LLONG_MIN() {
-        return -9223372036854775808L;
+        return LLONG_MIN;
     }
+    private static final long ULLONG_MAX = -1L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define ULLONG_MAX -1
      * }
      */
     public static long ULLONG_MAX() {
-        return -1L;
+        return ULLONG_MAX;
     }
+    private static final long LONG_LONG_MAX = 9223372036854775807L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LONG_LONG_MAX 9223372036854775807
      * }
      */
     public static long LONG_LONG_MAX() {
-        return 9223372036854775807L;
+        return LONG_LONG_MAX;
     }
+    private static final long LONG_LONG_MIN = -9223372036854775808L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LONG_LONG_MIN -9223372036854775808
      * }
      */
     public static long LONG_LONG_MIN() {
-        return -9223372036854775808L;
+        return LONG_LONG_MIN;
     }
+    private static final long ULONG_LONG_MAX = -1L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define ULONG_LONG_MAX -1
      * }
      */
     public static long ULONG_LONG_MAX() {
-        return -1L;
+        return ULONG_LONG_MAX;
     }
+    private static final float LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD = 0.75f;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD 0.75
      * }
      */
-    public static double LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD() {
-        return 0.75d;
+    public static float LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD() {
+        return LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD;
     }
+    private static final float LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD = 0.009999999776482582f;
     /**
-     * {@snippet :
-     * #define LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD 0.01
+     * {@snippet lang=c :
+     * #define LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD 0.009999999776482582
      * }
      */
-    public static double LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD() {
-        return 0.01d;
+    public static float LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD() {
+        return LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD;
     }
+    private static final int LIBRAW_MAX_ALLOC_MB_DEFAULT = (int)2048L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_MAX_ALLOC_MB_DEFAULT 2048
      * }
      */
     public static int LIBRAW_MAX_ALLOC_MB_DEFAULT() {
-        return (int)2048L;
+        return LIBRAW_MAX_ALLOC_MB_DEFAULT;
     }
+    private static final long LIBRAW_MAX_PROFILE_SIZE_MB = 256L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
+     * #define LIBRAW_MAX_PROFILE_SIZE_MB 256
+     * }
+     */
+    public static long LIBRAW_MAX_PROFILE_SIZE_MB() {
+        return LIBRAW_MAX_PROFILE_SIZE_MB;
+    }
+    private static final long LIBRAW_MAX_NONDNG_RAW_FILE_SIZE = 2147483647L;
+    /**
+     * {@snippet lang=c :
      * #define LIBRAW_MAX_NONDNG_RAW_FILE_SIZE 2147483647
      * }
      */
     public static long LIBRAW_MAX_NONDNG_RAW_FILE_SIZE() {
-        return 2147483647L;
+        return LIBRAW_MAX_NONDNG_RAW_FILE_SIZE;
     }
+    private static final long LIBRAW_MAX_DNG_RAW_FILE_SIZE = 2147483647L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_MAX_DNG_RAW_FILE_SIZE 2147483647
      * }
      */
     public static long LIBRAW_MAX_DNG_RAW_FILE_SIZE() {
-        return 2147483647L;
+        return LIBRAW_MAX_DNG_RAW_FILE_SIZE;
     }
+    private static final int LIBRAW_MAX_THUMBNAIL_MB = (int)512L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_MAX_THUMBNAIL_MB 512
      * }
      */
     public static int LIBRAW_MAX_THUMBNAIL_MB() {
-        return (int)512L;
+        return LIBRAW_MAX_THUMBNAIL_MB;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int8u = (int)1L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int8u 1
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int8u() {
-        return (int)1L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int8u;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_string = (int)2L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_string 2
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_string() {
-        return (int)2L;
+        return LIBRAW_EXIFTOOLTAGTYPE_string;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int16u = (int)3L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int16u 3
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int16u() {
-        return (int)3L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int16u;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int32u = (int)4L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int32u 4
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int32u() {
-        return (int)4L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int32u;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_rational64u = (int)5L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_rational64u 5
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_rational64u() {
-        return (int)5L;
+        return LIBRAW_EXIFTOOLTAGTYPE_rational64u;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int8s = (int)6L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int8s 6
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int8s() {
-        return (int)6L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int8s;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_undef = (int)7L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_undef 7
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_undef() {
-        return (int)7L;
+        return LIBRAW_EXIFTOOLTAGTYPE_undef;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_binary = (int)7L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_binary 7
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_binary() {
-        return (int)7L;
+        return LIBRAW_EXIFTOOLTAGTYPE_binary;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int16s = (int)8L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int16s 8
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int16s() {
-        return (int)8L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int16s;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int32s = (int)9L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int32s 9
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int32s() {
-        return (int)9L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int32s;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_rational64s = (int)10L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_rational64s 10
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_rational64s() {
-        return (int)10L;
+        return LIBRAW_EXIFTOOLTAGTYPE_rational64s;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_float = (int)11L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_float 11
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_float() {
-        return (int)11L;
+        return LIBRAW_EXIFTOOLTAGTYPE_float;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_double = (int)12L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_double 12
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_double() {
-        return (int)12L;
+        return LIBRAW_EXIFTOOLTAGTYPE_double;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_ifd = (int)13L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_ifd 13
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_ifd() {
-        return (int)13L;
+        return LIBRAW_EXIFTOOLTAGTYPE_ifd;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_unicode = (int)14L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_unicode 14
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_unicode() {
-        return (int)14L;
+        return LIBRAW_EXIFTOOLTAGTYPE_unicode;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_complex = (int)15L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_complex 15
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_complex() {
-        return (int)15L;
+        return LIBRAW_EXIFTOOLTAGTYPE_complex;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int64u = (int)16L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int64u 16
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int64u() {
-        return (int)16L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int64u;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_int64s = (int)17L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_int64s 17
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_int64s() {
-        return (int)17L;
+        return LIBRAW_EXIFTOOLTAGTYPE_int64s;
     }
+    private static final int LIBRAW_EXIFTOOLTAGTYPE_ifd64 = (int)18L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_EXIFTOOLTAGTYPE_ifd64 18
      * }
      */
     public static int LIBRAW_EXIFTOOLTAGTYPE_ifd64() {
-        return (int)18L;
+        return LIBRAW_EXIFTOOLTAGTYPE_ifd64;
     }
+    private static final long LIBRAW_LENS_NOT_SET = -1L;
     /**
-     * {@snippet :
+     * {@snippet lang=c :
      * #define LIBRAW_LENS_NOT_SET -1
      * }
      */
     public static long LIBRAW_LENS_NOT_SET() {
-        return -1L;
+        return LIBRAW_LENS_NOT_SET;
     }
     /**
-     * {@snippet :
-     * #define LIBRAW_VERSION_STR "0.21.0-Snapshot202110"
+     * {@snippet lang=c :
+     * #define LIBRAW_VERSION_STR "0.21.2-Release"
      * }
      */
     public static MemorySegment LIBRAW_VERSION_STR() {
-        return constants$127.const$4;
+        class Holder {
+            static final MemorySegment LIBRAW_VERSION_STR
+                = libraw_h.LIBRARY_ARENA.allocateFrom("0.21.2-Release");
+        }
+        return Holder.LIBRAW_VERSION_STR;
     }
+    private static final int LIBRAW_VERSION = (int)5378L;
     /**
-     * {@snippet :
-     * #define LIBRAW_VERSION 5376
+     * {@snippet lang=c :
+     * #define LIBRAW_VERSION 5378
      * }
      */
     public static int LIBRAW_VERSION() {
-        return (int)5376L;
+        return LIBRAW_VERSION;
     }
 }
-
 

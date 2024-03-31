@@ -2,84 +2,173 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_decoder_info_t {
- *     char* decoder_name;
+ * {@snippet lang=c :
+ * struct {
+ *     const char *decoder_name;
  *     unsigned int decoder_flags;
- * };
+ * }
  * }
  */
 public class libraw_decoder_info_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$0.const$0;
+    libraw_decoder_info_t() {
+        // Should not be called directly
     }
-    public static VarHandle decoder_name$VH() {
-        return constants$0.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * char* decoder_name;
-     * }
-     */
-    public static MemorySegment decoder_name$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$0.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * char* decoder_name;
-     * }
-     */
-    public static void decoder_name$set(MemorySegment seg, MemorySegment x) {
-        constants$0.const$1.set(seg, x);
-    }
-    public static MemorySegment decoder_name$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$0.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void decoder_name$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$0.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle decoder_flags$VH() {
-        return constants$0.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int decoder_flags;
-     * }
-     */
-    public static int decoder_flags$get(MemorySegment seg) {
-        return (int)constants$0.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int decoder_flags;
-     * }
-     */
-    public static void decoder_flags$set(MemorySegment seg, int x) {
-        constants$0.const$2.set(seg, x);
-    }
-    public static int decoder_flags$get(MemorySegment seg, long index) {
-        return (int)constants$0.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void decoder_flags$set(MemorySegment seg, long index, int x) {
-        constants$0.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_POINTER.withName("decoder_name"),
+        libraw_h.C_INT.withName("decoder_flags"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("$anon$120:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final AddressLayout decoder_name$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("decoder_name"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * const char *decoder_name
+     * }
+     */
+    public static final AddressLayout decoder_name$layout() {
+        return decoder_name$LAYOUT;
+    }
+
+    private static final long decoder_name$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * const char *decoder_name
+     * }
+     */
+    public static final long decoder_name$offset() {
+        return decoder_name$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * const char *decoder_name
+     * }
+     */
+    public static MemorySegment decoder_name(MemorySegment struct) {
+        return struct.get(decoder_name$LAYOUT, decoder_name$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * const char *decoder_name
+     * }
+     */
+    public static void decoder_name(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(decoder_name$LAYOUT, decoder_name$OFFSET, fieldValue);
+    }
+
+    private static final OfInt decoder_flags$LAYOUT = (OfInt)$LAYOUT.select(groupElement("decoder_flags"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int decoder_flags
+     * }
+     */
+    public static final OfInt decoder_flags$layout() {
+        return decoder_flags$LAYOUT;
+    }
+
+    private static final long decoder_flags$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int decoder_flags
+     * }
+     */
+    public static final long decoder_flags$offset() {
+        return decoder_flags$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int decoder_flags
+     * }
+     */
+    public static int decoder_flags(MemorySegment struct) {
+        return struct.get(decoder_flags$LAYOUT, decoder_flags$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int decoder_flags
+     * }
+     */
+    public static void decoder_flags(MemorySegment struct, int fieldValue) {
+        struct.set(decoder_flags$LAYOUT, decoder_flags$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

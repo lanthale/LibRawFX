@@ -2,60 +2,206 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
+ * {@snippet lang=c :
  * struct decode {
- *     struct decode* branch[2];
+ *     struct decode *branch[2];
  *     int leaf;
- * };
+ * }
  * }
  */
 public class decode {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$105.const$5;
+    decode() {
+        // Should not be called directly
     }
-    public static MemorySegment branch$slice(MemorySegment seg) {
-        return seg.asSlice(0, 16);
+
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(2, libraw_h.C_POINTER).withName("branch"),
+        libraw_h.C_INT.withName("leaf"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("decode");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
     }
-    public static VarHandle leaf$VH() {
-        return constants$106.const$0;
+
+    private static final SequenceLayout branch$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("branch"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * struct decode *branch[2]
+     * }
+     */
+    public static final SequenceLayout branch$layout() {
+        return branch$LAYOUT;
     }
+
+    private static final long branch$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * struct decode *branch[2]
+     * }
+     */
+    public static final long branch$offset() {
+        return branch$OFFSET;
+    }
+
     /**
      * Getter for field:
-     * {@snippet :
-     * int leaf;
+     * {@snippet lang=c :
+     * struct decode *branch[2]
      * }
      */
-    public static int leaf$get(MemorySegment seg) {
-        return (int)constants$106.const$0.get(seg);
+    public static MemorySegment branch(MemorySegment struct) {
+        return struct.asSlice(branch$OFFSET, branch$LAYOUT.byteSize());
     }
+
     /**
      * Setter for field:
-     * {@snippet :
-     * int leaf;
+     * {@snippet lang=c :
+     * struct decode *branch[2]
      * }
      */
-    public static void leaf$set(MemorySegment seg, int x) {
-        constants$106.const$0.set(seg, x);
+    public static void branch(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, branch$OFFSET, branch$LAYOUT.byteSize());
     }
-    public static int leaf$get(MemorySegment seg, long index) {
-        return (int)constants$106.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void leaf$set(MemorySegment seg, long index, int x) {
-        constants$106.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static long[] branch$DIMS = { 2 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * struct decode *branch[2]
+     * }
+     */
+    public static long[] branch$dimensions() {
+        return branch$DIMS;
+    }
+    private static final VarHandle branch$ELEM_HANDLE = branch$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * struct decode *branch[2]
+     * }
+     */
+    public static MemorySegment branch(MemorySegment struct, long index0) {
+        return (MemorySegment)branch$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * struct decode *branch[2]
+     * }
+     */
+    public static void branch(MemorySegment struct, long index0, MemorySegment fieldValue) {
+        branch$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfInt leaf$LAYOUT = (OfInt)$LAYOUT.select(groupElement("leaf"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int leaf
+     * }
+     */
+    public static final OfInt leaf$layout() {
+        return leaf$LAYOUT;
+    }
+
+    private static final long leaf$OFFSET = 16;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int leaf
+     * }
+     */
+    public static final long leaf$offset() {
+        return leaf$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int leaf
+     * }
+     */
+    public static int leaf(MemorySegment struct) {
+        return struct.get(leaf$LAYOUT, leaf$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int leaf
+     * }
+     */
+    public static void leaf(MemorySegment struct, int fieldValue) {
+        struct.set(leaf$LAYOUT, leaf$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

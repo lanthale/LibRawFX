@@ -2,28 +2,35 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct unpacker_data_t {
+ * {@snippet lang=c :
+ * struct {
  *     short order;
- *     unsigned short sraw_mul[4];
- *     unsigned short cr2_slice[3];
+ *     ushort sraw_mul[4];
+ *     ushort cr2_slice[3];
  *     unsigned int kodak_cbpp;
- *     long long strip_offset;
- *     long long data_offset;
- *     long long meta_offset;
- *     long long exif_offset;
- *     long long ifd0_offset;
+ *     INT64 strip_offset;
+ *     INT64 data_offset;
+ *     INT64 meta_offset;
+ *     INT64 exif_offset;
+ *     INT64 exif_subdir_offset;
+ *     INT64 ifd0_offset;
  *     unsigned int data_size;
  *     unsigned int meta_length;
  *     unsigned int cr3_exif_length;
  *     unsigned int cr3_ifd0_length;
  *     unsigned int thumb_misc;
+ *     enum LibRaw_internal_thumbnail_formats thumb_format;
  *     unsigned int fuji_layout;
  *     unsigned int tiff_samples;
  *     unsigned int tiff_bps;
@@ -45,8 +52,9 @@ import static java.lang.foreign.ValueLayout.*;
  *     int fuji_lossless;
  *     int pana_encoding;
  *     int pana_bpp;
- *     struct crx_data_header_t crx_header[16];
+ *     crx_data_header_t crx_header[16];
  *     int crx_track_selected;
+ *     int crx_track_count;
  *     short CR3_CTMDtag;
  *     short CR3_Version;
  *     int CM_found;
@@ -58,1220 +66,2502 @@ import static java.lang.foreign.ValueLayout.*;
  *     unsigned int is_PentaxRicohMakernotes;
  *     unsigned int dng_frames[20];
  *     unsigned short raw_stride;
- * };
+ * }
  * }
  */
 public class unpacker_data_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$98.const$1;
+    unpacker_data_t() {
+        // Should not be called directly
     }
-    public static VarHandle order$VH() {
-        return constants$98.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short order;
-     * }
-     */
-    public static short order$get(MemorySegment seg) {
-        return (short)constants$98.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short order;
-     * }
-     */
-    public static void order$set(MemorySegment seg, short x) {
-        constants$98.const$2.set(seg, x);
-    }
-    public static short order$get(MemorySegment seg, long index) {
-        return (short)constants$98.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void order$set(MemorySegment seg, long index, short x) {
-        constants$98.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment sraw_mul$slice(MemorySegment seg) {
-        return seg.asSlice(2, 8);
-    }
-    public static MemorySegment cr2_slice$slice(MemorySegment seg) {
-        return seg.asSlice(10, 6);
-    }
-    public static VarHandle kodak_cbpp$VH() {
-        return constants$98.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int kodak_cbpp;
-     * }
-     */
-    public static int kodak_cbpp$get(MemorySegment seg) {
-        return (int)constants$98.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int kodak_cbpp;
-     * }
-     */
-    public static void kodak_cbpp$set(MemorySegment seg, int x) {
-        constants$98.const$3.set(seg, x);
-    }
-    public static int kodak_cbpp$get(MemorySegment seg, long index) {
-        return (int)constants$98.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void kodak_cbpp$set(MemorySegment seg, long index, int x) {
-        constants$98.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle strip_offset$VH() {
-        return constants$98.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * long long strip_offset;
-     * }
-     */
-    public static long strip_offset$get(MemorySegment seg) {
-        return (long)constants$98.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * long long strip_offset;
-     * }
-     */
-    public static void strip_offset$set(MemorySegment seg, long x) {
-        constants$98.const$4.set(seg, x);
-    }
-    public static long strip_offset$get(MemorySegment seg, long index) {
-        return (long)constants$98.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void strip_offset$set(MemorySegment seg, long index, long x) {
-        constants$98.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle data_offset$VH() {
-        return constants$98.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * long long data_offset;
-     * }
-     */
-    public static long data_offset$get(MemorySegment seg) {
-        return (long)constants$98.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * long long data_offset;
-     * }
-     */
-    public static void data_offset$set(MemorySegment seg, long x) {
-        constants$98.const$5.set(seg, x);
-    }
-    public static long data_offset$get(MemorySegment seg, long index) {
-        return (long)constants$98.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void data_offset$set(MemorySegment seg, long index, long x) {
-        constants$98.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle meta_offset$VH() {
-        return constants$99.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * long long meta_offset;
-     * }
-     */
-    public static long meta_offset$get(MemorySegment seg) {
-        return (long)constants$99.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * long long meta_offset;
-     * }
-     */
-    public static void meta_offset$set(MemorySegment seg, long x) {
-        constants$99.const$0.set(seg, x);
-    }
-    public static long meta_offset$get(MemorySegment seg, long index) {
-        return (long)constants$99.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void meta_offset$set(MemorySegment seg, long index, long x) {
-        constants$99.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle exif_offset$VH() {
-        return constants$99.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * long long exif_offset;
-     * }
-     */
-    public static long exif_offset$get(MemorySegment seg) {
-        return (long)constants$99.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * long long exif_offset;
-     * }
-     */
-    public static void exif_offset$set(MemorySegment seg, long x) {
-        constants$99.const$1.set(seg, x);
-    }
-    public static long exif_offset$get(MemorySegment seg, long index) {
-        return (long)constants$99.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void exif_offset$set(MemorySegment seg, long index, long x) {
-        constants$99.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle ifd0_offset$VH() {
-        return constants$99.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * long long ifd0_offset;
-     * }
-     */
-    public static long ifd0_offset$get(MemorySegment seg) {
-        return (long)constants$99.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * long long ifd0_offset;
-     * }
-     */
-    public static void ifd0_offset$set(MemorySegment seg, long x) {
-        constants$99.const$2.set(seg, x);
-    }
-    public static long ifd0_offset$get(MemorySegment seg, long index) {
-        return (long)constants$99.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void ifd0_offset$set(MemorySegment seg, long index, long x) {
-        constants$99.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle data_size$VH() {
-        return constants$99.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int data_size;
-     * }
-     */
-    public static int data_size$get(MemorySegment seg) {
-        return (int)constants$99.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int data_size;
-     * }
-     */
-    public static void data_size$set(MemorySegment seg, int x) {
-        constants$99.const$3.set(seg, x);
-    }
-    public static int data_size$get(MemorySegment seg, long index) {
-        return (int)constants$99.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void data_size$set(MemorySegment seg, long index, int x) {
-        constants$99.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle meta_length$VH() {
-        return constants$99.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int meta_length;
-     * }
-     */
-    public static int meta_length$get(MemorySegment seg) {
-        return (int)constants$99.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int meta_length;
-     * }
-     */
-    public static void meta_length$set(MemorySegment seg, int x) {
-        constants$99.const$4.set(seg, x);
-    }
-    public static int meta_length$get(MemorySegment seg, long index) {
-        return (int)constants$99.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void meta_length$set(MemorySegment seg, long index, int x) {
-        constants$99.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle cr3_exif_length$VH() {
-        return constants$99.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int cr3_exif_length;
-     * }
-     */
-    public static int cr3_exif_length$get(MemorySegment seg) {
-        return (int)constants$99.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int cr3_exif_length;
-     * }
-     */
-    public static void cr3_exif_length$set(MemorySegment seg, int x) {
-        constants$99.const$5.set(seg, x);
-    }
-    public static int cr3_exif_length$get(MemorySegment seg, long index) {
-        return (int)constants$99.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void cr3_exif_length$set(MemorySegment seg, long index, int x) {
-        constants$99.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle cr3_ifd0_length$VH() {
-        return constants$100.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int cr3_ifd0_length;
-     * }
-     */
-    public static int cr3_ifd0_length$get(MemorySegment seg) {
-        return (int)constants$100.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int cr3_ifd0_length;
-     * }
-     */
-    public static void cr3_ifd0_length$set(MemorySegment seg, int x) {
-        constants$100.const$0.set(seg, x);
-    }
-    public static int cr3_ifd0_length$get(MemorySegment seg, long index) {
-        return (int)constants$100.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void cr3_ifd0_length$set(MemorySegment seg, long index, int x) {
-        constants$100.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle thumb_misc$VH() {
-        return constants$100.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int thumb_misc;
-     * }
-     */
-    public static int thumb_misc$get(MemorySegment seg) {
-        return (int)constants$100.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int thumb_misc;
-     * }
-     */
-    public static void thumb_misc$set(MemorySegment seg, int x) {
-        constants$100.const$1.set(seg, x);
-    }
-    public static int thumb_misc$get(MemorySegment seg, long index) {
-        return (int)constants$100.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void thumb_misc$set(MemorySegment seg, long index, int x) {
-        constants$100.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_layout$VH() {
-        return constants$100.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int fuji_layout;
-     * }
-     */
-    public static int fuji_layout$get(MemorySegment seg) {
-        return (int)constants$100.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int fuji_layout;
-     * }
-     */
-    public static void fuji_layout$set(MemorySegment seg, int x) {
-        constants$100.const$2.set(seg, x);
-    }
-    public static int fuji_layout$get(MemorySegment seg, long index) {
-        return (int)constants$100.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_layout$set(MemorySegment seg, long index, int x) {
-        constants$100.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle tiff_samples$VH() {
-        return constants$100.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int tiff_samples;
-     * }
-     */
-    public static int tiff_samples$get(MemorySegment seg) {
-        return (int)constants$100.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int tiff_samples;
-     * }
-     */
-    public static void tiff_samples$set(MemorySegment seg, int x) {
-        constants$100.const$3.set(seg, x);
-    }
-    public static int tiff_samples$get(MemorySegment seg, long index) {
-        return (int)constants$100.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void tiff_samples$set(MemorySegment seg, long index, int x) {
-        constants$100.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle tiff_bps$VH() {
-        return constants$100.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int tiff_bps;
-     * }
-     */
-    public static int tiff_bps$get(MemorySegment seg) {
-        return (int)constants$100.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int tiff_bps;
-     * }
-     */
-    public static void tiff_bps$set(MemorySegment seg, int x) {
-        constants$100.const$4.set(seg, x);
-    }
-    public static int tiff_bps$get(MemorySegment seg, long index) {
-        return (int)constants$100.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void tiff_bps$set(MemorySegment seg, long index, int x) {
-        constants$100.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle tiff_compress$VH() {
-        return constants$100.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int tiff_compress;
-     * }
-     */
-    public static int tiff_compress$get(MemorySegment seg) {
-        return (int)constants$100.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int tiff_compress;
-     * }
-     */
-    public static void tiff_compress$set(MemorySegment seg, int x) {
-        constants$100.const$5.set(seg, x);
-    }
-    public static int tiff_compress$get(MemorySegment seg, long index) {
-        return (int)constants$100.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void tiff_compress$set(MemorySegment seg, long index, int x) {
-        constants$100.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle tiff_sampleformat$VH() {
-        return constants$101.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int tiff_sampleformat;
-     * }
-     */
-    public static int tiff_sampleformat$get(MemorySegment seg) {
-        return (int)constants$101.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int tiff_sampleformat;
-     * }
-     */
-    public static void tiff_sampleformat$set(MemorySegment seg, int x) {
-        constants$101.const$0.set(seg, x);
-    }
-    public static int tiff_sampleformat$get(MemorySegment seg, long index) {
-        return (int)constants$101.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void tiff_sampleformat$set(MemorySegment seg, long index, int x) {
-        constants$101.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle zero_after_ff$VH() {
-        return constants$101.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int zero_after_ff;
-     * }
-     */
-    public static int zero_after_ff$get(MemorySegment seg) {
-        return (int)constants$101.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int zero_after_ff;
-     * }
-     */
-    public static void zero_after_ff$set(MemorySegment seg, int x) {
-        constants$101.const$1.set(seg, x);
-    }
-    public static int zero_after_ff$get(MemorySegment seg, long index) {
-        return (int)constants$101.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void zero_after_ff$set(MemorySegment seg, long index, int x) {
-        constants$101.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle tile_width$VH() {
-        return constants$101.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int tile_width;
-     * }
-     */
-    public static int tile_width$get(MemorySegment seg) {
-        return (int)constants$101.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int tile_width;
-     * }
-     */
-    public static void tile_width$set(MemorySegment seg, int x) {
-        constants$101.const$2.set(seg, x);
-    }
-    public static int tile_width$get(MemorySegment seg, long index) {
-        return (int)constants$101.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void tile_width$set(MemorySegment seg, long index, int x) {
-        constants$101.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle tile_length$VH() {
-        return constants$101.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int tile_length;
-     * }
-     */
-    public static int tile_length$get(MemorySegment seg) {
-        return (int)constants$101.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int tile_length;
-     * }
-     */
-    public static void tile_length$set(MemorySegment seg, int x) {
-        constants$101.const$3.set(seg, x);
-    }
-    public static int tile_length$get(MemorySegment seg, long index) {
-        return (int)constants$101.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void tile_length$set(MemorySegment seg, long index, int x) {
-        constants$101.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle load_flags$VH() {
-        return constants$101.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int load_flags;
-     * }
-     */
-    public static int load_flags$get(MemorySegment seg) {
-        return (int)constants$101.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int load_flags;
-     * }
-     */
-    public static void load_flags$set(MemorySegment seg, int x) {
-        constants$101.const$4.set(seg, x);
-    }
-    public static int load_flags$get(MemorySegment seg, long index) {
-        return (int)constants$101.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void load_flags$set(MemorySegment seg, long index, int x) {
-        constants$101.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle data_error$VH() {
-        return constants$101.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int data_error;
-     * }
-     */
-    public static int data_error$get(MemorySegment seg) {
-        return (int)constants$101.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int data_error;
-     * }
-     */
-    public static void data_error$set(MemorySegment seg, int x) {
-        constants$101.const$5.set(seg, x);
-    }
-    public static int data_error$get(MemorySegment seg, long index) {
-        return (int)constants$101.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void data_error$set(MemorySegment seg, long index, int x) {
-        constants$101.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle hasselblad_parser_flag$VH() {
-        return constants$102.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int hasselblad_parser_flag;
-     * }
-     */
-    public static int hasselblad_parser_flag$get(MemorySegment seg) {
-        return (int)constants$102.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int hasselblad_parser_flag;
-     * }
-     */
-    public static void hasselblad_parser_flag$set(MemorySegment seg, int x) {
-        constants$102.const$0.set(seg, x);
-    }
-    public static int hasselblad_parser_flag$get(MemorySegment seg, long index) {
-        return (int)constants$102.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void hasselblad_parser_flag$set(MemorySegment seg, long index, int x) {
-        constants$102.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle posRAFData$VH() {
-        return constants$102.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * long long posRAFData;
-     * }
-     */
-    public static long posRAFData$get(MemorySegment seg) {
-        return (long)constants$102.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * long long posRAFData;
-     * }
-     */
-    public static void posRAFData$set(MemorySegment seg, long x) {
-        constants$102.const$1.set(seg, x);
-    }
-    public static long posRAFData$get(MemorySegment seg, long index) {
-        return (long)constants$102.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void posRAFData$set(MemorySegment seg, long index, long x) {
-        constants$102.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle lenRAFData$VH() {
-        return constants$102.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int lenRAFData;
-     * }
-     */
-    public static int lenRAFData$get(MemorySegment seg) {
-        return (int)constants$102.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int lenRAFData;
-     * }
-     */
-    public static void lenRAFData$set(MemorySegment seg, int x) {
-        constants$102.const$2.set(seg, x);
-    }
-    public static int lenRAFData$get(MemorySegment seg, long index) {
-        return (int)constants$102.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void lenRAFData$set(MemorySegment seg, long index, int x) {
-        constants$102.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_total_lines$VH() {
-        return constants$102.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int fuji_total_lines;
-     * }
-     */
-    public static int fuji_total_lines$get(MemorySegment seg) {
-        return (int)constants$102.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int fuji_total_lines;
-     * }
-     */
-    public static void fuji_total_lines$set(MemorySegment seg, int x) {
-        constants$102.const$3.set(seg, x);
-    }
-    public static int fuji_total_lines$get(MemorySegment seg, long index) {
-        return (int)constants$102.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_total_lines$set(MemorySegment seg, long index, int x) {
-        constants$102.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_total_blocks$VH() {
-        return constants$102.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int fuji_total_blocks;
-     * }
-     */
-    public static int fuji_total_blocks$get(MemorySegment seg) {
-        return (int)constants$102.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int fuji_total_blocks;
-     * }
-     */
-    public static void fuji_total_blocks$set(MemorySegment seg, int x) {
-        constants$102.const$4.set(seg, x);
-    }
-    public static int fuji_total_blocks$get(MemorySegment seg, long index) {
-        return (int)constants$102.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_total_blocks$set(MemorySegment seg, long index, int x) {
-        constants$102.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_block_width$VH() {
-        return constants$102.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int fuji_block_width;
-     * }
-     */
-    public static int fuji_block_width$get(MemorySegment seg) {
-        return (int)constants$102.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int fuji_block_width;
-     * }
-     */
-    public static void fuji_block_width$set(MemorySegment seg, int x) {
-        constants$102.const$5.set(seg, x);
-    }
-    public static int fuji_block_width$get(MemorySegment seg, long index) {
-        return (int)constants$102.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_block_width$set(MemorySegment seg, long index, int x) {
-        constants$102.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_bits$VH() {
-        return constants$103.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int fuji_bits;
-     * }
-     */
-    public static int fuji_bits$get(MemorySegment seg) {
-        return (int)constants$103.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int fuji_bits;
-     * }
-     */
-    public static void fuji_bits$set(MemorySegment seg, int x) {
-        constants$103.const$0.set(seg, x);
-    }
-    public static int fuji_bits$get(MemorySegment seg, long index) {
-        return (int)constants$103.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_bits$set(MemorySegment seg, long index, int x) {
-        constants$103.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_raw_type$VH() {
-        return constants$103.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int fuji_raw_type;
-     * }
-     */
-    public static int fuji_raw_type$get(MemorySegment seg) {
-        return (int)constants$103.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int fuji_raw_type;
-     * }
-     */
-    public static void fuji_raw_type$set(MemorySegment seg, int x) {
-        constants$103.const$1.set(seg, x);
-    }
-    public static int fuji_raw_type$get(MemorySegment seg, long index) {
-        return (int)constants$103.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_raw_type$set(MemorySegment seg, long index, int x) {
-        constants$103.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle fuji_lossless$VH() {
-        return constants$103.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int fuji_lossless;
-     * }
-     */
-    public static int fuji_lossless$get(MemorySegment seg) {
-        return (int)constants$103.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int fuji_lossless;
-     * }
-     */
-    public static void fuji_lossless$set(MemorySegment seg, int x) {
-        constants$103.const$2.set(seg, x);
-    }
-    public static int fuji_lossless$get(MemorySegment seg, long index) {
-        return (int)constants$103.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void fuji_lossless$set(MemorySegment seg, long index, int x) {
-        constants$103.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle pana_encoding$VH() {
-        return constants$103.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int pana_encoding;
-     * }
-     */
-    public static int pana_encoding$get(MemorySegment seg) {
-        return (int)constants$103.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int pana_encoding;
-     * }
-     */
-    public static void pana_encoding$set(MemorySegment seg, int x) {
-        constants$103.const$3.set(seg, x);
-    }
-    public static int pana_encoding$get(MemorySegment seg, long index) {
-        return (int)constants$103.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pana_encoding$set(MemorySegment seg, long index, int x) {
-        constants$103.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle pana_bpp$VH() {
-        return constants$103.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int pana_bpp;
-     * }
-     */
-    public static int pana_bpp$get(MemorySegment seg) {
-        return (int)constants$103.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int pana_bpp;
-     * }
-     */
-    public static void pana_bpp$set(MemorySegment seg, int x) {
-        constants$103.const$4.set(seg, x);
-    }
-    public static int pana_bpp$get(MemorySegment seg, long index) {
-        return (int)constants$103.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void pana_bpp$set(MemorySegment seg, long index, int x) {
-        constants$103.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment crx_header$slice(MemorySegment seg) {
-        return seg.asSlice(176, 1152);
-    }
-    public static VarHandle crx_track_selected$VH() {
-        return constants$103.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int crx_track_selected;
-     * }
-     */
-    public static int crx_track_selected$get(MemorySegment seg) {
-        return (int)constants$103.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int crx_track_selected;
-     * }
-     */
-    public static void crx_track_selected$set(MemorySegment seg, int x) {
-        constants$103.const$5.set(seg, x);
-    }
-    public static int crx_track_selected$get(MemorySegment seg, long index) {
-        return (int)constants$103.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void crx_track_selected$set(MemorySegment seg, long index, int x) {
-        constants$103.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CR3_CTMDtag$VH() {
-        return constants$104.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short CR3_CTMDtag;
-     * }
-     */
-    public static short CR3_CTMDtag$get(MemorySegment seg) {
-        return (short)constants$104.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short CR3_CTMDtag;
-     * }
-     */
-    public static void CR3_CTMDtag$set(MemorySegment seg, short x) {
-        constants$104.const$0.set(seg, x);
-    }
-    public static short CR3_CTMDtag$get(MemorySegment seg, long index) {
-        return (short)constants$104.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CR3_CTMDtag$set(MemorySegment seg, long index, short x) {
-        constants$104.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CR3_Version$VH() {
-        return constants$104.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short CR3_Version;
-     * }
-     */
-    public static short CR3_Version$get(MemorySegment seg) {
-        return (short)constants$104.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short CR3_Version;
-     * }
-     */
-    public static void CR3_Version$set(MemorySegment seg, short x) {
-        constants$104.const$1.set(seg, x);
-    }
-    public static short CR3_Version$get(MemorySegment seg, long index) {
-        return (short)constants$104.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CR3_Version$set(MemorySegment seg, long index, short x) {
-        constants$104.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CM_found$VH() {
-        return constants$104.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int CM_found;
-     * }
-     */
-    public static int CM_found$get(MemorySegment seg) {
-        return (int)constants$104.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int CM_found;
-     * }
-     */
-    public static void CM_found$set(MemorySegment seg, int x) {
-        constants$104.const$2.set(seg, x);
-    }
-    public static int CM_found$get(MemorySegment seg, long index) {
-        return (int)constants$104.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CM_found$set(MemorySegment seg, long index, int x) {
-        constants$104.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle is_NikonTransfer$VH() {
-        return constants$104.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int is_NikonTransfer;
-     * }
-     */
-    public static int is_NikonTransfer$get(MemorySegment seg) {
-        return (int)constants$104.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int is_NikonTransfer;
-     * }
-     */
-    public static void is_NikonTransfer$set(MemorySegment seg, int x) {
-        constants$104.const$3.set(seg, x);
-    }
-    public static int is_NikonTransfer$get(MemorySegment seg, long index) {
-        return (int)constants$104.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void is_NikonTransfer$set(MemorySegment seg, long index, int x) {
-        constants$104.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle is_Olympus$VH() {
-        return constants$104.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int is_Olympus;
-     * }
-     */
-    public static int is_Olympus$get(MemorySegment seg) {
-        return (int)constants$104.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int is_Olympus;
-     * }
-     */
-    public static void is_Olympus$set(MemorySegment seg, int x) {
-        constants$104.const$4.set(seg, x);
-    }
-    public static int is_Olympus$get(MemorySegment seg, long index) {
-        return (int)constants$104.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void is_Olympus$set(MemorySegment seg, long index, int x) {
-        constants$104.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle OlympusDNG_SubDirOffsetValid$VH() {
-        return constants$104.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * int OlympusDNG_SubDirOffsetValid;
-     * }
-     */
-    public static int OlympusDNG_SubDirOffsetValid$get(MemorySegment seg) {
-        return (int)constants$104.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * int OlympusDNG_SubDirOffsetValid;
-     * }
-     */
-    public static void OlympusDNG_SubDirOffsetValid$set(MemorySegment seg, int x) {
-        constants$104.const$5.set(seg, x);
-    }
-    public static int OlympusDNG_SubDirOffsetValid$get(MemorySegment seg, long index) {
-        return (int)constants$104.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void OlympusDNG_SubDirOffsetValid$set(MemorySegment seg, long index, int x) {
-        constants$104.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle is_Sony$VH() {
-        return constants$105.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int is_Sony;
-     * }
-     */
-    public static int is_Sony$get(MemorySegment seg) {
-        return (int)constants$105.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int is_Sony;
-     * }
-     */
-    public static void is_Sony$set(MemorySegment seg, int x) {
-        constants$105.const$0.set(seg, x);
-    }
-    public static int is_Sony$get(MemorySegment seg, long index) {
-        return (int)constants$105.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void is_Sony$set(MemorySegment seg, long index, int x) {
-        constants$105.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle is_pana_raw$VH() {
-        return constants$105.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int is_pana_raw;
-     * }
-     */
-    public static int is_pana_raw$get(MemorySegment seg) {
-        return (int)constants$105.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int is_pana_raw;
-     * }
-     */
-    public static void is_pana_raw$set(MemorySegment seg, int x) {
-        constants$105.const$1.set(seg, x);
-    }
-    public static int is_pana_raw$get(MemorySegment seg, long index) {
-        return (int)constants$105.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void is_pana_raw$set(MemorySegment seg, long index, int x) {
-        constants$105.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle is_PentaxRicohMakernotes$VH() {
-        return constants$105.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int is_PentaxRicohMakernotes;
-     * }
-     */
-    public static int is_PentaxRicohMakernotes$get(MemorySegment seg) {
-        return (int)constants$105.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int is_PentaxRicohMakernotes;
-     * }
-     */
-    public static void is_PentaxRicohMakernotes$set(MemorySegment seg, int x) {
-        constants$105.const$2.set(seg, x);
-    }
-    public static int is_PentaxRicohMakernotes$get(MemorySegment seg, long index) {
-        return (int)constants$105.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void is_PentaxRicohMakernotes$set(MemorySegment seg, long index, int x) {
-        constants$105.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment dng_frames$slice(MemorySegment seg) {
-        return seg.asSlice(1364, 80);
-    }
-    public static VarHandle raw_stride$VH() {
-        return constants$105.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short raw_stride;
-     * }
-     */
-    public static short raw_stride$get(MemorySegment seg) {
-        return (short)constants$105.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short raw_stride;
-     * }
-     */
-    public static void raw_stride$set(MemorySegment seg, short x) {
-        constants$105.const$3.set(seg, x);
-    }
-    public static short raw_stride$get(MemorySegment seg, long index) {
-        return (short)constants$105.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void raw_stride$set(MemorySegment seg, long index, short x) {
-        constants$105.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_SHORT.withName("order"),
+        MemoryLayout.sequenceLayout(4, libraw_h.C_SHORT).withName("sraw_mul"),
+        MemoryLayout.sequenceLayout(3, libraw_h.C_SHORT).withName("cr2_slice"),
+        libraw_h.C_INT.withName("kodak_cbpp"),
+        MemoryLayout.paddingLayout(4),
+        libraw_h.C_LONG_LONG.withName("strip_offset"),
+        libraw_h.C_LONG_LONG.withName("data_offset"),
+        libraw_h.C_LONG_LONG.withName("meta_offset"),
+        libraw_h.C_LONG_LONG.withName("exif_offset"),
+        libraw_h.C_LONG_LONG.withName("exif_subdir_offset"),
+        libraw_h.C_LONG_LONG.withName("ifd0_offset"),
+        libraw_h.C_INT.withName("data_size"),
+        libraw_h.C_INT.withName("meta_length"),
+        libraw_h.C_INT.withName("cr3_exif_length"),
+        libraw_h.C_INT.withName("cr3_ifd0_length"),
+        libraw_h.C_INT.withName("thumb_misc"),
+        libraw_h.C_INT.withName("thumb_format"),
+        libraw_h.C_INT.withName("fuji_layout"),
+        libraw_h.C_INT.withName("tiff_samples"),
+        libraw_h.C_INT.withName("tiff_bps"),
+        libraw_h.C_INT.withName("tiff_compress"),
+        libraw_h.C_INT.withName("tiff_sampleformat"),
+        libraw_h.C_INT.withName("zero_after_ff"),
+        libraw_h.C_INT.withName("tile_width"),
+        libraw_h.C_INT.withName("tile_length"),
+        libraw_h.C_INT.withName("load_flags"),
+        libraw_h.C_INT.withName("data_error"),
+        libraw_h.C_INT.withName("hasselblad_parser_flag"),
+        MemoryLayout.paddingLayout(4),
+        libraw_h.C_LONG_LONG.withName("posRAFData"),
+        libraw_h.C_INT.withName("lenRAFData"),
+        libraw_h.C_INT.withName("fuji_total_lines"),
+        libraw_h.C_INT.withName("fuji_total_blocks"),
+        libraw_h.C_INT.withName("fuji_block_width"),
+        libraw_h.C_INT.withName("fuji_bits"),
+        libraw_h.C_INT.withName("fuji_raw_type"),
+        libraw_h.C_INT.withName("fuji_lossless"),
+        libraw_h.C_INT.withName("pana_encoding"),
+        libraw_h.C_INT.withName("pana_bpp"),
+        MemoryLayout.paddingLayout(4),
+        MemoryLayout.sequenceLayout(16, crx_data_header_t.layout()).withName("crx_header"),
+        libraw_h.C_INT.withName("crx_track_selected"),
+        libraw_h.C_INT.withName("crx_track_count"),
+        libraw_h.C_SHORT.withName("CR3_CTMDtag"),
+        libraw_h.C_SHORT.withName("CR3_Version"),
+        libraw_h.C_INT.withName("CM_found"),
+        libraw_h.C_INT.withName("is_NikonTransfer"),
+        libraw_h.C_INT.withName("is_Olympus"),
+        libraw_h.C_INT.withName("OlympusDNG_SubDirOffsetValid"),
+        libraw_h.C_INT.withName("is_Sony"),
+        libraw_h.C_INT.withName("is_pana_raw"),
+        libraw_h.C_INT.withName("is_PentaxRicohMakernotes"),
+        MemoryLayout.sequenceLayout(20, libraw_h.C_INT).withName("dng_frames"),
+        libraw_h.C_SHORT.withName("raw_stride"),
+        MemoryLayout.paddingLayout(6)
+    ).withName("$anon$153:9");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfShort order$LAYOUT = (OfShort)$LAYOUT.select(groupElement("order"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short order
+     * }
+     */
+    public static final OfShort order$layout() {
+        return order$LAYOUT;
+    }
+
+    private static final long order$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short order
+     * }
+     */
+    public static final long order$offset() {
+        return order$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short order
+     * }
+     */
+    public static short order(MemorySegment struct) {
+        return struct.get(order$LAYOUT, order$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short order
+     * }
+     */
+    public static void order(MemorySegment struct, short fieldValue) {
+        struct.set(order$LAYOUT, order$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout sraw_mul$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("sraw_mul"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static final SequenceLayout sraw_mul$layout() {
+        return sraw_mul$LAYOUT;
+    }
+
+    private static final long sraw_mul$OFFSET = 2;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static final long sraw_mul$offset() {
+        return sraw_mul$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static MemorySegment sraw_mul(MemorySegment struct) {
+        return struct.asSlice(sraw_mul$OFFSET, sraw_mul$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static void sraw_mul(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, sraw_mul$OFFSET, sraw_mul$LAYOUT.byteSize());
+    }
+
+    private static long[] sraw_mul$DIMS = { 4 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static long[] sraw_mul$dimensions() {
+        return sraw_mul$DIMS;
+    }
+    private static final VarHandle sraw_mul$ELEM_HANDLE = sraw_mul$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static short sraw_mul(MemorySegment struct, long index0) {
+        return (short)sraw_mul$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * ushort sraw_mul[4]
+     * }
+     */
+    public static void sraw_mul(MemorySegment struct, long index0, short fieldValue) {
+        sraw_mul$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final SequenceLayout cr2_slice$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("cr2_slice"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static final SequenceLayout cr2_slice$layout() {
+        return cr2_slice$LAYOUT;
+    }
+
+    private static final long cr2_slice$OFFSET = 10;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static final long cr2_slice$offset() {
+        return cr2_slice$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static MemorySegment cr2_slice(MemorySegment struct) {
+        return struct.asSlice(cr2_slice$OFFSET, cr2_slice$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static void cr2_slice(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, cr2_slice$OFFSET, cr2_slice$LAYOUT.byteSize());
+    }
+
+    private static long[] cr2_slice$DIMS = { 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static long[] cr2_slice$dimensions() {
+        return cr2_slice$DIMS;
+    }
+    private static final VarHandle cr2_slice$ELEM_HANDLE = cr2_slice$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static short cr2_slice(MemorySegment struct, long index0) {
+        return (short)cr2_slice$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * ushort cr2_slice[3]
+     * }
+     */
+    public static void cr2_slice(MemorySegment struct, long index0, short fieldValue) {
+        cr2_slice$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfInt kodak_cbpp$LAYOUT = (OfInt)$LAYOUT.select(groupElement("kodak_cbpp"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int kodak_cbpp
+     * }
+     */
+    public static final OfInt kodak_cbpp$layout() {
+        return kodak_cbpp$LAYOUT;
+    }
+
+    private static final long kodak_cbpp$OFFSET = 16;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int kodak_cbpp
+     * }
+     */
+    public static final long kodak_cbpp$offset() {
+        return kodak_cbpp$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int kodak_cbpp
+     * }
+     */
+    public static int kodak_cbpp(MemorySegment struct) {
+        return struct.get(kodak_cbpp$LAYOUT, kodak_cbpp$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int kodak_cbpp
+     * }
+     */
+    public static void kodak_cbpp(MemorySegment struct, int fieldValue) {
+        struct.set(kodak_cbpp$LAYOUT, kodak_cbpp$OFFSET, fieldValue);
+    }
+
+    private static final OfLong strip_offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("strip_offset"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * INT64 strip_offset
+     * }
+     */
+    public static final OfLong strip_offset$layout() {
+        return strip_offset$LAYOUT;
+    }
+
+    private static final long strip_offset$OFFSET = 24;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * INT64 strip_offset
+     * }
+     */
+    public static final long strip_offset$offset() {
+        return strip_offset$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * INT64 strip_offset
+     * }
+     */
+    public static long strip_offset(MemorySegment struct) {
+        return struct.get(strip_offset$LAYOUT, strip_offset$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * INT64 strip_offset
+     * }
+     */
+    public static void strip_offset(MemorySegment struct, long fieldValue) {
+        struct.set(strip_offset$LAYOUT, strip_offset$OFFSET, fieldValue);
+    }
+
+    private static final OfLong data_offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("data_offset"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * INT64 data_offset
+     * }
+     */
+    public static final OfLong data_offset$layout() {
+        return data_offset$LAYOUT;
+    }
+
+    private static final long data_offset$OFFSET = 32;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * INT64 data_offset
+     * }
+     */
+    public static final long data_offset$offset() {
+        return data_offset$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * INT64 data_offset
+     * }
+     */
+    public static long data_offset(MemorySegment struct) {
+        return struct.get(data_offset$LAYOUT, data_offset$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * INT64 data_offset
+     * }
+     */
+    public static void data_offset(MemorySegment struct, long fieldValue) {
+        struct.set(data_offset$LAYOUT, data_offset$OFFSET, fieldValue);
+    }
+
+    private static final OfLong meta_offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("meta_offset"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * INT64 meta_offset
+     * }
+     */
+    public static final OfLong meta_offset$layout() {
+        return meta_offset$LAYOUT;
+    }
+
+    private static final long meta_offset$OFFSET = 40;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * INT64 meta_offset
+     * }
+     */
+    public static final long meta_offset$offset() {
+        return meta_offset$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * INT64 meta_offset
+     * }
+     */
+    public static long meta_offset(MemorySegment struct) {
+        return struct.get(meta_offset$LAYOUT, meta_offset$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * INT64 meta_offset
+     * }
+     */
+    public static void meta_offset(MemorySegment struct, long fieldValue) {
+        struct.set(meta_offset$LAYOUT, meta_offset$OFFSET, fieldValue);
+    }
+
+    private static final OfLong exif_offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("exif_offset"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * INT64 exif_offset
+     * }
+     */
+    public static final OfLong exif_offset$layout() {
+        return exif_offset$LAYOUT;
+    }
+
+    private static final long exif_offset$OFFSET = 48;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * INT64 exif_offset
+     * }
+     */
+    public static final long exif_offset$offset() {
+        return exif_offset$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * INT64 exif_offset
+     * }
+     */
+    public static long exif_offset(MemorySegment struct) {
+        return struct.get(exif_offset$LAYOUT, exif_offset$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * INT64 exif_offset
+     * }
+     */
+    public static void exif_offset(MemorySegment struct, long fieldValue) {
+        struct.set(exif_offset$LAYOUT, exif_offset$OFFSET, fieldValue);
+    }
+
+    private static final OfLong exif_subdir_offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("exif_subdir_offset"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * INT64 exif_subdir_offset
+     * }
+     */
+    public static final OfLong exif_subdir_offset$layout() {
+        return exif_subdir_offset$LAYOUT;
+    }
+
+    private static final long exif_subdir_offset$OFFSET = 56;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * INT64 exif_subdir_offset
+     * }
+     */
+    public static final long exif_subdir_offset$offset() {
+        return exif_subdir_offset$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * INT64 exif_subdir_offset
+     * }
+     */
+    public static long exif_subdir_offset(MemorySegment struct) {
+        return struct.get(exif_subdir_offset$LAYOUT, exif_subdir_offset$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * INT64 exif_subdir_offset
+     * }
+     */
+    public static void exif_subdir_offset(MemorySegment struct, long fieldValue) {
+        struct.set(exif_subdir_offset$LAYOUT, exif_subdir_offset$OFFSET, fieldValue);
+    }
+
+    private static final OfLong ifd0_offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("ifd0_offset"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * INT64 ifd0_offset
+     * }
+     */
+    public static final OfLong ifd0_offset$layout() {
+        return ifd0_offset$LAYOUT;
+    }
+
+    private static final long ifd0_offset$OFFSET = 64;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * INT64 ifd0_offset
+     * }
+     */
+    public static final long ifd0_offset$offset() {
+        return ifd0_offset$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * INT64 ifd0_offset
+     * }
+     */
+    public static long ifd0_offset(MemorySegment struct) {
+        return struct.get(ifd0_offset$LAYOUT, ifd0_offset$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * INT64 ifd0_offset
+     * }
+     */
+    public static void ifd0_offset(MemorySegment struct, long fieldValue) {
+        struct.set(ifd0_offset$LAYOUT, ifd0_offset$OFFSET, fieldValue);
+    }
+
+    private static final OfInt data_size$LAYOUT = (OfInt)$LAYOUT.select(groupElement("data_size"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int data_size
+     * }
+     */
+    public static final OfInt data_size$layout() {
+        return data_size$LAYOUT;
+    }
+
+    private static final long data_size$OFFSET = 72;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int data_size
+     * }
+     */
+    public static final long data_size$offset() {
+        return data_size$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int data_size
+     * }
+     */
+    public static int data_size(MemorySegment struct) {
+        return struct.get(data_size$LAYOUT, data_size$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int data_size
+     * }
+     */
+    public static void data_size(MemorySegment struct, int fieldValue) {
+        struct.set(data_size$LAYOUT, data_size$OFFSET, fieldValue);
+    }
+
+    private static final OfInt meta_length$LAYOUT = (OfInt)$LAYOUT.select(groupElement("meta_length"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int meta_length
+     * }
+     */
+    public static final OfInt meta_length$layout() {
+        return meta_length$LAYOUT;
+    }
+
+    private static final long meta_length$OFFSET = 76;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int meta_length
+     * }
+     */
+    public static final long meta_length$offset() {
+        return meta_length$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int meta_length
+     * }
+     */
+    public static int meta_length(MemorySegment struct) {
+        return struct.get(meta_length$LAYOUT, meta_length$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int meta_length
+     * }
+     */
+    public static void meta_length(MemorySegment struct, int fieldValue) {
+        struct.set(meta_length$LAYOUT, meta_length$OFFSET, fieldValue);
+    }
+
+    private static final OfInt cr3_exif_length$LAYOUT = (OfInt)$LAYOUT.select(groupElement("cr3_exif_length"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_exif_length
+     * }
+     */
+    public static final OfInt cr3_exif_length$layout() {
+        return cr3_exif_length$LAYOUT;
+    }
+
+    private static final long cr3_exif_length$OFFSET = 80;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_exif_length
+     * }
+     */
+    public static final long cr3_exif_length$offset() {
+        return cr3_exif_length$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_exif_length
+     * }
+     */
+    public static int cr3_exif_length(MemorySegment struct) {
+        return struct.get(cr3_exif_length$LAYOUT, cr3_exif_length$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_exif_length
+     * }
+     */
+    public static void cr3_exif_length(MemorySegment struct, int fieldValue) {
+        struct.set(cr3_exif_length$LAYOUT, cr3_exif_length$OFFSET, fieldValue);
+    }
+
+    private static final OfInt cr3_ifd0_length$LAYOUT = (OfInt)$LAYOUT.select(groupElement("cr3_ifd0_length"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_ifd0_length
+     * }
+     */
+    public static final OfInt cr3_ifd0_length$layout() {
+        return cr3_ifd0_length$LAYOUT;
+    }
+
+    private static final long cr3_ifd0_length$OFFSET = 84;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_ifd0_length
+     * }
+     */
+    public static final long cr3_ifd0_length$offset() {
+        return cr3_ifd0_length$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_ifd0_length
+     * }
+     */
+    public static int cr3_ifd0_length(MemorySegment struct) {
+        return struct.get(cr3_ifd0_length$LAYOUT, cr3_ifd0_length$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int cr3_ifd0_length
+     * }
+     */
+    public static void cr3_ifd0_length(MemorySegment struct, int fieldValue) {
+        struct.set(cr3_ifd0_length$LAYOUT, cr3_ifd0_length$OFFSET, fieldValue);
+    }
+
+    private static final OfInt thumb_misc$LAYOUT = (OfInt)$LAYOUT.select(groupElement("thumb_misc"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int thumb_misc
+     * }
+     */
+    public static final OfInt thumb_misc$layout() {
+        return thumb_misc$LAYOUT;
+    }
+
+    private static final long thumb_misc$OFFSET = 88;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int thumb_misc
+     * }
+     */
+    public static final long thumb_misc$offset() {
+        return thumb_misc$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int thumb_misc
+     * }
+     */
+    public static int thumb_misc(MemorySegment struct) {
+        return struct.get(thumb_misc$LAYOUT, thumb_misc$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int thumb_misc
+     * }
+     */
+    public static void thumb_misc(MemorySegment struct, int fieldValue) {
+        struct.set(thumb_misc$LAYOUT, thumb_misc$OFFSET, fieldValue);
+    }
+
+    private static final OfInt thumb_format$LAYOUT = (OfInt)$LAYOUT.select(groupElement("thumb_format"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats thumb_format
+     * }
+     */
+    public static final OfInt thumb_format$layout() {
+        return thumb_format$LAYOUT;
+    }
+
+    private static final long thumb_format$OFFSET = 92;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats thumb_format
+     * }
+     */
+    public static final long thumb_format$offset() {
+        return thumb_format$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats thumb_format
+     * }
+     */
+    public static int thumb_format(MemorySegment struct) {
+        return struct.get(thumb_format$LAYOUT, thumb_format$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * enum LibRaw_internal_thumbnail_formats thumb_format
+     * }
+     */
+    public static void thumb_format(MemorySegment struct, int fieldValue) {
+        struct.set(thumb_format$LAYOUT, thumb_format$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_layout$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_layout"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int fuji_layout
+     * }
+     */
+    public static final OfInt fuji_layout$layout() {
+        return fuji_layout$LAYOUT;
+    }
+
+    private static final long fuji_layout$OFFSET = 96;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int fuji_layout
+     * }
+     */
+    public static final long fuji_layout$offset() {
+        return fuji_layout$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int fuji_layout
+     * }
+     */
+    public static int fuji_layout(MemorySegment struct) {
+        return struct.get(fuji_layout$LAYOUT, fuji_layout$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int fuji_layout
+     * }
+     */
+    public static void fuji_layout(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_layout$LAYOUT, fuji_layout$OFFSET, fieldValue);
+    }
+
+    private static final OfInt tiff_samples$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tiff_samples"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_samples
+     * }
+     */
+    public static final OfInt tiff_samples$layout() {
+        return tiff_samples$LAYOUT;
+    }
+
+    private static final long tiff_samples$OFFSET = 100;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_samples
+     * }
+     */
+    public static final long tiff_samples$offset() {
+        return tiff_samples$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_samples
+     * }
+     */
+    public static int tiff_samples(MemorySegment struct) {
+        return struct.get(tiff_samples$LAYOUT, tiff_samples$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_samples
+     * }
+     */
+    public static void tiff_samples(MemorySegment struct, int fieldValue) {
+        struct.set(tiff_samples$LAYOUT, tiff_samples$OFFSET, fieldValue);
+    }
+
+    private static final OfInt tiff_bps$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tiff_bps"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_bps
+     * }
+     */
+    public static final OfInt tiff_bps$layout() {
+        return tiff_bps$LAYOUT;
+    }
+
+    private static final long tiff_bps$OFFSET = 104;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_bps
+     * }
+     */
+    public static final long tiff_bps$offset() {
+        return tiff_bps$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_bps
+     * }
+     */
+    public static int tiff_bps(MemorySegment struct) {
+        return struct.get(tiff_bps$LAYOUT, tiff_bps$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_bps
+     * }
+     */
+    public static void tiff_bps(MemorySegment struct, int fieldValue) {
+        struct.set(tiff_bps$LAYOUT, tiff_bps$OFFSET, fieldValue);
+    }
+
+    private static final OfInt tiff_compress$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tiff_compress"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_compress
+     * }
+     */
+    public static final OfInt tiff_compress$layout() {
+        return tiff_compress$LAYOUT;
+    }
+
+    private static final long tiff_compress$OFFSET = 108;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_compress
+     * }
+     */
+    public static final long tiff_compress$offset() {
+        return tiff_compress$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_compress
+     * }
+     */
+    public static int tiff_compress(MemorySegment struct) {
+        return struct.get(tiff_compress$LAYOUT, tiff_compress$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_compress
+     * }
+     */
+    public static void tiff_compress(MemorySegment struct, int fieldValue) {
+        struct.set(tiff_compress$LAYOUT, tiff_compress$OFFSET, fieldValue);
+    }
+
+    private static final OfInt tiff_sampleformat$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tiff_sampleformat"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_sampleformat
+     * }
+     */
+    public static final OfInt tiff_sampleformat$layout() {
+        return tiff_sampleformat$LAYOUT;
+    }
+
+    private static final long tiff_sampleformat$OFFSET = 112;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_sampleformat
+     * }
+     */
+    public static final long tiff_sampleformat$offset() {
+        return tiff_sampleformat$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_sampleformat
+     * }
+     */
+    public static int tiff_sampleformat(MemorySegment struct) {
+        return struct.get(tiff_sampleformat$LAYOUT, tiff_sampleformat$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int tiff_sampleformat
+     * }
+     */
+    public static void tiff_sampleformat(MemorySegment struct, int fieldValue) {
+        struct.set(tiff_sampleformat$LAYOUT, tiff_sampleformat$OFFSET, fieldValue);
+    }
+
+    private static final OfInt zero_after_ff$LAYOUT = (OfInt)$LAYOUT.select(groupElement("zero_after_ff"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int zero_after_ff
+     * }
+     */
+    public static final OfInt zero_after_ff$layout() {
+        return zero_after_ff$LAYOUT;
+    }
+
+    private static final long zero_after_ff$OFFSET = 116;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int zero_after_ff
+     * }
+     */
+    public static final long zero_after_ff$offset() {
+        return zero_after_ff$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int zero_after_ff
+     * }
+     */
+    public static int zero_after_ff(MemorySegment struct) {
+        return struct.get(zero_after_ff$LAYOUT, zero_after_ff$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int zero_after_ff
+     * }
+     */
+    public static void zero_after_ff(MemorySegment struct, int fieldValue) {
+        struct.set(zero_after_ff$LAYOUT, zero_after_ff$OFFSET, fieldValue);
+    }
+
+    private static final OfInt tile_width$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tile_width"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int tile_width
+     * }
+     */
+    public static final OfInt tile_width$layout() {
+        return tile_width$LAYOUT;
+    }
+
+    private static final long tile_width$OFFSET = 120;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int tile_width
+     * }
+     */
+    public static final long tile_width$offset() {
+        return tile_width$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int tile_width
+     * }
+     */
+    public static int tile_width(MemorySegment struct) {
+        return struct.get(tile_width$LAYOUT, tile_width$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int tile_width
+     * }
+     */
+    public static void tile_width(MemorySegment struct, int fieldValue) {
+        struct.set(tile_width$LAYOUT, tile_width$OFFSET, fieldValue);
+    }
+
+    private static final OfInt tile_length$LAYOUT = (OfInt)$LAYOUT.select(groupElement("tile_length"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int tile_length
+     * }
+     */
+    public static final OfInt tile_length$layout() {
+        return tile_length$LAYOUT;
+    }
+
+    private static final long tile_length$OFFSET = 124;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int tile_length
+     * }
+     */
+    public static final long tile_length$offset() {
+        return tile_length$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int tile_length
+     * }
+     */
+    public static int tile_length(MemorySegment struct) {
+        return struct.get(tile_length$LAYOUT, tile_length$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int tile_length
+     * }
+     */
+    public static void tile_length(MemorySegment struct, int fieldValue) {
+        struct.set(tile_length$LAYOUT, tile_length$OFFSET, fieldValue);
+    }
+
+    private static final OfInt load_flags$LAYOUT = (OfInt)$LAYOUT.select(groupElement("load_flags"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int load_flags
+     * }
+     */
+    public static final OfInt load_flags$layout() {
+        return load_flags$LAYOUT;
+    }
+
+    private static final long load_flags$OFFSET = 128;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int load_flags
+     * }
+     */
+    public static final long load_flags$offset() {
+        return load_flags$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int load_flags
+     * }
+     */
+    public static int load_flags(MemorySegment struct) {
+        return struct.get(load_flags$LAYOUT, load_flags$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int load_flags
+     * }
+     */
+    public static void load_flags(MemorySegment struct, int fieldValue) {
+        struct.set(load_flags$LAYOUT, load_flags$OFFSET, fieldValue);
+    }
+
+    private static final OfInt data_error$LAYOUT = (OfInt)$LAYOUT.select(groupElement("data_error"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int data_error
+     * }
+     */
+    public static final OfInt data_error$layout() {
+        return data_error$LAYOUT;
+    }
+
+    private static final long data_error$OFFSET = 132;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int data_error
+     * }
+     */
+    public static final long data_error$offset() {
+        return data_error$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int data_error
+     * }
+     */
+    public static int data_error(MemorySegment struct) {
+        return struct.get(data_error$LAYOUT, data_error$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int data_error
+     * }
+     */
+    public static void data_error(MemorySegment struct, int fieldValue) {
+        struct.set(data_error$LAYOUT, data_error$OFFSET, fieldValue);
+    }
+
+    private static final OfInt hasselblad_parser_flag$LAYOUT = (OfInt)$LAYOUT.select(groupElement("hasselblad_parser_flag"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int hasselblad_parser_flag
+     * }
+     */
+    public static final OfInt hasselblad_parser_flag$layout() {
+        return hasselblad_parser_flag$LAYOUT;
+    }
+
+    private static final long hasselblad_parser_flag$OFFSET = 136;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int hasselblad_parser_flag
+     * }
+     */
+    public static final long hasselblad_parser_flag$offset() {
+        return hasselblad_parser_flag$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int hasselblad_parser_flag
+     * }
+     */
+    public static int hasselblad_parser_flag(MemorySegment struct) {
+        return struct.get(hasselblad_parser_flag$LAYOUT, hasselblad_parser_flag$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int hasselblad_parser_flag
+     * }
+     */
+    public static void hasselblad_parser_flag(MemorySegment struct, int fieldValue) {
+        struct.set(hasselblad_parser_flag$LAYOUT, hasselblad_parser_flag$OFFSET, fieldValue);
+    }
+
+    private static final OfLong posRAFData$LAYOUT = (OfLong)$LAYOUT.select(groupElement("posRAFData"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * long long posRAFData
+     * }
+     */
+    public static final OfLong posRAFData$layout() {
+        return posRAFData$LAYOUT;
+    }
+
+    private static final long posRAFData$OFFSET = 144;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * long long posRAFData
+     * }
+     */
+    public static final long posRAFData$offset() {
+        return posRAFData$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * long long posRAFData
+     * }
+     */
+    public static long posRAFData(MemorySegment struct) {
+        return struct.get(posRAFData$LAYOUT, posRAFData$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * long long posRAFData
+     * }
+     */
+    public static void posRAFData(MemorySegment struct, long fieldValue) {
+        struct.set(posRAFData$LAYOUT, posRAFData$OFFSET, fieldValue);
+    }
+
+    private static final OfInt lenRAFData$LAYOUT = (OfInt)$LAYOUT.select(groupElement("lenRAFData"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int lenRAFData
+     * }
+     */
+    public static final OfInt lenRAFData$layout() {
+        return lenRAFData$LAYOUT;
+    }
+
+    private static final long lenRAFData$OFFSET = 152;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int lenRAFData
+     * }
+     */
+    public static final long lenRAFData$offset() {
+        return lenRAFData$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int lenRAFData
+     * }
+     */
+    public static int lenRAFData(MemorySegment struct) {
+        return struct.get(lenRAFData$LAYOUT, lenRAFData$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int lenRAFData
+     * }
+     */
+    public static void lenRAFData(MemorySegment struct, int fieldValue) {
+        struct.set(lenRAFData$LAYOUT, lenRAFData$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_total_lines$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_total_lines"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int fuji_total_lines
+     * }
+     */
+    public static final OfInt fuji_total_lines$layout() {
+        return fuji_total_lines$LAYOUT;
+    }
+
+    private static final long fuji_total_lines$OFFSET = 156;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int fuji_total_lines
+     * }
+     */
+    public static final long fuji_total_lines$offset() {
+        return fuji_total_lines$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int fuji_total_lines
+     * }
+     */
+    public static int fuji_total_lines(MemorySegment struct) {
+        return struct.get(fuji_total_lines$LAYOUT, fuji_total_lines$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int fuji_total_lines
+     * }
+     */
+    public static void fuji_total_lines(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_total_lines$LAYOUT, fuji_total_lines$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_total_blocks$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_total_blocks"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int fuji_total_blocks
+     * }
+     */
+    public static final OfInt fuji_total_blocks$layout() {
+        return fuji_total_blocks$LAYOUT;
+    }
+
+    private static final long fuji_total_blocks$OFFSET = 160;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int fuji_total_blocks
+     * }
+     */
+    public static final long fuji_total_blocks$offset() {
+        return fuji_total_blocks$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int fuji_total_blocks
+     * }
+     */
+    public static int fuji_total_blocks(MemorySegment struct) {
+        return struct.get(fuji_total_blocks$LAYOUT, fuji_total_blocks$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int fuji_total_blocks
+     * }
+     */
+    public static void fuji_total_blocks(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_total_blocks$LAYOUT, fuji_total_blocks$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_block_width$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_block_width"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int fuji_block_width
+     * }
+     */
+    public static final OfInt fuji_block_width$layout() {
+        return fuji_block_width$LAYOUT;
+    }
+
+    private static final long fuji_block_width$OFFSET = 164;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int fuji_block_width
+     * }
+     */
+    public static final long fuji_block_width$offset() {
+        return fuji_block_width$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int fuji_block_width
+     * }
+     */
+    public static int fuji_block_width(MemorySegment struct) {
+        return struct.get(fuji_block_width$LAYOUT, fuji_block_width$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int fuji_block_width
+     * }
+     */
+    public static void fuji_block_width(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_block_width$LAYOUT, fuji_block_width$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_bits$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_bits"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int fuji_bits
+     * }
+     */
+    public static final OfInt fuji_bits$layout() {
+        return fuji_bits$LAYOUT;
+    }
+
+    private static final long fuji_bits$OFFSET = 168;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int fuji_bits
+     * }
+     */
+    public static final long fuji_bits$offset() {
+        return fuji_bits$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int fuji_bits
+     * }
+     */
+    public static int fuji_bits(MemorySegment struct) {
+        return struct.get(fuji_bits$LAYOUT, fuji_bits$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int fuji_bits
+     * }
+     */
+    public static void fuji_bits(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_bits$LAYOUT, fuji_bits$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_raw_type$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_raw_type"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int fuji_raw_type
+     * }
+     */
+    public static final OfInt fuji_raw_type$layout() {
+        return fuji_raw_type$LAYOUT;
+    }
+
+    private static final long fuji_raw_type$OFFSET = 172;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int fuji_raw_type
+     * }
+     */
+    public static final long fuji_raw_type$offset() {
+        return fuji_raw_type$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int fuji_raw_type
+     * }
+     */
+    public static int fuji_raw_type(MemorySegment struct) {
+        return struct.get(fuji_raw_type$LAYOUT, fuji_raw_type$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int fuji_raw_type
+     * }
+     */
+    public static void fuji_raw_type(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_raw_type$LAYOUT, fuji_raw_type$OFFSET, fieldValue);
+    }
+
+    private static final OfInt fuji_lossless$LAYOUT = (OfInt)$LAYOUT.select(groupElement("fuji_lossless"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int fuji_lossless
+     * }
+     */
+    public static final OfInt fuji_lossless$layout() {
+        return fuji_lossless$LAYOUT;
+    }
+
+    private static final long fuji_lossless$OFFSET = 176;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int fuji_lossless
+     * }
+     */
+    public static final long fuji_lossless$offset() {
+        return fuji_lossless$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int fuji_lossless
+     * }
+     */
+    public static int fuji_lossless(MemorySegment struct) {
+        return struct.get(fuji_lossless$LAYOUT, fuji_lossless$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int fuji_lossless
+     * }
+     */
+    public static void fuji_lossless(MemorySegment struct, int fieldValue) {
+        struct.set(fuji_lossless$LAYOUT, fuji_lossless$OFFSET, fieldValue);
+    }
+
+    private static final OfInt pana_encoding$LAYOUT = (OfInt)$LAYOUT.select(groupElement("pana_encoding"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int pana_encoding
+     * }
+     */
+    public static final OfInt pana_encoding$layout() {
+        return pana_encoding$LAYOUT;
+    }
+
+    private static final long pana_encoding$OFFSET = 180;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int pana_encoding
+     * }
+     */
+    public static final long pana_encoding$offset() {
+        return pana_encoding$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int pana_encoding
+     * }
+     */
+    public static int pana_encoding(MemorySegment struct) {
+        return struct.get(pana_encoding$LAYOUT, pana_encoding$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int pana_encoding
+     * }
+     */
+    public static void pana_encoding(MemorySegment struct, int fieldValue) {
+        struct.set(pana_encoding$LAYOUT, pana_encoding$OFFSET, fieldValue);
+    }
+
+    private static final OfInt pana_bpp$LAYOUT = (OfInt)$LAYOUT.select(groupElement("pana_bpp"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int pana_bpp
+     * }
+     */
+    public static final OfInt pana_bpp$layout() {
+        return pana_bpp$LAYOUT;
+    }
+
+    private static final long pana_bpp$OFFSET = 184;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int pana_bpp
+     * }
+     */
+    public static final long pana_bpp$offset() {
+        return pana_bpp$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int pana_bpp
+     * }
+     */
+    public static int pana_bpp(MemorySegment struct) {
+        return struct.get(pana_bpp$LAYOUT, pana_bpp$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int pana_bpp
+     * }
+     */
+    public static void pana_bpp(MemorySegment struct, int fieldValue) {
+        struct.set(pana_bpp$LAYOUT, pana_bpp$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout crx_header$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("crx_header"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static final SequenceLayout crx_header$layout() {
+        return crx_header$LAYOUT;
+    }
+
+    private static final long crx_header$OFFSET = 192;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static final long crx_header$offset() {
+        return crx_header$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static MemorySegment crx_header(MemorySegment struct) {
+        return struct.asSlice(crx_header$OFFSET, crx_header$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static void crx_header(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, crx_header$OFFSET, crx_header$LAYOUT.byteSize());
+    }
+
+    private static long[] crx_header$DIMS = { 16 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static long[] crx_header$dimensions() {
+        return crx_header$DIMS;
+    }
+    private static final MethodHandle crx_header$ELEM_HANDLE = crx_header$LAYOUT.sliceHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static MemorySegment crx_header(MemorySegment struct, long index0) {
+        try {
+            return (MemorySegment)crx_header$ELEM_HANDLE.invokeExact(struct, 0L, index0);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * crx_data_header_t crx_header[16]
+     * }
+     */
+    public static void crx_header(MemorySegment struct, long index0, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, crx_header(struct, index0), 0L, crx_data_header_t.layout().byteSize());
+    }
+
+    private static final OfInt crx_track_selected$LAYOUT = (OfInt)$LAYOUT.select(groupElement("crx_track_selected"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int crx_track_selected
+     * }
+     */
+    public static final OfInt crx_track_selected$layout() {
+        return crx_track_selected$LAYOUT;
+    }
+
+    private static final long crx_track_selected$OFFSET = 2240;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int crx_track_selected
+     * }
+     */
+    public static final long crx_track_selected$offset() {
+        return crx_track_selected$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int crx_track_selected
+     * }
+     */
+    public static int crx_track_selected(MemorySegment struct) {
+        return struct.get(crx_track_selected$LAYOUT, crx_track_selected$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int crx_track_selected
+     * }
+     */
+    public static void crx_track_selected(MemorySegment struct, int fieldValue) {
+        struct.set(crx_track_selected$LAYOUT, crx_track_selected$OFFSET, fieldValue);
+    }
+
+    private static final OfInt crx_track_count$LAYOUT = (OfInt)$LAYOUT.select(groupElement("crx_track_count"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int crx_track_count
+     * }
+     */
+    public static final OfInt crx_track_count$layout() {
+        return crx_track_count$LAYOUT;
+    }
+
+    private static final long crx_track_count$OFFSET = 2244;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int crx_track_count
+     * }
+     */
+    public static final long crx_track_count$offset() {
+        return crx_track_count$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int crx_track_count
+     * }
+     */
+    public static int crx_track_count(MemorySegment struct) {
+        return struct.get(crx_track_count$LAYOUT, crx_track_count$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int crx_track_count
+     * }
+     */
+    public static void crx_track_count(MemorySegment struct, int fieldValue) {
+        struct.set(crx_track_count$LAYOUT, crx_track_count$OFFSET, fieldValue);
+    }
+
+    private static final OfShort CR3_CTMDtag$LAYOUT = (OfShort)$LAYOUT.select(groupElement("CR3_CTMDtag"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short CR3_CTMDtag
+     * }
+     */
+    public static final OfShort CR3_CTMDtag$layout() {
+        return CR3_CTMDtag$LAYOUT;
+    }
+
+    private static final long CR3_CTMDtag$OFFSET = 2248;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short CR3_CTMDtag
+     * }
+     */
+    public static final long CR3_CTMDtag$offset() {
+        return CR3_CTMDtag$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short CR3_CTMDtag
+     * }
+     */
+    public static short CR3_CTMDtag(MemorySegment struct) {
+        return struct.get(CR3_CTMDtag$LAYOUT, CR3_CTMDtag$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short CR3_CTMDtag
+     * }
+     */
+    public static void CR3_CTMDtag(MemorySegment struct, short fieldValue) {
+        struct.set(CR3_CTMDtag$LAYOUT, CR3_CTMDtag$OFFSET, fieldValue);
+    }
+
+    private static final OfShort CR3_Version$LAYOUT = (OfShort)$LAYOUT.select(groupElement("CR3_Version"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short CR3_Version
+     * }
+     */
+    public static final OfShort CR3_Version$layout() {
+        return CR3_Version$LAYOUT;
+    }
+
+    private static final long CR3_Version$OFFSET = 2250;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short CR3_Version
+     * }
+     */
+    public static final long CR3_Version$offset() {
+        return CR3_Version$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short CR3_Version
+     * }
+     */
+    public static short CR3_Version(MemorySegment struct) {
+        return struct.get(CR3_Version$LAYOUT, CR3_Version$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short CR3_Version
+     * }
+     */
+    public static void CR3_Version(MemorySegment struct, short fieldValue) {
+        struct.set(CR3_Version$LAYOUT, CR3_Version$OFFSET, fieldValue);
+    }
+
+    private static final OfInt CM_found$LAYOUT = (OfInt)$LAYOUT.select(groupElement("CM_found"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int CM_found
+     * }
+     */
+    public static final OfInt CM_found$layout() {
+        return CM_found$LAYOUT;
+    }
+
+    private static final long CM_found$OFFSET = 2252;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int CM_found
+     * }
+     */
+    public static final long CM_found$offset() {
+        return CM_found$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int CM_found
+     * }
+     */
+    public static int CM_found(MemorySegment struct) {
+        return struct.get(CM_found$LAYOUT, CM_found$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int CM_found
+     * }
+     */
+    public static void CM_found(MemorySegment struct, int fieldValue) {
+        struct.set(CM_found$LAYOUT, CM_found$OFFSET, fieldValue);
+    }
+
+    private static final OfInt is_NikonTransfer$LAYOUT = (OfInt)$LAYOUT.select(groupElement("is_NikonTransfer"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int is_NikonTransfer
+     * }
+     */
+    public static final OfInt is_NikonTransfer$layout() {
+        return is_NikonTransfer$LAYOUT;
+    }
+
+    private static final long is_NikonTransfer$OFFSET = 2256;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int is_NikonTransfer
+     * }
+     */
+    public static final long is_NikonTransfer$offset() {
+        return is_NikonTransfer$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int is_NikonTransfer
+     * }
+     */
+    public static int is_NikonTransfer(MemorySegment struct) {
+        return struct.get(is_NikonTransfer$LAYOUT, is_NikonTransfer$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int is_NikonTransfer
+     * }
+     */
+    public static void is_NikonTransfer(MemorySegment struct, int fieldValue) {
+        struct.set(is_NikonTransfer$LAYOUT, is_NikonTransfer$OFFSET, fieldValue);
+    }
+
+    private static final OfInt is_Olympus$LAYOUT = (OfInt)$LAYOUT.select(groupElement("is_Olympus"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int is_Olympus
+     * }
+     */
+    public static final OfInt is_Olympus$layout() {
+        return is_Olympus$LAYOUT;
+    }
+
+    private static final long is_Olympus$OFFSET = 2260;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int is_Olympus
+     * }
+     */
+    public static final long is_Olympus$offset() {
+        return is_Olympus$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int is_Olympus
+     * }
+     */
+    public static int is_Olympus(MemorySegment struct) {
+        return struct.get(is_Olympus$LAYOUT, is_Olympus$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int is_Olympus
+     * }
+     */
+    public static void is_Olympus(MemorySegment struct, int fieldValue) {
+        struct.set(is_Olympus$LAYOUT, is_Olympus$OFFSET, fieldValue);
+    }
+
+    private static final OfInt OlympusDNG_SubDirOffsetValid$LAYOUT = (OfInt)$LAYOUT.select(groupElement("OlympusDNG_SubDirOffsetValid"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * int OlympusDNG_SubDirOffsetValid
+     * }
+     */
+    public static final OfInt OlympusDNG_SubDirOffsetValid$layout() {
+        return OlympusDNG_SubDirOffsetValid$LAYOUT;
+    }
+
+    private static final long OlympusDNG_SubDirOffsetValid$OFFSET = 2264;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * int OlympusDNG_SubDirOffsetValid
+     * }
+     */
+    public static final long OlympusDNG_SubDirOffsetValid$offset() {
+        return OlympusDNG_SubDirOffsetValid$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * int OlympusDNG_SubDirOffsetValid
+     * }
+     */
+    public static int OlympusDNG_SubDirOffsetValid(MemorySegment struct) {
+        return struct.get(OlympusDNG_SubDirOffsetValid$LAYOUT, OlympusDNG_SubDirOffsetValid$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * int OlympusDNG_SubDirOffsetValid
+     * }
+     */
+    public static void OlympusDNG_SubDirOffsetValid(MemorySegment struct, int fieldValue) {
+        struct.set(OlympusDNG_SubDirOffsetValid$LAYOUT, OlympusDNG_SubDirOffsetValid$OFFSET, fieldValue);
+    }
+
+    private static final OfInt is_Sony$LAYOUT = (OfInt)$LAYOUT.select(groupElement("is_Sony"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int is_Sony
+     * }
+     */
+    public static final OfInt is_Sony$layout() {
+        return is_Sony$LAYOUT;
+    }
+
+    private static final long is_Sony$OFFSET = 2268;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int is_Sony
+     * }
+     */
+    public static final long is_Sony$offset() {
+        return is_Sony$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int is_Sony
+     * }
+     */
+    public static int is_Sony(MemorySegment struct) {
+        return struct.get(is_Sony$LAYOUT, is_Sony$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int is_Sony
+     * }
+     */
+    public static void is_Sony(MemorySegment struct, int fieldValue) {
+        struct.set(is_Sony$LAYOUT, is_Sony$OFFSET, fieldValue);
+    }
+
+    private static final OfInt is_pana_raw$LAYOUT = (OfInt)$LAYOUT.select(groupElement("is_pana_raw"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int is_pana_raw
+     * }
+     */
+    public static final OfInt is_pana_raw$layout() {
+        return is_pana_raw$LAYOUT;
+    }
+
+    private static final long is_pana_raw$OFFSET = 2272;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int is_pana_raw
+     * }
+     */
+    public static final long is_pana_raw$offset() {
+        return is_pana_raw$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int is_pana_raw
+     * }
+     */
+    public static int is_pana_raw(MemorySegment struct) {
+        return struct.get(is_pana_raw$LAYOUT, is_pana_raw$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int is_pana_raw
+     * }
+     */
+    public static void is_pana_raw(MemorySegment struct, int fieldValue) {
+        struct.set(is_pana_raw$LAYOUT, is_pana_raw$OFFSET, fieldValue);
+    }
+
+    private static final OfInt is_PentaxRicohMakernotes$LAYOUT = (OfInt)$LAYOUT.select(groupElement("is_PentaxRicohMakernotes"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int is_PentaxRicohMakernotes
+     * }
+     */
+    public static final OfInt is_PentaxRicohMakernotes$layout() {
+        return is_PentaxRicohMakernotes$LAYOUT;
+    }
+
+    private static final long is_PentaxRicohMakernotes$OFFSET = 2276;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int is_PentaxRicohMakernotes
+     * }
+     */
+    public static final long is_PentaxRicohMakernotes$offset() {
+        return is_PentaxRicohMakernotes$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int is_PentaxRicohMakernotes
+     * }
+     */
+    public static int is_PentaxRicohMakernotes(MemorySegment struct) {
+        return struct.get(is_PentaxRicohMakernotes$LAYOUT, is_PentaxRicohMakernotes$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int is_PentaxRicohMakernotes
+     * }
+     */
+    public static void is_PentaxRicohMakernotes(MemorySegment struct, int fieldValue) {
+        struct.set(is_PentaxRicohMakernotes$LAYOUT, is_PentaxRicohMakernotes$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout dng_frames$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("dng_frames"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static final SequenceLayout dng_frames$layout() {
+        return dng_frames$LAYOUT;
+    }
+
+    private static final long dng_frames$OFFSET = 2280;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static final long dng_frames$offset() {
+        return dng_frames$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static MemorySegment dng_frames(MemorySegment struct) {
+        return struct.asSlice(dng_frames$OFFSET, dng_frames$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static void dng_frames(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, dng_frames$OFFSET, dng_frames$LAYOUT.byteSize());
+    }
+
+    private static long[] dng_frames$DIMS = { 20 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static long[] dng_frames$dimensions() {
+        return dng_frames$DIMS;
+    }
+    private static final VarHandle dng_frames$ELEM_HANDLE = dng_frames$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static int dng_frames(MemorySegment struct, long index0) {
+        return (int)dng_frames$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * unsigned int dng_frames[20]
+     * }
+     */
+    public static void dng_frames(MemorySegment struct, long index0, int fieldValue) {
+        dng_frames$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfShort raw_stride$LAYOUT = (OfShort)$LAYOUT.select(groupElement("raw_stride"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned short raw_stride
+     * }
+     */
+    public static final OfShort raw_stride$layout() {
+        return raw_stride$LAYOUT;
+    }
+
+    private static final long raw_stride$OFFSET = 2360;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned short raw_stride
+     * }
+     */
+    public static final long raw_stride$offset() {
+        return raw_stride$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned short raw_stride
+     * }
+     */
+    public static short raw_stride(MemorySegment struct) {
+        return struct.get(raw_stride$LAYOUT, raw_stride$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned short raw_stride
+     * }
+     */
+    public static void raw_stride(MemorySegment struct, short fieldValue) {
+        struct.set(raw_stride$LAYOUT, raw_stride$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

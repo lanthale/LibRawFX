@@ -2,21 +2,26 @@
 
 package org.libraw.win;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_makernotes_lens_t {
+ * {@snippet lang=c :
+ * struct {
  *     unsigned long long LensID;
  *     char Lens[128];
- *     unsigned short LensFormat;
- *     unsigned short LensMount;
+ *     ushort LensFormat;
+ *     ushort LensMount;
  *     unsigned long long CamID;
- *     unsigned short CameraFormat;
- *     unsigned short CameraMount;
+ *     ushort CameraFormat;
+ *     ushort CameraMount;
  *     char body[64];
  *     short FocalType;
  *     char LensFeatures_pre[16];
@@ -42,772 +47,1834 @@ import static java.lang.foreign.ValueLayout.*;
  *     char Adapter[128];
  *     unsigned long long AttachmentID;
  *     char Attachment[128];
- *     unsigned short FocalUnits;
+ *     ushort FocalUnits;
  *     float FocalLengthIn35mmFormat;
- * };
+ * }
  * }
  */
 public class libraw_makernotes_lens_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$78.const$1;
+    libraw_makernotes_lens_t() {
+        // Should not be called directly
     }
-    public static VarHandle LensID$VH() {
-        return constants$78.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned long long LensID;
-     * }
-     */
-    public static long LensID$get(MemorySegment seg) {
-        return (long)constants$78.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned long long LensID;
-     * }
-     */
-    public static void LensID$set(MemorySegment seg, long x) {
-        constants$78.const$2.set(seg, x);
-    }
-    public static long LensID$get(MemorySegment seg, long index) {
-        return (long)constants$78.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensID$set(MemorySegment seg, long index, long x) {
-        constants$78.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment Lens$slice(MemorySegment seg) {
-        return seg.asSlice(8, 128);
-    }
-    public static VarHandle LensFormat$VH() {
-        return constants$78.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short LensFormat;
-     * }
-     */
-    public static short LensFormat$get(MemorySegment seg) {
-        return (short)constants$78.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short LensFormat;
-     * }
-     */
-    public static void LensFormat$set(MemorySegment seg, short x) {
-        constants$78.const$3.set(seg, x);
-    }
-    public static short LensFormat$get(MemorySegment seg, long index) {
-        return (short)constants$78.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensFormat$set(MemorySegment seg, long index, short x) {
-        constants$78.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle LensMount$VH() {
-        return constants$78.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short LensMount;
-     * }
-     */
-    public static short LensMount$get(MemorySegment seg) {
-        return (short)constants$78.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short LensMount;
-     * }
-     */
-    public static void LensMount$set(MemorySegment seg, short x) {
-        constants$78.const$4.set(seg, x);
-    }
-    public static short LensMount$get(MemorySegment seg, long index) {
-        return (short)constants$78.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensMount$set(MemorySegment seg, long index, short x) {
-        constants$78.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CamID$VH() {
-        return constants$78.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned long long CamID;
-     * }
-     */
-    public static long CamID$get(MemorySegment seg) {
-        return (long)constants$78.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned long long CamID;
-     * }
-     */
-    public static void CamID$set(MemorySegment seg, long x) {
-        constants$78.const$5.set(seg, x);
-    }
-    public static long CamID$get(MemorySegment seg, long index) {
-        return (long)constants$78.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CamID$set(MemorySegment seg, long index, long x) {
-        constants$78.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CameraFormat$VH() {
-        return constants$79.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short CameraFormat;
-     * }
-     */
-    public static short CameraFormat$get(MemorySegment seg) {
-        return (short)constants$79.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short CameraFormat;
-     * }
-     */
-    public static void CameraFormat$set(MemorySegment seg, short x) {
-        constants$79.const$0.set(seg, x);
-    }
-    public static short CameraFormat$get(MemorySegment seg, long index) {
-        return (short)constants$79.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CameraFormat$set(MemorySegment seg, long index, short x) {
-        constants$79.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CameraMount$VH() {
-        return constants$79.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short CameraMount;
-     * }
-     */
-    public static short CameraMount$get(MemorySegment seg) {
-        return (short)constants$79.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short CameraMount;
-     * }
-     */
-    public static void CameraMount$set(MemorySegment seg, short x) {
-        constants$79.const$1.set(seg, x);
-    }
-    public static short CameraMount$get(MemorySegment seg, long index) {
-        return (short)constants$79.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CameraMount$set(MemorySegment seg, long index, short x) {
-        constants$79.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment body$slice(MemorySegment seg) {
-        return seg.asSlice(156, 64);
-    }
-    public static VarHandle FocalType$VH() {
-        return constants$79.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short FocalType;
-     * }
-     */
-    public static short FocalType$get(MemorySegment seg) {
-        return (short)constants$79.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short FocalType;
-     * }
-     */
-    public static void FocalType$set(MemorySegment seg, short x) {
-        constants$79.const$2.set(seg, x);
-    }
-    public static short FocalType$get(MemorySegment seg, long index) {
-        return (short)constants$79.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FocalType$set(MemorySegment seg, long index, short x) {
-        constants$79.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment LensFeatures_pre$slice(MemorySegment seg) {
-        return seg.asSlice(222, 16);
-    }
-    public static MemorySegment LensFeatures_suf$slice(MemorySegment seg) {
-        return seg.asSlice(238, 16);
-    }
-    public static VarHandle MinFocal$VH() {
-        return constants$79.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MinFocal;
-     * }
-     */
-    public static float MinFocal$get(MemorySegment seg) {
-        return (float)constants$79.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MinFocal;
-     * }
-     */
-    public static void MinFocal$set(MemorySegment seg, float x) {
-        constants$79.const$3.set(seg, x);
-    }
-    public static float MinFocal$get(MemorySegment seg, long index) {
-        return (float)constants$79.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MinFocal$set(MemorySegment seg, long index, float x) {
-        constants$79.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MaxFocal$VH() {
-        return constants$79.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MaxFocal;
-     * }
-     */
-    public static float MaxFocal$get(MemorySegment seg) {
-        return (float)constants$79.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MaxFocal;
-     * }
-     */
-    public static void MaxFocal$set(MemorySegment seg, float x) {
-        constants$79.const$4.set(seg, x);
-    }
-    public static float MaxFocal$get(MemorySegment seg, long index) {
-        return (float)constants$79.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MaxFocal$set(MemorySegment seg, long index, float x) {
-        constants$79.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MaxAp4MinFocal$VH() {
-        return constants$79.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MaxAp4MinFocal;
-     * }
-     */
-    public static float MaxAp4MinFocal$get(MemorySegment seg) {
-        return (float)constants$79.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MaxAp4MinFocal;
-     * }
-     */
-    public static void MaxAp4MinFocal$set(MemorySegment seg, float x) {
-        constants$79.const$5.set(seg, x);
-    }
-    public static float MaxAp4MinFocal$get(MemorySegment seg, long index) {
-        return (float)constants$79.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MaxAp4MinFocal$set(MemorySegment seg, long index, float x) {
-        constants$79.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MaxAp4MaxFocal$VH() {
-        return constants$80.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MaxAp4MaxFocal;
-     * }
-     */
-    public static float MaxAp4MaxFocal$get(MemorySegment seg) {
-        return (float)constants$80.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MaxAp4MaxFocal;
-     * }
-     */
-    public static void MaxAp4MaxFocal$set(MemorySegment seg, float x) {
-        constants$80.const$0.set(seg, x);
-    }
-    public static float MaxAp4MaxFocal$get(MemorySegment seg, long index) {
-        return (float)constants$80.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MaxAp4MaxFocal$set(MemorySegment seg, long index, float x) {
-        constants$80.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MinAp4MinFocal$VH() {
-        return constants$80.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MinAp4MinFocal;
-     * }
-     */
-    public static float MinAp4MinFocal$get(MemorySegment seg) {
-        return (float)constants$80.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MinAp4MinFocal;
-     * }
-     */
-    public static void MinAp4MinFocal$set(MemorySegment seg, float x) {
-        constants$80.const$1.set(seg, x);
-    }
-    public static float MinAp4MinFocal$get(MemorySegment seg, long index) {
-        return (float)constants$80.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MinAp4MinFocal$set(MemorySegment seg, long index, float x) {
-        constants$80.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MinAp4MaxFocal$VH() {
-        return constants$80.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MinAp4MaxFocal;
-     * }
-     */
-    public static float MinAp4MaxFocal$get(MemorySegment seg) {
-        return (float)constants$80.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MinAp4MaxFocal;
-     * }
-     */
-    public static void MinAp4MaxFocal$set(MemorySegment seg, float x) {
-        constants$80.const$2.set(seg, x);
-    }
-    public static float MinAp4MaxFocal$get(MemorySegment seg, long index) {
-        return (float)constants$80.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MinAp4MaxFocal$set(MemorySegment seg, long index, float x) {
-        constants$80.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MaxAp$VH() {
-        return constants$80.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MaxAp;
-     * }
-     */
-    public static float MaxAp$get(MemorySegment seg) {
-        return (float)constants$80.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MaxAp;
-     * }
-     */
-    public static void MaxAp$set(MemorySegment seg, float x) {
-        constants$80.const$3.set(seg, x);
-    }
-    public static float MaxAp$get(MemorySegment seg, long index) {
-        return (float)constants$80.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MaxAp$set(MemorySegment seg, long index, float x) {
-        constants$80.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MinAp$VH() {
-        return constants$80.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MinAp;
-     * }
-     */
-    public static float MinAp$get(MemorySegment seg) {
-        return (float)constants$80.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MinAp;
-     * }
-     */
-    public static void MinAp$set(MemorySegment seg, float x) {
-        constants$80.const$4.set(seg, x);
-    }
-    public static float MinAp$get(MemorySegment seg, long index) {
-        return (float)constants$80.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MinAp$set(MemorySegment seg, long index, float x) {
-        constants$80.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CurFocal$VH() {
-        return constants$80.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float CurFocal;
-     * }
-     */
-    public static float CurFocal$get(MemorySegment seg) {
-        return (float)constants$80.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float CurFocal;
-     * }
-     */
-    public static void CurFocal$set(MemorySegment seg, float x) {
-        constants$80.const$5.set(seg, x);
-    }
-    public static float CurFocal$get(MemorySegment seg, long index) {
-        return (float)constants$80.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CurFocal$set(MemorySegment seg, long index, float x) {
-        constants$80.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle CurAp$VH() {
-        return constants$81.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float CurAp;
-     * }
-     */
-    public static float CurAp$get(MemorySegment seg) {
-        return (float)constants$81.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float CurAp;
-     * }
-     */
-    public static void CurAp$set(MemorySegment seg, float x) {
-        constants$81.const$0.set(seg, x);
-    }
-    public static float CurAp$get(MemorySegment seg, long index) {
-        return (float)constants$81.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void CurAp$set(MemorySegment seg, long index, float x) {
-        constants$81.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MaxAp4CurFocal$VH() {
-        return constants$81.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MaxAp4CurFocal;
-     * }
-     */
-    public static float MaxAp4CurFocal$get(MemorySegment seg) {
-        return (float)constants$81.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MaxAp4CurFocal;
-     * }
-     */
-    public static void MaxAp4CurFocal$set(MemorySegment seg, float x) {
-        constants$81.const$1.set(seg, x);
-    }
-    public static float MaxAp4CurFocal$get(MemorySegment seg, long index) {
-        return (float)constants$81.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MaxAp4CurFocal$set(MemorySegment seg, long index, float x) {
-        constants$81.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MinAp4CurFocal$VH() {
-        return constants$81.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MinAp4CurFocal;
-     * }
-     */
-    public static float MinAp4CurFocal$get(MemorySegment seg) {
-        return (float)constants$81.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MinAp4CurFocal;
-     * }
-     */
-    public static void MinAp4CurFocal$set(MemorySegment seg, float x) {
-        constants$81.const$2.set(seg, x);
-    }
-    public static float MinAp4CurFocal$get(MemorySegment seg, long index) {
-        return (float)constants$81.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MinAp4CurFocal$set(MemorySegment seg, long index, float x) {
-        constants$81.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle MinFocusDistance$VH() {
-        return constants$81.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float MinFocusDistance;
-     * }
-     */
-    public static float MinFocusDistance$get(MemorySegment seg) {
-        return (float)constants$81.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float MinFocusDistance;
-     * }
-     */
-    public static void MinFocusDistance$set(MemorySegment seg, float x) {
-        constants$81.const$3.set(seg, x);
-    }
-    public static float MinFocusDistance$get(MemorySegment seg, long index) {
-        return (float)constants$81.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void MinFocusDistance$set(MemorySegment seg, long index, float x) {
-        constants$81.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle FocusRangeIndex$VH() {
-        return constants$81.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float FocusRangeIndex;
-     * }
-     */
-    public static float FocusRangeIndex$get(MemorySegment seg) {
-        return (float)constants$81.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float FocusRangeIndex;
-     * }
-     */
-    public static void FocusRangeIndex$set(MemorySegment seg, float x) {
-        constants$81.const$4.set(seg, x);
-    }
-    public static float FocusRangeIndex$get(MemorySegment seg, long index) {
-        return (float)constants$81.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FocusRangeIndex$set(MemorySegment seg, long index, float x) {
-        constants$81.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle LensFStops$VH() {
-        return constants$81.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float LensFStops;
-     * }
-     */
-    public static float LensFStops$get(MemorySegment seg) {
-        return (float)constants$81.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float LensFStops;
-     * }
-     */
-    public static void LensFStops$set(MemorySegment seg, float x) {
-        constants$81.const$5.set(seg, x);
-    }
-    public static float LensFStops$get(MemorySegment seg, long index) {
-        return (float)constants$81.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void LensFStops$set(MemorySegment seg, long index, float x) {
-        constants$81.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle TeleconverterID$VH() {
-        return constants$82.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned long long TeleconverterID;
-     * }
-     */
-    public static long TeleconverterID$get(MemorySegment seg) {
-        return (long)constants$82.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned long long TeleconverterID;
-     * }
-     */
-    public static void TeleconverterID$set(MemorySegment seg, long x) {
-        constants$82.const$0.set(seg, x);
-    }
-    public static long TeleconverterID$get(MemorySegment seg, long index) {
-        return (long)constants$82.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void TeleconverterID$set(MemorySegment seg, long index, long x) {
-        constants$82.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment Teleconverter$slice(MemorySegment seg) {
-        return seg.asSlice(328, 128);
-    }
-    public static VarHandle AdapterID$VH() {
-        return constants$82.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned long long AdapterID;
-     * }
-     */
-    public static long AdapterID$get(MemorySegment seg) {
-        return (long)constants$82.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned long long AdapterID;
-     * }
-     */
-    public static void AdapterID$set(MemorySegment seg, long x) {
-        constants$82.const$1.set(seg, x);
-    }
-    public static long AdapterID$get(MemorySegment seg, long index) {
-        return (long)constants$82.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AdapterID$set(MemorySegment seg, long index, long x) {
-        constants$82.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment Adapter$slice(MemorySegment seg) {
-        return seg.asSlice(464, 128);
-    }
-    public static VarHandle AttachmentID$VH() {
-        return constants$82.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned long long AttachmentID;
-     * }
-     */
-    public static long AttachmentID$get(MemorySegment seg) {
-        return (long)constants$82.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned long long AttachmentID;
-     * }
-     */
-    public static void AttachmentID$set(MemorySegment seg, long x) {
-        constants$82.const$2.set(seg, x);
-    }
-    public static long AttachmentID$get(MemorySegment seg, long index) {
-        return (long)constants$82.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AttachmentID$set(MemorySegment seg, long index, long x) {
-        constants$82.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment Attachment$slice(MemorySegment seg) {
-        return seg.asSlice(600, 128);
-    }
-    public static VarHandle FocalUnits$VH() {
-        return constants$82.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short FocalUnits;
-     * }
-     */
-    public static short FocalUnits$get(MemorySegment seg) {
-        return (short)constants$82.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short FocalUnits;
-     * }
-     */
-    public static void FocalUnits$set(MemorySegment seg, short x) {
-        constants$82.const$3.set(seg, x);
-    }
-    public static short FocalUnits$get(MemorySegment seg, long index) {
-        return (short)constants$82.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FocalUnits$set(MemorySegment seg, long index, short x) {
-        constants$82.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle FocalLengthIn35mmFormat$VH() {
-        return constants$82.const$4;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * float FocalLengthIn35mmFormat;
-     * }
-     */
-    public static float FocalLengthIn35mmFormat$get(MemorySegment seg) {
-        return (float)constants$82.const$4.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * float FocalLengthIn35mmFormat;
-     * }
-     */
-    public static void FocalLengthIn35mmFormat$set(MemorySegment seg, float x) {
-        constants$82.const$4.set(seg, x);
-    }
-    public static float FocalLengthIn35mmFormat$get(MemorySegment seg, long index) {
-        return (float)constants$82.const$4.get(seg.asSlice(index*sizeof()));
-    }
-    public static void FocalLengthIn35mmFormat$set(MemorySegment seg, long index, float x) {
-        constants$82.const$4.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_LONG_LONG.withName("LensID"),
+        MemoryLayout.sequenceLayout(128, libraw_h.C_CHAR).withName("Lens"),
+        libraw_h.C_SHORT.withName("LensFormat"),
+        libraw_h.C_SHORT.withName("LensMount"),
+        MemoryLayout.paddingLayout(4),
+        libraw_h.C_LONG_LONG.withName("CamID"),
+        libraw_h.C_SHORT.withName("CameraFormat"),
+        libraw_h.C_SHORT.withName("CameraMount"),
+        MemoryLayout.sequenceLayout(64, libraw_h.C_CHAR).withName("body"),
+        libraw_h.C_SHORT.withName("FocalType"),
+        MemoryLayout.sequenceLayout(16, libraw_h.C_CHAR).withName("LensFeatures_pre"),
+        MemoryLayout.sequenceLayout(16, libraw_h.C_CHAR).withName("LensFeatures_suf"),
+        MemoryLayout.paddingLayout(2),
+        libraw_h.C_FLOAT.withName("MinFocal"),
+        libraw_h.C_FLOAT.withName("MaxFocal"),
+        libraw_h.C_FLOAT.withName("MaxAp4MinFocal"),
+        libraw_h.C_FLOAT.withName("MaxAp4MaxFocal"),
+        libraw_h.C_FLOAT.withName("MinAp4MinFocal"),
+        libraw_h.C_FLOAT.withName("MinAp4MaxFocal"),
+        libraw_h.C_FLOAT.withName("MaxAp"),
+        libraw_h.C_FLOAT.withName("MinAp"),
+        libraw_h.C_FLOAT.withName("CurFocal"),
+        libraw_h.C_FLOAT.withName("CurAp"),
+        libraw_h.C_FLOAT.withName("MaxAp4CurFocal"),
+        libraw_h.C_FLOAT.withName("MinAp4CurFocal"),
+        libraw_h.C_FLOAT.withName("MinFocusDistance"),
+        libraw_h.C_FLOAT.withName("FocusRangeIndex"),
+        libraw_h.C_FLOAT.withName("LensFStops"),
+        MemoryLayout.paddingLayout(4),
+        libraw_h.C_LONG_LONG.withName("TeleconverterID"),
+        MemoryLayout.sequenceLayout(128, libraw_h.C_CHAR).withName("Teleconverter"),
+        libraw_h.C_LONG_LONG.withName("AdapterID"),
+        MemoryLayout.sequenceLayout(128, libraw_h.C_CHAR).withName("Adapter"),
+        libraw_h.C_LONG_LONG.withName("AttachmentID"),
+        MemoryLayout.sequenceLayout(128, libraw_h.C_CHAR).withName("Attachment"),
+        libraw_h.C_SHORT.withName("FocalUnits"),
+        MemoryLayout.paddingLayout(2),
+        libraw_h.C_FLOAT.withName("FocalLengthIn35mmFormat")
+    ).withName("$anon$977:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfLong LensID$LAYOUT = (OfLong)$LAYOUT.select(groupElement("LensID"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned long long LensID
+     * }
+     */
+    public static final OfLong LensID$layout() {
+        return LensID$LAYOUT;
+    }
+
+    private static final long LensID$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned long long LensID
+     * }
+     */
+    public static final long LensID$offset() {
+        return LensID$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned long long LensID
+     * }
+     */
+    public static long LensID(MemorySegment struct) {
+        return struct.get(LensID$LAYOUT, LensID$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned long long LensID
+     * }
+     */
+    public static void LensID(MemorySegment struct, long fieldValue) {
+        struct.set(LensID$LAYOUT, LensID$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout Lens$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("Lens"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static final SequenceLayout Lens$layout() {
+        return Lens$LAYOUT;
+    }
+
+    private static final long Lens$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static final long Lens$offset() {
+        return Lens$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static MemorySegment Lens(MemorySegment struct) {
+        return struct.asSlice(Lens$OFFSET, Lens$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static void Lens(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, Lens$OFFSET, Lens$LAYOUT.byteSize());
+    }
+
+    private static long[] Lens$DIMS = { 128 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static long[] Lens$dimensions() {
+        return Lens$DIMS;
+    }
+    private static final VarHandle Lens$ELEM_HANDLE = Lens$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static byte Lens(MemorySegment struct, long index0) {
+        return (byte)Lens$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char Lens[128]
+     * }
+     */
+    public static void Lens(MemorySegment struct, long index0, byte fieldValue) {
+        Lens$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfShort LensFormat$LAYOUT = (OfShort)$LAYOUT.select(groupElement("LensFormat"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort LensFormat
+     * }
+     */
+    public static final OfShort LensFormat$layout() {
+        return LensFormat$LAYOUT;
+    }
+
+    private static final long LensFormat$OFFSET = 136;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort LensFormat
+     * }
+     */
+    public static final long LensFormat$offset() {
+        return LensFormat$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort LensFormat
+     * }
+     */
+    public static short LensFormat(MemorySegment struct) {
+        return struct.get(LensFormat$LAYOUT, LensFormat$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort LensFormat
+     * }
+     */
+    public static void LensFormat(MemorySegment struct, short fieldValue) {
+        struct.set(LensFormat$LAYOUT, LensFormat$OFFSET, fieldValue);
+    }
+
+    private static final OfShort LensMount$LAYOUT = (OfShort)$LAYOUT.select(groupElement("LensMount"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort LensMount
+     * }
+     */
+    public static final OfShort LensMount$layout() {
+        return LensMount$LAYOUT;
+    }
+
+    private static final long LensMount$OFFSET = 138;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort LensMount
+     * }
+     */
+    public static final long LensMount$offset() {
+        return LensMount$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort LensMount
+     * }
+     */
+    public static short LensMount(MemorySegment struct) {
+        return struct.get(LensMount$LAYOUT, LensMount$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort LensMount
+     * }
+     */
+    public static void LensMount(MemorySegment struct, short fieldValue) {
+        struct.set(LensMount$LAYOUT, LensMount$OFFSET, fieldValue);
+    }
+
+    private static final OfLong CamID$LAYOUT = (OfLong)$LAYOUT.select(groupElement("CamID"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned long long CamID
+     * }
+     */
+    public static final OfLong CamID$layout() {
+        return CamID$LAYOUT;
+    }
+
+    private static final long CamID$OFFSET = 144;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned long long CamID
+     * }
+     */
+    public static final long CamID$offset() {
+        return CamID$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned long long CamID
+     * }
+     */
+    public static long CamID(MemorySegment struct) {
+        return struct.get(CamID$LAYOUT, CamID$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned long long CamID
+     * }
+     */
+    public static void CamID(MemorySegment struct, long fieldValue) {
+        struct.set(CamID$LAYOUT, CamID$OFFSET, fieldValue);
+    }
+
+    private static final OfShort CameraFormat$LAYOUT = (OfShort)$LAYOUT.select(groupElement("CameraFormat"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort CameraFormat
+     * }
+     */
+    public static final OfShort CameraFormat$layout() {
+        return CameraFormat$LAYOUT;
+    }
+
+    private static final long CameraFormat$OFFSET = 152;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort CameraFormat
+     * }
+     */
+    public static final long CameraFormat$offset() {
+        return CameraFormat$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort CameraFormat
+     * }
+     */
+    public static short CameraFormat(MemorySegment struct) {
+        return struct.get(CameraFormat$LAYOUT, CameraFormat$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort CameraFormat
+     * }
+     */
+    public static void CameraFormat(MemorySegment struct, short fieldValue) {
+        struct.set(CameraFormat$LAYOUT, CameraFormat$OFFSET, fieldValue);
+    }
+
+    private static final OfShort CameraMount$LAYOUT = (OfShort)$LAYOUT.select(groupElement("CameraMount"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort CameraMount
+     * }
+     */
+    public static final OfShort CameraMount$layout() {
+        return CameraMount$LAYOUT;
+    }
+
+    private static final long CameraMount$OFFSET = 154;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort CameraMount
+     * }
+     */
+    public static final long CameraMount$offset() {
+        return CameraMount$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort CameraMount
+     * }
+     */
+    public static short CameraMount(MemorySegment struct) {
+        return struct.get(CameraMount$LAYOUT, CameraMount$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort CameraMount
+     * }
+     */
+    public static void CameraMount(MemorySegment struct, short fieldValue) {
+        struct.set(CameraMount$LAYOUT, CameraMount$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout body$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("body"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static final SequenceLayout body$layout() {
+        return body$LAYOUT;
+    }
+
+    private static final long body$OFFSET = 156;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static final long body$offset() {
+        return body$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static MemorySegment body(MemorySegment struct) {
+        return struct.asSlice(body$OFFSET, body$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static void body(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, body$OFFSET, body$LAYOUT.byteSize());
+    }
+
+    private static long[] body$DIMS = { 64 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static long[] body$dimensions() {
+        return body$DIMS;
+    }
+    private static final VarHandle body$ELEM_HANDLE = body$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static byte body(MemorySegment struct, long index0) {
+        return (byte)body$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char body[64]
+     * }
+     */
+    public static void body(MemorySegment struct, long index0, byte fieldValue) {
+        body$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfShort FocalType$LAYOUT = (OfShort)$LAYOUT.select(groupElement("FocalType"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short FocalType
+     * }
+     */
+    public static final OfShort FocalType$layout() {
+        return FocalType$LAYOUT;
+    }
+
+    private static final long FocalType$OFFSET = 220;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short FocalType
+     * }
+     */
+    public static final long FocalType$offset() {
+        return FocalType$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short FocalType
+     * }
+     */
+    public static short FocalType(MemorySegment struct) {
+        return struct.get(FocalType$LAYOUT, FocalType$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short FocalType
+     * }
+     */
+    public static void FocalType(MemorySegment struct, short fieldValue) {
+        struct.set(FocalType$LAYOUT, FocalType$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout LensFeatures_pre$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("LensFeatures_pre"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static final SequenceLayout LensFeatures_pre$layout() {
+        return LensFeatures_pre$LAYOUT;
+    }
+
+    private static final long LensFeatures_pre$OFFSET = 222;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static final long LensFeatures_pre$offset() {
+        return LensFeatures_pre$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static MemorySegment LensFeatures_pre(MemorySegment struct) {
+        return struct.asSlice(LensFeatures_pre$OFFSET, LensFeatures_pre$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static void LensFeatures_pre(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, LensFeatures_pre$OFFSET, LensFeatures_pre$LAYOUT.byteSize());
+    }
+
+    private static long[] LensFeatures_pre$DIMS = { 16 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static long[] LensFeatures_pre$dimensions() {
+        return LensFeatures_pre$DIMS;
+    }
+    private static final VarHandle LensFeatures_pre$ELEM_HANDLE = LensFeatures_pre$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static byte LensFeatures_pre(MemorySegment struct, long index0) {
+        return (byte)LensFeatures_pre$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_pre[16]
+     * }
+     */
+    public static void LensFeatures_pre(MemorySegment struct, long index0, byte fieldValue) {
+        LensFeatures_pre$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final SequenceLayout LensFeatures_suf$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("LensFeatures_suf"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static final SequenceLayout LensFeatures_suf$layout() {
+        return LensFeatures_suf$LAYOUT;
+    }
+
+    private static final long LensFeatures_suf$OFFSET = 238;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static final long LensFeatures_suf$offset() {
+        return LensFeatures_suf$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static MemorySegment LensFeatures_suf(MemorySegment struct) {
+        return struct.asSlice(LensFeatures_suf$OFFSET, LensFeatures_suf$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static void LensFeatures_suf(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, LensFeatures_suf$OFFSET, LensFeatures_suf$LAYOUT.byteSize());
+    }
+
+    private static long[] LensFeatures_suf$DIMS = { 16 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static long[] LensFeatures_suf$dimensions() {
+        return LensFeatures_suf$DIMS;
+    }
+    private static final VarHandle LensFeatures_suf$ELEM_HANDLE = LensFeatures_suf$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static byte LensFeatures_suf(MemorySegment struct, long index0) {
+        return (byte)LensFeatures_suf$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char LensFeatures_suf[16]
+     * }
+     */
+    public static void LensFeatures_suf(MemorySegment struct, long index0, byte fieldValue) {
+        LensFeatures_suf$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfFloat MinFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MinFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MinFocal
+     * }
+     */
+    public static final OfFloat MinFocal$layout() {
+        return MinFocal$LAYOUT;
+    }
+
+    private static final long MinFocal$OFFSET = 256;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MinFocal
+     * }
+     */
+    public static final long MinFocal$offset() {
+        return MinFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MinFocal
+     * }
+     */
+    public static float MinFocal(MemorySegment struct) {
+        return struct.get(MinFocal$LAYOUT, MinFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MinFocal
+     * }
+     */
+    public static void MinFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MinFocal$LAYOUT, MinFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MaxFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MaxFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MaxFocal
+     * }
+     */
+    public static final OfFloat MaxFocal$layout() {
+        return MaxFocal$LAYOUT;
+    }
+
+    private static final long MaxFocal$OFFSET = 260;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MaxFocal
+     * }
+     */
+    public static final long MaxFocal$offset() {
+        return MaxFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MaxFocal
+     * }
+     */
+    public static float MaxFocal(MemorySegment struct) {
+        return struct.get(MaxFocal$LAYOUT, MaxFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MaxFocal
+     * }
+     */
+    public static void MaxFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MaxFocal$LAYOUT, MaxFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MaxAp4MinFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MaxAp4MinFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MaxAp4MinFocal
+     * }
+     */
+    public static final OfFloat MaxAp4MinFocal$layout() {
+        return MaxAp4MinFocal$LAYOUT;
+    }
+
+    private static final long MaxAp4MinFocal$OFFSET = 264;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MaxAp4MinFocal
+     * }
+     */
+    public static final long MaxAp4MinFocal$offset() {
+        return MaxAp4MinFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MaxAp4MinFocal
+     * }
+     */
+    public static float MaxAp4MinFocal(MemorySegment struct) {
+        return struct.get(MaxAp4MinFocal$LAYOUT, MaxAp4MinFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MaxAp4MinFocal
+     * }
+     */
+    public static void MaxAp4MinFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MaxAp4MinFocal$LAYOUT, MaxAp4MinFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MaxAp4MaxFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MaxAp4MaxFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MaxAp4MaxFocal
+     * }
+     */
+    public static final OfFloat MaxAp4MaxFocal$layout() {
+        return MaxAp4MaxFocal$LAYOUT;
+    }
+
+    private static final long MaxAp4MaxFocal$OFFSET = 268;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MaxAp4MaxFocal
+     * }
+     */
+    public static final long MaxAp4MaxFocal$offset() {
+        return MaxAp4MaxFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MaxAp4MaxFocal
+     * }
+     */
+    public static float MaxAp4MaxFocal(MemorySegment struct) {
+        return struct.get(MaxAp4MaxFocal$LAYOUT, MaxAp4MaxFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MaxAp4MaxFocal
+     * }
+     */
+    public static void MaxAp4MaxFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MaxAp4MaxFocal$LAYOUT, MaxAp4MaxFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MinAp4MinFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MinAp4MinFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MinAp4MinFocal
+     * }
+     */
+    public static final OfFloat MinAp4MinFocal$layout() {
+        return MinAp4MinFocal$LAYOUT;
+    }
+
+    private static final long MinAp4MinFocal$OFFSET = 272;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MinAp4MinFocal
+     * }
+     */
+    public static final long MinAp4MinFocal$offset() {
+        return MinAp4MinFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MinAp4MinFocal
+     * }
+     */
+    public static float MinAp4MinFocal(MemorySegment struct) {
+        return struct.get(MinAp4MinFocal$LAYOUT, MinAp4MinFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MinAp4MinFocal
+     * }
+     */
+    public static void MinAp4MinFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MinAp4MinFocal$LAYOUT, MinAp4MinFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MinAp4MaxFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MinAp4MaxFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MinAp4MaxFocal
+     * }
+     */
+    public static final OfFloat MinAp4MaxFocal$layout() {
+        return MinAp4MaxFocal$LAYOUT;
+    }
+
+    private static final long MinAp4MaxFocal$OFFSET = 276;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MinAp4MaxFocal
+     * }
+     */
+    public static final long MinAp4MaxFocal$offset() {
+        return MinAp4MaxFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MinAp4MaxFocal
+     * }
+     */
+    public static float MinAp4MaxFocal(MemorySegment struct) {
+        return struct.get(MinAp4MaxFocal$LAYOUT, MinAp4MaxFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MinAp4MaxFocal
+     * }
+     */
+    public static void MinAp4MaxFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MinAp4MaxFocal$LAYOUT, MinAp4MaxFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MaxAp$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MaxAp"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MaxAp
+     * }
+     */
+    public static final OfFloat MaxAp$layout() {
+        return MaxAp$LAYOUT;
+    }
+
+    private static final long MaxAp$OFFSET = 280;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MaxAp
+     * }
+     */
+    public static final long MaxAp$offset() {
+        return MaxAp$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MaxAp
+     * }
+     */
+    public static float MaxAp(MemorySegment struct) {
+        return struct.get(MaxAp$LAYOUT, MaxAp$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MaxAp
+     * }
+     */
+    public static void MaxAp(MemorySegment struct, float fieldValue) {
+        struct.set(MaxAp$LAYOUT, MaxAp$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MinAp$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MinAp"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MinAp
+     * }
+     */
+    public static final OfFloat MinAp$layout() {
+        return MinAp$LAYOUT;
+    }
+
+    private static final long MinAp$OFFSET = 284;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MinAp
+     * }
+     */
+    public static final long MinAp$offset() {
+        return MinAp$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MinAp
+     * }
+     */
+    public static float MinAp(MemorySegment struct) {
+        return struct.get(MinAp$LAYOUT, MinAp$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MinAp
+     * }
+     */
+    public static void MinAp(MemorySegment struct, float fieldValue) {
+        struct.set(MinAp$LAYOUT, MinAp$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat CurFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("CurFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float CurFocal
+     * }
+     */
+    public static final OfFloat CurFocal$layout() {
+        return CurFocal$LAYOUT;
+    }
+
+    private static final long CurFocal$OFFSET = 288;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float CurFocal
+     * }
+     */
+    public static final long CurFocal$offset() {
+        return CurFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float CurFocal
+     * }
+     */
+    public static float CurFocal(MemorySegment struct) {
+        return struct.get(CurFocal$LAYOUT, CurFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float CurFocal
+     * }
+     */
+    public static void CurFocal(MemorySegment struct, float fieldValue) {
+        struct.set(CurFocal$LAYOUT, CurFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat CurAp$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("CurAp"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float CurAp
+     * }
+     */
+    public static final OfFloat CurAp$layout() {
+        return CurAp$LAYOUT;
+    }
+
+    private static final long CurAp$OFFSET = 292;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float CurAp
+     * }
+     */
+    public static final long CurAp$offset() {
+        return CurAp$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float CurAp
+     * }
+     */
+    public static float CurAp(MemorySegment struct) {
+        return struct.get(CurAp$LAYOUT, CurAp$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float CurAp
+     * }
+     */
+    public static void CurAp(MemorySegment struct, float fieldValue) {
+        struct.set(CurAp$LAYOUT, CurAp$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MaxAp4CurFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MaxAp4CurFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MaxAp4CurFocal
+     * }
+     */
+    public static final OfFloat MaxAp4CurFocal$layout() {
+        return MaxAp4CurFocal$LAYOUT;
+    }
+
+    private static final long MaxAp4CurFocal$OFFSET = 296;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MaxAp4CurFocal
+     * }
+     */
+    public static final long MaxAp4CurFocal$offset() {
+        return MaxAp4CurFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MaxAp4CurFocal
+     * }
+     */
+    public static float MaxAp4CurFocal(MemorySegment struct) {
+        return struct.get(MaxAp4CurFocal$LAYOUT, MaxAp4CurFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MaxAp4CurFocal
+     * }
+     */
+    public static void MaxAp4CurFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MaxAp4CurFocal$LAYOUT, MaxAp4CurFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MinAp4CurFocal$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MinAp4CurFocal"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MinAp4CurFocal
+     * }
+     */
+    public static final OfFloat MinAp4CurFocal$layout() {
+        return MinAp4CurFocal$LAYOUT;
+    }
+
+    private static final long MinAp4CurFocal$OFFSET = 300;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MinAp4CurFocal
+     * }
+     */
+    public static final long MinAp4CurFocal$offset() {
+        return MinAp4CurFocal$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MinAp4CurFocal
+     * }
+     */
+    public static float MinAp4CurFocal(MemorySegment struct) {
+        return struct.get(MinAp4CurFocal$LAYOUT, MinAp4CurFocal$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MinAp4CurFocal
+     * }
+     */
+    public static void MinAp4CurFocal(MemorySegment struct, float fieldValue) {
+        struct.set(MinAp4CurFocal$LAYOUT, MinAp4CurFocal$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat MinFocusDistance$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("MinFocusDistance"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float MinFocusDistance
+     * }
+     */
+    public static final OfFloat MinFocusDistance$layout() {
+        return MinFocusDistance$LAYOUT;
+    }
+
+    private static final long MinFocusDistance$OFFSET = 304;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float MinFocusDistance
+     * }
+     */
+    public static final long MinFocusDistance$offset() {
+        return MinFocusDistance$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float MinFocusDistance
+     * }
+     */
+    public static float MinFocusDistance(MemorySegment struct) {
+        return struct.get(MinFocusDistance$LAYOUT, MinFocusDistance$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float MinFocusDistance
+     * }
+     */
+    public static void MinFocusDistance(MemorySegment struct, float fieldValue) {
+        struct.set(MinFocusDistance$LAYOUT, MinFocusDistance$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat FocusRangeIndex$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("FocusRangeIndex"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float FocusRangeIndex
+     * }
+     */
+    public static final OfFloat FocusRangeIndex$layout() {
+        return FocusRangeIndex$LAYOUT;
+    }
+
+    private static final long FocusRangeIndex$OFFSET = 308;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float FocusRangeIndex
+     * }
+     */
+    public static final long FocusRangeIndex$offset() {
+        return FocusRangeIndex$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float FocusRangeIndex
+     * }
+     */
+    public static float FocusRangeIndex(MemorySegment struct) {
+        return struct.get(FocusRangeIndex$LAYOUT, FocusRangeIndex$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float FocusRangeIndex
+     * }
+     */
+    public static void FocusRangeIndex(MemorySegment struct, float fieldValue) {
+        struct.set(FocusRangeIndex$LAYOUT, FocusRangeIndex$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat LensFStops$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("LensFStops"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float LensFStops
+     * }
+     */
+    public static final OfFloat LensFStops$layout() {
+        return LensFStops$LAYOUT;
+    }
+
+    private static final long LensFStops$OFFSET = 312;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float LensFStops
+     * }
+     */
+    public static final long LensFStops$offset() {
+        return LensFStops$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float LensFStops
+     * }
+     */
+    public static float LensFStops(MemorySegment struct) {
+        return struct.get(LensFStops$LAYOUT, LensFStops$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float LensFStops
+     * }
+     */
+    public static void LensFStops(MemorySegment struct, float fieldValue) {
+        struct.set(LensFStops$LAYOUT, LensFStops$OFFSET, fieldValue);
+    }
+
+    private static final OfLong TeleconverterID$LAYOUT = (OfLong)$LAYOUT.select(groupElement("TeleconverterID"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned long long TeleconverterID
+     * }
+     */
+    public static final OfLong TeleconverterID$layout() {
+        return TeleconverterID$LAYOUT;
+    }
+
+    private static final long TeleconverterID$OFFSET = 320;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned long long TeleconverterID
+     * }
+     */
+    public static final long TeleconverterID$offset() {
+        return TeleconverterID$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned long long TeleconverterID
+     * }
+     */
+    public static long TeleconverterID(MemorySegment struct) {
+        return struct.get(TeleconverterID$LAYOUT, TeleconverterID$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned long long TeleconverterID
+     * }
+     */
+    public static void TeleconverterID(MemorySegment struct, long fieldValue) {
+        struct.set(TeleconverterID$LAYOUT, TeleconverterID$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout Teleconverter$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("Teleconverter"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static final SequenceLayout Teleconverter$layout() {
+        return Teleconverter$LAYOUT;
+    }
+
+    private static final long Teleconverter$OFFSET = 328;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static final long Teleconverter$offset() {
+        return Teleconverter$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static MemorySegment Teleconverter(MemorySegment struct) {
+        return struct.asSlice(Teleconverter$OFFSET, Teleconverter$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static void Teleconverter(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, Teleconverter$OFFSET, Teleconverter$LAYOUT.byteSize());
+    }
+
+    private static long[] Teleconverter$DIMS = { 128 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static long[] Teleconverter$dimensions() {
+        return Teleconverter$DIMS;
+    }
+    private static final VarHandle Teleconverter$ELEM_HANDLE = Teleconverter$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static byte Teleconverter(MemorySegment struct, long index0) {
+        return (byte)Teleconverter$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char Teleconverter[128]
+     * }
+     */
+    public static void Teleconverter(MemorySegment struct, long index0, byte fieldValue) {
+        Teleconverter$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfLong AdapterID$LAYOUT = (OfLong)$LAYOUT.select(groupElement("AdapterID"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned long long AdapterID
+     * }
+     */
+    public static final OfLong AdapterID$layout() {
+        return AdapterID$LAYOUT;
+    }
+
+    private static final long AdapterID$OFFSET = 456;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned long long AdapterID
+     * }
+     */
+    public static final long AdapterID$offset() {
+        return AdapterID$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned long long AdapterID
+     * }
+     */
+    public static long AdapterID(MemorySegment struct) {
+        return struct.get(AdapterID$LAYOUT, AdapterID$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned long long AdapterID
+     * }
+     */
+    public static void AdapterID(MemorySegment struct, long fieldValue) {
+        struct.set(AdapterID$LAYOUT, AdapterID$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout Adapter$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("Adapter"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static final SequenceLayout Adapter$layout() {
+        return Adapter$LAYOUT;
+    }
+
+    private static final long Adapter$OFFSET = 464;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static final long Adapter$offset() {
+        return Adapter$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static MemorySegment Adapter(MemorySegment struct) {
+        return struct.asSlice(Adapter$OFFSET, Adapter$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static void Adapter(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, Adapter$OFFSET, Adapter$LAYOUT.byteSize());
+    }
+
+    private static long[] Adapter$DIMS = { 128 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static long[] Adapter$dimensions() {
+        return Adapter$DIMS;
+    }
+    private static final VarHandle Adapter$ELEM_HANDLE = Adapter$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static byte Adapter(MemorySegment struct, long index0) {
+        return (byte)Adapter$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char Adapter[128]
+     * }
+     */
+    public static void Adapter(MemorySegment struct, long index0, byte fieldValue) {
+        Adapter$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfLong AttachmentID$LAYOUT = (OfLong)$LAYOUT.select(groupElement("AttachmentID"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned long long AttachmentID
+     * }
+     */
+    public static final OfLong AttachmentID$layout() {
+        return AttachmentID$LAYOUT;
+    }
+
+    private static final long AttachmentID$OFFSET = 592;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned long long AttachmentID
+     * }
+     */
+    public static final long AttachmentID$offset() {
+        return AttachmentID$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned long long AttachmentID
+     * }
+     */
+    public static long AttachmentID(MemorySegment struct) {
+        return struct.get(AttachmentID$LAYOUT, AttachmentID$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned long long AttachmentID
+     * }
+     */
+    public static void AttachmentID(MemorySegment struct, long fieldValue) {
+        struct.set(AttachmentID$LAYOUT, AttachmentID$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout Attachment$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("Attachment"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static final SequenceLayout Attachment$layout() {
+        return Attachment$LAYOUT;
+    }
+
+    private static final long Attachment$OFFSET = 600;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static final long Attachment$offset() {
+        return Attachment$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static MemorySegment Attachment(MemorySegment struct) {
+        return struct.asSlice(Attachment$OFFSET, Attachment$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static void Attachment(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, Attachment$OFFSET, Attachment$LAYOUT.byteSize());
+    }
+
+    private static long[] Attachment$DIMS = { 128 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static long[] Attachment$dimensions() {
+        return Attachment$DIMS;
+    }
+    private static final VarHandle Attachment$ELEM_HANDLE = Attachment$LAYOUT.varHandle(sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static byte Attachment(MemorySegment struct, long index0) {
+        return (byte)Attachment$ELEM_HANDLE.get(struct, 0L, index0);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * char Attachment[128]
+     * }
+     */
+    public static void Attachment(MemorySegment struct, long index0, byte fieldValue) {
+        Attachment$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
+    }
+
+    private static final OfShort FocalUnits$LAYOUT = (OfShort)$LAYOUT.select(groupElement("FocalUnits"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort FocalUnits
+     * }
+     */
+    public static final OfShort FocalUnits$layout() {
+        return FocalUnits$LAYOUT;
+    }
+
+    private static final long FocalUnits$OFFSET = 728;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort FocalUnits
+     * }
+     */
+    public static final long FocalUnits$offset() {
+        return FocalUnits$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort FocalUnits
+     * }
+     */
+    public static short FocalUnits(MemorySegment struct) {
+        return struct.get(FocalUnits$LAYOUT, FocalUnits$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort FocalUnits
+     * }
+     */
+    public static void FocalUnits(MemorySegment struct, short fieldValue) {
+        struct.set(FocalUnits$LAYOUT, FocalUnits$OFFSET, fieldValue);
+    }
+
+    private static final OfFloat FocalLengthIn35mmFormat$LAYOUT = (OfFloat)$LAYOUT.select(groupElement("FocalLengthIn35mmFormat"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float FocalLengthIn35mmFormat
+     * }
+     */
+    public static final OfFloat FocalLengthIn35mmFormat$layout() {
+        return FocalLengthIn35mmFormat$LAYOUT;
+    }
+
+    private static final long FocalLengthIn35mmFormat$OFFSET = 732;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float FocalLengthIn35mmFormat
+     * }
+     */
+    public static final long FocalLengthIn35mmFormat$offset() {
+        return FocalLengthIn35mmFormat$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float FocalLengthIn35mmFormat
+     * }
+     */
+    public static float FocalLengthIn35mmFormat(MemorySegment struct) {
+        return struct.get(FocalLengthIn35mmFormat$LAYOUT, FocalLengthIn35mmFormat$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float FocalLengthIn35mmFormat
+     * }
+     */
+    public static void FocalLengthIn35mmFormat(MemorySegment struct, float fieldValue) {
+        struct.set(FocalLengthIn35mmFormat$LAYOUT, FocalLengthIn35mmFormat$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

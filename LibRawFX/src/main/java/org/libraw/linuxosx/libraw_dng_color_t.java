@@ -2,96 +2,410 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_dng_color_t {
+ * {@snippet lang=c :
+ * struct {
  *     unsigned int parsedfields;
- *     unsigned short illuminant;
- *     float  calibration[4][4];
- *     float  colormatrix[4][3];
- *     float  forwardmatrix[3][4];
- * };
+ *     ushort illuminant;
+ *     float calibration[4][4];
+ *     float colormatrix[4][3];
+ *     float forwardmatrix[3][4];
+ * }
  * }
  */
 public class libraw_dng_color_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$19.const$0;
+    libraw_dng_color_t() {
+        // Should not be called directly
     }
-    public static VarHandle parsedfields$VH() {
-        return constants$19.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int parsedfields;
-     * }
-     */
-    public static int parsedfields$get(MemorySegment seg) {
-        return (int)constants$19.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int parsedfields;
-     * }
-     */
-    public static void parsedfields$set(MemorySegment seg, int x) {
-        constants$19.const$1.set(seg, x);
-    }
-    public static int parsedfields$get(MemorySegment seg, long index) {
-        return (int)constants$19.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void parsedfields$set(MemorySegment seg, long index, int x) {
-        constants$19.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle illuminant$VH() {
-        return constants$19.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned short illuminant;
-     * }
-     */
-    public static short illuminant$get(MemorySegment seg) {
-        return (short)constants$19.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned short illuminant;
-     * }
-     */
-    public static void illuminant$set(MemorySegment seg, short x) {
-        constants$19.const$2.set(seg, x);
-    }
-    public static short illuminant$get(MemorySegment seg, long index) {
-        return (short)constants$19.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void illuminant$set(MemorySegment seg, long index, short x) {
-        constants$19.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static MemorySegment calibration$slice(MemorySegment seg) {
-        return seg.asSlice(8, 64);
-    }
-    public static MemorySegment colormatrix$slice(MemorySegment seg) {
-        return seg.asSlice(72, 48);
-    }
-    public static MemorySegment forwardmatrix$slice(MemorySegment seg) {
-        return seg.asSlice(120, 48);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_INT.withName("parsedfields"),
+        libraw_h.C_SHORT.withName("illuminant"),
+        MemoryLayout.paddingLayout(2),
+        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(4, libraw_h.C_FLOAT)).withName("calibration"),
+        MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, libraw_h.C_FLOAT)).withName("colormatrix"),
+        MemoryLayout.sequenceLayout(3, MemoryLayout.sequenceLayout(4, libraw_h.C_FLOAT)).withName("forwardmatrix")
+    ).withName("$anon$229:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfInt parsedfields$LAYOUT = (OfInt)$LAYOUT.select(groupElement("parsedfields"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int parsedfields
+     * }
+     */
+    public static final OfInt parsedfields$layout() {
+        return parsedfields$LAYOUT;
+    }
+
+    private static final long parsedfields$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int parsedfields
+     * }
+     */
+    public static final long parsedfields$offset() {
+        return parsedfields$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int parsedfields
+     * }
+     */
+    public static int parsedfields(MemorySegment struct) {
+        return struct.get(parsedfields$LAYOUT, parsedfields$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int parsedfields
+     * }
+     */
+    public static void parsedfields(MemorySegment struct, int fieldValue) {
+        struct.set(parsedfields$LAYOUT, parsedfields$OFFSET, fieldValue);
+    }
+
+    private static final OfShort illuminant$LAYOUT = (OfShort)$LAYOUT.select(groupElement("illuminant"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * ushort illuminant
+     * }
+     */
+    public static final OfShort illuminant$layout() {
+        return illuminant$LAYOUT;
+    }
+
+    private static final long illuminant$OFFSET = 4;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * ushort illuminant
+     * }
+     */
+    public static final long illuminant$offset() {
+        return illuminant$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * ushort illuminant
+     * }
+     */
+    public static short illuminant(MemorySegment struct) {
+        return struct.get(illuminant$LAYOUT, illuminant$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * ushort illuminant
+     * }
+     */
+    public static void illuminant(MemorySegment struct, short fieldValue) {
+        struct.set(illuminant$LAYOUT, illuminant$OFFSET, fieldValue);
+    }
+
+    private static final SequenceLayout calibration$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("calibration"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static final SequenceLayout calibration$layout() {
+        return calibration$LAYOUT;
+    }
+
+    private static final long calibration$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static final long calibration$offset() {
+        return calibration$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static MemorySegment calibration(MemorySegment struct) {
+        return struct.asSlice(calibration$OFFSET, calibration$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static void calibration(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, calibration$OFFSET, calibration$LAYOUT.byteSize());
+    }
+
+    private static long[] calibration$DIMS = { 4, 4 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static long[] calibration$dimensions() {
+        return calibration$DIMS;
+    }
+    private static final VarHandle calibration$ELEM_HANDLE = calibration$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static float calibration(MemorySegment struct, long index0, long index1) {
+        return (float)calibration$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float calibration[4][4]
+     * }
+     */
+    public static void calibration(MemorySegment struct, long index0, long index1, float fieldValue) {
+        calibration$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout colormatrix$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("colormatrix"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static final SequenceLayout colormatrix$layout() {
+        return colormatrix$LAYOUT;
+    }
+
+    private static final long colormatrix$OFFSET = 72;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static final long colormatrix$offset() {
+        return colormatrix$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static MemorySegment colormatrix(MemorySegment struct) {
+        return struct.asSlice(colormatrix$OFFSET, colormatrix$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static void colormatrix(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, colormatrix$OFFSET, colormatrix$LAYOUT.byteSize());
+    }
+
+    private static long[] colormatrix$DIMS = { 4, 3 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static long[] colormatrix$dimensions() {
+        return colormatrix$DIMS;
+    }
+    private static final VarHandle colormatrix$ELEM_HANDLE = colormatrix$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static float colormatrix(MemorySegment struct, long index0, long index1) {
+        return (float)colormatrix$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float colormatrix[4][3]
+     * }
+     */
+    public static void colormatrix(MemorySegment struct, long index0, long index1, float fieldValue) {
+        colormatrix$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    private static final SequenceLayout forwardmatrix$LAYOUT = (SequenceLayout)$LAYOUT.select(groupElement("forwardmatrix"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static final SequenceLayout forwardmatrix$layout() {
+        return forwardmatrix$LAYOUT;
+    }
+
+    private static final long forwardmatrix$OFFSET = 120;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static final long forwardmatrix$offset() {
+        return forwardmatrix$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static MemorySegment forwardmatrix(MemorySegment struct) {
+        return struct.asSlice(forwardmatrix$OFFSET, forwardmatrix$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static void forwardmatrix(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, forwardmatrix$OFFSET, forwardmatrix$LAYOUT.byteSize());
+    }
+
+    private static long[] forwardmatrix$DIMS = { 3, 4 };
+
+    /**
+     * Dimensions for array field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static long[] forwardmatrix$dimensions() {
+        return forwardmatrix$DIMS;
+    }
+    private static final VarHandle forwardmatrix$ELEM_HANDLE = forwardmatrix$LAYOUT.varHandle(sequenceElement(), sequenceElement());
+
+    /**
+     * Indexed getter for field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static float forwardmatrix(MemorySegment struct, long index0, long index1) {
+        return (float)forwardmatrix$ELEM_HANDLE.get(struct, 0L, index0, index1);
+    }
+
+    /**
+     * Indexed setter for field:
+     * {@snippet lang=c :
+     * float forwardmatrix[3][4]
+     * }
+     */
+    public static void forwardmatrix(MemorySegment struct, long index0, long index1, float fieldValue) {
+        forwardmatrix$ELEM_HANDLE.set(struct, 0L, index0, index1, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

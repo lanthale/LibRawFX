@@ -2,48 +2,310 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_internal_data_t {
- *     struct internal_data_t internal_data;
- *     struct libraw_internal_output_params_t internal_output_params;
- *     struct output_data_t output_data;
- *     struct identify_data_t identify_data;
- *     struct unpacker_data_t unpacker_data;
- * };
+ * {@snippet lang=c :
+ * struct {
+ *     internal_data_t internal_data;
+ *     libraw_internal_output_params_t internal_output_params;
+ *     output_data_t output_data;
+ *     identify_data_t identify_data;
+ *     unpacker_data_t unpacker_data;
+ * }
  * }
  */
 public class libraw_internal_data_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$105.const$4;
+    libraw_internal_data_t() {
+        // Should not be called directly
     }
-    public static MemorySegment internal_data$slice(MemorySegment seg) {
-        return seg.asSlice(0, 64);
-    }
-    public static MemorySegment internal_output_params$slice(MemorySegment seg) {
-        return seg.asSlice(64, 16);
-    }
-    public static MemorySegment output_data$slice(MemorySegment seg) {
-        return seg.asSlice(80, 16);
-    }
-    public static MemorySegment identify_data$slice(MemorySegment seg) {
-        return seg.asSlice(96, 40);
-    }
-    public static MemorySegment unpacker_data$slice(MemorySegment seg) {
-        return seg.asSlice(136, 1448);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        internal_data_t.layout().withName("internal_data"),
+        libraw_internal_output_params_t.layout().withName("internal_output_params"),
+        output_data_t.layout().withName("output_data"),
+        identify_data_t.layout().withName("identify_data"),
+        unpacker_data_t.layout().withName("unpacker_data")
+    ).withName("$anon$197:9");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final GroupLayout internal_data$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("internal_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * internal_data_t internal_data
+     * }
+     */
+    public static final GroupLayout internal_data$layout() {
+        return internal_data$LAYOUT;
+    }
+
+    private static final long internal_data$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * internal_data_t internal_data
+     * }
+     */
+    public static final long internal_data$offset() {
+        return internal_data$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * internal_data_t internal_data
+     * }
+     */
+    public static MemorySegment internal_data(MemorySegment struct) {
+        return struct.asSlice(internal_data$OFFSET, internal_data$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * internal_data_t internal_data
+     * }
+     */
+    public static void internal_data(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, internal_data$OFFSET, internal_data$LAYOUT.byteSize());
+    }
+
+    private static final GroupLayout internal_output_params$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("internal_output_params"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * libraw_internal_output_params_t internal_output_params
+     * }
+     */
+    public static final GroupLayout internal_output_params$layout() {
+        return internal_output_params$LAYOUT;
+    }
+
+    private static final long internal_output_params$OFFSET = 64;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * libraw_internal_output_params_t internal_output_params
+     * }
+     */
+    public static final long internal_output_params$offset() {
+        return internal_output_params$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * libraw_internal_output_params_t internal_output_params
+     * }
+     */
+    public static MemorySegment internal_output_params(MemorySegment struct) {
+        return struct.asSlice(internal_output_params$OFFSET, internal_output_params$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * libraw_internal_output_params_t internal_output_params
+     * }
+     */
+    public static void internal_output_params(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, internal_output_params$OFFSET, internal_output_params$LAYOUT.byteSize());
+    }
+
+    private static final GroupLayout output_data$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("output_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * output_data_t output_data
+     * }
+     */
+    public static final GroupLayout output_data$layout() {
+        return output_data$LAYOUT;
+    }
+
+    private static final long output_data$OFFSET = 80;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * output_data_t output_data
+     * }
+     */
+    public static final long output_data$offset() {
+        return output_data$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * output_data_t output_data
+     * }
+     */
+    public static MemorySegment output_data(MemorySegment struct) {
+        return struct.asSlice(output_data$OFFSET, output_data$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * output_data_t output_data
+     * }
+     */
+    public static void output_data(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, output_data$OFFSET, output_data$LAYOUT.byteSize());
+    }
+
+    private static final GroupLayout identify_data$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("identify_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * identify_data_t identify_data
+     * }
+     */
+    public static final GroupLayout identify_data$layout() {
+        return identify_data$LAYOUT;
+    }
+
+    private static final long identify_data$OFFSET = 96;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * identify_data_t identify_data
+     * }
+     */
+    public static final long identify_data$offset() {
+        return identify_data$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * identify_data_t identify_data
+     * }
+     */
+    public static MemorySegment identify_data(MemorySegment struct) {
+        return struct.asSlice(identify_data$OFFSET, identify_data$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * identify_data_t identify_data
+     * }
+     */
+    public static void identify_data(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, identify_data$OFFSET, identify_data$LAYOUT.byteSize());
+    }
+
+    private static final GroupLayout unpacker_data$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("unpacker_data"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unpacker_data_t unpacker_data
+     * }
+     */
+    public static final GroupLayout unpacker_data$layout() {
+        return unpacker_data$LAYOUT;
+    }
+
+    private static final long unpacker_data$OFFSET = 136;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unpacker_data_t unpacker_data
+     * }
+     */
+    public static final long unpacker_data$offset() {
+        return unpacker_data$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unpacker_data_t unpacker_data
+     * }
+     */
+    public static MemorySegment unpacker_data(MemorySegment struct) {
+        return struct.asSlice(unpacker_data$OFFSET, unpacker_data$LAYOUT.byteSize());
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unpacker_data_t unpacker_data
+     * }
+     */
+    public static void unpacker_data(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, unpacker_data$OFFSET, unpacker_data$LAYOUT.byteSize());
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

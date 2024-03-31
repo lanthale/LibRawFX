@@ -2,168 +2,311 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * struct libraw_afinfo_item_t {
+ * {@snippet lang=c :
+ * struct {
  *     unsigned int AFInfoData_tag;
  *     short AFInfoData_order;
  *     unsigned int AFInfoData_version;
  *     unsigned int AFInfoData_length;
- *     unsigned char* AFInfoData;
- * };
+ *     uchar *AFInfoData;
+ * }
  * }
  */
 public class libraw_afinfo_item_t {
 
-    public static MemoryLayout $LAYOUT() {
-        return constants$64.const$4;
+    libraw_afinfo_item_t() {
+        // Should not be called directly
     }
-    public static VarHandle AFInfoData_tag$VH() {
-        return constants$64.const$5;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int AFInfoData_tag;
-     * }
-     */
-    public static int AFInfoData_tag$get(MemorySegment seg) {
-        return (int)constants$64.const$5.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int AFInfoData_tag;
-     * }
-     */
-    public static void AFInfoData_tag$set(MemorySegment seg, int x) {
-        constants$64.const$5.set(seg, x);
-    }
-    public static int AFInfoData_tag$get(MemorySegment seg, long index) {
-        return (int)constants$64.const$5.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFInfoData_tag$set(MemorySegment seg, long index, int x) {
-        constants$64.const$5.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle AFInfoData_order$VH() {
-        return constants$65.const$0;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * short AFInfoData_order;
-     * }
-     */
-    public static short AFInfoData_order$get(MemorySegment seg) {
-        return (short)constants$65.const$0.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * short AFInfoData_order;
-     * }
-     */
-    public static void AFInfoData_order$set(MemorySegment seg, short x) {
-        constants$65.const$0.set(seg, x);
-    }
-    public static short AFInfoData_order$get(MemorySegment seg, long index) {
-        return (short)constants$65.const$0.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFInfoData_order$set(MemorySegment seg, long index, short x) {
-        constants$65.const$0.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle AFInfoData_version$VH() {
-        return constants$65.const$1;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int AFInfoData_version;
-     * }
-     */
-    public static int AFInfoData_version$get(MemorySegment seg) {
-        return (int)constants$65.const$1.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int AFInfoData_version;
-     * }
-     */
-    public static void AFInfoData_version$set(MemorySegment seg, int x) {
-        constants$65.const$1.set(seg, x);
-    }
-    public static int AFInfoData_version$get(MemorySegment seg, long index) {
-        return (int)constants$65.const$1.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFInfoData_version$set(MemorySegment seg, long index, int x) {
-        constants$65.const$1.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle AFInfoData_length$VH() {
-        return constants$65.const$2;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned int AFInfoData_length;
-     * }
-     */
-    public static int AFInfoData_length$get(MemorySegment seg) {
-        return (int)constants$65.const$2.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned int AFInfoData_length;
-     * }
-     */
-    public static void AFInfoData_length$set(MemorySegment seg, int x) {
-        constants$65.const$2.set(seg, x);
-    }
-    public static int AFInfoData_length$get(MemorySegment seg, long index) {
-        return (int)constants$65.const$2.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFInfoData_length$set(MemorySegment seg, long index, int x) {
-        constants$65.const$2.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static VarHandle AFInfoData$VH() {
-        return constants$65.const$3;
-    }
-    /**
-     * Getter for field:
-     * {@snippet :
-     * unsigned char* AFInfoData;
-     * }
-     */
-    public static MemorySegment AFInfoData$get(MemorySegment seg) {
-        return (java.lang.foreign.MemorySegment)constants$65.const$3.get(seg);
-    }
-    /**
-     * Setter for field:
-     * {@snippet :
-     * unsigned char* AFInfoData;
-     * }
-     */
-    public static void AFInfoData$set(MemorySegment seg, MemorySegment x) {
-        constants$65.const$3.set(seg, x);
-    }
-    public static MemorySegment AFInfoData$get(MemorySegment seg, long index) {
-        return (java.lang.foreign.MemorySegment)constants$65.const$3.get(seg.asSlice(index*sizeof()));
-    }
-    public static void AFInfoData$set(MemorySegment seg, long index, MemorySegment x) {
-        constants$65.const$3.set(seg.asSlice(index*sizeof()), x);
-    }
-    public static long sizeof() { return $LAYOUT().byteSize(); }
-    public static MemorySegment allocate(SegmentAllocator allocator) { return allocator.allocate($LAYOUT()); }
-    public static MemorySegment allocateArray(long len, SegmentAllocator allocator) {
-        return allocator.allocate(MemoryLayout.sequenceLayout(len, $LAYOUT()));
-    }
-    public static MemorySegment ofAddress(MemorySegment addr, Arena scope) { return RuntimeHelper.asArray(addr, $LAYOUT(), 1, scope); }
-}
 
+    private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
+        libraw_h.C_INT.withName("AFInfoData_tag"),
+        libraw_h.C_SHORT.withName("AFInfoData_order"),
+        MemoryLayout.paddingLayout(2),
+        libraw_h.C_INT.withName("AFInfoData_version"),
+        libraw_h.C_INT.withName("AFInfoData_length"),
+        libraw_h.C_POINTER.withName("AFInfoData")
+    ).withName("$anon$852:11");
+
+    /**
+     * The layout of this struct
+     */
+    public static final GroupLayout layout() {
+        return $LAYOUT;
+    }
+
+    private static final OfInt AFInfoData_tag$LAYOUT = (OfInt)$LAYOUT.select(groupElement("AFInfoData_tag"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_tag
+     * }
+     */
+    public static final OfInt AFInfoData_tag$layout() {
+        return AFInfoData_tag$LAYOUT;
+    }
+
+    private static final long AFInfoData_tag$OFFSET = 0;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_tag
+     * }
+     */
+    public static final long AFInfoData_tag$offset() {
+        return AFInfoData_tag$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_tag
+     * }
+     */
+    public static int AFInfoData_tag(MemorySegment struct) {
+        return struct.get(AFInfoData_tag$LAYOUT, AFInfoData_tag$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_tag
+     * }
+     */
+    public static void AFInfoData_tag(MemorySegment struct, int fieldValue) {
+        struct.set(AFInfoData_tag$LAYOUT, AFInfoData_tag$OFFSET, fieldValue);
+    }
+
+    private static final OfShort AFInfoData_order$LAYOUT = (OfShort)$LAYOUT.select(groupElement("AFInfoData_order"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * short AFInfoData_order
+     * }
+     */
+    public static final OfShort AFInfoData_order$layout() {
+        return AFInfoData_order$LAYOUT;
+    }
+
+    private static final long AFInfoData_order$OFFSET = 4;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * short AFInfoData_order
+     * }
+     */
+    public static final long AFInfoData_order$offset() {
+        return AFInfoData_order$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * short AFInfoData_order
+     * }
+     */
+    public static short AFInfoData_order(MemorySegment struct) {
+        return struct.get(AFInfoData_order$LAYOUT, AFInfoData_order$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * short AFInfoData_order
+     * }
+     */
+    public static void AFInfoData_order(MemorySegment struct, short fieldValue) {
+        struct.set(AFInfoData_order$LAYOUT, AFInfoData_order$OFFSET, fieldValue);
+    }
+
+    private static final OfInt AFInfoData_version$LAYOUT = (OfInt)$LAYOUT.select(groupElement("AFInfoData_version"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_version
+     * }
+     */
+    public static final OfInt AFInfoData_version$layout() {
+        return AFInfoData_version$LAYOUT;
+    }
+
+    private static final long AFInfoData_version$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_version
+     * }
+     */
+    public static final long AFInfoData_version$offset() {
+        return AFInfoData_version$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_version
+     * }
+     */
+    public static int AFInfoData_version(MemorySegment struct) {
+        return struct.get(AFInfoData_version$LAYOUT, AFInfoData_version$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_version
+     * }
+     */
+    public static void AFInfoData_version(MemorySegment struct, int fieldValue) {
+        struct.set(AFInfoData_version$LAYOUT, AFInfoData_version$OFFSET, fieldValue);
+    }
+
+    private static final OfInt AFInfoData_length$LAYOUT = (OfInt)$LAYOUT.select(groupElement("AFInfoData_length"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_length
+     * }
+     */
+    public static final OfInt AFInfoData_length$layout() {
+        return AFInfoData_length$LAYOUT;
+    }
+
+    private static final long AFInfoData_length$OFFSET = 12;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_length
+     * }
+     */
+    public static final long AFInfoData_length$offset() {
+        return AFInfoData_length$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_length
+     * }
+     */
+    public static int AFInfoData_length(MemorySegment struct) {
+        return struct.get(AFInfoData_length$LAYOUT, AFInfoData_length$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * unsigned int AFInfoData_length
+     * }
+     */
+    public static void AFInfoData_length(MemorySegment struct, int fieldValue) {
+        struct.set(AFInfoData_length$LAYOUT, AFInfoData_length$OFFSET, fieldValue);
+    }
+
+    private static final AddressLayout AFInfoData$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("AFInfoData"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * uchar *AFInfoData
+     * }
+     */
+    public static final AddressLayout AFInfoData$layout() {
+        return AFInfoData$LAYOUT;
+    }
+
+    private static final long AFInfoData$OFFSET = 16;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * uchar *AFInfoData
+     * }
+     */
+    public static final long AFInfoData$offset() {
+        return AFInfoData$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * uchar *AFInfoData
+     * }
+     */
+    public static MemorySegment AFInfoData(MemorySegment struct) {
+        return struct.get(AFInfoData$LAYOUT, AFInfoData$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * uchar *AFInfoData
+     * }
+     */
+    public static void AFInfoData(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(AFInfoData$LAYOUT, AFInfoData$OFFSET, fieldValue);
+    }
+
+    /**
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
+     */
+    public static MemorySegment asSlice(MemorySegment array, long index) {
+        return array.asSlice(layout().byteSize() * index);
+    }
+
+    /**
+     * The size (in bytes) of this struct
+     */
+    public static long sizeof() { return layout().byteSize(); }
+
+    /**
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     */
+    public static MemorySegment allocate(SegmentAllocator allocator) {
+        return allocator.allocate(layout());
+    }
+
+    /**
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     */
+    public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
+        return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
+        return reinterpret(addr, 1, arena, cleanup);
+    }
+
+    /**
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
+     */
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
+        return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
+    }
+}
 

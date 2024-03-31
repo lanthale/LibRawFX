@@ -2,32 +2,67 @@
 
 package org.libraw.linuxosx;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+
 /**
- * {@snippet :
- * int (*pre_identify_callback)(void* ctx);
+ * {@snippet lang=c :
+ * typedef int (*pre_identify_callback)(void *)
  * }
  */
-public interface pre_identify_callback {
+public class pre_identify_callback {
 
-    int apply(java.lang.foreign.MemorySegment ctx);
-    static MemorySegment allocate(pre_identify_callback fi, Arena scope) {
-        return RuntimeHelper.upcallStub(constants$4.const$0, fi, constants$3.const$5, scope);
+    pre_identify_callback() {
+        // Should not be called directly
     }
-    static pre_identify_callback ofAddress(MemorySegment addr, Arena arena) {
-        MemorySegment symbol = addr.reinterpret(arena, null);
-        return (java.lang.foreign.MemorySegment _ctx) -> {
-            try {
-                return (int)constants$4.const$1.invokeExact(symbol, _ctx);
-            } catch (Throwable ex$) {
-                throw new AssertionError("should not reach here", ex$);
-            }
-        };
+
+    /**
+     * The function pointer signature, expressed as a functional interface
+     */
+    public interface Function {
+        int apply(MemorySegment ctx);
+    }
+
+    private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
+        libraw_h.C_INT,
+        libraw_h.C_POINTER
+    );
+
+    /**
+     * The descriptor of this function pointer
+     */
+    public static FunctionDescriptor descriptor() {
+        return $DESC;
+    }
+
+    private static final MethodHandle UP$MH = libraw_h.upcallHandle(pre_identify_callback.Function.class, "apply", $DESC);
+
+    /**
+     * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
+     * The lifetime of the returned segment is managed by {@code arena}
+     */
+    public static MemorySegment allocate(pre_identify_callback.Function fi, Arena arena) {
+        return Linker.nativeLinker().upcallStub(UP$MH.bindTo(fi), $DESC, arena);
+    }
+
+    private static final MethodHandle DOWN$MH = Linker.nativeLinker().downcallHandle($DESC);
+
+    /**
+     * Invoke the upcall stub {@code funcPtr}, with given parameters
+     */
+    public static int invoke(MemorySegment funcPtr,MemorySegment ctx) {
+        try {
+            return (int) DOWN$MH.invokeExact(funcPtr, ctx);
+        } catch (Throwable ex$) {
+            throw new AssertionError("should not reach here", ex$);
+        }
     }
 }
-
 
