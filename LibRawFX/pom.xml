@@ -94,12 +94,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <enablePreview>true</enablePreview>
+                <version>3.12.1</version>
+                <configuration>                    
                     <fork>true</fork>
-                    <compilerArgs>                        
-                        <arg>--enable-preview</arg>
+                    <compilerArgs>                                                
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</arg>                                
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
                     </compilerArgs>                                        
@@ -108,10 +106,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <argLine>--enable-preview</argLine>
-                </configuration>
+                <version>3.1.2</version>                
             </plugin>           
             <plugin>
                 <groupId>org.openjfx</groupId>
@@ -124,9 +119,8 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
-                            <options>                                   
-                                <option>--enable-native-access org.librawfx</option>
-                                <option>--enable-preview</option>
+                            <options>  
+                                <option>--enable-native-access=org.librawfx</option>         
                                 <option>--add-modules java.se</option>                              
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
@@ -140,9 +134,9 @@
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
                             <options> 
-                                <option>--enable-native-access org.librawfx</option>  
+                                <option>--enable-native-access=org.librawfx</option>                                         
                                 <option>--add-modules java.se</option>                                                           
-                                <option>--enable-preview -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
+                                <option>--agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
@@ -153,10 +147,10 @@
                         <id>ide-debug</id>
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
-                            <options> 
-                                <option>--enable-native-access org.librawfx</option> 
+                            <options>        
+                                <option>--enable-native-access=org.librawfx</option>                                   
                                 <option>--add-modules java.se</option>                                                            
-                                <option>--enable-preview -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
+                                <option>--agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
@@ -168,13 +162,12 @@
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
                             <options>
+                                <option>--enable-native-access=org.librawfx</option>         
                                 <option>${profiler.jvmargs.arg1}</option>
                                 <option>${profiler.jvmargs.arg2}</option>
                                 <option>${profiler.jvmargs.arg3}</option>
                                 <option>${profiler.jvmargs.arg4}</option>
-                                <option>${profiler.jvmargs.arg5}</option>
-                                <option>--enable-native-access org.librawfx</option>                               
-                                <option>--enable-preview</option>
+                                <option>${profiler.jvmargs.arg5}</option>                                                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
@@ -238,7 +231,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.3.1</version>                
+                        <version>3.3.2</version>                
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -246,8 +239,7 @@
                                     <goal>jar</goal>
                                 </goals>
                                 <configuration>    
-                                    <release>21</release>
-                                    <additionalOptions>--enable-preview</additionalOptions>                        
+                                    <release>22</release>                                                           
                                     <additionalJOptions>                                
                                         <additionalJOption>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</additionalJOption>                                
                                         <additionalJOption>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</additionalJOption>
@@ -259,7 +251,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.8</version>
+                        <version>1.6.13</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
