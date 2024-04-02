@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='libraw_r.so.22'
+dlname='libraw_r.so.23'
 
 # Names of this library.
-library_names='libraw_r.so.22.0.0 libraw_r.so.22 libraw_r.so'
+library_names='libraw_r.so.23.0.0 libraw_r.so.23 libraw_r.so'
 
 # The name of the static archive.
 old_library='libraw_r.a'
@@ -23,7 +23,7 @@ dependency_libs=' -ljpeg -ljasper -lz -llcms2'
 weak_library_names=''
 
 # Version information for libraw_r.
-current=22
+current=23
 age=0
 revision=0
 
