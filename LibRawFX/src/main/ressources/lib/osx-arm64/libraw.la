@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='libraw.22.dylib'
+dlname='libraw.23.dylib'
 
 # Names of this library.
-library_names='libraw.22.dylib libraw.dylib'
+library_names='libraw.23.dylib libraw.dylib'
 
 # The name of the static archive.
 old_library='libraw.a'
@@ -17,13 +17,13 @@ old_library='libraw.a'
 inherited_linker_flags=' '
 
 # Libraries that this one depends upon.
-dependency_libs=' -ljpeg -ljasper -lz -L/opt/homebrew/Cellar/little-cms2/2.13.1_1/lib -llcms2 -lm'
+dependency_libs=' -ljpeg -ljasper -lz -L/opt/homebrew/Cellar/little-cms2/2.16/lib -llcms2 -lm'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
 
 # Version information for libraw.
-current=22
+current=23
 age=0
 revision=0
 
