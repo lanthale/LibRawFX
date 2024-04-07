@@ -240,7 +240,7 @@
                                 </goals>
                                 <configuration>    
                                     <release>22</release>                                                           
-                                    <additionalJOptions>                                
+                                    <additionalJOptions>                                                                        
                                         <additionalJOption>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</additionalJOption>                                
                                         <additionalJOption>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</additionalJOption>
                                     </additionalJOptions>

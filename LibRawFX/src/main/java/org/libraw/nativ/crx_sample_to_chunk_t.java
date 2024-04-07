@@ -186,15 +186,15 @@ public class crx_sample_to_chunk_t {
     public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
+     * Allocate a segment of size @code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
     }
 
     /**
-     * Allocate an array of size {@code elementCount} using {@code allocator}.
-     * The returned segment has size {@code elementCount * layout().byteSize()}.
+     * Allocate an array of size @code elementCount} using {@code allocator}.
+     * The returned segment has size @code elementCount * layout().byteSize()}.
      */
     public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
@@ -202,7 +202,7 @@ public class crx_sample_to_chunk_t {
 
     /**
      * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
-     * The returned segment has size {@code layout().byteSize()}
+     * The returned segment has size layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
         return reinterpret(addr, 1, arena, cleanup);
@@ -210,7 +210,7 @@ public class crx_sample_to_chunk_t {
 
     /**
      * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
-     * The returned segment has size {@code elementCount * layout().byteSize()}
+     * The returned segment has size elementCount * layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
