@@ -123,8 +123,7 @@ public class LibrawImage {
 
             MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
             MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
-            System.out.println("model " + model);
+            String model = maker$slice.getString(0) + " " + model$slice.getString(0);            
 
             RawDecoderSettings settings;
             if (rawSettings.get(model) == null) {
