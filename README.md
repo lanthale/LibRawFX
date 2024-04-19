@@ -28,6 +28,7 @@ Actually only the following raw formats are enabled (see class `RAWDescriptor.ja
 - Leica
 
 The lib now resized the image in memory before sending it back to the image class (the same as the Javafx is doing for PNG/JPG).
+You can now specify for each camera model different settings for the raw decoder (sample below).
 
 ## Open topics
 - Writing of metadata back to raw files
@@ -48,16 +49,20 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.8.6</version>  
+    <version>1.8.7</version>  
 </dependency>  
 ```
 
 - In the Class where the start method is add as one of the first lines the following code to install the file handler:
 
      `RAWImageLoaderFactory.install();
-     RawDecoderSettings settings=RAWImageLoaderFactory.getDecoderSettings();
-     settings.setAutoBrightness(true);`
-      //use the setters provided. They settings will take effect on the next call
+     HashMap<String, RawDecoderSettings> decoderSettings = RAWImageLoaderFactory.getDecoderSettings(); //.setEnableExposureCorrection(false);
+     decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
+     decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
+     decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
+     decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
+     decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
+     //use the setters provided. They settings will take effect on the next call. 
       
        
 
@@ -68,7 +73,7 @@ Point to the maven coordinates:
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
 
-- and add the following lines to your java config on JDK 20:
+- and add the following lines to your java config on JDK 22:
 ```
 --enable-native-access=org.librawfx  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
