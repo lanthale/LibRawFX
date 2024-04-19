@@ -62,7 +62,7 @@ Point to the maven coordinates:
      decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
      decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
      decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
-     //use the setters provided. They settings will take effect on the next call. 
+     //use the setters provided. They settings will take effect on the next call. The camera maker can be found out by method call getCameraMaker() or extract from the Metadata in form "maker model"
       
        
 
