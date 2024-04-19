@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Screen;
@@ -31,8 +32,8 @@ public class RAWImageLoader extends ImageLoaderImpl {
     private final DimensionProvider dimensionProvider;
     private final Lock accessLock = new Lock();
     private boolean isDisposed = false;
-    private LibrawImage libraw;
-    private static RawDecoderSettings settings;
+    private LibrawImage libraw;    
+    private static HashMap<String, RawDecoderSettings> settings=new HashMap<>();
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
         super(RAWDescriptor.getInstance());
@@ -40,9 +41,15 @@ public class RAWImageLoader extends ImageLoaderImpl {
             throw new IllegalArgumentException("input == null!");
         }
         this.input = input;
-        this.dimensionProvider = dimensionProvider;
-        RAWImageLoader.settings = new RawDecoderSettings();
+        this.dimensionProvider = dimensionProvider;        
+        initSettings();
         libraw = new LibrawImage(this, settings);
+    }
+
+    public static void initSettings() {
+        if (settings.isEmpty()) {            
+            settings.put("Default", new RawDecoderSettings());
+        }
     }
 
     @Override
@@ -210,9 +217,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
         }
     }
 
-    public static RawDecoderSettings getSettings() {
-        if (settings == null) {
-            RAWImageLoader.settings = new RawDecoderSettings();
+    public static final HashMap<String, RawDecoderSettings> getSettings() {
+        if (settings == null) {            
+            initSettings();
         }
         return settings;
     }

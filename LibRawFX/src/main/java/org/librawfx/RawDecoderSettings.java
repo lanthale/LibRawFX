@@ -10,10 +10,10 @@ package org.librawfx;
  */
 public class RawDecoderSettings {
 
-    private String whiteBalance = "CUSTOM"; //CAMERA
+    private String whiteBalance = "CAMERA"; //CAMERA
     private boolean autoWhitebalance = false;
     private boolean output_tiff = false;
-    private boolean halfSizeOutput = false;    
+    private boolean halfSizeOutput = false;
     private int RAWQuality = 0;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
     private boolean autoBrightness = false;
     private float autoBrightnessThreashold = 0.0f;
@@ -25,9 +25,9 @@ public class RawDecoderSettings {
     private float expoCorrectionHighlight = 0.0f;
     private int noiseReduction = 0;
 
-    private boolean fixColorsHighlights = false;        
+    private boolean fixColorsHighlights = false;
     private boolean sixteenBitsImage = false;
-    private double brightness = 1.0;  
+    private double brightness = 1.0;
     private int saturation = 0;
     private int outputColorSpace = 1; //[0-6] Output colorspace (raw, sRGB, Adobe, Wide, ProPhoto, XYZ, ACES)
     private boolean RGBInterpolate4Colors = false;
@@ -36,37 +36,31 @@ public class RawDecoderSettings {
     //private int customWhiteBalance = 6500;
     //private double customWhiteBalanceGreen = 1.0;
     private int medianFilterPasses = 0;
-    
 
     private boolean enableBlackPoint = false;
     private int blackPoint = 0;
 
     //private boolean enableWhitePoint = false;
     //private int whitePoint = 0;
-
     private String NRType = "NONR";
     private int NRThreshold = 0;
 
     //private String inputProfile = "";
     //private String outputProfile = "";
-
     //private String deadPixelMap = "";
-
     //private String whiteBalanceArea = "";
-
     //-- Extended demosaicing settings ----------------------------------------------------------
     private int dcbIterations = -1;
-    private boolean dcbEnhanceFl = false;            
-    
+    private boolean dcbEnhanceFl = false;
 
     public RawDecoderSettings() {
     }
-    
+
     public boolean isFixColorsHighlights() {
         return fixColorsHighlights;
     }
 
-    public void setFixColorsHighlights(boolean fixColorsHighlights) {        
+    public void setFixColorsHighlights(boolean fixColorsHighlights) {
         this.fixColorsHighlights = fixColorsHighlights;
     }
 
@@ -195,9 +189,11 @@ public class RawDecoderSettings {
     }
 
     public void setEnableExposureCorrection(boolean enableExposureCorrection) {
+        if (enableExposureCorrection == true) {
+            exposureCorrection = 1;
+        }
         this.enableExposureCorrection = enableExposureCorrection;
     }
-        
 
     public float getExpoCorrectionShift() {
         return exposureShift;
@@ -214,7 +210,7 @@ public class RawDecoderSettings {
     public void setExpoCorrectionHighlight(float expoCorrectionHighlight) {
         this.expoCorrectionHighlight = expoCorrectionHighlight;
     }
-    
+
     public boolean isAutoWhitebalance() {
         return autoWhitebalance;
     }
@@ -307,7 +303,5 @@ public class RawDecoderSettings {
     public String toString() {
         return "RawDecoderSettings{" + "whiteBalance=" + whiteBalance + ", autoWhitebalance=" + autoWhitebalance + ", output_tiff=" + output_tiff + ", halfSizeOutput=" + halfSizeOutput + ", RAWQuality=" + RAWQuality + ", autoBrightness=" + autoBrightness + ", autoBrightnessThreashold=" + autoBrightnessThreashold + ", brightNess=" + brightnes + ", coolScanNEFGamma=" + coolScanNEFGamma + ", enableExposureCorrection=" + enableExposureCorrection + ", exposureCorrection=" + exposureCorrection + ", exposureShift=" + exposureShift + ", expoCorrectionHighlight=" + expoCorrectionHighlight + ", noiseReduction=" + noiseReduction + ", fixColorsHighlights=" + fixColorsHighlights + ", sixteenBitsImage=" + sixteenBitsImage + ", brightness=" + brightness + ", saturation=" + saturation + ", outputColorSpace=" + outputColorSpace + ", RGBInterpolate4Colors=" + RGBInterpolate4Colors + ", DontStretchPixels=" + DontStretchPixels + ", unclipColors=" + unclipColors + ", medianFilterPasses=" + medianFilterPasses + ", enableBlackPoint=" + enableBlackPoint + ", blackPoint=" + blackPoint + ", NRType=" + NRType + ", NRThreshold=" + NRThreshold + ", dcbIterations=" + dcbIterations + ", dcbEnhanceFl=" + dcbEnhanceFl + '}';
     }
-    
-    
 
 }

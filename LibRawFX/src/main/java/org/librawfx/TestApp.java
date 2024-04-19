@@ -36,6 +36,12 @@ public class TestApp extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException {
         RAWImageLoaderFactory.install();
+        HashMap<String, RawDecoderSettings> decoderSettings = RAWImageLoaderFactory.getDecoderSettings(); //.setEnableExposureCorrection(false);
+        decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
+        decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
+        decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
+        decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
+        decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
 
         Parameters parameters = getParameters();
         String file = parameters.getRaw().get(0);
@@ -47,7 +53,7 @@ public class TestApp extends Application {
         stack.setSpacing(5);
         //stack.setAlignment(Pos.TOP_CENTER);
         loadImagesByStream(stack, file, file2, file3);
-        //loadImagesByFile(stack, file);
+        //loadImagesByFile(stack, file2);
 
         var scene = new Scene(stack, 640, 480);
         stage.setScene(scene);
@@ -55,7 +61,7 @@ public class TestApp extends Application {
     }
 
     private void loadImagesByStream(VBox stack, String file, String file2, String file3) throws MalformedURLException {
-        File initialFile = new File(file);        
+        File initialFile = new File(file);
         File initialFile2 = new File(file2);
         File initialFile3 = new File(file3);
         //ind.progressProperty().bind(img.progressProperty());
@@ -100,7 +106,9 @@ public class TestApp extends Application {
                 hb.getChildren().add(view);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), new RawDecoderSettings()).getMetaData();
+                        HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+                        settings.put("Default", new RawDecoderSettings());
+                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaData();
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -130,7 +138,9 @@ public class TestApp extends Application {
                 hb.getChildren().add(view2);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), new RawDecoderSettings()).getMetaData();
+                        HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+                        settings.put("Default", new RawDecoderSettings());
+                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaData();
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -160,7 +170,9 @@ public class TestApp extends Application {
                 hb.getChildren().add(view3);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), new RawDecoderSettings()).getMetaData();
+                        HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+                        settings.put("Default", new RawDecoderSettings());
+                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaData();
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -200,8 +212,14 @@ public class TestApp extends Application {
         //ind.progressProperty().bind(img.progressProperty());
         for (int i = 0; i < 1; i++) {
             File initialFile = new File(file);
-            LibrawImage libraw = new LibrawImage(initialFile.getAbsolutePath(), new RawDecoderSettings());
-            System.out.println("CameraMaker "+libraw.getCameraMaker());
+            HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+            settings.put("Default", new RawDecoderSettings());
+            settings.put("Sigma DP2 Merrill", new RawDecoderSettings());
+            settings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
+            settings.get("Sigma DP2 Merrill").setExposureCorrection(1);
+            settings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
+            settings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
+            LibrawImage libraw = new LibrawImage(initialFile.getAbsolutePath(), settings);
             int[] raw = libraw.readPixelData();
             WritableImage img = new WritableImage(libraw.getImageWidth(), libraw.getImageHeight());
             PixelWriter pw = img.getPixelWriter();

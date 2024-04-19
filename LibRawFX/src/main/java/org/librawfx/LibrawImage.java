@@ -37,15 +37,15 @@ public class LibrawImage {
     private RAWImageLoader loader;
     private String cameraModel;
     private LocalDateTime shootingDateTime;
-    private RawDecoderSettings rawSettings;
+    private HashMap<String, RawDecoderSettings> rawSettings;
     private static SymbolLookup loaderLookup;
 
-    public LibrawImage(String imageFile, RawDecoderSettings settings) {
+    public LibrawImage(String imageFile, HashMap<String, RawDecoderSettings> settings) {
         this.imageFileURL = imageFile;
         this.rawSettings = settings;
     }
 
-    public LibrawImage(RAWImageLoader loader, RawDecoderSettings settings) {
+    public LibrawImage(RAWImageLoader loader, HashMap<String, RawDecoderSettings> settings) {
         imageFileURL = null;
         this.loader = loader;
         this.rawSettings = settings;
@@ -76,7 +76,6 @@ public class LibrawImage {
 
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + Arrays.toString(loadLibraryFromJar) + " , tempdir: " + tempDir);
         for (String part : loadLibraryFromJar) {
-            //System.out.println("libsarray "+part);
             new File(part).deleteOnExit();
         }
         for (String strTemp : loadLibraryFromJar) {
@@ -110,16 +109,6 @@ public class LibrawImage {
             //MemorySegment datasegment = org.libraw.win.libraw_data_t.idata(iprc);
             MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
 
-            if (this.rawSettings == null) {
-                this.rawSettings = new RawDecoderSettings();
-            }
-            new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
-            /*org.libraw.win.libraw_output_params_t.use_camera_wb$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.use_auto_wb$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.output_tiff$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.half_size$set(params$slice, 0);
-                org.libraw.win.libraw_output_params_t.user_qual$set(params$slice, 0);*/
-
             MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
             MemorySegment allocateNative = scope.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray);//)Array(org.libraw.win.libraw_h.C_CHAR, sourceFileAsByteArray);
             int k = org.libraw.nativ.libraw_h.libraw_open_buffer(iprc, allocateNative, inputStreamBytes.byteSize());
@@ -131,6 +120,20 @@ public class LibrawImage {
             org.libraw.nativ.libraw_h.libraw_unpack(iprc);
 
             MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
+
+            MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
+            MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
+            System.out.println("model " + model);
+
+            RawDecoderSettings settings;
+            if (rawSettings.get(model) == null) {
+                settings = rawSettings.get("Default");
+            } else {
+                settings = rawSettings.get(model);
+            }
+            new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
+
             //MemorySegment iParamsRestricted = org.libraw.win.libraw_iparams_t.allocate(iParams);//.ofAddress(iParams, scope);
             MemorySegment modelSlice = org.libraw.nativ.libraw_iparams_t.model(iParams);
             cameraModel = new String(modelSlice.toArray(ValueLayout.JAVA_BYTE), StandardCharsets.US_ASCII);
@@ -205,11 +208,6 @@ public class LibrawImage {
             //MemorySegment datasegment = org.libraw.win.libraw_data_t.ofAddress(iprc, scope);
             MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
 
-            if (this.rawSettings == null) {
-                this.rawSettings = new RawDecoderSettings();
-            }
-            new RawDecoderToNativeTranslator(rawSettings, operatingSystem).translate(params$slice);
-
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
             //int libraw_open_file = org.libraw.win.libraw_h.libraw_open_file(iprc, SegmentAllocator.nativeAllocator(scope).allocateUtf8String(imageFileURL));
             int libraw_open_file = org.libraw.nativ.libraw_h.libraw_open_file(iprc, scope.allocateFrom(imageFileURL));
@@ -221,7 +219,19 @@ public class LibrawImage {
             org.libraw.nativ.libraw_h.libraw_unpack(iprc);
 
             MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
-            //MemorySegment iParamsRestricted = org.libraw.win.libraw_iparams_t.ofAddress(iParams, scope);
+
+            MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
+            MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
+
+            RawDecoderSettings settings;
+            if (rawSettings.get(model) == null) {
+                settings = rawSettings.get("Default");
+            } else {
+                settings = rawSettings.get(model);
+            }
+            new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
+
             MemorySegment modelSlice = org.libraw.nativ.libraw_iparams_t.model(iParams);
             cameraModel = new String(modelSlice.toArray(ValueLayout.JAVA_BYTE), StandardCharsets.UTF_8);
             MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
@@ -530,26 +540,6 @@ public class LibrawImage {
 
     public LocalDateTime getShootingDateTime() {
         return shootingDateTime;
-    }
-
-    /**
-     * getting the actual setting for the raw decoder engine
-     *
-     * @return the settings object with all settings applied
-     */
-    public RawDecoderSettings getRawSettings() {
-        return rawSettings;
-    }
-
-    /**
-     * Optional settings for the raw decoding engine. If not set than basis
-     * engine properties are applied. This must be called before any loading of
-     * images
-     *
-     * @param rawSettings the settings object to be set.
-     */
-    public void setRawSettings(RawDecoderSettings rawSettings) {
-        this.rawSettings = rawSettings;
     }
 
     /**

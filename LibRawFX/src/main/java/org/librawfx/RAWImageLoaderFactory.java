@@ -13,6 +13,7 @@ import com.sun.javafx.iio.ImageLoaderFactory;
 import com.sun.javafx.iio.ImageStorage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +43,7 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
      */
     public static final void install() {  
         RAWImageLoaderFactory.tempDir=null;
-        install(new DefaultDimensionProvider());        
+        install(new DefaultDimensionProvider());          
     }
 
     public static final void install(DimensionProvider dimensionProvider) {
@@ -52,7 +53,7 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
             Logger.getLogger(RAWImageLoaderFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         RAWImageLoaderFactory.dimensionProvider = dimensionProvider;
-
+        RAWImageLoader.initSettings();
         ImageStorage.getInstance().addImageLoaderFactory(instance);        
     }    
 
@@ -60,7 +61,7 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
         return instance;
     }
     
-    public static final RawDecoderSettings getDecoderSettings(){        
+    public static final HashMap<String, RawDecoderSettings> getDecoderSettings(){        
         return RAWImageLoader.getSettings();
     }
 
