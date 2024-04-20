@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class to install the TIFF renderer to the javafx image systems
+ * Class to install the RAW renderer to the javafx image systems
  * @author selfemp
  */
 public class RAWImageLoaderFactory implements ImageLoaderFactory {

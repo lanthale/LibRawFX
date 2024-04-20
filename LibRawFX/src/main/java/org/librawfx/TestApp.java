@@ -108,7 +108,10 @@ public class TestApp extends Application {
                     try {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaData();
+                        long start=System.currentTimeMillis();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaDataFromFile();
+                        long end=System.currentTimeMillis();
+                        System.out.println("meta file: "+(end-start)+" ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -140,7 +143,10 @@ public class TestApp extends Application {
                     try {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaData();
+                        long start=System.currentTimeMillis();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaDataFromFile();
+                        long end=System.currentTimeMillis();
+                        System.out.println("meta file: "+(end-start)+" ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -172,7 +178,10 @@ public class TestApp extends Application {
                     try {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaData();
+                        long start=System.currentTimeMillis();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaDataFromFile();
+                        long end=System.currentTimeMillis();
+                        System.out.println("meta file: "+(end-start)+" ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
