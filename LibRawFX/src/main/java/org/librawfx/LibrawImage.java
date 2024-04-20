@@ -295,7 +295,7 @@ public class LibrawImage {
      * @return Hashmap of all meta data
      * @throws IOException
      */
-    public HashMap<String, String> getMetaDataFromFile() throws IOException {
+    public HashMap<String, String> getMetaData() throws IOException {
         if (imageFileURL == null) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "imageFileURL == null! " + imageFileURL);
             throw new IllegalArgumentException("imageFileURL == null!");

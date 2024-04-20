@@ -109,7 +109,7 @@ public class TestApp extends Application {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
                         long start=System.currentTimeMillis();
-                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaDataFromFile();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaData();
                         long end=System.currentTimeMillis();
                         System.out.println("meta file: "+(end-start)+" ms");
                         ScrollPane sc = new ScrollPane();
@@ -144,7 +144,7 @@ public class TestApp extends Application {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
                         long start=System.currentTimeMillis();
-                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaDataFromFile();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaData();
                         long end=System.currentTimeMillis();
                         System.out.println("meta file: "+(end-start)+" ms");
                         ScrollPane sc = new ScrollPane();
@@ -179,7 +179,7 @@ public class TestApp extends Application {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
                         long start=System.currentTimeMillis();
-                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaDataFromFile();
+                        HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaData();
                         long end=System.currentTimeMillis();
                         System.out.println("meta file: "+(end-start)+" ms");
                         ScrollPane sc = new ScrollPane();
