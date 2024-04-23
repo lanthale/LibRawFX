@@ -53,7 +53,7 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
             Logger.getLogger(RAWImageLoaderFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         RAWImageLoaderFactory.dimensionProvider = dimensionProvider;
-        RAWImageLoader.initSettings();
+        RAWImageLoader.initSettings();        
         ImageStorage.getInstance().addImageLoaderFactory(instance);        
     }    
 

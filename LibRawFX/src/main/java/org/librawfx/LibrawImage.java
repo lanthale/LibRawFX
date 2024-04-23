@@ -82,8 +82,10 @@ public class LibrawImage {
             System.load(strTemp);
             loaderLookup = SymbolLookup.loaderLookup();
         }
+        MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
+
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...finished");
-        
+
     }
 
     /**
@@ -107,7 +109,7 @@ public class LibrawImage {
         try (var scope = Arena.ofShared()) {
             MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.get(ValueLayout.JAVA_LONG, 0));
-            
+
             MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
 
             MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
@@ -124,7 +126,7 @@ public class LibrawImage {
 
             MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
             MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            String model = maker$slice.getString(0) + " " + model$slice.getString(0);            
+            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
 
             RawDecoderSettings settings;
             if (rawSettings.get(model) == null) {
@@ -329,7 +331,7 @@ public class LibrawImage {
             }
 
             MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
-            
+
             MemorySegment gpsInfoSegement = org.libraw.nativ.libraw_imgother_t.parsed_gps(image_other_data);
             float altitude$get = org.libraw.nativ.libraw_gps_info_t.altitude(gpsInfoSegement);
             retMap.put("GPS Altitude", "" + altitude$get);
