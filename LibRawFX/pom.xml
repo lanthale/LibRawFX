@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.librawfx</groupId>
     <artifactId>LibRawFX</artifactId>
-    <version>1.8.9</version>
+    <version>1.9.0</version>
     
     <name>LibRawFX</name>
     <description>This installs the native lib libraw as a JavaFX Image format provider similar to imageIO before on Swing</description>
@@ -46,9 +46,9 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target> 
-        <javafx.version>22</javafx.version>       
+        <maven.compiler.source>24</maven.compiler.source>
+        <maven.compiler.target>24</maven.compiler.target> 
+        <javafx.version>24</javafx.version>       
     </properties>
     
     
@@ -94,7 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.14.0</version>
                 <configuration>                    
                     <fork>true</fork>
                     <compilerArgs>                                                
@@ -106,7 +106,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>                
+                <version>3.5.2</version>                
             </plugin>           
             <plugin>
                 <groupId>org.openjfx</groupId>
@@ -231,7 +231,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.3.2</version>                
+                        <version>3.11.2</version>                
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -251,7 +251,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.13</version>
+                        <version>1.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
@@ -262,7 +262,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>3.2.7</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
