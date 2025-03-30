@@ -23,7 +23,7 @@ jobs:
         architecture: 'x64' # defaults to 'x64'
         cache: 'maven'
     - name: Cache Maven packages
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -32,12 +32,12 @@ jobs:
       run: mvn clean compile package -f LibRawFX/pom.xml
     - name: Get release
       id: get_release
-      uses: bruceadams/get-release@v1.2.2
+      uses: bruceadams/get-release@v1.3.2
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: Upload Release Asset jar
       id: upload-release-asset 
-      uses: csexton/release-asset-action@v2
+      uses: csexton/release-asset-action@v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
