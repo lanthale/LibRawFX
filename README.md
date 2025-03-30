@@ -6,7 +6,7 @@ All raw formats can be loaded with the Image class and manipulated by Pixelwrite
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 22 and JavaFX 22 is required for v1.8.6** because of the foreign linker API usage, changes in JavaFX 21 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
+**JDK 24 and JavaFX 24 is required for v1.9.1** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
@@ -44,12 +44,12 @@ Point to the maven coordinates:
     <version>1.8.0</version>  
 </dependency>  
 ```
-**JDK22**
+**JDK24**
 ```
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.8.7</version>  
+    <version>1.9.1</version>  
 </dependency>  
 ```
 
@@ -73,7 +73,7 @@ Point to the maven coordinates:
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
 
-- and add the following lines to your java config on JDK 22:
+- and add the following lines to your java config on JDK 24:
 ```
 --enable-native-access=org.librawfx  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
@@ -112,8 +112,8 @@ You can have a look into the class TestAPP.java to see how to use it, but genera
 You can also use the lib without adding the file handler. What I mean is that you can also forget the "...install" line and just load a file URL with the lib (see the `TestApp.java` to see how it works).
 
 ## Steps to create your own build:
-- OpenJDK/Adoptium 22 or newer
-- JavaFX 20 or newer (22 is recommended)
+- OpenJDK/Adoptium 24 or newer
+- JavaFX 24
 - SET JAVA_HOME variable
 - Execute `mvn clean compile package -f LibRawFX/pom.xml`
 - To run the example execute `mvn javafx:run@cli-default`
