@@ -326,8 +326,10 @@ public class LibrawImage {
             MemorySegment xmpdata$get = org.libraw.nativ.libraw_iparams_t.xmpdata(iParams);
             int xmplen$get = org.libraw.nativ.libraw_iparams_t.xmplen(iParams);
             if (xmplen$get != 0) {
-                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(xmplen$get);
-                retMap.put("XMP", asSegmentRestricted.getString(0));
+                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(xmplen$get);                
+                if (asSegmentRestricted.byteSize() != 0) {
+                    retMap.put("XMP", asSegmentRestricted.getString(0));
+                }
             }
 
             MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);

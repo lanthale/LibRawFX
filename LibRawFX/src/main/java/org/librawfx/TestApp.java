@@ -44,7 +44,7 @@ public class TestApp extends Application {
         decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
 
         Parameters parameters = getParameters();
-        String file = parameters.getRaw().get(0);
+        String file = parameters.getRaw().get(0);        
         String file2 = parameters.getRaw().get(1);
         String file3 = parameters.getRaw().get(2);
 
