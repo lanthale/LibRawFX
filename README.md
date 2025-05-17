@@ -126,3 +126,4 @@ You can also use the lib without adding the file handler. What I mean is that yo
 - Inside of these packages above I exposed also the raw interface to libraw
 - The main class to interact with the native lib is the class `LibrawImage.java` in package `org.librawfx`
      
+[![JFXCentral](https://img.shields.io/badge/Find_me_on-JFXCentral-blue?logo=googlechrome&logoColor=white)](https://www.jfx-central.com/libraries/librawfx)
