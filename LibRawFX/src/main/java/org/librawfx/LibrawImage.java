@@ -39,6 +39,7 @@ public class LibrawImage {
     private LocalDateTime shootingDateTime;
     private final HashMap<String, RawDecoderSettings> rawSettings;
     private static SymbolLookup loaderLookup;
+    private RAWImageIOReader imageIOReader;
 
     public LibrawImage(String imageFile, HashMap<String, RawDecoderSettings> settings) {
         this.imageFileURL = imageFile;
@@ -48,6 +49,12 @@ public class LibrawImage {
     public LibrawImage(RAWImageLoader loader, HashMap<String, RawDecoderSettings> settings) {
         imageFileURL = null;
         this.loader = loader;
+        this.rawSettings = settings;
+    }
+
+    public LibrawImage(RAWImageIOReader imageIOReader, HashMap<String, RawDecoderSettings> settings) {
+        imageFileURL = null;
+        this.imageIOReader = imageIOReader;
         this.rawSettings = settings;
     }
 
@@ -158,7 +165,9 @@ public class LibrawImage {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Start reading image from native memory...");
             byte[] line = new byte[stride];
             for (var i = 0; i < imageHeight; i++) {
-                loader.updateImageProgress(i, imageHeight);
+                if (loader != null) {
+                    loader.updateImageProgress(i, imageHeight);
+                }
                 long offSetAdr = data$slice.address() + stride * i;
                 MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr);
                 line = asSegmentRestricted.reinterpret(stride).toArray(ValueLayout.JAVA_BYTE);
@@ -326,7 +335,7 @@ public class LibrawImage {
             MemorySegment xmpdata$get = org.libraw.nativ.libraw_iparams_t.xmpdata(iParams);
             int xmplen$get = org.libraw.nativ.libraw_iparams_t.xmplen(iParams);
             if (xmplen$get != 0) {
-                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(xmplen$get);                
+                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(xmplen$get);
                 if (asSegmentRestricted.byteSize() != 0) {
                     retMap.put("XMP", asSegmentRestricted.getString(0));
                 }
@@ -440,7 +449,7 @@ public class LibrawImage {
             MemorySegment make$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
             retString = make$slice.getString(0);
             MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            retString = retString + model$slice.getString(0);
+            retString = retString + " " + model$slice.getString(0);
 
             org.libraw.nativ.libraw_h.libraw_close(iprc);
             iprc = null;

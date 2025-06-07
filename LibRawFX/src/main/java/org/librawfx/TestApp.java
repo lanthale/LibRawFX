@@ -40,8 +40,11 @@ public class TestApp extends Application {
         decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
         decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
         decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
-        decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
-        decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
+        decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);        
+        decoderSettings.get("Sigma DP2 Merrill").setAutoWhitebalance(true);
+        decoderSettings.put("Fujifilm X-T2", new RawDecoderSettings());
+        decoderSettings.get("Fujifilm X-T2").setEnableExposureCorrection(true);
+        decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);
 
         Parameters parameters = getParameters();
         String file = parameters.getRaw().get(0);        
