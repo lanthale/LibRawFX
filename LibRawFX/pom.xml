@@ -118,7 +118,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.librawfx.TestApp</mainClass>  
+                            <mainClass>org.librawfx.TestAppImageIO</mainClass>  
                             <options>  
                                 <option>--enable-native-access=org.librawfx</option>         
                                 <option>--add-modules java.se</option>                              
@@ -132,7 +132,7 @@
                         <!-- Usage: mvn clean javafx:run@debug -->
                         <id>debug</id>
                         <configuration>
-                            <mainClass>org.librawfx.TestApp</mainClass>  
+                            <mainClass>org.librawfx.TestAppImageIO</mainClass>  
                             <options> 
                                 <option>--enable-native-access=org.librawfx</option>                                         
                                 <option>--add-modules java.se</option>                                                           
@@ -146,7 +146,7 @@
                         <!-- Configuration for automatic IDE debugging -->
                         <id>ide-debug</id>
                         <configuration>
-                            <mainClass>org.librawfx.TestApp</mainClass>  
+                            <mainClass>org.librawfx.TestAppImageIO</mainClass>  
                             <options>        
                                 <option>--enable-native-access=org.librawfx</option>                                   
                                 <option>--add-modules java.se</option>                                                            
@@ -160,7 +160,7 @@
                         <!-- Configuration for automatic IDE profiling -->
                         <id>ide-profile</id>
                         <configuration>
-                            <mainClass>org.librawfx.TestApp</mainClass>  
+                            <mainClass>org.librawfx.TestAppImageIO</mainClass>  
                             <options>
                                 <option>--enable-native-access=org.librawfx</option>         
                                 <option>${profiler.jvmargs.arg1}</option>

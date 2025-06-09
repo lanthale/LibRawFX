@@ -14,8 +14,8 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -46,8 +46,8 @@ public class RAWImageIOReader extends ImageReader {
 
     boolean gotHeader = false;
     RAWIOFormatMetadata metadata = null; // class defined below
-    
-    private static HashMap<String, RawDecoderSettings> settings=new HashMap<>();
+
+    private static HashMap<String, RawDecoderSettings> settings = new HashMap<>();
 
     public RAWImageIOReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
@@ -81,13 +81,13 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public int getWidth(int imageIndex) throws IOException {
-        width=libraw.getImageWidth();        
+        width = libraw.getImageWidth();
         return width;
     }
 
     @Override
     public int getHeight(int imageIndex) throws IOException {
-        height=libraw.getImageHeight();        
+        height = libraw.getImageHeight();
         return height;
     }
 
@@ -184,8 +184,7 @@ public class RAWImageIOReader extends ImageReader {
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
-        int[] rgbData = libraw.convertToINT(raw);
-                
+
         readMetadata(); // Stream is positioned at start of image data
 // Compute initial source region, clip against destination later
         Rectangle sourceRegion = getSourceRegion(param, width, height);
@@ -233,9 +232,8 @@ public class RAWImageIOReader extends ImageReader {
         int dstMaxX = dstMinX + imRas.getWidth() - 1;
         int dstMinY = imRas.getMinY();
         int dstMaxY = dstMinY + imRas.getHeight() - 1;
-        
-        //imRas.set
 
+        //imRas.set
         // Create a child raster exposing only the desired source bands
         if (sourceBands != null) {
             rowRas = rowRas.createWritableChild(0, 0,
@@ -253,13 +251,16 @@ public class RAWImageIOReader extends ImageReader {
                     destinationBands);
         }
 
+        int stride = libraw.getImageWidth() * libraw.getImageColors() * (libraw.getImageBits() / 8);
         for (int srcY = 0; srcY < height; srcY++) {
             // Read the row
-            try {
+            rowBuf = Arrays.copyOfRange(raw, 0, stride * srcY);
+            /*try {
                 stream.readFully(rowBuf);
+                rowBuf = Arrays.copyOfRange(raw, 0, stride * srcY);
             } catch (IOException e) {
                 throw new IIOException("Error reading line " + srcY, e);
-            }
+            }*/
 
             // Reject rows that lie outside the source region,
             // or which aren't part of the subsampling

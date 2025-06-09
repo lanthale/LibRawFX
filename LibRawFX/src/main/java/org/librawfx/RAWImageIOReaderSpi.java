@@ -16,16 +16,16 @@ import javax.imageio.stream.ImageInputStream;
  */
 public class RAWImageIOReaderSpi extends ImageReaderSpi {
 
-    static final String vendorName = "My Company";
-    static final String version = "1.0_beta33_build9467";
+    static final String vendorName = "LibrawFX";
+    static final String version = "1.0";
     static final String readerClassName
-            = "com.mycompany.imageio.MyFormatImageReader";
+            = "org.librawfx.RAWImageIOReader";
     static final String[] names = {"myformat"};
-    static final String[] suffixes = {"myf"};
+    static final String[] suffixes = {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"};
     static final String[] MIMETypes = {
-        "image/x-myformat"};
+        "image/x-raw"};
     static final String[] writerSpiNames = {
-        "com.mycompany.imageio.MyFormatImageWriterSpi"};
+        "org.librawfx.RAWImageWriterSpi"};
 
     // Metadata formats, more information below
     static final boolean supportsStandardStreamMetadataFormat = false;
@@ -35,9 +35,9 @@ public class RAWImageIOReaderSpi extends ImageReaderSpi {
     static final String[] extraStreamMetadataFormatClassNames = null;
     static final boolean supportsStandardImageMetadataFormat = false;
     static final String nativeImageMetadataFormatName
-            = "com.mycompany.imageio.MyFormatMetadata_1.0";
+            = "org.librawfx.RAWMetadata_1.0";
     static final String nativeImageMetadataFormatClassName
-            = "com.mycompany.imageio.MyFormatMetadata";
+            = "org.librawfx.RAWMetadata";
     static final String[] extraImageMetadataFormatNames = null;
     static final String[] extraImageMetadataFormatClassNames = null;
 
