@@ -288,7 +288,7 @@ public class LibrawImage {
      * @param rawBytes byte array of RGB bytes
      * @return an int array of the RGB bytes
      */
-    private synchronized int[] convertToINT(byte[] rawBytes) {
+    public synchronized int[] convertToINT(byte[] rawBytes) {
         int[] raw = new int[rawBytes.length * 4 / 3];
         for (int j = 0; j < rawBytes.length / 3; j++) {
             raw[j] = 0xFF000000
@@ -457,7 +457,7 @@ public class LibrawImage {
 
             return retString;
         }
-    }
+    }        
 
     /**
      * URL of the given file

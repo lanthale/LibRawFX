@@ -12,7 +12,9 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -170,6 +172,20 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] datab = new byte[1024];
+        long reading = System.currentTimeMillis();
+        while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
+            buffer.write(datab, 0, nRead);
+        }
+        buffer.flush();
+        byte[] targetArray = buffer.toByteArray();
+        byte[] raw = libraw.readPixelDataFromStream(targetArray);
+        double diff = (System.currentTimeMillis() - reading) / 1000;
+        Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
+        int[] rgbData = libraw.convertToINT(raw);
+                
         readMetadata(); // Stream is positioned at start of image data
 // Compute initial source region, clip against destination later
         Rectangle sourceRegion = getSourceRegion(param, width, height);
@@ -192,7 +208,7 @@ public class RAWImageIOReader extends ImageReader {
         // Get the specified detination image or create a new one
         BufferedImage dst = getDestination(param,
                 getImageTypes(0),
-                width, height);
+                libraw.getImageWidth(), libraw.getImageHeight());
         // Enure band settings from param are compatible with images
         int inputBands = (colorType == COLOR_TYPE_RGB) ? 3 : 1;
         checkReadParamBandSettings(param, inputBands,
@@ -217,6 +233,8 @@ public class RAWImageIOReader extends ImageReader {
         int dstMaxX = dstMinX + imRas.getWidth() - 1;
         int dstMinY = imRas.getMinY();
         int dstMaxY = dstMinY + imRas.getHeight() - 1;
+        
+        //imRas.set
 
         // Create a child raster exposing only the desired source bands
         if (sourceBands != null) {
