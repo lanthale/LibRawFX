@@ -185,7 +185,7 @@ public class RAWImageIOReader extends ImageReader {
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
 
-        readMetadata(); // Stream is positioned at start of image data
+        //readMetadata(); // Stream is positioned at start of image data
 // Compute initial source region, clip against destination later
         Rectangle sourceRegion = getSourceRegion(param, width, height);
 

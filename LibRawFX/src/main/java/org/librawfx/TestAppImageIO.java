@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -27,6 +28,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import javax.imageio.spi.IIORegistry;
 
 /**
  * JavaFX TestApp
@@ -44,7 +47,12 @@ public class TestAppImageIO extends Application {
         decoderSettings.get("Sigma DP2 Merrill").setAutoWhitebalance(true);
         decoderSettings.put("Fujifilm X-T2", new RawDecoderSettings());
         decoderSettings.get("Fujifilm X-T2").setEnableExposureCorrection(true);
-        decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);*/
+        decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);*/        
+        
+        IIORegistry registry = IIORegistry.getDefaultInstance();
+        registry.registerServiceProvider(new RAWImageIOReaderSpi());
+        Iterator<Class<?>> categories = registry.getCategories();
+        //registry.getServiceProviders(category, true)
 
         Parameters parameters = getParameters();
         String file = parameters.getRaw().get(0);        
