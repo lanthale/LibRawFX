@@ -13,6 +13,7 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +68,8 @@ public class RAWImageIOReader extends ImageReader {
         super.setInput(input, seekForwardOnly, ignoreMetadata); 
         stream = (ImageInputStream) input;
     }
+    
+    
 
     @Override
     public int getNumImages(boolean allowSearch) throws IOException {
@@ -81,13 +84,11 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public int getWidth(int imageIndex) throws IOException {
-        readHeader();
         return width;
     }
 
     @Override
     public int getHeight(int imageIndex) throws IOException {
-        readHeader();
         return height;
     }
 
@@ -114,7 +115,7 @@ public class RAWImageIOReader extends ImageReader {
     @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IOException {
         checkIndex(imageIndex);
-        readHeader();
+        //readHeader();
 
         ImageTypeSpecifier imageType = null;
         int datatype = DataBuffer.TYPE_BYTE;
@@ -155,144 +156,18 @@ public class RAWImageIOReader extends ImageReader {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException("imageIndex != 0!");
         }
-        readMetadata();
+        //readMetadata();
         return metadata;
     }
 
     @Override
-    public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int nRead;
-        byte[] datab = new byte[1024];
-        long reading = System.currentTimeMillis();
-        while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
-            buffer.write(datab, 0, nRead);
-        }
-        buffer.flush();
-        byte[] targetArray = buffer.toByteArray();
-        byte[] raw = libraw.readPixelDataFromStream(targetArray);
-        double diff = (System.currentTimeMillis() - reading) / 1000;
-        Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
-
-        //readMetadata(); // Stream is positioned at start of image data
-// Compute initial source region, clip against destination later
-        Rectangle sourceRegion = getSourceRegion(param, width, height);
-
-        // Set everything to default values
-        int sourceXSubsampling = 1;
-        int sourceYSubsampling = 1;
-        int[] sourceBands = null;
-        int[] destinationBands = null;
-        Point destinationOffset = new Point(0, 0);
-
-        // Get values from the ImageReadParam, if any
-        if (param != null) {
-            sourceXSubsampling = param.getSourceXSubsampling();
-            sourceYSubsampling = param.getSourceYSubsampling();
-            sourceBands = param.getSourceBands();
-            destinationBands = param.getDestinationBands();
-            destinationOffset = param.getDestinationOffset();
-        }
-        // Get the specified detination image or create a new one
-        BufferedImage dst = getDestination(param,
-                getImageTypes(0),
-                libraw.getImageWidth(), libraw.getImageHeight());
-        // Enure band settings from param are compatible with images
-        int inputBands = (colorType == COLOR_TYPE_RGB) ? 3 : 1;
-        checkReadParamBandSettings(param, inputBands,
-                dst.getSampleModel().getNumBands());
-        int[] bandOffsets = new int[inputBands];
-        for (int i = 0; i < inputBands; i++) {
-            bandOffsets[i] = i;
-        }
-        int bytesPerRow = width * inputBands;
-        DataBufferByte rowDB = new DataBufferByte(bytesPerRow);
-        WritableRaster rowRas
-                = Raster.createInterleavedRaster(rowDB,
-                        width, 1, bytesPerRow,
-                        inputBands, bandOffsets,
-                        new Point(0, 0));
-        byte[] rowBuf = rowDB.getData();
-
-        // Create an int[] that can a single pixel
-        int[] pixel = rowRas.getPixel(0, 0, (int[]) null);
-        WritableRaster imRas = dst.getWritableTile(0, 0);
-        int dstMinX = imRas.getMinX();
-        int dstMaxX = dstMinX + imRas.getWidth() - 1;
-        int dstMinY = imRas.getMinY();
-        int dstMaxY = dstMinY + imRas.getHeight() - 1;
-
-        //imRas.set
-        // Create a child raster exposing only the desired source bands
-        if (sourceBands != null) {
-            rowRas = rowRas.createWritableChild(0, 0,
-                    width, 1,
-                    0, 0,
-                    sourceBands);
-        }
-
-        // Create a child raster exposing only the desired dest bands
-        if (destinationBands != null) {
-            imRas = imRas.createWritableChild(0, 0,
-                    imRas.getWidth(),
-                    imRas.getHeight(),
-                    0, 0,
-                    destinationBands);
-        }
-
-        int stride = libraw.getImageWidth() * libraw.getImageColors() * (libraw.getImageBits() / 8);
-        for (int srcY = 0; srcY < height; srcY++) {
-            // Read the row
-            rowBuf = Arrays.copyOfRange(raw, 0, stride * srcY);
-            /*try {
-                stream.readFully(rowBuf);
-                rowBuf = Arrays.copyOfRange(raw, 0, stride * srcY);
-            } catch (IOException e) {
-                throw new IIOException("Error reading line " + srcY, e);
-            }*/
-
-            // Reject rows that lie outside the source region,
-            // or which aren't part of the subsampling
-            if ((srcY < sourceRegion.y)
-                    || (srcY >= sourceRegion.y + sourceRegion.height)
-                    || (((srcY - sourceRegion.y)
-                    % sourceYSubsampling) != 0)) {
-                continue;
-            }
-
-            // Determine where the row will go in the destination
-            int dstY = destinationOffset.y
-                    + (srcY - sourceRegion.y) / sourceYSubsampling;
-            if (dstY < dstMinY) {
-                continue; // The row is above imRas
-            }
-            if (dstY > dstMaxY) {
-                break; // We're done with the image
-            }
-
-            // Copy each (subsampled) source pixel into imRas
-            for (int srcX = sourceRegion.x;
-                    srcX < sourceRegion.x + sourceRegion.width;
-                    srcX++) {
-                if (((srcX - sourceRegion.x) % sourceXSubsampling) != 0) {
-                    continue;
-                }
-                int dstX = destinationOffset.x
-                        + (srcX - sourceRegion.x) / sourceXSubsampling;
-                if (dstX < dstMinX) {
-                    continue;  // The pixel is to the left of imRas
-                }
-                if (dstX > dstMaxX) {
-                    break; // We're done with the row
-                }
-
-                // Copy the pixel, sub-banding is done automatically
-                rowRas.getPixel(srcX, 0, pixel);
-                imRas.setPixel(dstX, dstY, pixel);
-            }
-        }
-        return dst;
+    public BufferedImage read(int imageIndex) throws IOException {
+        return super.read(imageIndex); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
+
+    
+    
+    
 
     public void readMetadata() throws IIOException {
         /*if (metadata != null) {
@@ -324,6 +199,54 @@ public class RAWImageIOReader extends ImageReader {
         if (settings.isEmpty()) {            
             settings.put("Default", new RawDecoderSettings());
         }
+    }
+
+    @Override
+    public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] datab = new byte[1024];
+        long reading = System.currentTimeMillis();
+        while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
+            buffer.write(datab, 0, nRead);
+        }
+        buffer.flush();
+        byte[] targetArray = buffer.toByteArray();
+        byte[] raw = libraw.readPixelDataFromStream(targetArray);
+        this.width=libraw.getImageWidth();
+        this.height=libraw.getImageHeight();
+        double diff = (System.currentTimeMillis() - reading) / 1000;
+        Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
+
+        
+        
+        //readMetadata(); // Stream is positioned at start of image data
+// Compute initial source region, clip against destination later
+        Rectangle sourceRegion = getSourceRegion(param, width, height);
+
+        // Set everything to default values
+        int sourceXSubsampling = 1;
+        int sourceYSubsampling = 1;
+        int[] sourceBands = null;
+        int[] destinationBands = null;
+        Point destinationOffset = new Point(0, 0);
+
+        // Get values from the ImageReadParam, if any
+        if (param != null) {
+            sourceXSubsampling = param.getSourceXSubsampling();
+            sourceYSubsampling = param.getSourceYSubsampling();
+            sourceBands = param.getSourceBands();
+            destinationBands = param.getDestinationBands();
+            destinationOffset = param.getDestinationOffset();
+        }
+        // Get the specified detination image or create a new one
+        BufferedImage dst = getDestination(param,
+                getImageTypes(0),
+                width, height);
+        dst.setData(Raster.createRaster(dst.getSampleModel(), new DataBufferByte(raw, raw.length), new Point() ) );
+        // Enure band settings from param are compatible with images
+        
+        return dst;
     }
     
     

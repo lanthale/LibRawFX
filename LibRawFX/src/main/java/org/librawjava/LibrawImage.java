@@ -30,7 +30,7 @@ import org.librawfx.RAWImageLoader;
  */
 public class LibrawImage {
 
-    private final String imageFileURL;
+    private String imageFileURL;
     private short imageWidth;
     private short imageHeight;
     private short imageBits;
@@ -461,7 +461,7 @@ public class LibrawImage {
 
             return retString;
         }
-    }        
+    }
 
     /**
      * URL of the given file
@@ -470,6 +470,10 @@ public class LibrawImage {
      */
     public String getImageFileURL() {
         return imageFileURL;
+    }
+
+    public void setImageFileURL(String url) {
+        imageFileURL = url;
     }
 
     /**
