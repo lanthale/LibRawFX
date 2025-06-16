@@ -12,20 +12,35 @@ public class RAWImageIOProviderInfo extends RAWImageIOReaderWriterProviderInfo{
      public RAWImageIOProviderInfo() {
         super(
                 RAWImageIOProviderInfo.class,
-                new String[] {"bmp", "BMP"},
-                new String[] {"bmp", "rle"},
+                new String[] {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"},
+                new String[] {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"},
                 new String[] {
-                        "image/bmp",
-                        "image/x-bmp",
-                        "image/vnd.microsoft.bitmap"
+                        "image/cr2",
+                        "image/crw",
+                        "image/cr3",
+                        "image/nef",
+                        "image/nrw",
+                        "image/raf",
+                        "image/x3f",
+                        "image/dng",
+                        "image/raw",
+                        "image/rwl",
+                        "image/mef",
+                        "image/mfw",
+                        "image/orf",
+                        "image/ori",
+                        "image/rw2",
+                        "image/pef",
+                        "image/srw",
+                        "image/arw"
                 },
-                "com.twelvemonkeys.imageio.plugins.bmp.BMPImageReader",
-                new String[] {"com.twelvemonkeys.imageio.plugins.bmp.BMPImageReaderSpi"},
+                "org.librawimageio.RAWImageIOReader",
+                new String[] {"org.librawimageio.RAWImageReaderSpiBase"},
                 "com.twelvemonkeys.imageio.plugins.bmp.BMPImageWriter",
                 new String[] {"com.twelvemonkeys.imageio.plugins.bmp.BMPImageWriterSpi"},
                 false, null, null,
                 null, null,
-                true, RAWIOFormatMetadata.nativeMetadataFormatName, "com.sun.imageio.plugins.bmp.BMPMetadataFormat",
+                true, RAWIOFormatMetadata.nativeMetadataFormatName, "org.librawimageio.RAWIOMetadataFormat",
                 null, null
         );
     }

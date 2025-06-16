@@ -8,27 +8,19 @@ import com.sun.javafx.iio.ImageFormatDescription;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.spi.ServiceRegistry;
-import javax.imageio.stream.ImageInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.stream.ImageInputStream;
+import org.librawjava.LibrawImage;
 
 /**
  *
  * @author selfemp
  */
 public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
-
-    static final String vendorName = "LibrawImageIO";
-    static final String version = "1.0";
-    static final String readerClassName
-            = "org.librawimageio.RAWImageIOReader";
-    static final String[] names = {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"};
-    static final String[] suffixes = {"cr2", "crw", "cr3", "nef", "nrw", "raf", "x3f", "dng", "raw", "rwl", "mef", "mfw", "orf", "ori", "rw2", "pef", "srw", "arw"};
-    static final String[] MIMETypes = {
-        "image/x-raw"};    
+    
     private static final ImageFormatDescription.Signature[] signatures = {
         new ImageFormatDescription.Signature(hexStringToByteArray("49491A0000004845")),//cr2
         new ImageFormatDescription.Signature(hexStringToByteArray("49492A00100000004352")),//crw3
@@ -42,19 +34,7 @@ public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
         new ImageFormatDescription.Signature(hexStringToByteArray("49492A00080000001300")),//sony arw
         new ImageFormatDescription.Signature(hexStringToByteArray("49495500080000002200")) //Leica raw
     };
-    // Metadata formats, more information below
-    static final boolean supportsStandardStreamMetadataFormat = false;
-    static final String nativeStreamMetadataFormatName = null;
-    static final String nativeStreamMetadataFormatClassName = null;
-    static final String[] extraStreamMetadataFormatNames = null;
-    static final String[] extraStreamMetadataFormatClassNames = null;
-    static final boolean supportsStandardImageMetadataFormat = false;
-    static final String nativeImageMetadataFormatName
-            = "org.librawimageio.RAWMetadata_1.0";
-    static final String nativeImageMetadataFormatClassName
-            = "org.librawimageio.RAWMetadata";
-    static final String[] extraImageMetadataFormatNames = null;
-    static final String[] extraImageMetadataFormatClassNames = null;
+    
 
     public RAWImageIOReaderSpi() {
         super(new RAWImageIOProviderInfo());
@@ -67,11 +47,21 @@ public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
     public void onRegistration(final ServiceRegistry registry, final Class<?> category) {
         ImageReaderSpi defaultProvider = lookupProviderByName(registry, "org.librawimageio.RAWImageIOReaderSpi");
 
+        install();
+        
         if (defaultProvider != null) {
             // Order before com.sun provider, to aid ImageIO in selecting our reader
             //registry.setOrdering((Class<ImageReaderSpi>) category, this, defaultProvider);
         }
     }
+
+    public static final void install() {
+        try {
+            LibrawImage.loadLibs(null);
+        } catch (IOException ex) {
+            Logger.getLogger(RAWImageIOReaderSpi.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }  
     
 
     @Override

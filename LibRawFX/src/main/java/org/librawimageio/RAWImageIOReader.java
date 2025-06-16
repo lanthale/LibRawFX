@@ -29,7 +29,6 @@ import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 import org.librawjava.LibrawImage;
 import org.librawdecodersettings.RawDecoderSettings;
-import static org.librawfx.RAWImageLoader.initSettings;
 
 /**
  *
@@ -49,7 +48,7 @@ public class RAWImageIOReader extends ImageReader {
     boolean gotHeader = false;
     RAWIOFormatMetadata metadata = null; // class defined below
 
-    private static HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+    private static final HashMap<String, RawDecoderSettings> settings = new HashMap<>();
 
     public RAWImageIOReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
@@ -57,6 +56,7 @@ public class RAWImageIOReader extends ImageReader {
         libraw = new LibrawImage(this, settings);
     }
 
+    @Override
     public void setInput(Object input, boolean isStreamable) {
         super.setInput(input, isStreamable);
         if (input == null) {
@@ -83,13 +83,13 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public int getWidth(int imageIndex) throws IOException {
-        width = libraw.getImageWidth();
+        readHeader();
         return width;
     }
 
     @Override
     public int getHeight(int imageIndex) throws IOException {
-        height = libraw.getImageHeight();
+        readHeader();
         return height;
     }
 
@@ -110,6 +110,7 @@ public class RAWImageIOReader extends ImageReader {
         } catch (IOException e) {
             throw new IIOException("Error reading signature", e);
         }
+        
         if (signature[0] != (byte) 'm') { // etc.
             throw new IIOException("Bad file signature!");
         }
@@ -333,5 +334,13 @@ public class RAWImageIOReader extends ImageReader {
             Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }
+
+    public static void initSettings() {
+        if (settings.isEmpty()) {            
+            settings.put("Default", new RawDecoderSettings());
+        }
+    }
+    
+    
 
 }
