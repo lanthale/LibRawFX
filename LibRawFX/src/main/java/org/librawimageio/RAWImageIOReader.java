@@ -57,17 +57,15 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     @Override
-    public void setInput(Object input, boolean isStreamable) {
-        super.setInput(input, isStreamable);
-        if (input == null) {
-            this.stream = null;
-            return;
-        }
-        if (input instanceof ImageInputStream) {
-            this.stream = (ImageInputStream) input;
-        } else {
-            throw new IllegalArgumentException("bad input");
-        }
+    public void setInput(Object input) {
+        super.setInput(input); 
+        stream = (ImageInputStream) input;
+    }
+
+    @Override
+    public void setInput(Object input, boolean seekForwardOnly, boolean ignoreMetadata) {
+        super.setInput(input, seekForwardOnly, ignoreMetadata); 
+        stream = (ImageInputStream) input;
     }
 
     @Override
@@ -102,25 +100,12 @@ public class RAWImageIOReader extends ImageReader {
         if (stream == null) {
             throw new IllegalStateException("No input stream");
         }
-
-        // Read `myformat\n' from the stream
-        byte[] signature = new byte[9];
-        try {
-            stream.readFully(signature);
-        } catch (IOException e) {
-            throw new IIOException("Error reading signature", e);
-        }
-        
-        if (signature[0] != (byte) 'm') { // etc.
-            throw new IIOException("Bad file signature!");
-        }
         // Read width, height, color type, newline
         try {
             libraw.getMetaData();
             this.width = libraw.getImageWidth();
             this.height = libraw.getImageWidth();
             this.colorType = COLOR_TYPE_RGB;
-            stream.readUnsignedByte(); // skip newline character
         } catch (IOException e) {
             throw new IIOException("Error reading header", e);
         }
