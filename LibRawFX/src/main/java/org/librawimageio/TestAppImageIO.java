@@ -1,5 +1,7 @@
-package org.librawfx;
+package org.librawimageio;
 
+import org.librawjava.LibrawImage;
+import org.librawdecodersettings.RawDecoderSettings;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,7 +30,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 import javax.imageio.spi.IIORegistry;
 
 /**

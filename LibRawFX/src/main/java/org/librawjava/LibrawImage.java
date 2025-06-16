@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.librawfx;
+package org.librawjava;
 
+import org.librawdecodersettings.RawDecoderToNativeTranslator;
+import org.librawdecodersettings.RawDecoderSettings;
+import org.librawimageio.RAWImageIOReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.foreign.*;
+import org.librawfx.RAWImageLoader;
 
 /**
  * Loads the native libraw lib and process the image in the native space. This

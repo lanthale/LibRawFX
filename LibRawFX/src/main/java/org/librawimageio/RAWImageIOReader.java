@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.librawfx;
+package org.librawimageio;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -27,6 +27,8 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
+import org.librawjava.LibrawImage;
+import org.librawdecodersettings.RawDecoderSettings;
 import static org.librawfx.RAWImageLoader.initSettings;
 
 /**
@@ -113,6 +115,7 @@ public class RAWImageIOReader extends ImageReader {
         }
         // Read width, height, color type, newline
         try {
+            libraw.getMetaData();
             this.width = libraw.getImageWidth();
             this.height = libraw.getImageWidth();
             this.colorType = COLOR_TYPE_RGB;
@@ -306,7 +309,7 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     public void readMetadata() throws IIOException {
-        if (metadata != null) {
+        /*if (metadata != null) {
             return;
         }
         readHeader();
@@ -328,7 +331,7 @@ public class RAWImageIOReader extends ImageReader {
             }
         } catch (IOException ex) {
             Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
 }

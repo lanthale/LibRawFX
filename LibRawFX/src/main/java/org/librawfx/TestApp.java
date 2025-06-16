@@ -1,5 +1,7 @@
 package org.librawfx;
 
+import org.librawjava.LibrawImage;
+import org.librawdecodersettings.RawDecoderSettings;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

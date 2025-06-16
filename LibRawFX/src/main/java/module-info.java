@@ -6,6 +6,9 @@ module org.librawfx {
     requires javafx.base;        
     requires java.logging;
     exports org.librawfx;
+    exports org.librawimageio;
+    exports org.librawdecodersettings;
+    exports org.librawjava;
     exports org.libraw.nativ;
     opens org.libraw.nativ;
 }

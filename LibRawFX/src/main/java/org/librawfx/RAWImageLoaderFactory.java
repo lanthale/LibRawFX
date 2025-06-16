@@ -5,6 +5,8 @@
  */
 package org.librawfx;
 
+import org.librawjava.LibrawImage;
+import org.librawdecodersettings.RawDecoderSettings;
 import org.librawfx.dimension.DimensionProvider;
 import org.librawfx.dimension.DefaultDimensionProvider;
 import com.sun.javafx.iio.ImageFormatDescription;

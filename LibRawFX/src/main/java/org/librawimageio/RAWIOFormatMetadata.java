@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.librawfx;
+package org.librawimageio;
 
 import org.w3c.dom.*;
 
@@ -22,9 +22,9 @@ public class RAWIOFormatMetadata extends IIOMetadata {
 
     static final boolean standardMetadataFormatSupported = false;
     static final String nativeMetadataFormatName
-            = "com.mycompany.imageio.MyFormatMetadata_1.0";
+            = "org.librawfx.RAWIOMetadataFormat_1.0";
     static final String nativeMetadataFormatClassName
-            = "com.mycompany.imageio.MyFormatMetadata";
+            = "org.librawfx.RAWIOMetadataFormat";
     static final String[] extraMetadataFormatNames = null;
     static final String[] extraMetadataFormatClassNames = null;
 
