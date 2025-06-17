@@ -6,8 +6,11 @@ package org.librawimageio;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
@@ -59,17 +62,15 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public void setInput(Object input) {
-        super.setInput(input); 
+        super.setInput(input);
         stream = (ImageInputStream) input;
     }
 
     @Override
     public void setInput(Object input, boolean seekForwardOnly, boolean ignoreMetadata) {
-        super.setInput(input, seekForwardOnly, ignoreMetadata); 
+        super.setInput(input, seekForwardOnly, ignoreMetadata);
         stream = (ImageInputStream) input;
     }
-    
-    
 
     @Override
     public int getNumImages(boolean allowSearch) throws IOException {
@@ -140,7 +141,7 @@ public class RAWImageIOReader extends ImageReader {
                                 bandOffsets,
                                 datatype,
                                 false,
-                                false);                
+                                false);
                 break;
         }
         l.add(imageType);
@@ -165,10 +166,6 @@ public class RAWImageIOReader extends ImageReader {
     public BufferedImage read(int imageIndex) throws IOException {
         return super.read(imageIndex); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
-
-    
-    
-    
 
     public void readMetadata() throws IIOException {
         /*if (metadata != null) {
@@ -197,7 +194,7 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     public static void initSettings() {
-        if (settings.isEmpty()) {            
+        if (settings.isEmpty()) {
             settings.put("Default", new RawDecoderSettings());
         }
     }
@@ -214,13 +211,11 @@ public class RAWImageIOReader extends ImageReader {
         buffer.flush();
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
-        this.width=libraw.getImageWidth();
-        this.height=libraw.getImageHeight();        
+        this.width = libraw.getImageWidth();
+        this.height = libraw.getImageHeight();
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
 
-        
-        
         //readMetadata(); // Stream is positioned at start of image data
 // Compute initial source region, clip against destination later
         Rectangle sourceRegion = getSourceRegion(param, width, height);
@@ -241,15 +236,35 @@ public class RAWImageIOReader extends ImageReader {
             destinationOffset = param.getDestinationOffset();
         }
         // Get the specified detination image or create a new one
-        BufferedImage dst = getDestination(param,
+        /*BufferedImage dst = getDestination(param,
                 getImageTypes(0),
-                width, height);        
-        dst.setData(Raster.createRaster(dst.getSampleModel(), new DataBufferByte(raw, raw.length), null ) );
+                width, height);*/
+
+        ColorSpace colorSpace = ColorSpace.getInstance(ColorSpace.CS_sRGB);
+
+        ColorModel model = new ComponentColorModel(
+                colorSpace,
+                false,
+                true,
+                Transparency.OPAQUE,
+                DataBuffer.TYPE_BYTE
+        );
+        WritableRaster raster = Raster.createInterleavedRaster(
+                DataBuffer.TYPE_BYTE,
+                width,
+                height,
+                3,
+                null
+        );
+
+        BufferedImage dst = new BufferedImage(model, raster, true, null);
+
+        dst.setData(raster);
+        byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
+        System.arraycopy(raw, 0, imagePixels, 0, raw.length);
         // Enure band settings from param are compatible with images
-        
+
         return dst;
     }
-    
-    
 
 }
