@@ -116,6 +116,7 @@ public class RAWImageIOReader extends ImageReader {
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IOException {
         checkIndex(imageIndex);
         //readHeader();
+        colorType = COLOR_TYPE_RGB;
 
         ImageTypeSpecifier imageType = null;
         int datatype = DataBuffer.TYPE_BYTE;
@@ -139,7 +140,7 @@ public class RAWImageIOReader extends ImageReader {
                                 bandOffsets,
                                 datatype,
                                 false,
-                                false);
+                                false);                
                 break;
         }
         l.add(imageType);
@@ -214,7 +215,7 @@ public class RAWImageIOReader extends ImageReader {
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
         this.width=libraw.getImageWidth();
-        this.height=libraw.getImageHeight();
+        this.height=libraw.getImageHeight();        
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
 
@@ -242,8 +243,8 @@ public class RAWImageIOReader extends ImageReader {
         // Get the specified detination image or create a new one
         BufferedImage dst = getDestination(param,
                 getImageTypes(0),
-                width, height);
-        dst.setData(Raster.createRaster(dst.getSampleModel(), new DataBufferByte(raw, raw.length), new Point() ) );
+                width, height);        
+        dst.setData(Raster.createRaster(dst.getSampleModel(), new DataBufferByte(raw, raw.length), null ) );
         // Enure band settings from param are compatible with images
         
         return dst;
