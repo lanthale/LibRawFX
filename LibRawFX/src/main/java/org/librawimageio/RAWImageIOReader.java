@@ -4,6 +4,7 @@
  */
 package org.librawimageio;
 
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Transparency;
@@ -40,7 +41,7 @@ import org.librawdecodersettings.RawDecoderSettings;
  */
 public class RAWImageIOReader extends ImageReader {
 
-    private LibrawImage libraw;
+    private final LibrawImage libraw;
     ImageInputStream stream = null;
     int width, height;
     int colorType;
@@ -53,6 +54,12 @@ public class RAWImageIOReader extends ImageReader {
     RAWIOFormatMetadata metadata = null; // class defined below
 
     private static final HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+
+    public RAWImageIOReader() {
+        super(new RAWImageIOReaderSpi());
+        initSettings();
+        libraw = new LibrawImage(this, settings);
+    }
 
     public RAWImageIOReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
@@ -164,7 +171,7 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public BufferedImage read(int imageIndex) throws IOException {
-        return super.read(imageIndex); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return super.read(imageIndex);
     }
 
     public void readMetadata() throws IIOException {
@@ -201,6 +208,7 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
+
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
         byte[] datab = new byte[1024];
@@ -257,12 +265,15 @@ public class RAWImageIOReader extends ImageReader {
                 null
         );
 
-        BufferedImage dst = new BufferedImage(model, raster, true, null);
-
+        BufferedImage dst = new BufferedImage(model, raster, true, null);        
         dst.setData(raster);
         byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
         System.arraycopy(raw, 0, imagePixels, 0, raw.length);
         // Enure band settings from param are compatible with images
+
+        Image scaledInstance = dst.getScaledInstance(
+                width, height, Image.SCALE_DEFAULT);
+                       
 
         return dst;
     }
