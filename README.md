@@ -2,11 +2,14 @@
 Integration of LibRaw (https://www.libraw.org) library for JavaFX for all major operating systems (Linux, Windows, OSX). 
 All raw formats can be loaded with the Image class and manipulated by Pixelwriter/Pixelreader. Limitation is that the image class only supports 8-bit color deph but converts all 16bit image format to 8bit automatically.
 
+New is now that the plugin supports now a moore general plugin type which is ImageIO. Therefore also Swing developers can use the lib to load images.
+Beginning of 1.9.3 the ImageIO function is included. On Javafx side you can choose which method you will use, all others use automatically ImageIO. The support for ImageIO is now beta.
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=CXWX6CAQ5MMV4)
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 24 and JavaFX 24 is required for v1.9.1** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
+**JDK 24 and JavaFX 24 is required for v1.9.3** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
@@ -29,6 +32,7 @@ Actually only the following raw formats are enabled (see class `RAWDescriptor.ja
 
 The lib now resized the image in memory before sending it back to the image class (the same as the Javafx is doing for PNG/JPG).
 You can now specify for each camera model different settings for the raw decoder (sample below).
+ImageIO plugin is provided and should be automatically installed.
 
 ## Open topics
 - Writing of metadata back to raw files
@@ -49,10 +53,11 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.9.1</version>  
+    <version>1.9.3</version>  
 </dependency>  
 ```
 
+- Automatic ImageIO mode: Just add the dependency and you can read with ImageIO.read(new File(file)) the data
 - In the Class where the start method is add as one of the first lines the following code to install the file handler:
 
      `RAWImageLoaderFactory.install();
@@ -73,7 +78,7 @@ Point to the maven coordinates:
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
 
-- and add the following lines to your java config on JDK 24:
+- and add the following lines to your java config on JDK 24 if you use Javafx otherwise only the "enable-native" line is necessary:
 ```
 --enable-native-access=org.librawfx  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
@@ -97,7 +102,7 @@ You can get the default settings for all camera models with the call RAWImageLoa
 
 - **Module name: org.librawfx**
 
-You can have a look into the class TestAPP.java to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
+You can have a look into the class TestAPP.java, TestAppSwing.java, TestAppImageIO to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
 
 ```
   Image img=new Image(initialFile.toURI().toURL().toString(), false);  
