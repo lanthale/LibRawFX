@@ -427,6 +427,198 @@ public class LibrawImage {
             return retMap;
         }
     }
+    
+    /**
+     * Retrievs for the given stream in the constructor the metadata Important:
+     * The timestamps are in EpocheInSeconds and not milliseconds
+     *
+     * @return Hashmap of all meta data
+     * @throws IOException
+     */
+    public HashMap<String, String> getMetaData(byte[] sourceFileAsByteArray) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "sourceFileAsByteArray == null!");
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
+        if (loadLibraryFromJar == null) {
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
+            throw new IllegalArgumentException("Please call loadLibs as static method first!");
+        }
+        HashMap<String, String> retMap = new HashMap<>();
+        try (var scope = Arena.ofShared()) {
+            MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.get(ValueLayout.JAVA_LONG, 0));
+
+            MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
+
+            MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
+            MemorySegment allocateNative = scope.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray);//)Array(org.libraw.win.libraw_h.C_CHAR, sourceFileAsByteArray);
+            int k = org.libraw.nativ.libraw_h.libraw_open_buffer(iprc, allocateNative, inputStreamBytes.byteSize());
+            if (k > 0) {
+                Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Cannot open stream, return value was: " + k);
+                throw new IOException("Cannot open file stream!");
+            }
+
+            MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
+            MemorySegment make$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
+            retMap.put("CameraMaker", make$slice.getString(0));
+            MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+            retMap.put("CameraModel", model$slice.getString(0));
+            MemorySegment xmpdata$get = org.libraw.nativ.libraw_iparams_t.xmpdata(iParams);
+            int xmplen$get = org.libraw.nativ.libraw_iparams_t.xmplen(iParams);
+            if (xmplen$get != 0) {
+                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(xmplen$get);
+                if (asSegmentRestricted.byteSize() != 0) {
+                    retMap.put("XMP", asSegmentRestricted.getString(0));
+                }
+            }
+
+            MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
+
+            MemorySegment gpsInfoSegement = org.libraw.nativ.libraw_imgother_t.parsed_gps(image_other_data);
+            float altitude$get = org.libraw.nativ.libraw_gps_info_t.altitude(gpsInfoSegement);
+            retMap.put("GPS Altitude", "" + altitude$get);
+            byte latref$get = org.libraw.nativ.libraw_gps_info_t.latref(gpsInfoSegement);
+            byte longref = org.libraw.nativ.libraw_gps_info_t.longref(gpsInfoSegement);
+            retMap.put("GPS Position", String.valueOf(latref$get) + ";" + String.valueOf(longref));
+            MemorySegment gpstime = org.libraw.nativ.libraw_gps_info_t.gpstimestamp(gpsInfoSegement);
+            retMap.put("GPS Time", gpstime.getString(0));
+
+            float aperture = org.libraw.nativ.libraw_imgother_t.aperture(image_other_data);
+            float focal_len = org.libraw.nativ.libraw_imgother_t.focal_len(image_other_data);
+            float isoSpeed = org.libraw.nativ.libraw_imgother_t.iso_speed(image_other_data);
+            float shutter = org.libraw.nativ.libraw_imgother_t.shutter(image_other_data);
+            long timestamp = org.libraw.nativ.libraw_imgother_t.timestamp(image_other_data);
+            retMap.put("CurFocal", "" + focal_len);
+            retMap.put("ISO speed", "" + isoSpeed);
+            retMap.put("shutter", "" + shutter);
+            retMap.put("Timestamp (EpocheSec)", "" + timestamp);
+
+            MemorySegment lens$slice = org.libraw.nativ.libraw_data_t.lens(iprc);
+            float EXIF_MaxAp$get = org.libraw.nativ.libraw_lensinfo_t.EXIF_MaxAp(lens$slice);
+            retMap.put("MaxAperture @CurFocal", "f/" + EXIF_MaxAp$get);
+            short FocalLengthIn35mmFormat$get = org.libraw.nativ.libraw_lensinfo_t.FocalLengthIn35mmFormat(lens$slice);
+            retMap.put("FocalLengthIn35mmFormat", "" + FocalLengthIn35mmFormat$get + " mm");
+            MemorySegment InternalLensSerial$slice = org.libraw.nativ.libraw_lensinfo_t.InternalLensSerial(lens$slice);
+            retMap.put("InternalLensSerial$slice", InternalLensSerial$slice.getString(0));
+            MemorySegment Lens$slice = org.libraw.nativ.libraw_lensinfo_t.Lens(lens$slice);
+            retMap.put("Lens", Lens$slice.getString(0));
+            MemorySegment LensMake$slice = org.libraw.nativ.libraw_lensinfo_t.LensMake(lens$slice);
+            retMap.put("LensMake", LensMake$slice.getString(0));
+            MemorySegment LensSerial$slice = org.libraw.nativ.libraw_lensinfo_t.LensSerial(lens$slice);
+            retMap.put("LensSerial$slice", LensSerial$slice.getString(0));
+            float MaxAp4MaxFocal$get = org.libraw.nativ.libraw_lensinfo_t.MaxAp4MaxFocal(lens$slice);
+            retMap.put("MaxAp @MaxFocal", "f/" + MaxAp4MaxFocal$get);
+            float MaxAp4MinFocal$get = org.libraw.nativ.libraw_lensinfo_t.MaxAp4MinFocal(lens$slice);
+            retMap.put("MaxAp @MinFocal", "f/" + MaxAp4MinFocal$get);
+            float MaxFocal$get = org.libraw.nativ.libraw_lensinfo_t.MaxFocal(lens$slice);
+            retMap.put("MaxFocal", "" + MaxFocal$get + " mm");
+            float MinFocal$get = org.libraw.nativ.libraw_lensinfo_t.MinFocal(lens$slice);
+            retMap.put("MinFocal", "" + MinFocal$get + " mm");
+            MemorySegment makernotes$slice = org.libraw.nativ.libraw_lensinfo_t.makernotes(lens$slice);
+            float CurFocal$get = org.libraw.nativ.libraw_makernotes_lens_t.CurFocal(makernotes$slice);
+            retMap.put("CurFocal", "" + CurFocal$get);
+            float CurAp$get = org.libraw.nativ.libraw_makernotes_lens_t.CurAp(makernotes$slice);
+            retMap.put("CurAperture", "" + CurAp$get);
+
+            MemorySegment shootingInfo$slice = org.libraw.nativ.libraw_data_t.shootinginfo(iprc);
+            short afPoint = org.libraw.nativ.libraw_shootinginfo_t.AFPoint(shootingInfo$slice);
+            retMap.put("AFPoint", "" + afPoint);
+            short driveMode = org.libraw.nativ.libraw_shootinginfo_t.DriveMode(shootingInfo$slice);
+            retMap.put("DriveMode", "" + driveMode);
+            short exposureMode = org.libraw.nativ.libraw_shootinginfo_t.ExposureMode(shootingInfo$slice);
+            retMap.put("ExposureMode", "" + exposureMode);
+            short exposureProgram = org.libraw.nativ.libraw_shootinginfo_t.ExposureProgram(shootingInfo$slice);
+            retMap.put("ExposureProgram", "" + exposureProgram);
+            short focusMode = org.libraw.nativ.libraw_shootinginfo_t.FocusMode(shootingInfo$slice);
+            retMap.put("FocusMode", "" + focusMode);
+            short imageStabiMode = org.libraw.nativ.libraw_shootinginfo_t.ImageStabilization(shootingInfo$slice);
+            retMap.put("ImageStabiMode", "" + imageStabiMode);
+            short medteringMode = org.libraw.nativ.libraw_shootinginfo_t.MeteringMode(shootingInfo$slice);
+            retMap.put("MedteringMode", "" + medteringMode);
+
+            imageHeight = (short) org.libraw.nativ.libraw_h.libraw_get_iheight(iprc);
+            imageWidth = (short) org.libraw.nativ.libraw_h.libraw_get_iwidth(iprc);
+            imageColors = (short) org.libraw.nativ.libraw_h.libraw_get_color_maximum(iprc);
+
+            org.libraw.nativ.libraw_h.libraw_close(iprc);
+            iprc = null;
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...finished.");
+            retMap.put("ImageWidth", "" + imageWidth);
+            retMap.put("ImageHeight", "" + imageHeight);
+            retMap.put("ImageColors", "" + imageColors);
+            retMap.put("Aperture", "f/" + aperture);
+            retMap.put("Focal length", "" + focal_len + " mm");
+            retMap.put("ISO speed", "" + isoSpeed);
+            retMap.put("Shutter", "" + (1 / shutter));
+
+            return retMap;
+        }
+    }
+
+    public void getBasicMetaInfo(byte[] sourceFileAsByteArray) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "sourceFileAsByteArray == null!");
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
+        if (loadLibraryFromJar == null) {
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
+            throw new IllegalArgumentException("Please call loadLibs as static method first!");
+        }
+        try (var scope = Arena.ofShared()) {
+            MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.get(ValueLayout.JAVA_LONG, 0));
+
+            MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
+
+            MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
+            MemorySegment allocateNative = scope.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray);//)Array(org.libraw.win.libraw_h.C_CHAR, sourceFileAsByteArray);
+            int k = org.libraw.nativ.libraw_h.libraw_open_buffer(iprc, allocateNative, inputStreamBytes.byteSize());
+            if (k > 0) {
+                Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Cannot open stream, return value was: " + k);
+                throw new IOException("Cannot open file stream!");
+            }
+
+            org.libraw.nativ.libraw_h.libraw_unpack(iprc);
+
+            MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
+
+            MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
+            MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
+
+            RawDecoderSettings settings;
+            if (rawSettings.get(model) == null) {
+                settings = rawSettings.get("Default");
+            } else {
+                settings = rawSettings.get(model);
+            }
+            new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
+
+            MemorySegment modelSlice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+            cameraModel = new String(modelSlice.toArray(ValueLayout.JAVA_BYTE), StandardCharsets.US_ASCII);
+            MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
+            long timestamp = org.libraw.nativ.libraw_imgother_t.timestamp(image_other_data);
+            shootingDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.getDefault().toZoneId());
+
+            org.libraw.nativ.libraw_h.libraw_dcraw_process(iprc);
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+
+            MemorySegment errorCode = scope.allocate(org.libraw.nativ.libraw_h.C_INT.byteSize());
+            MemorySegment mem_image_adr = org.libraw.nativ.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode);
+            imageWidth = org.libraw.nativ.libraw_processed_image_t.width(mem_image_adr);
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Native width: " + imageWidth);
+            imageHeight = org.libraw.nativ.libraw_processed_image_t.height(mem_image_adr);
+            imageBits = org.libraw.nativ.libraw_processed_image_t.bits(mem_image_adr);
+            imageColors = org.libraw.nativ.libraw_processed_image_t.colors(mem_image_adr);
+
+            stride = imageWidth * imageColors * (imageBits / 8);
+            org.libraw.nativ.libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
+            mem_image_adr = null;
+            org.libraw.nativ.libraw_h.libraw_close(iprc);
+            iprc = null;
+        }
+    }
 
     public String getCameraMaker() throws IOException {
         String retString;

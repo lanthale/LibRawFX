@@ -4,9 +4,11 @@
  */
 package org.librawimageio;
 
-import java.awt.Image;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
@@ -17,10 +19,8 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -92,11 +92,23 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public int getWidth(int imageIndex) throws IOException {
+        if (libraw.getImageWidth() == 0) {
+            getBasicMetaData();
+            width = libraw.getImageWidth();
+        } else {
+            height = libraw.getImageWidth();
+        }
         return width;
     }
 
     @Override
     public int getHeight(int imageIndex) throws IOException {
+        if (libraw.getImageHeight() == 0) {
+            getBasicMetaData();
+            height = libraw.getImageHeight();
+        } else {
+            height = libraw.getImageHeight();
+        }
         return height;
     }
 
@@ -155,6 +167,29 @@ public class RAWImageIOReader extends ImageReader {
         return l.iterator();
     }
 
+    private void getBasicMetaData() {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] datab = new byte[1024];
+            long reading = System.currentTimeMillis();
+            while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
+                buffer.write(datab, 0, nRead);
+            }
+            buffer.flush();
+            byte[] targetArray = buffer.toByteArray();
+            libraw.getBasicMetaInfo(targetArray);
+            stream.seek(0);
+        } catch (IOException ex) {
+            Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public ImageReadParam getDefaultReadParam() {
+        return new RAWImageIOImageReadParam();
+    }
+
     @Override
     public IIOMetadata getStreamMetadata() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -175,29 +210,30 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     public void readMetadata() throws IIOException {
-        /*if (metadata != null) {
-            return;
-        }
-        readHeader();
-        this.metadata = new RAWIOFormatMetadata();
-
         try {
-            while (true) {
-
-                String keyword = stream.readUTF();
-                stream.readUnsignedByte();
-                if (keyword.equals("END")) {
-                    break;
-                }
-                String value = stream.readUTF();
-                stream.readUnsignedByte();
-
-                metadata.keywords.add(keyword);
-                metadata.values.add(value);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] datab = new byte[1024];
+            long reading = System.currentTimeMillis();
+            while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
+                buffer.write(datab, 0, nRead);
             }
+            buffer.flush();
+            byte[] targetArray = buffer.toByteArray();
+            HashMap<String, String> metaData = libraw.getMetaData(targetArray);
+            width = libraw.getImageWidth();
+            height = libraw.getImageHeight();
+            stream.seek(0);
+            this.metadata = new RAWIOFormatMetadata();
+            metaData.entrySet().forEach((var entry) -> {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                metadata.keywords.add(key);
+                metadata.values.add(value);
+            });
         } catch (IOException ex) {
             Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     public static void initSettings() {
@@ -208,23 +244,29 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
-
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
         byte[] datab = new byte[1024];
         long reading = System.currentTimeMillis();
+        if (width == 0) {
+            getWidth(0);
+        }
+        if (height == 0) {
+            getHeight(0);
+        }
+        stream.seek(0);
+
         while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
             buffer.write(datab, 0, nRead);
         }
         buffer.flush();
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
-        this.width = libraw.getImageWidth();
-        this.height = libraw.getImageHeight();
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
 
-        //readMetadata(); // Stream is positioned at start of image data
+        stream.seek(0);
+        readMetadata(); // Stream is positioned at start of image data
 // Compute initial source region, clip against destination later
         Rectangle sourceRegion = getSourceRegion(param, width, height);
 
@@ -265,17 +307,34 @@ public class RAWImageIOReader extends ImageReader {
                 null
         );
 
-        BufferedImage dst = new BufferedImage(model, raster, true, null);        
+        BufferedImage dst = new BufferedImage(model, raster, true, null);
         dst.setData(raster);
         byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
         System.arraycopy(raw, 0, imagePixels, 0, raw.length);
         // Enure band settings from param are compatible with images
 
-        Image scaledInstance = dst.getScaledInstance(
-                width, height, Image.SCALE_DEFAULT);
-                       
+        double dstWidth = 0;
+        double dstHeight = 0;
+        if (param != null) {
+            if (param.getSourceRenderSize() != null) {
+                dstWidth = param.getSourceRenderSize().getWidth();
+                dstHeight = param.getSourceRenderSize().getHeight();
+            } else {
+                param.setSourceRenderSize(new Dimension(width, height));
+                dstWidth = width;
+                dstHeight = height;
+            }
+        }
 
-        return dst;
+        BufferedImage resized = new BufferedImage((int) dstWidth, (int) dstHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = resized.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(dst, 0, 0, (int) dstWidth, (int) dstHeight, 0, 0, dst.getWidth(),
+                dst.getHeight(), null);
+        g.dispose();
+
+        return resized;
     }
 
 }
