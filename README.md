@@ -60,14 +60,14 @@ Point to the maven coordinates:
 - Automatic ImageIO mode: Just add the dependency and you can read with ImageIO.read(new File(file)) the data
 - In the Class where the start method is add as one of the first lines the following code to install the file handler:
 
-     `RAWImageLoaderFactory.install();
+     ```RAWImageLoaderFactory.install();
      HashMap<String, RawDecoderSettings> decoderSettings = RAWImageLoaderFactory.getDecoderSettings(); //.setEnableExposureCorrection(false);
      decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
      decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
      decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
      decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
      decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
-     //use the setters provided. They settings will take effect on the next call. The camera maker can be found out by method call getCameraMaker() or extract from the Metadata in form "maker model"
+     //use the setters provided. They settings will take effect on the next call. The camera maker can be found out by method call getCameraMaker() or extract from the Metadata in form "maker model"```
       
        
 
