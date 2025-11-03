@@ -9,7 +9,7 @@ Beginning of 1.9.3 the ImageIO function is included. On Javafx side you can choo
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 24 and JavaFX 24 is required for v1.9.3** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
+**JDK 25 and JavaFX 25 is required for v1.9.4** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
@@ -19,7 +19,7 @@ Supported OS:
 - OSX up to 12.5 including Apple M1
 - Windows 10/11
 
-I have integrated LibRaw SNAPSHOT version 0.21.2 (https://www.libraw.org/news/libraw-0-21-2-release)
+I have integrated LibRaw SNAPSHOT version 0.21.4 (https://www.libraw.org/download#stable)
 
 Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
 - Adobe DNG
@@ -48,12 +48,12 @@ Point to the maven coordinates:
     <version>1.8.0</version>  
 </dependency>  
 ```
-**JDK24**
+**JDK25**
 ```
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.9.3</version>  
+    <version>1.9.4</version>  
 </dependency>  
 ```
 
