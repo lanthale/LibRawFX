@@ -563,7 +563,7 @@ public class libraw_data_t {
         return other$LAYOUT;
     }
 
-    private static final long other$OFFSET = 192416;
+    private static final long other$OFFSET = 192432;
 
     /**
      * Offset for field:
@@ -607,7 +607,7 @@ public class libraw_data_t {
         return thumbnail$LAYOUT;
     }
 
-    private static final long thumbnail$OFFSET = 193216;
+    private static final long thumbnail$OFFSET = 193232;
 
     /**
      * Offset for field:
@@ -651,7 +651,7 @@ public class libraw_data_t {
         return thumbs_list$LAYOUT;
     }
 
-    private static final long thumbs_list$OFFSET = 193240;
+    private static final long thumbs_list$OFFSET = 193256;
 
     /**
      * Offset for field:
@@ -695,7 +695,7 @@ public class libraw_data_t {
         return rawdata$LAYOUT;
     }
 
-    private static final long rawdata$OFFSET = 193504;
+    private static final long rawdata$OFFSET = 193520;
 
     /**
      * Offset for field:
@@ -739,7 +739,7 @@ public class libraw_data_t {
         return parent_class$LAYOUT;
     }
 
-    private static final long parent_class$OFFSET = 381248;
+    private static final long parent_class$OFFSET = 381280;
 
     /**
      * Offset for field:
@@ -785,31 +785,31 @@ public class libraw_data_t {
     public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size @code layout().byteSize()} using {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
     }
 
     /**
-     * Allocate an array of size @code elementCount} using {@code allocator}.
-     * The returned segment has size @code elementCount * layout().byteSize()}.
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
      */
     public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
-     * The returned segment has size @code layout().byteSize()}
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
+     * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
         return reinterpret(addr, 1, arena, cleanup);
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
-     * The returned segment has size @code elementCount * layout().byteSize()}
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);

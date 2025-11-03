@@ -67,62 +67,7 @@ public class libraw_h {
     public static final ValueLayout.OfDouble C_DOUBLE = ValueLayout.JAVA_DOUBLE;
     public static final AddressLayout C_POINTER = ValueLayout.ADDRESS
             .withTargetLayout(MemoryLayout.sequenceLayout(java.lang.Long.MAX_VALUE, JAVA_BYTE));
-    public static final ValueLayout.OfInt C_LONG = ValueLayout.JAVA_INT;
-    public static final ValueLayout.OfDouble C_LONG_DOUBLE = ValueLayout.JAVA_DOUBLE;
-    private static final int CHAR_BIT = (int)8L;
-    /**
-     * {@snippet lang=c :
-     * #define CHAR_BIT 8
-     * }
-     */
-    public static int CHAR_BIT() {
-        return CHAR_BIT;
-    }
-    private static final int SCHAR_MAX = (int)127L;
-    /**
-     * {@snippet lang=c :
-     * #define SCHAR_MAX 127
-     * }
-     */
-    public static int SCHAR_MAX() {
-        return SCHAR_MAX;
-    }
-    private static final int UCHAR_MAX = (int)255L;
-    /**
-     * {@snippet lang=c :
-     * #define UCHAR_MAX 255
-     * }
-     */
-    public static int UCHAR_MAX() {
-        return UCHAR_MAX;
-    }
-    private static final int SHRT_MAX = (int)32767L;
-    /**
-     * {@snippet lang=c :
-     * #define SHRT_MAX 32767
-     * }
-     */
-    public static int SHRT_MAX() {
-        return SHRT_MAX;
-    }
-    private static final int USHRT_MAX = (int)65535L;
-    /**
-     * {@snippet lang=c :
-     * #define USHRT_MAX 65535
-     * }
-     */
-    public static int USHRT_MAX() {
-        return USHRT_MAX;
-    }
-    private static final int INT_MAX = (int)2147483647L;
-    /**
-     * {@snippet lang=c :
-     * #define INT_MAX 2147483647
-     * }
-     */
-    public static int INT_MAX() {
-        return INT_MAX;
-    }
+    public static final ValueLayout.OfLong C_LONG = ValueLayout.JAVA_LONG;
     private static final int LIBRAW_MAX_METADATA_BLOCKS = (int)1024L;
     /**
      * {@snippet lang=c :
@@ -222,10 +167,10 @@ public class libraw_h {
     public static int LIBRAW_MINOR_VERSION() {
         return LIBRAW_MINOR_VERSION;
     }
-    private static final int LIBRAW_PATCH_VERSION = (int)2L;
+    private static final int LIBRAW_PATCH_VERSION = (int)4L;
     /**
      * {@snippet lang=c :
-     * #define LIBRAW_PATCH_VERSION 2
+     * #define LIBRAW_PATCH_VERSION 4
      * }
      */
     public static int LIBRAW_PATCH_VERSION() {
@@ -278,28 +223,10 @@ public class libraw_h {
     }
     /**
      * {@snippet lang=c :
-     * typedef unsigned long long size_t
+     * typedef unsigned short ushort
      * }
      */
-    public static final OfLong size_t = libraw_h.C_LONG_LONG;
-    /**
-     * {@snippet lang=c :
-     * typedef long long ptrdiff_t
-     * }
-     */
-    public static final OfLong ptrdiff_t = libraw_h.C_LONG_LONG;
-    /**
-     * {@snippet lang=c :
-     * typedef unsigned short wchar_t
-     * }
-     */
-    public static final OfShort wchar_t = libraw_h.C_SHORT;
-    /**
-     * {@snippet lang=c :
-     * typedef double max_align_t
-     * }
-     */
-    public static final OfDouble max_align_t = libraw_h.C_DOUBLE;
+    public static final OfShort ushort = libraw_h.C_SHORT;
     private static final int LIBRAW_OPENBAYER_RGGB = (int)148L;
     /**
      * {@snippet lang=c :
@@ -5106,12 +5033,6 @@ public class libraw_h {
      * }
      */
     public static final OfByte uchar = libraw_h.C_CHAR;
-    /**
-     * {@snippet lang=c :
-     * typedef unsigned short ushort
-     * }
-     */
-    public static final OfShort ushort = libraw_h.C_SHORT;
 
     private static class default_data_callback {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
@@ -5120,9 +5041,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("default_data_callback"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("default_data_callback");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5144,6 +5065,17 @@ public class libraw_h {
     public static MethodHandle default_data_callback$handle() {
         return default_data_callback.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void default_data_callback(void *data, const char *file, const int offset)
+     * }
+     */
+    public static MemorySegment default_data_callback$address() {
+        return default_data_callback.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void default_data_callback(void *data, const char *file, const int offset)
@@ -5167,9 +5099,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_strerror"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_strerror");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5191,6 +5123,17 @@ public class libraw_h {
     public static MethodHandle libraw_strerror$handle() {
         return libraw_strerror.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const char *libraw_strerror(int errorcode)
+     * }
+     */
+    public static MemorySegment libraw_strerror$address() {
+        return libraw_strerror.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * const char *libraw_strerror(int errorcode)
@@ -5214,9 +5157,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_strprogress"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_strprogress");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5238,6 +5181,17 @@ public class libraw_h {
     public static MethodHandle libraw_strprogress$handle() {
         return libraw_strprogress.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const char *libraw_strprogress(enum LibRaw_progress)
+     * }
+     */
+    public static MemorySegment libraw_strprogress$address() {
+        return libraw_strprogress.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * const char *libraw_strprogress(enum LibRaw_progress)
@@ -5261,9 +5215,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_init"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_init");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5285,6 +5239,17 @@ public class libraw_h {
     public static MethodHandle libraw_init$handle() {
         return libraw_init.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * libraw_data_t *libraw_init(unsigned int flags)
+     * }
+     */
+    public static MemorySegment libraw_init$address() {
+        return libraw_init.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * libraw_data_t *libraw_init(unsigned int flags)
@@ -5309,9 +5274,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_open_file"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_open_file");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5333,6 +5298,17 @@ public class libraw_h {
     public static MethodHandle libraw_open_file$handle() {
         return libraw_open_file.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_open_file(libraw_data_t *, const char *)
+     * }
+     */
+    public static MemorySegment libraw_open_file$address() {
+        return libraw_open_file.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_open_file(libraw_data_t *, const char *)
@@ -5350,65 +5326,17 @@ public class libraw_h {
         }
     }
 
-    private static class libraw_open_wfile {
-        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
-            libraw_h.C_INT,
-            libraw_h.C_POINTER,
-            libraw_h.C_POINTER
-        );
-
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_open_wfile"),
-                    DESC);
-    }
-
-    /**
-     * Function descriptor for:
-     * {@snippet lang=c :
-     * int libraw_open_wfile(libraw_data_t *, const wchar_t *)
-     * }
-     */
-    public static FunctionDescriptor libraw_open_wfile$descriptor() {
-        return libraw_open_wfile.DESC;
-    }
-
-    /**
-     * Downcall method handle for:
-     * {@snippet lang=c :
-     * int libraw_open_wfile(libraw_data_t *, const wchar_t *)
-     * }
-     */
-    public static MethodHandle libraw_open_wfile$handle() {
-        return libraw_open_wfile.HANDLE;
-    }
-    /**
-     * {@snippet lang=c :
-     * int libraw_open_wfile(libraw_data_t *, const wchar_t *)
-     * }
-     */
-    public static int libraw_open_wfile(MemorySegment x0, MemorySegment x1) {
-        var mh$ = libraw_open_wfile.HANDLE;
-        try {
-            if (TRACE_DOWNCALLS) {
-                traceDowncall("libraw_open_wfile", x0, x1);
-            }
-            return (int)mh$.invokeExact(x0, x1);
-        } catch (Throwable ex$) {
-           throw new AssertionError("should not reach here", ex$);
-        }
-    }
-
     private static class libraw_open_buffer {
         public static final FunctionDescriptor DESC = FunctionDescriptor.of(
             libraw_h.C_INT,
             libraw_h.C_POINTER,
             libraw_h.C_POINTER,
-            libraw_h.C_LONG_LONG
+            libraw_h.C_LONG
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_open_buffer"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_open_buffer");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5430,6 +5358,17 @@ public class libraw_h {
     public static MethodHandle libraw_open_buffer$handle() {
         return libraw_open_buffer.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_open_buffer(libraw_data_t *, const void *buffer, size_t size)
+     * }
+     */
+    public static MemorySegment libraw_open_buffer$address() {
+        return libraw_open_buffer.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_open_buffer(libraw_data_t *, const void *buffer, size_t size)
@@ -5466,9 +5405,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_open_bayer"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_open_bayer");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5490,6 +5429,17 @@ public class libraw_h {
     public static MethodHandle libraw_open_bayer$handle() {
         return libraw_open_bayer.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_open_bayer(libraw_data_t *lr, unsigned char *data, unsigned int datalen, ushort _raw_width, ushort _raw_height, ushort _left_margin, ushort _top_margin, ushort _right_margin, ushort _bottom_margin, unsigned char procflags, unsigned char bayer_battern, unsigned int unused_bits, unsigned int otherflags, unsigned int black_level)
+     * }
+     */
+    public static MemorySegment libraw_open_bayer$address() {
+        return libraw_open_bayer.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_open_bayer(libraw_data_t *lr, unsigned char *data, unsigned int datalen, ushort _raw_width, ushort _raw_height, ushort _left_margin, ushort _top_margin, ushort _right_margin, ushort _bottom_margin, unsigned char procflags, unsigned char bayer_battern, unsigned int unused_bits, unsigned int otherflags, unsigned int black_level)
@@ -5513,9 +5463,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_unpack"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_unpack");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5537,6 +5487,17 @@ public class libraw_h {
     public static MethodHandle libraw_unpack$handle() {
         return libraw_unpack.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_unpack(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_unpack$address() {
+        return libraw_unpack.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_unpack(libraw_data_t *)
@@ -5560,9 +5521,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_unpack_thumb"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_unpack_thumb");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5584,6 +5545,17 @@ public class libraw_h {
     public static MethodHandle libraw_unpack_thumb$handle() {
         return libraw_unpack_thumb.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_unpack_thumb$address() {
+        return libraw_unpack_thumb.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_unpack_thumb(libraw_data_t *)
@@ -5608,9 +5580,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_unpack_thumb_ex"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_unpack_thumb_ex");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5632,6 +5604,17 @@ public class libraw_h {
     public static MethodHandle libraw_unpack_thumb_ex$handle() {
         return libraw_unpack_thumb_ex.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_unpack_thumb_ex(libraw_data_t *, int)
+     * }
+     */
+    public static MemorySegment libraw_unpack_thumb_ex$address() {
+        return libraw_unpack_thumb_ex.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_unpack_thumb_ex(libraw_data_t *, int)
@@ -5654,9 +5637,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_recycle_datastream"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_recycle_datastream");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5678,6 +5661,17 @@ public class libraw_h {
     public static MethodHandle libraw_recycle_datastream$handle() {
         return libraw_recycle_datastream.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_recycle_datastream(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_recycle_datastream$address() {
+        return libraw_recycle_datastream.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_recycle_datastream(libraw_data_t *)
@@ -5700,9 +5694,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_recycle"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_recycle");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5724,6 +5718,17 @@ public class libraw_h {
     public static MethodHandle libraw_recycle$handle() {
         return libraw_recycle.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_recycle(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_recycle$address() {
+        return libraw_recycle.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_recycle(libraw_data_t *)
@@ -5746,9 +5751,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_close"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_close");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5770,6 +5775,17 @@ public class libraw_h {
     public static MethodHandle libraw_close$handle() {
         return libraw_close.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_close(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_close$address() {
+        return libraw_close.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_close(libraw_data_t *)
@@ -5792,9 +5808,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_subtract_black"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_subtract_black");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5816,6 +5832,17 @@ public class libraw_h {
     public static MethodHandle libraw_subtract_black$handle() {
         return libraw_subtract_black.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_subtract_black(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_subtract_black$address() {
+        return libraw_subtract_black.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_subtract_black(libraw_data_t *)
@@ -5839,9 +5866,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_raw2image"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_raw2image");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5863,6 +5890,17 @@ public class libraw_h {
     public static MethodHandle libraw_raw2image$handle() {
         return libraw_raw2image.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_raw2image(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_raw2image$address() {
+        return libraw_raw2image.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_raw2image(libraw_data_t *)
@@ -5885,9 +5923,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_free_image"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_free_image");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -5909,6 +5947,17 @@ public class libraw_h {
     public static MethodHandle libraw_free_image$handle() {
         return libraw_free_image.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_free_image(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_free_image$address() {
+        return libraw_free_image.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_free_image(libraw_data_t *)
@@ -5962,6 +6011,13 @@ public class libraw_h {
         }
 
         /**
+         * {@return the address}
+         */
+        public static MemorySegment address() {
+            return ADDR;
+        }
+
+        /**
          * {@return the specialized method handle}
          */
         public MethodHandle handle() {
@@ -5980,7 +6036,7 @@ public class libraw_h {
                 if (TRACE_DOWNCALLS) {
                     traceDowncall("libraw_version", x0);
                 }
-                return (MemorySegment)spreader.invokeExact(x0);
+                return (MemorySegment) spreader.invokeExact(x0);
             } catch(IllegalArgumentException | ClassCastException ex$)  {
                 throw ex$; // rethrow IAE from passing wrong number/type of args
             } catch (Throwable ex$) {
@@ -6025,6 +6081,13 @@ public class libraw_h {
         }
 
         /**
+         * {@return the address}
+         */
+        public static MemorySegment address() {
+            return ADDR;
+        }
+
+        /**
          * {@return the specialized method handle}
          */
         public MethodHandle handle() {
@@ -6043,7 +6106,7 @@ public class libraw_h {
                 if (TRACE_DOWNCALLS) {
                     traceDowncall("libraw_versionNumber", x0);
                 }
-                return (int)spreader.invokeExact(x0);
+                return (int) spreader.invokeExact(x0);
             } catch(IllegalArgumentException | ClassCastException ex$)  {
                 throw ex$; // rethrow IAE from passing wrong number/type of args
             } catch (Throwable ex$) {
@@ -6088,6 +6151,13 @@ public class libraw_h {
         }
 
         /**
+         * {@return the address}
+         */
+        public static MemorySegment address() {
+            return ADDR;
+        }
+
+        /**
          * {@return the specialized method handle}
          */
         public MethodHandle handle() {
@@ -6106,7 +6176,7 @@ public class libraw_h {
                 if (TRACE_DOWNCALLS) {
                     traceDowncall("libraw_cameraList", x0);
                 }
-                return (MemorySegment)spreader.invokeExact(x0);
+                return (MemorySegment) spreader.invokeExact(x0);
             } catch(IllegalArgumentException | ClassCastException ex$)  {
                 throw ex$; // rethrow IAE from passing wrong number/type of args
             } catch (Throwable ex$) {
@@ -6151,6 +6221,13 @@ public class libraw_h {
         }
 
         /**
+         * {@return the address}
+         */
+        public static MemorySegment address() {
+            return ADDR;
+        }
+
+        /**
          * {@return the specialized method handle}
          */
         public MethodHandle handle() {
@@ -6169,7 +6246,7 @@ public class libraw_h {
                 if (TRACE_DOWNCALLS) {
                     traceDowncall("libraw_cameraCount", x0);
                 }
-                return (int)spreader.invokeExact(x0);
+                return (int) spreader.invokeExact(x0);
             } catch(IllegalArgumentException | ClassCastException ex$)  {
                 throw ex$; // rethrow IAE from passing wrong number/type of args
             } catch (Throwable ex$) {
@@ -6185,9 +6262,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_exifparser_handler"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_exifparser_handler");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6209,6 +6286,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_exifparser_handler$handle() {
         return libraw_set_exifparser_handler.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_exifparser_handler(libraw_data_t *, exif_parser_callback cb, void *datap)
+     * }
+     */
+    public static MemorySegment libraw_set_exifparser_handler$address() {
+        return libraw_set_exifparser_handler.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_exifparser_handler(libraw_data_t *, exif_parser_callback cb, void *datap)
@@ -6233,9 +6321,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_dataerror_handler"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_dataerror_handler");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6257,6 +6345,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_dataerror_handler$handle() {
         return libraw_set_dataerror_handler.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_dataerror_handler(libraw_data_t *, data_callback func, void *datap)
+     * }
+     */
+    public static MemorySegment libraw_set_dataerror_handler$address() {
+        return libraw_set_dataerror_handler.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_dataerror_handler(libraw_data_t *, data_callback func, void *datap)
@@ -6281,9 +6380,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_progress_handler"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_progress_handler");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6305,6 +6404,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_progress_handler$handle() {
         return libraw_set_progress_handler.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_progress_handler(libraw_data_t *, progress_callback cb, void *datap)
+     * }
+     */
+    public static MemorySegment libraw_set_progress_handler$address() {
+        return libraw_set_progress_handler.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_progress_handler(libraw_data_t *, progress_callback cb, void *datap)
@@ -6328,9 +6438,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_unpack_function_name"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_unpack_function_name");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6352,6 +6462,17 @@ public class libraw_h {
     public static MethodHandle libraw_unpack_function_name$handle() {
         return libraw_unpack_function_name.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const char *libraw_unpack_function_name(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_unpack_function_name$address() {
+        return libraw_unpack_function_name.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * const char *libraw_unpack_function_name(libraw_data_t *lr)
@@ -6376,9 +6497,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_decoder_info"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_decoder_info");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6400,6 +6521,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_decoder_info$handle() {
         return libraw_get_decoder_info.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_get_decoder_info(libraw_data_t *lr, libraw_decoder_info_t *d)
+     * }
+     */
+    public static MemorySegment libraw_get_decoder_info$address() {
+        return libraw_get_decoder_info.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_get_decoder_info(libraw_data_t *lr, libraw_decoder_info_t *d)
@@ -6425,9 +6557,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_COLOR"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_COLOR");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6449,6 +6581,17 @@ public class libraw_h {
     public static MethodHandle libraw_COLOR$handle() {
         return libraw_COLOR.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_COLOR(libraw_data_t *, int row, int col)
+     * }
+     */
+    public static MemorySegment libraw_COLOR$address() {
+        return libraw_COLOR.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_COLOR(libraw_data_t *, int row, int col)
@@ -6502,6 +6645,13 @@ public class libraw_h {
         }
 
         /**
+         * {@return the address}
+         */
+        public static MemorySegment address() {
+            return ADDR;
+        }
+
+        /**
          * {@return the specialized method handle}
          */
         public MethodHandle handle() {
@@ -6520,7 +6670,7 @@ public class libraw_h {
                 if (TRACE_DOWNCALLS) {
                     traceDowncall("libraw_capabilities", x0);
                 }
-                return (int)spreader.invokeExact(x0);
+                return (int) spreader.invokeExact(x0);
             } catch(IllegalArgumentException | ClassCastException ex$)  {
                 throw ex$; // rethrow IAE from passing wrong number/type of args
             } catch (Throwable ex$) {
@@ -6535,9 +6685,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_adjust_sizes_info_only"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_adjust_sizes_info_only");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6559,6 +6709,17 @@ public class libraw_h {
     public static MethodHandle libraw_adjust_sizes_info_only$handle() {
         return libraw_adjust_sizes_info_only.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_adjust_sizes_info_only(libraw_data_t *)
+     * }
+     */
+    public static MemorySegment libraw_adjust_sizes_info_only$address() {
+        return libraw_adjust_sizes_info_only.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_adjust_sizes_info_only(libraw_data_t *)
@@ -6583,9 +6744,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_dcraw_ppm_tiff_writer"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_dcraw_ppm_tiff_writer");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6607,6 +6768,17 @@ public class libraw_h {
     public static MethodHandle libraw_dcraw_ppm_tiff_writer$handle() {
         return libraw_dcraw_ppm_tiff_writer.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_ppm_tiff_writer(libraw_data_t *lr, const char *filename)
+     * }
+     */
+    public static MemorySegment libraw_dcraw_ppm_tiff_writer$address() {
+        return libraw_dcraw_ppm_tiff_writer.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_dcraw_ppm_tiff_writer(libraw_data_t *lr, const char *filename)
@@ -6631,9 +6803,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_dcraw_thumb_writer"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_dcraw_thumb_writer");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6655,6 +6827,17 @@ public class libraw_h {
     public static MethodHandle libraw_dcraw_thumb_writer$handle() {
         return libraw_dcraw_thumb_writer.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_thumb_writer(libraw_data_t *lr, const char *fname)
+     * }
+     */
+    public static MemorySegment libraw_dcraw_thumb_writer$address() {
+        return libraw_dcraw_thumb_writer.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_dcraw_thumb_writer(libraw_data_t *lr, const char *fname)
@@ -6678,9 +6861,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_dcraw_process"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_dcraw_process");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6702,6 +6885,17 @@ public class libraw_h {
     public static MethodHandle libraw_dcraw_process$handle() {
         return libraw_dcraw_process.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_dcraw_process(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_dcraw_process$address() {
+        return libraw_dcraw_process.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_dcraw_process(libraw_data_t *lr)
@@ -6726,9 +6920,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_dcraw_make_mem_image"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_dcraw_make_mem_image");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6750,6 +6944,17 @@ public class libraw_h {
     public static MethodHandle libraw_dcraw_make_mem_image$handle() {
         return libraw_dcraw_make_mem_image.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_image(libraw_data_t *lr, int *errc)
+     * }
+     */
+    public static MemorySegment libraw_dcraw_make_mem_image$address() {
+        return libraw_dcraw_make_mem_image.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * libraw_processed_image_t *libraw_dcraw_make_mem_image(libraw_data_t *lr, int *errc)
@@ -6774,9 +6979,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_dcraw_make_mem_thumb"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_dcraw_make_mem_thumb");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6798,6 +7003,17 @@ public class libraw_h {
     public static MethodHandle libraw_dcraw_make_mem_thumb$handle() {
         return libraw_dcraw_make_mem_thumb.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * libraw_processed_image_t *libraw_dcraw_make_mem_thumb(libraw_data_t *lr, int *errc)
+     * }
+     */
+    public static MemorySegment libraw_dcraw_make_mem_thumb$address() {
+        return libraw_dcraw_make_mem_thumb.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * libraw_processed_image_t *libraw_dcraw_make_mem_thumb(libraw_data_t *lr, int *errc)
@@ -6820,9 +7036,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_dcraw_clear_mem"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_dcraw_clear_mem");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6844,6 +7060,17 @@ public class libraw_h {
     public static MethodHandle libraw_dcraw_clear_mem$handle() {
         return libraw_dcraw_clear_mem.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_dcraw_clear_mem(libraw_processed_image_t *)
+     * }
+     */
+    public static MemorySegment libraw_dcraw_clear_mem$address() {
+        return libraw_dcraw_clear_mem.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_dcraw_clear_mem(libraw_processed_image_t *)
@@ -6867,9 +7094,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_demosaic"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_demosaic");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6891,6 +7118,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_demosaic$handle() {
         return libraw_set_demosaic.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_demosaic(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_demosaic$address() {
+        return libraw_set_demosaic.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_demosaic(libraw_data_t *lr, int value)
@@ -6914,9 +7152,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_output_color"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_output_color");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6938,6 +7176,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_output_color$handle() {
         return libraw_set_output_color.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_output_color(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_output_color$address() {
+        return libraw_set_output_color.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_output_color(libraw_data_t *lr, int value)
@@ -6961,9 +7210,9 @@ public class libraw_h {
             libraw_h.C_FLOAT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_adjust_maximum_thr"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_adjust_maximum_thr");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -6985,6 +7234,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_adjust_maximum_thr$handle() {
         return libraw_set_adjust_maximum_thr.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_adjust_maximum_thr(libraw_data_t *lr, float value)
+     * }
+     */
+    public static MemorySegment libraw_set_adjust_maximum_thr$address() {
+        return libraw_set_adjust_maximum_thr.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_adjust_maximum_thr(libraw_data_t *lr, float value)
@@ -7009,9 +7269,9 @@ public class libraw_h {
             libraw_h.C_FLOAT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_user_mul"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_user_mul");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7033,6 +7293,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_user_mul$handle() {
         return libraw_set_user_mul.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_user_mul(libraw_data_t *lr, int index, float val)
+     * }
+     */
+    public static MemorySegment libraw_set_user_mul$address() {
+        return libraw_set_user_mul.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_user_mul(libraw_data_t *lr, int index, float val)
@@ -7056,9 +7327,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_output_bps"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_output_bps");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7080,6 +7351,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_output_bps$handle() {
         return libraw_set_output_bps.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_output_bps(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_output_bps$address() {
+        return libraw_set_output_bps.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_output_bps(libraw_data_t *lr, int value)
@@ -7104,9 +7386,9 @@ public class libraw_h {
             libraw_h.C_FLOAT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_gamma"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_gamma");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7128,6 +7410,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_gamma$handle() {
         return libraw_set_gamma.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_gamma(libraw_data_t *lr, int index, float value)
+     * }
+     */
+    public static MemorySegment libraw_set_gamma$address() {
+        return libraw_set_gamma.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_gamma(libraw_data_t *lr, int index, float value)
@@ -7151,9 +7444,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_no_auto_bright"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_no_auto_bright");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7175,6 +7468,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_no_auto_bright$handle() {
         return libraw_set_no_auto_bright.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_no_auto_bright(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_no_auto_bright$address() {
+        return libraw_set_no_auto_bright.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_no_auto_bright(libraw_data_t *lr, int value)
@@ -7198,9 +7502,9 @@ public class libraw_h {
             libraw_h.C_FLOAT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_bright"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_bright");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7222,6 +7526,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_bright$handle() {
         return libraw_set_bright.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_bright(libraw_data_t *lr, float value)
+     * }
+     */
+    public static MemorySegment libraw_set_bright$address() {
+        return libraw_set_bright.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_bright(libraw_data_t *lr, float value)
@@ -7245,9 +7560,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_highlight"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_highlight");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7269,6 +7584,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_highlight$handle() {
         return libraw_set_highlight.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_highlight(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_highlight$address() {
+        return libraw_set_highlight.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_highlight(libraw_data_t *lr, int value)
@@ -7292,9 +7618,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_fbdd_noiserd"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_fbdd_noiserd");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7316,6 +7642,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_fbdd_noiserd$handle() {
         return libraw_set_fbdd_noiserd.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_fbdd_noiserd(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_fbdd_noiserd$address() {
+        return libraw_set_fbdd_noiserd.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_fbdd_noiserd(libraw_data_t *lr, int value)
@@ -7339,9 +7676,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_raw_height"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_raw_height");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7363,6 +7700,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_raw_height$handle() {
         return libraw_get_raw_height.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_get_raw_height(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_raw_height$address() {
+        return libraw_get_raw_height.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_get_raw_height(libraw_data_t *lr)
@@ -7386,9 +7734,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_raw_width"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_raw_width");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7410,6 +7758,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_raw_width$handle() {
         return libraw_get_raw_width.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_get_raw_width(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_raw_width$address() {
+        return libraw_get_raw_width.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_get_raw_width(libraw_data_t *lr)
@@ -7433,9 +7792,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_iheight"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_iheight");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7457,6 +7816,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_iheight$handle() {
         return libraw_get_iheight.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_get_iheight(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_iheight$address() {
+        return libraw_get_iheight.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_get_iheight(libraw_data_t *lr)
@@ -7480,9 +7850,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_iwidth"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_iwidth");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7504,6 +7874,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_iwidth$handle() {
         return libraw_get_iwidth.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_get_iwidth(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_iwidth$address() {
+        return libraw_get_iwidth.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_get_iwidth(libraw_data_t *lr)
@@ -7528,9 +7909,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_cam_mul"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_cam_mul");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7552,6 +7933,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_cam_mul$handle() {
         return libraw_get_cam_mul.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * float libraw_get_cam_mul(libraw_data_t *lr, int index)
+     * }
+     */
+    public static MemorySegment libraw_get_cam_mul$address() {
+        return libraw_get_cam_mul.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * float libraw_get_cam_mul(libraw_data_t *lr, int index)
@@ -7576,9 +7968,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_pre_mul"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_pre_mul");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7600,6 +7992,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_pre_mul$handle() {
         return libraw_get_pre_mul.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * float libraw_get_pre_mul(libraw_data_t *lr, int index)
+     * }
+     */
+    public static MemorySegment libraw_get_pre_mul$address() {
+        return libraw_get_pre_mul.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * float libraw_get_pre_mul(libraw_data_t *lr, int index)
@@ -7625,9 +8028,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_rgb_cam"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_rgb_cam");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7649,6 +8052,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_rgb_cam$handle() {
         return libraw_get_rgb_cam.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * float libraw_get_rgb_cam(libraw_data_t *lr, int index1, int index2)
+     * }
+     */
+    public static MemorySegment libraw_get_rgb_cam$address() {
+        return libraw_get_rgb_cam.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * float libraw_get_rgb_cam(libraw_data_t *lr, int index1, int index2)
@@ -7672,9 +8086,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_color_maximum"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_color_maximum");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7696,6 +8110,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_color_maximum$handle() {
         return libraw_get_color_maximum.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int libraw_get_color_maximum(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_color_maximum$address() {
+        return libraw_get_color_maximum.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * int libraw_get_color_maximum(libraw_data_t *lr)
@@ -7719,9 +8144,9 @@ public class libraw_h {
             libraw_h.C_INT
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_set_output_tif"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_set_output_tif");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7743,6 +8168,17 @@ public class libraw_h {
     public static MethodHandle libraw_set_output_tif$handle() {
         return libraw_set_output_tif.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void libraw_set_output_tif(libraw_data_t *lr, int value)
+     * }
+     */
+    public static MemorySegment libraw_set_output_tif$address() {
+        return libraw_set_output_tif.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * void libraw_set_output_tif(libraw_data_t *lr, int value)
@@ -7766,9 +8202,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_iparams"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_iparams");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7790,6 +8226,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_iparams$handle() {
         return libraw_get_iparams.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * libraw_iparams_t *libraw_get_iparams(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_iparams$address() {
+        return libraw_get_iparams.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * libraw_iparams_t *libraw_get_iparams(libraw_data_t *lr)
@@ -7813,9 +8260,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_lensinfo"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_lensinfo");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7837,6 +8284,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_lensinfo$handle() {
         return libraw_get_lensinfo.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * libraw_lensinfo_t *libraw_get_lensinfo(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_lensinfo$address() {
+        return libraw_get_lensinfo.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * libraw_lensinfo_t *libraw_get_lensinfo(libraw_data_t *lr)
@@ -7860,9 +8318,9 @@ public class libraw_h {
             libraw_h.C_POINTER
         );
 
-        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(
-                    libraw_h.findOrThrow("libraw_get_imgother"),
-                    DESC);
+        public static final MemorySegment ADDR = libraw_h.findOrThrow("libraw_get_imgother");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
 
     /**
@@ -7884,6 +8342,17 @@ public class libraw_h {
     public static MethodHandle libraw_get_imgother$handle() {
         return libraw_get_imgother.HANDLE;
     }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * libraw_imgother_t *libraw_get_imgother(libraw_data_t *lr)
+     * }
+     */
+    public static MemorySegment libraw_get_imgother$address() {
+        return libraw_get_imgother.ADDR;
+    }
+
     /**
      * {@snippet lang=c :
      * libraw_imgother_t *libraw_get_imgother(libraw_data_t *lr)
@@ -7899,150 +8368,6 @@ public class libraw_h {
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
-    }
-    private static final MemorySegment NULL = MemorySegment.ofAddress(0L);
-    /**
-     * {@snippet lang=c :
-     * #define NULL (void*) 0
-     * }
-     */
-    public static MemorySegment NULL() {
-        return NULL;
-    }
-    private static final int SCHAR_MIN = (int)-128L;
-    /**
-     * {@snippet lang=c :
-     * #define SCHAR_MIN -128
-     * }
-     */
-    public static int SCHAR_MIN() {
-        return SCHAR_MIN;
-    }
-    private static final int CHAR_MIN = (int)-128L;
-    /**
-     * {@snippet lang=c :
-     * #define CHAR_MIN -128
-     * }
-     */
-    public static int CHAR_MIN() {
-        return CHAR_MIN;
-    }
-    private static final int CHAR_MAX = (int)127L;
-    /**
-     * {@snippet lang=c :
-     * #define CHAR_MAX 127
-     * }
-     */
-    public static int CHAR_MAX() {
-        return CHAR_MAX;
-    }
-    private static final int SHRT_MIN = (int)-32768L;
-    /**
-     * {@snippet lang=c :
-     * #define SHRT_MIN -32768
-     * }
-     */
-    public static int SHRT_MIN() {
-        return SHRT_MIN;
-    }
-    private static final int INT_MIN = (int)-2147483648L;
-    /**
-     * {@snippet lang=c :
-     * #define INT_MIN -2147483648
-     * }
-     */
-    public static int INT_MIN() {
-        return INT_MIN;
-    }
-    private static final int UINT_MAX = (int)4294967295L;
-    /**
-     * {@snippet lang=c :
-     * #define UINT_MAX 4294967295
-     * }
-     */
-    public static int UINT_MAX() {
-        return UINT_MAX;
-    }
-    private static final int LONG_MIN = (int)-2147483648L;
-    /**
-     * {@snippet lang=c :
-     * #define LONG_MIN -2147483648
-     * }
-     */
-    public static int LONG_MIN() {
-        return LONG_MIN;
-    }
-    private static final int LONG_MAX = (int)2147483647L;
-    /**
-     * {@snippet lang=c :
-     * #define LONG_MAX 2147483647
-     * }
-     */
-    public static int LONG_MAX() {
-        return LONG_MAX;
-    }
-    private static final int ULONG_MAX = (int)4294967295L;
-    /**
-     * {@snippet lang=c :
-     * #define ULONG_MAX 4294967295
-     * }
-     */
-    public static int ULONG_MAX() {
-        return ULONG_MAX;
-    }
-    private static final long LLONG_MAX = 9223372036854775807L;
-    /**
-     * {@snippet lang=c :
-     * #define LLONG_MAX 9223372036854775807
-     * }
-     */
-    public static long LLONG_MAX() {
-        return LLONG_MAX;
-    }
-    private static final long LLONG_MIN = -9223372036854775808L;
-    /**
-     * {@snippet lang=c :
-     * #define LLONG_MIN -9223372036854775808
-     * }
-     */
-    public static long LLONG_MIN() {
-        return LLONG_MIN;
-    }
-    private static final long ULLONG_MAX = -1L;
-    /**
-     * {@snippet lang=c :
-     * #define ULLONG_MAX -1
-     * }
-     */
-    public static long ULLONG_MAX() {
-        return ULLONG_MAX;
-    }
-    private static final long LONG_LONG_MAX = 9223372036854775807L;
-    /**
-     * {@snippet lang=c :
-     * #define LONG_LONG_MAX 9223372036854775807
-     * }
-     */
-    public static long LONG_LONG_MAX() {
-        return LONG_LONG_MAX;
-    }
-    private static final long LONG_LONG_MIN = -9223372036854775808L;
-    /**
-     * {@snippet lang=c :
-     * #define LONG_LONG_MIN -9223372036854775808
-     * }
-     */
-    public static long LONG_LONG_MIN() {
-        return LONG_LONG_MIN;
-    }
-    private static final long ULONG_LONG_MAX = -1L;
-    /**
-     * {@snippet lang=c :
-     * #define ULONG_LONG_MAX -1
-     * }
-     */
-    public static long ULONG_LONG_MAX() {
-        return ULONG_LONG_MAX;
     }
     private static final float LIBRAW_DEFAULT_ADJUST_MAXIMUM_THRESHOLD = 0.75f;
     /**
@@ -8062,13 +8387,13 @@ public class libraw_h {
     public static float LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD() {
         return LIBRAW_DEFAULT_AUTO_BRIGHTNESS_THRESHOLD;
     }
-    private static final int LIBRAW_MAX_ALLOC_MB_DEFAULT = (int)2048L;
+    private static final long LIBRAW_MAX_ALLOC_MB_DEFAULT = 2048L;
     /**
      * {@snippet lang=c :
      * #define LIBRAW_MAX_ALLOC_MB_DEFAULT 2048
      * }
      */
-    public static int LIBRAW_MAX_ALLOC_MB_DEFAULT() {
+    public static long LIBRAW_MAX_ALLOC_MB_DEFAULT() {
         return LIBRAW_MAX_ALLOC_MB_DEFAULT;
     }
     private static final long LIBRAW_MAX_PROFILE_SIZE_MB = 256L;
@@ -8098,13 +8423,13 @@ public class libraw_h {
     public static long LIBRAW_MAX_DNG_RAW_FILE_SIZE() {
         return LIBRAW_MAX_DNG_RAW_FILE_SIZE;
     }
-    private static final int LIBRAW_MAX_THUMBNAIL_MB = (int)512L;
+    private static final long LIBRAW_MAX_THUMBNAIL_MB = 512L;
     /**
      * {@snippet lang=c :
      * #define LIBRAW_MAX_THUMBNAIL_MB 512
      * }
      */
-    public static int LIBRAW_MAX_THUMBNAIL_MB() {
+    public static long LIBRAW_MAX_THUMBNAIL_MB() {
         return LIBRAW_MAX_THUMBNAIL_MB;
     }
     private static final int LIBRAW_EXIFTOOLTAGTYPE_int8u = (int)1L;
@@ -8289,20 +8614,20 @@ public class libraw_h {
     }
     /**
      * {@snippet lang=c :
-     * #define LIBRAW_VERSION_STR "0.21.2-Release"
+     * #define LIBRAW_VERSION_STR "0.21.4-Release"
      * }
      */
     public static MemorySegment LIBRAW_VERSION_STR() {
         class Holder {
             static final MemorySegment LIBRAW_VERSION_STR
-                = libraw_h.LIBRARY_ARENA.allocateFrom("0.21.2-Release");
+                = libraw_h.LIBRARY_ARENA.allocateFrom("0.21.4-Release");
         }
         return Holder.LIBRAW_VERSION_STR;
     }
-    private static final int LIBRAW_VERSION = (int)5378L;
+    private static final int LIBRAW_VERSION = (int)5380L;
     /**
      * {@snippet lang=c :
-     * #define LIBRAW_VERSION 5378
+     * #define LIBRAW_VERSION 5380
      * }
      */
     public static int LIBRAW_VERSION() {

@@ -65,6 +65,7 @@ public class libraw_colordata_t {
         libraw_h.C_INT.withName("black"),
         libraw_h.C_INT.withName("data_maximum"),
         libraw_h.C_INT.withName("maximum"),
+        MemoryLayout.paddingLayout(4),
         MemoryLayout.sequenceLayout(4, libraw_h.C_LONG).withName("linear_max"),
         libraw_h.C_FLOAT.withName("fmaximum"),
         libraw_h.C_FLOAT.withName("fnorm"),
@@ -84,7 +85,7 @@ public class libraw_colordata_t {
         MemoryLayout.sequenceLayout(64, libraw_h.C_CHAR).withName("ImageUniqueID"),
         MemoryLayout.sequenceLayout(17, libraw_h.C_CHAR).withName("RawDataUniqueID"),
         MemoryLayout.sequenceLayout(64, libraw_h.C_CHAR).withName("OriginalRawFileName"),
-        MemoryLayout.paddingLayout(7),
+        MemoryLayout.paddingLayout(3),
         libraw_h.C_POINTER.withName("profile"),
         libraw_h.C_INT.withName("profile_length"),
         MemoryLayout.sequenceLayout(8, libraw_h.C_INT).withName("black_stat"),
@@ -403,7 +404,7 @@ public class libraw_colordata_t {
         return linear_max$LAYOUT;
     }
 
-    private static final long linear_max$OFFSET = 147500;
+    private static final long linear_max$OFFSET = 147504;
 
     /**
      * Offset for field:
@@ -454,8 +455,8 @@ public class libraw_colordata_t {
      * long linear_max[4]
      * }
      */
-    public static int linear_max(MemorySegment struct, long index0) {
-        return (int)linear_max$ELEM_HANDLE.get(struct, 0L, index0);
+    public static long linear_max(MemorySegment struct, long index0) {
+        return (long)linear_max$ELEM_HANDLE.get(struct, 0L, index0);
     }
 
     /**
@@ -464,7 +465,7 @@ public class libraw_colordata_t {
      * long linear_max[4]
      * }
      */
-    public static void linear_max(MemorySegment struct, long index0, int fieldValue) {
+    public static void linear_max(MemorySegment struct, long index0, long fieldValue) {
         linear_max$ELEM_HANDLE.set(struct, 0L, index0, fieldValue);
     }
 
@@ -480,7 +481,7 @@ public class libraw_colordata_t {
         return fmaximum$LAYOUT;
     }
 
-    private static final long fmaximum$OFFSET = 147516;
+    private static final long fmaximum$OFFSET = 147536;
 
     /**
      * Offset for field:
@@ -524,7 +525,7 @@ public class libraw_colordata_t {
         return fnorm$LAYOUT;
     }
 
-    private static final long fnorm$OFFSET = 147520;
+    private static final long fnorm$OFFSET = 147540;
 
     /**
      * Offset for field:
@@ -568,7 +569,7 @@ public class libraw_colordata_t {
         return white$LAYOUT;
     }
 
-    private static final long white$OFFSET = 147524;
+    private static final long white$OFFSET = 147544;
 
     /**
      * Offset for field:
@@ -645,7 +646,7 @@ public class libraw_colordata_t {
         return cam_mul$LAYOUT;
     }
 
-    private static final long cam_mul$OFFSET = 147652;
+    private static final long cam_mul$OFFSET = 147672;
 
     /**
      * Offset for field:
@@ -722,7 +723,7 @@ public class libraw_colordata_t {
         return pre_mul$LAYOUT;
     }
 
-    private static final long pre_mul$OFFSET = 147668;
+    private static final long pre_mul$OFFSET = 147688;
 
     /**
      * Offset for field:
@@ -799,7 +800,7 @@ public class libraw_colordata_t {
         return cmatrix$LAYOUT;
     }
 
-    private static final long cmatrix$OFFSET = 147684;
+    private static final long cmatrix$OFFSET = 147704;
 
     /**
      * Offset for field:
@@ -876,7 +877,7 @@ public class libraw_colordata_t {
         return ccm$LAYOUT;
     }
 
-    private static final long ccm$OFFSET = 147732;
+    private static final long ccm$OFFSET = 147752;
 
     /**
      * Offset for field:
@@ -953,7 +954,7 @@ public class libraw_colordata_t {
         return rgb_cam$LAYOUT;
     }
 
-    private static final long rgb_cam$OFFSET = 147780;
+    private static final long rgb_cam$OFFSET = 147800;
 
     /**
      * Offset for field:
@@ -1030,7 +1031,7 @@ public class libraw_colordata_t {
         return cam_xyz$LAYOUT;
     }
 
-    private static final long cam_xyz$OFFSET = 147828;
+    private static final long cam_xyz$OFFSET = 147848;
 
     /**
      * Offset for field:
@@ -1107,7 +1108,7 @@ public class libraw_colordata_t {
         return phase_one_data$LAYOUT;
     }
 
-    private static final long phase_one_data$OFFSET = 147876;
+    private static final long phase_one_data$OFFSET = 147896;
 
     /**
      * Offset for field:
@@ -1151,7 +1152,7 @@ public class libraw_colordata_t {
         return flash_used$LAYOUT;
     }
 
-    private static final long flash_used$OFFSET = 147912;
+    private static final long flash_used$OFFSET = 147932;
 
     /**
      * Offset for field:
@@ -1195,7 +1196,7 @@ public class libraw_colordata_t {
         return canon_ev$LAYOUT;
     }
 
-    private static final long canon_ev$OFFSET = 147916;
+    private static final long canon_ev$OFFSET = 147936;
 
     /**
      * Offset for field:
@@ -1239,7 +1240,7 @@ public class libraw_colordata_t {
         return model2$LAYOUT;
     }
 
-    private static final long model2$OFFSET = 147920;
+    private static final long model2$OFFSET = 147940;
 
     /**
      * Offset for field:
@@ -1316,7 +1317,7 @@ public class libraw_colordata_t {
         return UniqueCameraModel$LAYOUT;
     }
 
-    private static final long UniqueCameraModel$OFFSET = 147984;
+    private static final long UniqueCameraModel$OFFSET = 148004;
 
     /**
      * Offset for field:
@@ -1393,7 +1394,7 @@ public class libraw_colordata_t {
         return LocalizedCameraModel$LAYOUT;
     }
 
-    private static final long LocalizedCameraModel$OFFSET = 148048;
+    private static final long LocalizedCameraModel$OFFSET = 148068;
 
     /**
      * Offset for field:
@@ -1470,7 +1471,7 @@ public class libraw_colordata_t {
         return ImageUniqueID$LAYOUT;
     }
 
-    private static final long ImageUniqueID$OFFSET = 148112;
+    private static final long ImageUniqueID$OFFSET = 148132;
 
     /**
      * Offset for field:
@@ -1547,7 +1548,7 @@ public class libraw_colordata_t {
         return RawDataUniqueID$LAYOUT;
     }
 
-    private static final long RawDataUniqueID$OFFSET = 148176;
+    private static final long RawDataUniqueID$OFFSET = 148196;
 
     /**
      * Offset for field:
@@ -1624,7 +1625,7 @@ public class libraw_colordata_t {
         return OriginalRawFileName$LAYOUT;
     }
 
-    private static final long OriginalRawFileName$OFFSET = 148193;
+    private static final long OriginalRawFileName$OFFSET = 148213;
 
     /**
      * Offset for field:
@@ -1701,7 +1702,7 @@ public class libraw_colordata_t {
         return profile$LAYOUT;
     }
 
-    private static final long profile$OFFSET = 148264;
+    private static final long profile$OFFSET = 148280;
 
     /**
      * Offset for field:
@@ -1745,7 +1746,7 @@ public class libraw_colordata_t {
         return profile_length$LAYOUT;
     }
 
-    private static final long profile_length$OFFSET = 148272;
+    private static final long profile_length$OFFSET = 148288;
 
     /**
      * Offset for field:
@@ -1789,7 +1790,7 @@ public class libraw_colordata_t {
         return black_stat$LAYOUT;
     }
 
-    private static final long black_stat$OFFSET = 148276;
+    private static final long black_stat$OFFSET = 148292;
 
     /**
      * Offset for field:
@@ -1866,7 +1867,7 @@ public class libraw_colordata_t {
         return dng_color$LAYOUT;
     }
 
-    private static final long dng_color$OFFSET = 148308;
+    private static final long dng_color$OFFSET = 148324;
 
     /**
      * Offset for field:
@@ -1947,7 +1948,7 @@ public class libraw_colordata_t {
         return dng_levels$LAYOUT;
     }
 
-    private static final long dng_levels$OFFSET = 148644;
+    private static final long dng_levels$OFFSET = 148660;
 
     /**
      * Offset for field:
@@ -1991,7 +1992,7 @@ public class libraw_colordata_t {
         return WB_Coeffs$LAYOUT;
     }
 
-    private static final long WB_Coeffs$OFFSET = 181572;
+    private static final long WB_Coeffs$OFFSET = 181588;
 
     /**
      * Offset for field:
@@ -2068,7 +2069,7 @@ public class libraw_colordata_t {
         return WBCT_Coeffs$LAYOUT;
     }
 
-    private static final long WBCT_Coeffs$OFFSET = 185668;
+    private static final long WBCT_Coeffs$OFFSET = 185684;
 
     /**
      * Offset for field:
@@ -2145,7 +2146,7 @@ public class libraw_colordata_t {
         return as_shot_wb_applied$LAYOUT;
     }
 
-    private static final long as_shot_wb_applied$OFFSET = 186948;
+    private static final long as_shot_wb_applied$OFFSET = 186964;
 
     /**
      * Offset for field:
@@ -2189,7 +2190,7 @@ public class libraw_colordata_t {
         return P1_color$LAYOUT;
     }
 
-    private static final long P1_color$OFFSET = 186952;
+    private static final long P1_color$OFFSET = 186968;
 
     /**
      * Offset for field:
@@ -2270,7 +2271,7 @@ public class libraw_colordata_t {
         return raw_bps$LAYOUT;
     }
 
-    private static final long raw_bps$OFFSET = 187024;
+    private static final long raw_bps$OFFSET = 187040;
 
     /**
      * Offset for field:
@@ -2314,7 +2315,7 @@ public class libraw_colordata_t {
         return ExifColorSpace$LAYOUT;
     }
 
-    private static final long ExifColorSpace$OFFSET = 187028;
+    private static final long ExifColorSpace$OFFSET = 187044;
 
     /**
      * Offset for field:
@@ -2360,31 +2361,31 @@ public class libraw_colordata_t {
     public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size @code layout().byteSize()} using {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
     }
 
     /**
-     * Allocate an array of size @code elementCount} using {@code allocator}.
-     * The returned segment has size @code elementCount * layout().byteSize()}.
+     * Allocate an array of size {@code elementCount} using {@code allocator}.
+     * The returned segment has size {@code elementCount * layout().byteSize()}.
      */
     public static MemorySegment allocateArray(long elementCount, SegmentAllocator allocator) {
         return allocator.allocate(MemoryLayout.sequenceLayout(elementCount, layout()));
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
-     * The returned segment has size @code layout().byteSize()}
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
+     * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
         return reinterpret(addr, 1, arena, cleanup);
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction) (if any).
-     * The returned segment has size @code elementCount * layout().byteSize()}
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
+     * The returned segment has size {@code elementCount * layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
