@@ -46,8 +46,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>27</maven.compiler.source>
-        <maven.compiler.target>27</maven.compiler.target> 
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target> 
         <javafx.version>27</javafx.version>       
     </properties>
     
@@ -171,8 +171,7 @@
                     <fork>true</fork>
                     <compilerArgs>
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</arg>
-                        <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
-                        <arg>--enable-preview</arg>
+                        <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>                        
                     </compilerArgs>
                 </configuration>
             </plugin>
