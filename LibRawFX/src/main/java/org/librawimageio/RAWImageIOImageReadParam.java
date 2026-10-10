@@ -13,11 +13,11 @@ import javax.imageio.ImageReadParam;
  */
 public class RAWImageIOImageReadParam extends ImageReadParam {
 
-    public RAWImageIOImageReadParam() {
+    public RAWImageIOImageReadParam() {        
     }
 
     @Override
-    public void setSourceRenderSize(Dimension size) throws UnsupportedOperationException {
+    public void setSourceRenderSize(Dimension size) throws UnsupportedOperationException {        
         super.setSourceRenderSize(size); 
     }
 

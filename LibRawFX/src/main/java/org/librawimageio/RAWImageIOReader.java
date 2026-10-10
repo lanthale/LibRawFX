@@ -45,6 +45,7 @@ public class RAWImageIOReader extends ImageReader {
     ImageInputStream stream = null;
     int width, height;
     int colorType;
+    private static final Object LIBRAW_LOCK = new Object();
 
     // Constants enumerating the values of colorType
     static final int COLOR_TYPE_GRAY = 0;
@@ -90,7 +91,7 @@ public class RAWImageIOReader extends ImageReader {
         }
     }
 
-    @Override
+    /*@Override
     public int getWidth(int imageIndex) throws IOException {
         if (libraw.getImageWidth() == 0) {
             getBasicMetaData();
@@ -110,6 +111,23 @@ public class RAWImageIOReader extends ImageReader {
             height = libraw.getImageHeight();
         }
         return height;
+    }*/
+    @Override
+    public int getWidth(int imageIndex) throws IOException {
+        checkIndex(imageIndex);
+        if (width <= 0) {
+            getBasicMetaData();
+        }
+        return width;
+    }
+
+    @Override
+    public int getHeight(int imageIndex) throws IOException {
+        checkIndex(imageIndex);
+        if (height <= 0) {
+            getBasicMetaData();
+        }
+        return height;
     }
 
     public void readHeader() throws IIOException {
@@ -125,7 +143,7 @@ public class RAWImageIOReader extends ImageReader {
         try {
             libraw.getMetaData();
             this.width = libraw.getImageWidth();
-            this.height = libraw.getImageWidth();
+            this.height = libraw.getImageHeight();
             this.colorType = COLOR_TYPE_RGB;
         } catch (IOException e) {
             throw new IIOException("Error reading header", e);
@@ -135,7 +153,7 @@ public class RAWImageIOReader extends ImageReader {
     @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IOException {
         checkIndex(imageIndex);
-        //readHeader();
+        readHeader();
         colorType = COLOR_TYPE_RGB;
 
         ImageTypeSpecifier imageType = null;
@@ -167,7 +185,7 @@ public class RAWImageIOReader extends ImageReader {
         return l.iterator();
     }
 
-    private void getBasicMetaData() {
+    private void getBasicMetaData() {        
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int nRead;
@@ -178,7 +196,11 @@ public class RAWImageIOReader extends ImageReader {
             }
             buffer.flush();
             byte[] targetArray = buffer.toByteArray();
-            libraw.getBasicMetaInfo(targetArray);
+            synchronized (LIBRAW_LOCK) {
+                libraw.getBasicMetaInfo(targetArray);
+                width = libraw.getImageWidth();    // Werte sofort im Lock kopieren
+                height = libraw.getImageHeight();
+            }
             stream.seek(0);
         } catch (IOException ex) {
             Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -243,7 +265,7 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     @Override
-    public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
+    public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {        
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
         byte[] datab = new byte[1024];
@@ -313,27 +335,29 @@ public class RAWImageIOReader extends ImageReader {
         System.arraycopy(raw, 0, imagePixels, 0, raw.length);
         // Enure band settings from param are compatible with images
 
-        double dstWidth = 0;
-        double dstHeight = 0;
+        int dstW = width;
+        int dstH = height;
         if (param != null) {
-            if (param.getSourceRenderSize() != null) {
-                dstWidth = param.getSourceRenderSize().getWidth();
-                dstHeight = param.getSourceRenderSize().getHeight();
-            } else {
-                param.setSourceRenderSize(new Dimension(width, height));
-                dstWidth = width;
-                dstHeight = height;
+            Dimension rs = param.getSourceRenderSize();
+            if (rs != null) {
+                dstW = Math.max(1, rs.width);
+                dstH = Math.max(1, rs.height);
             }
         }
 
-        BufferedImage resized = new BufferedImage((int) dstWidth, (int) dstHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = resized.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(dst, 0, 0, (int) dstWidth, (int) dstHeight, 0, 0, dst.getWidth(),
-                dst.getHeight(), null);
-        g.dispose();
+        if (dstW == dst.getWidth() && dstH == dst.getHeight()) {
+            // kein Resize nötig, aber trotzdem in ein Standardformat konvertieren
+        }
 
+        BufferedImage resized = new BufferedImage(dstW, dstH, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = resized.createGraphics();
+        try {
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.drawImage(dst, 0, 0, dstW, dstH, null);
+        } finally {
+            g.dispose();
+        }        
         return resized;
     }
 

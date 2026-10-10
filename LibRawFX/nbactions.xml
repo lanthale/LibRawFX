@@ -9,7 +9,7 @@
                 <goal>javafx:run@default-cli</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath org.librawfx.TestApp</exec.args>
+                <exec.args>-classpath %classpath org.librawimageio.TestAppSwing</exec.args>
                 <exec.executable>java</exec.executable>
                 
                 

@@ -30,12 +30,25 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import javax.imageio.spi.IIORegistry;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
 
 /**
  * JavaFX TestApp
  */
 public class TestAppImageIO extends Application {
+    
+    private static void printReaders(String label, File f) {
+    try (ImageInputStream in = ImageIO.createImageInputStream(f)) {
+        System.out.println("--- Reader " + label + " für " + f.getName());
+        ImageIO.getImageReaders(in).forEachRemaining(r ->
+            System.out.println("   " + r.getClass().getName()));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException {
@@ -48,17 +61,29 @@ public class TestAppImageIO extends Application {
         decoderSettings.get("Sigma DP2 Merrill").setAutoWhitebalance(true);
         decoderSettings.put("Fujifilm X-T2", new RawDecoderSettings());
         decoderSettings.get("Fujifilm X-T2").setEnableExposureCorrection(true);
-        decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);*/        
-        
-        IIORegistry registry = IIORegistry.getDefaultInstance();
-        registry.registerServiceProvider(new RAWImageIOReaderSpi());
-        Iterator<Class<?>> categories = registry.getCategories();
-        //registry.getServiceProviders(category, true)
+        decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);*/
 
         Parameters parameters = getParameters();
-        String file = parameters.getRaw().get(0);        
+        String file = parameters.getRaw().get(0);
         String file2 = parameters.getRaw().get(1);
         String file3 = parameters.getRaw().get(2);
+        
+        IIORegistry registry = IIORegistry.getDefaultInstance();
+        ImageReaderSpi mine = new RAWImageIOReaderSpi();
+        registry.registerServiceProvider(mine);
+
+        /*printReaders("vorher", new File(file));
+
+        Iterator<ImageReaderSpi> it = registry.getServiceProviders(ImageReaderSpi.class, false);
+        while (it.hasNext()) {
+            ImageReaderSpi other = it.next();
+            if (other != mine) {
+                registry.setOrdering(ImageReaderSpi.class, mine, other); // mine vor other
+            }
+        }
+
+        printReaders("nachher", new File(file));*/
+        
 
         VBox stack = new VBox();
         stack.setPadding(new Insets(10));
@@ -85,7 +110,7 @@ public class TestAppImageIO extends Application {
         btn.setOnAction((t) -> {
             stack.getChildren().clear();
             stack.getChildren().add(btn);
-            final ProgressBar pg=new ProgressBar();
+            final ProgressBar pg = new ProgressBar();
             stack.getChildren().add(pg);
             Platform.runLater(() -> {
                 try {
@@ -122,10 +147,10 @@ public class TestAppImageIO extends Application {
                     try {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        long start=System.currentTimeMillis();
+                        long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaData();
-                        long end=System.currentTimeMillis();
-                        System.out.println("meta file: "+(end-start)+" ms");
+                        long end = System.currentTimeMillis();
+                        System.out.println("meta file: " + (end - start) + " ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -157,10 +182,10 @@ public class TestAppImageIO extends Application {
                     try {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        long start=System.currentTimeMillis();
+                        long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaData();
-                        long end=System.currentTimeMillis();
-                        System.out.println("meta file: "+(end-start)+" ms");
+                        long end = System.currentTimeMillis();
+                        System.out.println("meta file: " + (end - start) + " ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -192,10 +217,10 @@ public class TestAppImageIO extends Application {
                     try {
                         HashMap<String, RawDecoderSettings> settings = new HashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        long start=System.currentTimeMillis();
+                        long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaData();
-                        long end=System.currentTimeMillis();
-                        System.out.println("meta file: "+(end-start)+" ms");
+                        long end = System.currentTimeMillis();
+                        System.out.println("meta file: " + (end - start) + " ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
