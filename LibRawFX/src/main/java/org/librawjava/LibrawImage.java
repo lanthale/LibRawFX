@@ -110,89 +110,113 @@ public class LibrawImage {
      */
     public byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray) throws IOException {
         if (sourceFileAsByteArray == null) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "sourceFileAsByteArray == null!");
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "sourceFileAsByteArray == null!");
             throw new IllegalArgumentException("sourceFileAsByteArray == null!");
         }
         if (loadLibraryFromJar == null) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Please call loadLibs as static method first!");
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
+
         try (var scope = Arena.ofShared()) {
             MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Memory dddress native lib was: " + iprc.get(ValueLayout.JAVA_LONG, 0));
-
-            MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
-
-            MemorySegment inputStreamBytes = MemorySegment.ofArray(sourceFileAsByteArray);
-            MemorySegment allocateNative = scope.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray);//)Array(org.libraw.win.libraw_h.C_CHAR, sourceFileAsByteArray);
-            int k = org.libraw.nativ.libraw_h.libraw_open_buffer(iprc, allocateNative, inputStreamBytes.byteSize());
-            if (k > 0) {
-                Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "Cannot open stream, return value was: " + k);
-                throw new IOException("Cannot open file stream!");
+            if (iprc == null || iprc.equals(MemorySegment.NULL)) {
+                throw new IOException("libraw_init failed");
             }
+            MemorySegment memImage = MemorySegment.NULL;
 
-            org.libraw.nativ.libraw_h.libraw_unpack(iprc);
+            try {
+                MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
 
-            MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
+                MemorySegment allocateNative = scope.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray);
+                int k = org.libraw.nativ.libraw_h.libraw_open_buffer(iprc, allocateNative, sourceFileAsByteArray.length);
+                if (k != 0) {
+                    throw new IOException("Cannot open file stream, LibRaw return value was: " + k);
+                }
 
-            MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
-            MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
+                k = org.libraw.nativ.libraw_h.libraw_unpack(iprc);
+                if (k < 0) {
+                    throw new IOException("libraw_unpack failed, return value was: " + k);
+                }
 
-            RawDecoderSettings settings;
-            if (rawSettings.get(model) == null) {
-                settings = rawSettings.get("Default");
-            } else {
-                settings = rawSettings.get(model);
-            }
-            new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
+                MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
+                MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
+                MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+                String model = maker$slice.getString(0) + " " + model$slice.getString(0);
 
-            MemorySegment modelSlice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            cameraModel = new String(modelSlice.toArray(ValueLayout.JAVA_BYTE), StandardCharsets.US_ASCII);
-            MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
-            long timestamp = org.libraw.nativ.libraw_imgother_t.timestamp(image_other_data);
-            shootingDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.getDefault().toZoneId());
+                RawDecoderSettings settings = rawSettings.get(model);
+                if (settings == null) {
+                    settings = rawSettings.get("Default");
+                }
+                new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
 
-            org.libraw.nativ.libraw_h.libraw_dcraw_process(iprc);
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                cameraModel = model$slice.getString(0);
+                MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
+                long timestamp = org.libraw.nativ.libraw_imgother_t.timestamp(image_other_data);
+                shootingDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp),
+                        TimeZone.getDefault().toZoneId());
 
-            MemorySegment errorCode = scope.allocate(org.libraw.nativ.libraw_h.C_INT.byteSize());
-            MemorySegment mem_image_adr = org.libraw.nativ.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode);
-            MemorySegment data$slice = org.libraw.nativ.libraw_processed_image_t.data(mem_image_adr);
-            imageWidth = org.libraw.nativ.libraw_processed_image_t.width(mem_image_adr);
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Native width: " + imageWidth);
-            imageHeight = org.libraw.nativ.libraw_processed_image_t.height(mem_image_adr);
-            imageBits = org.libraw.nativ.libraw_processed_image_t.bits(mem_image_adr);
-            imageColors = org.libraw.nativ.libraw_processed_image_t.colors(mem_image_adr);
+                k = org.libraw.nativ.libraw_h.libraw_dcraw_process(iprc);
+                if (k < 0) {
+                    throw new IOException("libraw_dcraw_process failed, return value was: " + k);
+                }
 
-            stride = imageWidth * imageColors * (imageBits / 8);
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Start reading image from native memory...");
-            byte[] line = new byte[stride];
-            for (var i = 0; i < imageHeight; i++) {
+                MemorySegment errorCode = scope.allocate(org.libraw.nativ.libraw_h.C_INT);
+                memImage = org.libraw.nativ.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode);
+                int memErr = errorCode.get(ValueLayout.JAVA_INT, 0);
+                if (memImage == null || memImage.address() == 0L || memErr != 0) {
+                    memImage = MemorySegment.NULL;   // nichts freizugeben
+                    throw new IOException("libraw_dcraw_make_mem_image failed, error code: " + memErr);
+                }
+
+                // Alle Werte aus DEMSELBEN processed_image_t lesen, das die Pixel enthält
+                int w = org.libraw.nativ.libraw_processed_image_t.width(memImage);
+                int h = org.libraw.nativ.libraw_processed_image_t.height(memImage);
+                int bits = org.libraw.nativ.libraw_processed_image_t.bits(memImage);
+                int colors = org.libraw.nativ.libraw_processed_image_t.colors(memImage);
+
+                if (bits != 8 || colors != 3) {
+                    // read() erwartet 8 Bit RGB (siehe Raster in RAWImageIOReader)
+                    throw new IOException("Unsupported pixel format: bits=" + bits + ", colors=" + colors);
+                }
+
+                long rowBytes = (long) w * colors * (bits / 8);
+                long total = rowBytes * h;
+                if (w <= 0 || h <= 0 || total > Integer.MAX_VALUE - 8) {
+                    throw new IOException("Invalid image size: " + w + "x" + h);
+                }
+
+                MemorySegment data$slice = org.libraw.nativ.libraw_processed_image_t.data(memImage);
+                MemorySegment pixels = MemorySegment.ofAddress(data$slice.address()).reinterpret(total);
+
+                // Felder erst jetzt setzen, wenn alles geprüft ist
+                imageWidth = (short) w;
+                imageHeight = (short) h;
+                imageBits = (short) bits;
+                imageColors = (short) colors;
+                stride = (int) rowBytes;
+
+                byte[] data = new byte[(int) total];
+                final int rowsPerBlock = 64;
+                for (int row = 0; row < h; row += rowsPerBlock) {
+                    if (loader != null) {
+                        loader.updateImageProgress(row, h);
+                    }
+                    int rows = Math.min(rowsPerBlock, h - row);
+                    long off = rowBytes * row;
+                    MemorySegment.copy(pixels, ValueLayout.JAVA_BYTE, off, data, (int) off, (int) (rowBytes * rows));
+                }
                 if (loader != null) {
-                    loader.updateImageProgress(i, imageHeight);
+                    loader.updateImageProgress(h, h);
                 }
-                long offSetAdr = data$slice.address() + stride * i;
-                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr);
-                line = asSegmentRestricted.reinterpret(stride).toArray(ValueLayout.JAVA_BYTE);
-                try {
-                    bo.write(line);
-                } catch (IOException ex) {
-                    Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Cannot retrieve image from native memory", ex);
-                    return null;
+                return data;
+
+            } finally {
+                if (memImage.address() != 0L) {
+                    org.libraw.nativ.libraw_h.libraw_dcraw_clear_mem(memImage);
                 }
+                org.libraw.nativ.libraw_h.libraw_close(iprc);
             }
-            bo.flush();
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Start reading image from native memory...finished");
-            byte[] data = bo.toByteArray();
-            bo.close();
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Freeing of native memory...");
-            org.libraw.nativ.libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
-            mem_image_adr = null;
-            org.libraw.nativ.libraw_h.libraw_close(iprc);
-            iprc = null;
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Freeing of native memory...finished");
-            return data;
         }
     }
 
@@ -205,84 +229,97 @@ public class LibrawImage {
      */
     public synchronized int[] readPixelData() throws IOException {
         if (imageFileURL == null) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "imageFileURL == null! " + imageFileURL);
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "imageFileURL == null!");
             throw new IllegalArgumentException("imageFileURL == null!");
         }
         if (loadLibraryFromJar == null) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Please call loadLibs as static method first!");
+            Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, "Please call loadLibs as static method first!");
             throw new IllegalArgumentException("Please call loadLibs as static method first!");
         }
 
         try (var scope = Arena.ofShared()) {
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native memory");
             MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
-
-            MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
-
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Open file");
-            int libraw_open_file = org.libraw.nativ.libraw_h.libraw_open_file(iprc, scope.allocateFrom(imageFileURL));
-            if (libraw_open_file > 0) {
-                Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Cannot open file stream '" + imageFileURL + "'!" + libraw_open_file);
-                throw new IOException("Cannot open file stream '" + imageFileURL + "'! " + libraw_open_file);
+            if (iprc == null || iprc.address() == 0L) {
+                throw new IOException("libraw_init failed");
             }
+            MemorySegment memImage = MemorySegment.NULL;
 
-            org.libraw.nativ.libraw_h.libraw_unpack(iprc);
+            try {
+                MemorySegment params$slice = org.libraw.nativ.libraw_data_t.params(iprc);
 
-            MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
-
-            MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
-            MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            String model = maker$slice.getString(0) + " " + model$slice.getString(0);
-
-            RawDecoderSettings settings;
-            if (rawSettings.get(model) == null) {
-                settings = rawSettings.get("Default");
-            } else {
-                settings = rawSettings.get(model);
-            }
-            new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
-
-            MemorySegment modelSlice = org.libraw.nativ.libraw_iparams_t.model(iParams);
-            cameraModel = new String(modelSlice.toArray(ValueLayout.JAVA_BYTE), StandardCharsets.UTF_8);
-            MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
-            long timestamp = org.libraw.nativ.libraw_imgother_t.timestamp(image_other_data);
-            shootingDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.getDefault().toZoneId());
-
-            org.libraw.nativ.libraw_h.libraw_dcraw_process(iprc);
-
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
-
-            MemorySegment errorCode = scope.allocate(org.libraw.nativ.libraw_h.C_INT.byteSize());
-            MemorySegment mem_image_adr = org.libraw.nativ.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode);
-            MemorySegment data$slice = org.libraw.nativ.libraw_processed_image_t.data(mem_image_adr);
-            imageWidth = org.libraw.nativ.libraw_processed_image_t.width(mem_image_adr);
-            imageHeight = org.libraw.nativ.libraw_processed_image_t.height(mem_image_adr);
-            imageBits = org.libraw.nativ.libraw_processed_image_t.bits(mem_image_adr);
-            imageColors = org.libraw.nativ.libraw_processed_image_t.colors(mem_image_adr);
-            stride = imageWidth * imageColors * (imageBits / 8);
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Reading image from native memory...");
-            byte[] line = new byte[stride];
-            for (var i = 0; i < imageHeight; i++) {
-                long offSetAdr = data$slice.address() + stride * i;
-                MemorySegment asSegmentRestricted = MemorySegment.ofAddress(offSetAdr);
-                line = asSegmentRestricted.reinterpret(stride).toArray(ValueLayout.JAVA_BYTE);
-                try {
-                    bo.write(line);
-                } catch (IOException ex) {
-                    return null;
+                int k = org.libraw.nativ.libraw_h.libraw_open_file(iprc, scope.allocateFrom(imageFileURL));
+                if (k != 0) {
+                    throw new IOException("Cannot open file '" + imageFileURL + "', LibRaw return value was: " + k);
                 }
+
+                k = org.libraw.nativ.libraw_h.libraw_unpack(iprc);
+                if (k < 0) {
+                    throw new IOException("libraw_unpack failed, return value was: " + k);
+                }
+
+                MemorySegment iParams = org.libraw.nativ.libraw_h.libraw_get_iparams(iprc);
+                MemorySegment maker$slice = org.libraw.nativ.libraw_iparams_t.make(iParams);
+                MemorySegment model$slice = org.libraw.nativ.libraw_iparams_t.model(iParams);
+                String model = maker$slice.getString(0) + " " + model$slice.getString(0);
+
+                RawDecoderSettings settings = rawSettings.get(model);
+                if (settings == null) {
+                    settings = rawSettings.get("Default");
+                }
+                new RawDecoderToNativeTranslator(settings, operatingSystem).translate(params$slice);
+
+                cameraModel = model$slice.getString(0);
+                MemorySegment image_other_data = org.libraw.nativ.libraw_h.libraw_get_imgother(iprc);
+                long timestamp = org.libraw.nativ.libraw_imgother_t.timestamp(image_other_data);
+                shootingDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp),
+                        TimeZone.getDefault().toZoneId());
+
+                k = org.libraw.nativ.libraw_h.libraw_dcraw_process(iprc);
+                if (k < 0) {
+                    throw new IOException("libraw_dcraw_process failed, return value was: " + k);
+                }
+
+                MemorySegment errorCode = scope.allocate(org.libraw.nativ.libraw_h.C_INT);
+                memImage = org.libraw.nativ.libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode);
+                int memErr = errorCode.get(ValueLayout.JAVA_INT, 0);
+                if (memImage == null || memImage.address() == 0L || memErr != 0) {
+                    memImage = MemorySegment.NULL;   // nichts freizugeben
+                    throw new IOException("libraw_dcraw_make_mem_image failed, error code: " + memErr);
+                }
+
+                int w = org.libraw.nativ.libraw_processed_image_t.width(memImage);
+                int h = org.libraw.nativ.libraw_processed_image_t.height(memImage);
+                int bits = org.libraw.nativ.libraw_processed_image_t.bits(memImage);
+                int colors = org.libraw.nativ.libraw_processed_image_t.colors(memImage);
+
+                if (bits != 8 || colors != 3) {
+                    throw new IOException("Unsupported pixel format: bits=" + bits + ", colors=" + colors);
+                }
+
+                long rowBytes = (long) w * colors * (bits / 8);
+                long total = rowBytes * h;
+                if (w <= 0 || h <= 0 || total > Integer.MAX_VALUE - 8) {
+                    throw new IOException("Invalid image size: " + w + "x" + h);
+                }
+
+                MemorySegment data$slice = org.libraw.nativ.libraw_processed_image_t.data(memImage);
+                MemorySegment pixels = MemorySegment.ofAddress(data$slice.address()).reinterpret(total);
+
+                imageWidth = (short) w;
+                imageHeight = (short) h;
+                imageBits = (short) bits;
+                imageColors = (short) colors;
+                stride = (int) rowBytes;
+
+                byte[] rawBytes = pixels.toArray(ValueLayout.JAVA_BYTE);
+                return convertToINT(rawBytes);
+
+            } finally {
+                if (memImage.address() != 0L) {
+                    org.libraw.nativ.libraw_h.libraw_dcraw_clear_mem(memImage);
+                }
+                org.libraw.nativ.libraw_h.libraw_close(iprc);
             }
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Reading image from native memory...finished");
-            byte[] rawBytes = bo.toByteArray();
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Convert rawtoINTBytes");
-            int[] raw = convertToINT(rawBytes);
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...");
-            org.libraw.nativ.libraw_h.libraw_dcraw_clear_mem(mem_image_adr);
-            mem_image_adr = null;
-            org.libraw.nativ.libraw_h.libraw_close(iprc);
-            iprc = null;
-            Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...finished.");
-            return raw;
         }
     }
 
@@ -409,16 +446,16 @@ public class LibrawImage {
             short medteringMode = org.libraw.nativ.libraw_shootinginfo_t.MeteringMode(shootingInfo$slice);
             retMap.put("MedteringMode", "" + medteringMode);
 
-            imageHeight = (short) org.libraw.nativ.libraw_h.libraw_get_iheight(iprc);
-            imageWidth = (short) org.libraw.nativ.libraw_h.libraw_get_iwidth(iprc);
-            imageColors = (short) org.libraw.nativ.libraw_h.libraw_get_color_maximum(iprc);
+            int iHeight = org.libraw.nativ.libraw_h.libraw_get_iheight(iprc);
+            int iWidth = org.libraw.nativ.libraw_h.libraw_get_iwidth(iprc);
+            int colorMax = org.libraw.nativ.libraw_h.libraw_get_color_maximum(iprc);
+            retMap.put("ImageWidth", "" + iWidth);
+            retMap.put("ImageHeight", "" + iHeight);
+            retMap.put("ColorMaximum", "" + colorMax);
 
             org.libraw.nativ.libraw_h.libraw_close(iprc);
             iprc = null;
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...finished.");
-            retMap.put("ImageWidth", "" + imageWidth);
-            retMap.put("ImageHeight", "" + imageHeight);
-            retMap.put("ImageColors", "" + imageColors);
             retMap.put("Aperture", "f/" + aperture);
             retMap.put("Focal length", "" + focal_len + " mm");
             retMap.put("ISO speed", "" + isoSpeed);
@@ -427,7 +464,7 @@ public class LibrawImage {
             return retMap;
         }
     }
-    
+
     /**
      * Retrievs for the given stream in the constructor the metadata Important:
      * The timestamps are in EpocheInSeconds and not milliseconds
@@ -537,16 +574,16 @@ public class LibrawImage {
             short medteringMode = org.libraw.nativ.libraw_shootinginfo_t.MeteringMode(shootingInfo$slice);
             retMap.put("MedteringMode", "" + medteringMode);
 
-            imageHeight = (short) org.libraw.nativ.libraw_h.libraw_get_iheight(iprc);
-            imageWidth = (short) org.libraw.nativ.libraw_h.libraw_get_iwidth(iprc);
-            imageColors = (short) org.libraw.nativ.libraw_h.libraw_get_color_maximum(iprc);
+            int iHeight = org.libraw.nativ.libraw_h.libraw_get_iheight(iprc);
+            int iWidth = org.libraw.nativ.libraw_h.libraw_get_iwidth(iprc);
+            int colorMax = org.libraw.nativ.libraw_h.libraw_get_color_maximum(iprc);
+            retMap.put("ImageWidth", "" + iWidth);
+            retMap.put("ImageHeight", "" + iHeight);
+            retMap.put("ColorMaximum", "" + colorMax);
 
             org.libraw.nativ.libraw_h.libraw_close(iprc);
             iprc = null;
             Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Releasing native memory...finished.");
-            retMap.put("ImageWidth", "" + imageWidth);
-            retMap.put("ImageHeight", "" + imageHeight);
-            retMap.put("ImageColors", "" + imageColors);
             retMap.put("Aperture", "f/" + aperture);
             retMap.put("Focal length", "" + focal_len + " mm");
             retMap.put("ISO speed", "" + isoSpeed);
@@ -556,6 +593,11 @@ public class LibrawImage {
         }
     }
 
+    /**
+     * Class for ImageIO support
+     * @param sourceFileAsByteArray getting for ImageIO basis metadata so that is can operate
+     * @throws IOException if file is not supported or if a reading error occurs
+     */
     public void getBasicMetaInfo(byte[] sourceFileAsByteArray) throws IOException {
         if (sourceFileAsByteArray == null) {
             Logger.getLogger(LibrawImage.class.getName()).log(Level.SEVERE, null, "sourceFileAsByteArray == null!");
@@ -617,11 +659,14 @@ public class LibrawImage {
             mem_image_adr = null;
             org.libraw.nativ.libraw_h.libraw_close(iprc);
             iprc = null;
-            System.out.println("width "+imageWidth);
-            System.out.println("height "+imageHeight);
         }
     }
 
+    /**
+     *
+     * @return the camera maker such as Nikon 
+     * @throws IOException if not possible
+     */
     public String getCameraMaker() throws IOException {
         String retString;
         if (imageFileURL == null) {

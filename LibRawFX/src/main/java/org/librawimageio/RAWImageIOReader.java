@@ -116,16 +116,27 @@ public class RAWImageIOReader extends ImageReader {
     public int getWidth(int imageIndex) throws IOException {
         checkIndex(imageIndex);
         if (width <= 0) {
-            getBasicMetaData();
+            getBasicMetaData();                    // setzt libraw-Felder aus processed_image_t
+            width = libraw.getImageWidth();
+            height = libraw.getImageHeight();
+        }
+        if (width <= 0) {
+            throw new IIOException("Could not determine image width");
         }
         return width;
     }
+// getHeight analog mit height
 
     @Override
     public int getHeight(int imageIndex) throws IOException {
         checkIndex(imageIndex);
         if (height <= 0) {
-            getBasicMetaData();
+            getBasicMetaData();                    // setzt libraw-Felder aus processed_image_t
+            width = libraw.getImageWidth();
+            height = libraw.getImageHeight();
+        }
+        if (height <= 0) {
+            throw new IIOException("Could not determine image width");
         }
         return height;
     }
@@ -185,7 +196,7 @@ public class RAWImageIOReader extends ImageReader {
         return l.iterator();
     }
 
-    private void getBasicMetaData() {        
+    private void getBasicMetaData() {
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int nRead;
@@ -198,8 +209,8 @@ public class RAWImageIOReader extends ImageReader {
             byte[] targetArray = buffer.toByteArray();
             synchronized (LIBRAW_LOCK) {
                 libraw.getBasicMetaInfo(targetArray);
-                width = libraw.getImageWidth();    // Werte sofort im Lock kopieren
-                height = libraw.getImageHeight();
+                //width = libraw.getImageWidth();    // Werte sofort im Lock kopieren
+                //height = libraw.getImageHeight();
             }
             stream.seek(0);
         } catch (IOException ex) {
@@ -265,7 +276,7 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     @Override
-    public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {        
+    public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
         byte[] datab = new byte[1024];
@@ -284,6 +295,19 @@ public class RAWImageIOReader extends ImageReader {
         buffer.flush();
         byte[] targetArray = buffer.toByteArray();
         byte[] raw = libraw.readPixelDataFromStream(targetArray);
+        final int w = libraw.getImageWidth();    // processed_image_t, nach flip
+        final int h = libraw.getImageHeight();
+        // optional zur Kontrolle:
+        if (raw.length != (long) w * h * 3) {
+            throw new IIOException("Unexpected pixel data size: " + raw.length + " for " + w + "x" + h);
+        }
+        long sum = 0;
+        int max = 0;
+        for (int i = 0; i < raw.length; i += 997) {      // Stichprobe
+            int v = raw[i] & 0xFF;
+            sum += v;
+            max = Math.max(max, v);
+        }        
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
 
@@ -331,7 +355,7 @@ public class RAWImageIOReader extends ImageReader {
 
         BufferedImage dst = new BufferedImage(model, raster, true, null);
         dst.setData(raster);
-        byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
+        byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();        
         System.arraycopy(raw, 0, imagePixels, 0, raw.length);
         // Enure band settings from param are compatible with images
 
@@ -348,7 +372,7 @@ public class RAWImageIOReader extends ImageReader {
         if (dstW == dst.getWidth() && dstH == dst.getHeight()) {
             // kein Resize nötig, aber trotzdem in ein Standardformat konvertieren
         }
-
+        
         BufferedImage resized = new BufferedImage(dstW, dstH, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = resized.createGraphics();
         try {
@@ -360,5 +384,7 @@ public class RAWImageIOReader extends ImageReader {
         }        
         return resized;
     }
+
+    
 
 }

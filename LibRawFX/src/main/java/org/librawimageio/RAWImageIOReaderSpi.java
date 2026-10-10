@@ -9,6 +9,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.spi.ServiceRegistry;
 import java.io.IOException;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -67,23 +69,98 @@ public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
         return names;
     }
 
+    // Nur Nicht-TIFF-Formate mit festem Präfix
+    private static final byte[][] PREFIXES = {
+        "FUJIFILMCCD-RAW".getBytes(StandardCharsets.US_ASCII), // RAF
+        "FOVb".getBytes(StandardCharsets.US_ASCII), // X3F
+        {0x49, 0x49, 0x1A, 0x00, 0x00, 0x00, 'H', 'E', 'A', 'P', 'C', 'C', 'D', 'R'} // CRW
+    };
+
+    private static final String[] RAW_MAKES = {
+        "NIKON", "CANON", "SONY", "OLYMPUS", "OM DIGITAL", "PENTAX", "RICOH",
+        "PANASONIC", "LEICA", "FUJIFILM", "HASSELBLAD", "PHASE ONE", "SAMSUNG", "KODAK"
+    };
+
     @Override
     public boolean canDecodeInput(Object source) throws IOException {
         if (!(source instanceof ImageInputStream stream)) {
             return false;
         }
-        byte[] b = new byte[16];
+        ByteOrder oldOrder = stream.getByteOrder();
         stream.mark();
         try {
-            stream.readFully(b);
-        } catch (IOException e) {      // z. B. Datei kürzer als 16 Byte
+            byte[] head = new byte[16];
+            stream.readFully(head);
+
+            for (byte[] prefix : PREFIXES) {
+                if (startsWith(head, prefix)) {
+                    return true;
+                }
+            }
+
+            boolean le = head[0] == 'I' && head[1] == 'I' && head[2] == 42 && head[3] == 0;
+            boolean be = head[0] == 'M' && head[1] == 'M' && head[2] == 0 && head[3] == 42;
+            if (le || be) {
+                return isTiffRaw(stream, le);
+            }
+            return false;
+        } catch (IOException e) {      // inkl. EOFException bei zu kurzen Dateien
             return false;
         } finally {
+            stream.setByteOrder(oldOrder);
             stream.reset();
         }
-        for (ImageFormatDescription.Signature signature : signatures) {
-            if (signature.matches(b)) {
+    }
+
+    private static boolean startsWith(byte[] data, byte[] prefix) {
+        if (data.length < prefix.length) {
+            return false;
+        }
+        for (int i = 0; i < prefix.length; i++) {
+            if (data[i] != prefix[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isTiffRaw(ImageInputStream s, boolean littleEndian) throws IOException {
+        s.setByteOrder(littleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+        s.seek(4);
+        long ifd0 = s.readUnsignedInt();
+        long len = s.length();
+        if (ifd0 < 8 || (len >= 0 && ifd0 > len - 2)) {
+            return false;
+        }
+
+        s.seek(ifd0);
+        int entries = s.readUnsignedShort();
+        String make = null;
+
+        for (int i = 0; i < Math.min(entries, 128); i++) {
+            long entry = ifd0 + 2 + i * 12L;
+            s.seek(entry);
+            int tag = s.readUnsignedShort();
+            int type = s.readUnsignedShort();
+            long count = s.readUnsignedInt();
+
+            if (tag == 0xC612) {                       // DNGVersion
                 return true;
+            }
+            if (tag == 0x010F && type == 2 && count > 0 && count <= 64) {   // Make
+                long off = count <= 4 ? entry + 8 : s.readUnsignedInt();
+                s.seek(off);
+                byte[] mk = new byte[(int) count];
+                s.readFully(mk);
+                make = new String(mk, StandardCharsets.US_ASCII).trim().toUpperCase();
+            }
+        }
+
+        if (make != null) {
+            for (String m : RAW_MAKES) {
+                if (make.startsWith(m)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -130,6 +207,53 @@ public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
         } catch (ClassNotFoundException ignore) {
             return null;
         }
+    }
+
+    private static boolean isTiffRaw(ImageInputStream s) throws IOException {
+        byte[] hdr = new byte[8];
+        s.readFully(hdr);
+        boolean le;
+        if (hdr[0] == 'I' && hdr[1] == 'I') {
+            le = true;
+        } else if (hdr[0] == 'M' && hdr[1] == 'M') {
+            le = false;
+        } else {
+            return false;
+        }
+        s.setByteOrder(le ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+
+        if (s.readUnsignedShort() != 42 && false) {
+            /* Magic 42 steht in hdr[2..3] */ }
+        s.seek(4);
+        long ifd0 = s.readUnsignedInt();
+        if (ifd0 < 8 || ifd0 > s.length() - 2) {
+            return false;
+        }
+
+        s.seek(ifd0);
+        int n = s.readUnsignedShort();
+        for (int i = 0; i < Math.min(n, 64); i++) {
+            s.seek(ifd0 + 2 + i * 12L);
+            int tag = s.readUnsignedShort();
+            int type = s.readUnsignedShort();
+            long count = s.readUnsignedInt();
+            if (tag == 0xC612) {
+                return true;                    // DNGVersion
+            }
+            if (tag == 0x010F && type == 2) {                  // Make (ASCII)
+                long off = count <= 4 ? ifd0 + 2 + i * 12L + 8 : s.readUnsignedInt();
+                // bei count <= 4 liegt der Wert inline
+                s.seek(off);
+                byte[] mk = new byte[(int) Math.min(count, 32)];
+                s.readFully(mk);
+                String make = new String(mk, StandardCharsets.US_ASCII).toUpperCase();
+                return make.startsWith("NIKON") || make.startsWith("CANON")
+                        || make.startsWith("SONY") || make.startsWith("OLYMPUS")
+                        || make.startsWith("PENTAX") || make.startsWith("PANASONIC")
+                        || make.startsWith("LEICA") || make.startsWith("FUJIFILM");
+            }
+        }
+        return false;
     }
 
 }

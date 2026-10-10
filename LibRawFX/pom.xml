@@ -46,8 +46,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>26</maven.compiler.source>
-        <maven.compiler.target>26</maven.compiler.target> 
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target> 
         <javafx.version>27</javafx.version>       
     </properties>
     
@@ -106,7 +106,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.librawimageio.TestAppImageIO</mainClass>  
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options>  
                                 <option>--enable-native-access=org.librawfx,javafx.graphics</option>        
                                 <option>--add-modules java.se</option>                              
@@ -120,7 +120,7 @@
                         <!-- Usage: mvn clean javafx:run@debug -->
                         <id>debug</id>
                         <configuration>
-                            <mainClass>org.librawimageio.TestAppImageIO</mainClass>  
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options> 
                                 <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
                                 <option>--enable-native-access=org.librawfx,javafx.graphics</option>
@@ -134,7 +134,7 @@
                         <!-- Configuration for automatic IDE debugging -->
                         <id>ide-debug</id>
                         <configuration>
-                            <mainClass>org.librawimageio.TestAppImageIO</mainClass>  
+                            <mainClass>org.librawfx.TestApp</mainClass>  
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>        
                                 <option>--enable-native-access=org.librawfx,javafx.graphics</option>
