@@ -15,11 +15,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 25
+    - name: Set up JDK 27
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin' # See 'Supported distributions' for available options
-        java-version: '25'
+        java-version: '27'
         architecture: 'x64' # defaults to 'x64'
         cache: 'maven'
     - name: Cache Maven packages
