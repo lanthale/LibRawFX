@@ -20,6 +20,7 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.foreign.*;
+import java.util.concurrent.ConcurrentHashMap;
 import org.librawfx.RAWImageLoader;
 
 /**
@@ -41,22 +42,22 @@ public class LibrawImage {
     private RAWImageLoader loader;
     private String cameraModel;
     private LocalDateTime shootingDateTime;
-    private final HashMap<String, RawDecoderSettings> rawSettings;
+    private final ConcurrentHashMap<String, RawDecoderSettings> rawSettings;
     private static SymbolLookup loaderLookup;
     private RAWImageIOReader imageIOReader;
 
-    public LibrawImage(String imageFile, HashMap<String, RawDecoderSettings> settings) {
+    public LibrawImage(String imageFile, ConcurrentHashMap<String, RawDecoderSettings> settings) {
         this.imageFileURL = imageFile;
         this.rawSettings = settings;
     }
 
-    public LibrawImage(RAWImageLoader loader, HashMap<String, RawDecoderSettings> settings) {
+    public LibrawImage(RAWImageLoader loader, ConcurrentHashMap<String, RawDecoderSettings> settings) {
         imageFileURL = null;
         this.loader = loader;
         this.rawSettings = settings;
     }
 
-    public LibrawImage(RAWImageIOReader imageIOReader, HashMap<String, RawDecoderSettings> settings) {
+    public LibrawImage(RAWImageIOReader imageIOReader, ConcurrentHashMap<String, RawDecoderSettings> settings) {
         imageFileURL = null;
         this.imageIOReader = imageIOReader;
         this.rawSettings = settings;

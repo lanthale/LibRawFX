@@ -25,6 +25,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Screen;
@@ -43,7 +44,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
     private final Lock accessLock = new Lock();
     private boolean isDisposed = false;
     private LibrawImage libraw;
-    private static HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+    private static ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
 
     protected RAWImageLoader(InputStream input, DimensionProvider dimensionProvider) {
         super(RAWDescriptor.getInstance());
@@ -225,7 +226,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
         }
     }
 
-    public static final HashMap<String, RawDecoderSettings> getSettings() {
+    public static final ConcurrentHashMap<String, RawDecoderSettings> getSettings() {
         if (settings == null) {
             initSettings();
         }

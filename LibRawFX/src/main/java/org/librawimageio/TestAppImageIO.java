@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -145,7 +146,7 @@ public class TestAppImageIO extends Application {
                 hb.getChildren().add(view);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+                        ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
                         settings.put("Default", new RawDecoderSettings());
                         long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaData();
@@ -180,7 +181,7 @@ public class TestAppImageIO extends Application {
                 hb.getChildren().add(view2);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+                        ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
                         settings.put("Default", new RawDecoderSettings());
                         long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaData();
@@ -215,7 +216,7 @@ public class TestAppImageIO extends Application {
                 hb.getChildren().add(view3);
                 Platform.runLater(() -> {
                     try {
-                        HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+                        ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
                         settings.put("Default", new RawDecoderSettings());
                         long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaData();
@@ -260,7 +261,7 @@ public class TestAppImageIO extends Application {
         //ind.progressProperty().bind(img.progressProperty());
         for (int i = 0; i < 1; i++) {
             File initialFile = new File(file);
-            HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+            ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
             settings.put("Default", new RawDecoderSettings());
             settings.put("Sigma DP2 Merrill", new RawDecoderSettings());
             settings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);

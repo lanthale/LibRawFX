@@ -14,9 +14,9 @@ public class RawDecoderSettings {
     private boolean autoWhitebalance = false;
     private boolean output_tiff = false;
     private boolean halfSizeOutput = false;
-    private int RAWQuality = 0;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
-    private boolean autoBrightness = false;
-    private float autoBrightnessThreashold = 0.0f;
+    private int RAWQuality = 3;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
+    private boolean autoBrightness = true;
+    private float autoBrightnessThreashold = 0.01f;
     private float brightnes = 1.0f;
     private float coolScanNEFGamma = 1.0f;
     private boolean enableExposureCorrection = false;

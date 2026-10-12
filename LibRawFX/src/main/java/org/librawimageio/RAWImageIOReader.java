@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.IIOException;
@@ -54,7 +55,7 @@ public class RAWImageIOReader extends ImageReader {
     boolean gotHeader = false;
     RAWIOFormatMetadata metadata = null; // class defined below
 
-    private static final HashMap<String, RawDecoderSettings> settings = new HashMap<>();
+    private static final ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
 
     public RAWImageIOReader() {
         super(new RAWImageIOReaderSpi());
@@ -275,6 +276,11 @@ public class RAWImageIOReader extends ImageReader {
         }
     }
 
+    public static ConcurrentHashMap<String, RawDecoderSettings> getSettings() {
+        initSettings();
+        return settings;
+    }
+
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -307,7 +313,7 @@ public class RAWImageIOReader extends ImageReader {
             int v = raw[i] & 0xFF;
             sum += v;
             max = Math.max(max, v);
-        }        
+        }
         double diff = (System.currentTimeMillis() - reading) / 1000;
         Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
 
@@ -355,7 +361,7 @@ public class RAWImageIOReader extends ImageReader {
 
         BufferedImage dst = new BufferedImage(model, raster, true, null);
         dst.setData(raster);
-        byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();        
+        byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
         System.arraycopy(raw, 0, imagePixels, 0, raw.length);
         // Enure band settings from param are compatible with images
 
@@ -372,7 +378,7 @@ public class RAWImageIOReader extends ImageReader {
         if (dstW == dst.getWidth() && dstH == dst.getHeight()) {
             // kein Resize nötig, aber trotzdem in ein Standardformat konvertieren
         }
-        
+
         BufferedImage resized = new BufferedImage(dstW, dstH, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = resized.createGraphics();
         try {
@@ -381,10 +387,8 @@ public class RAWImageIOReader extends ImageReader {
             g.drawImage(dst, 0, 0, dstW, dstH, null);
         } finally {
             g.dispose();
-        }        
+        }
         return resized;
     }
-
-    
 
 }

@@ -16,6 +16,7 @@ import com.sun.javafx.iio.ImageStorage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,7 +64,7 @@ public class RAWImageLoaderFactory implements ImageLoaderFactory {
         return instance;
     }
     
-    public static final HashMap<String, RawDecoderSettings> getDecoderSettings(){        
+    public static final ConcurrentHashMap<String, RawDecoderSettings> getDecoderSettings(){        
         return RAWImageLoader.getSettings();
     }
 
