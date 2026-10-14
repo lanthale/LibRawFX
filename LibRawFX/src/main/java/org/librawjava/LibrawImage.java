@@ -71,7 +71,7 @@ public class LibrawImage {
      * @throws IOException if it is not possible to load/unpack the native libs
      * into a temp directory
      */
-    public static void loadLibs(String tempDir) throws IOException {
+    public static void loadLibs(String tempDir) throws IOException {        
         Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...");
         operatingSystem = System.getProperty("os.name").toUpperCase();
         String arch = System.getProperty("os.arch").toUpperCase();

@@ -102,14 +102,17 @@ public class NativeUtils {
 
         if (tempDir == null) {
             // Prepare temporary file
-            if (temporaryDir == null) {
+            if (temporaryDir == null) {                
                 temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, null, "Tempdir was '" + temporaryDir.toString() + ".");
                 //temporaryDir.deleteOnExit();
             }
         } else {
             temporaryDir = new File(tempDir);
             if (temporaryDir.exists() == false) {
                 temporaryDir.mkdirs();
+                System.out.println("tempdir:"+temporaryDir.toString());
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, null, "Tempdir was '" + temporaryDir.toString() + ".");
                 //temporaryDir.deleteOnExit();
             }
         }
