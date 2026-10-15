@@ -53,7 +53,7 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.9.7</version>  
+    <version>1.9.9</version>  
 </dependency>  
 ```
 
@@ -117,8 +117,8 @@ You can have a look into the class TestAPP.java, TestAppSwing.java, TestAppImage
 You can also use the lib without adding the file handler. What I mean is that you can also forget the "...install" line and just load a file URL with the lib (see the `TestApp.java` to see how it works).
 
 ## Steps to create your own build:
-- OpenJDK/Adoptium 24 or newer
-- JavaFX 24
+- OpenJDK/Adoptium 25 or newer
+- JavaFX 25 or newer
 - SET JAVA_HOME variable
 - Execute `mvn clean compile package -f LibRawFX/pom.xml`
 - To run the example execute `mvn javafx:run@cli-default`
