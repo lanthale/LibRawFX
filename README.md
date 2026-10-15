@@ -9,7 +9,7 @@ Beginning of 1.9.3 the ImageIO function is included. On Javafx side you can choo
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 25 and JavaFX 25/26/27 is required for v1.9.7** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
+**JDK 25 and JavaFX 25/26/27 is required for v1.9.9** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
