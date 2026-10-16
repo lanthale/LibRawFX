@@ -14,7 +14,7 @@ public class RawDecoderSettings {
     private boolean autoWhitebalance = false;
     private boolean output_tiff = false;
     private boolean halfSizeOutput = false;
-    private int RAWQuality = 3;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
+    private int RAWQuality = 1;//0 - linear interpolation, 1 - VNG interpolation, 2 - PPG interpolation, 3 - AHD interpolation, 4 - DCB interpolation, 11 - DHT intepolation, 12 - Modified AHD intepolation (by Anton Petrusevich)
     private boolean autoBrightness = true;
     private float autoBrightnessThreashold = 0.01f;
     private float brightnes = 1.0f;
@@ -49,7 +49,8 @@ public class RawDecoderSettings {
     //private String outputProfile = "";
     //private String deadPixelMap = "";
     //private String whiteBalanceArea = "";
-    //-- Extended demosaicing settings ----------------------------------------------------------
+    
+    //------- Extended demosaicing settings ----------
     private int dcbIterations = -1;
     private boolean dcbEnhanceFl = false;
 

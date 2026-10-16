@@ -2,19 +2,47 @@ package org.librawfx;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Heuristische Vorerkennung von RAW-Dateien anhand der ersten Bytes.
+ * Entscheidet nur, ob die Datei an LibRaw geht oder an ImageIO.
+ * Die endgültige Instanz bleibt LibRaw (siehe Fallback im RAWImageLoader).
+ */
 public final class RawFormatDetector {
 
-    public static final int HEADER_SIZE = 2048;
+    /** Je größer, desto zuverlässiger die TIFF-IFD-Analyse (Make-String liegt oft hinter dem IFD). */
+    public static final int HEADER_SIZE = 65536;
 
+    private static final int MAX_IFD_ENTRIES = 512;
+
+    // TIFF-Tags
+    private static final int TAG_NEW_SUBFILE_TYPE = 0x00FE;
+    private static final int TAG_COMPRESSION      = 0x0103;
+    private static final int TAG_PHOTOMETRIC      = 0x0106;
+    private static final int TAG_MAKE             = 0x010F;
+    private static final int TAG_SUB_IFDS         = 0x014A;
+    private static final int TAG_DNG_VERSION      = 0xC612;
+
+    // Photometric-Werte
+    private static final int PHOTO_CFA        = 32803;
+    private static final int PHOTO_LINEAR_RAW = 34892;
+
+    /** Eindeutige Prefixe am Dateianfang. */
     private static final byte[][] PREFIXES = {
-        "FUJIFILMCCD-RAW".getBytes(StandardCharsets.US_ASCII),                       // RAF
-        "FOVb".getBytes(StandardCharsets.US_ASCII),                                  // X3F
-        {0x49, 0x49, 0x1A, 0x00, 0x00, 0x00, 'H', 'E', 'A', 'P', 'C', 'C', 'D', 'R'} // CRW
+        ascii("FUJIFILMCCD-RAW"),                                   // RAF
+        ascii("FOVb"),                                              // X3F (Sigma/Foveon)
+        {0x49, 0x49, 0x1A, 0x00, 0x00, 0x00, 'H', 'E', 'A', 'P', 'C', 'C', 'D', 'R'}, // CRW
+        {0x00, 'M', 'R', 'M'},                                      // MRW (Minolta)
+        ascii("IIRO"), ascii("IIRS"), ascii("MMOR"),                // ORF (Olympus)
+        {'I', 'I', 0x55, 0x00},                                     // RW2 / RWL (Panasonic, Leica)
+        ascii("IIII"), ascii("MMMM")                                // IIQ (Phase One)
     };
 
+    /** Kamerahersteller, die RAW-Dateien mit TIFF-Container erzeugen (Vergleich per contains, Großbuchstaben). */
     private static final String[] RAW_MAKES = {
         "NIKON", "CANON", "SONY", "OLYMPUS", "OM DIGITAL", "PENTAX", "RICOH",
-        "PANASONIC", "LEICA", "FUJIFILM", "HASSELBLAD", "PHASE ONE", "SAMSUNG", "KODAK"
+        "PANASONIC", "LEICA", "FUJIFILM", "HASSELBLAD", "PHASE ONE", "SAMSUNG",
+        "KODAK", "MINOLTA", "EPSON", "MAMIYA", "LEAF", "SIGMA", "CASIO",
+        "AGFA", "SINAR", "IMACON", "CONTAX"
     };
 
     private RawFormatDetector() {}
@@ -25,18 +53,16 @@ public final class RawFormatDetector {
         for (byte[] p : PREFIXES) {
             if (startsWith(h, p)) return true;
         }
-        // CR3 (ISO-BMFF): "ftypcrx " ab Offset 4
+
+        // CR3 (ISO-BMFF): Box-Größe beliebig, "ftyp" ab Offset 4, Brand "crx "
         if (h[4] == 'f' && h[5] == 't' && h[6] == 'y' && h[7] == 'p'
-                && h[8] == 'c' && h[9] == 'r' && h[10] == 'x') return true;
-        // ORF ("IIRO"/"IIRS") und RW2/Leica ("II" 0x55 0x00)
-        if (h[0] == 'I' && h[1] == 'I'
-                && ((h[2] == 'R' && (h[3] == 'O' || h[3] == 'S')) || (h[2] == 0x55 && h[3] == 0))) return true;
+                && h[8] == 'c' && h[9] == 'r' && h[10] == 'x' && h[11] == ' ') return true;
 
         boolean le = h[0] == 'I' && h[1] == 'I' && h[2] == 42 && h[3] == 0;
         boolean be = h[0] == 'M' && h[1] == 'M' && h[2] == 0 && h[3] == 42;
         if (!le && !be) return false;
 
-        // CR2: TIFF mit "CR" an Offset 8
+        // CR2: TIFF (little endian) mit "CR" an Offset 8
         if (le && h[8] == 'C' && h[9] == 'R') return true;
 
         return isTiffRaw(h, le);
@@ -45,31 +71,100 @@ public final class RawFormatDetector {
     private static boolean isTiffRaw(byte[] h, boolean le) {
         long ifd0 = u32(h, 4, le);
         if (ifd0 < 8 || ifd0 + 2 > h.length) return false;
-        int n = u16(h, (int) ifd0, le);
-        String make = null;
+        int base = (int) ifd0;
+        int n = Math.min(u16(h, base, le), MAX_IFD_ENTRIES);
 
-        for (int i = 0; i < Math.min(n, 128); i++) {
-            int e = (int) ifd0 + 2 + i * 12;
+        String make = null;
+        boolean hasSubIfds = false;
+        long newSubfileType = -1;
+        long photometric = -1;
+        long compression = -1;
+
+        for (int i = 0; i < n; i++) {
+            int e = base + 2 + i * 12;
             if (e + 12 > h.length) break;
+
             int tag = u16(h, e, le);
             int type = u16(h, e + 2, le);
             long count = u32(h, e + 4, le);
 
-            if (tag == 0xC612) return true;                       // DNGVersion
-            if (tag == 0x010F && type == 2 && count > 0 && count <= 64) {   // Make
-                long off = count <= 4 ? e + 8 : u32(h, e + 8, le);
-                if (off + count <= h.length) {
-                    make = new String(h, (int) off, (int) count, StandardCharsets.US_ASCII)
-                            .trim().toUpperCase();
-                }
+            switch (tag) {
+                case TAG_DNG_VERSION:
+                    return true;                                   // DNG (auch Linear-DNG)
+                case TAG_SUB_IFDS:
+                    hasSubIfds = true;
+                    break;
+                case TAG_NEW_SUBFILE_TYPE:
+                    newSubfileType = scalar(h, e, type, le);
+                    break;
+                case TAG_PHOTOMETRIC:
+                    photometric = scalar(h, e, type, le);
+                    break;
+                case TAG_COMPRESSION:
+                    compression = scalar(h, e, type, le);
+                    break;
+                case TAG_MAKE:
+                    if (type == 2 && count >= 2 && count <= 64) {
+                        long off = count <= 4 ? e + 8 : u32(h, e + 8, le);
+                        if (off >= 0 && off + count <= h.length) {
+                            make = readAscii(h, (int) off, (int) count);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
-        if (make != null) {
-            for (String m : RAW_MAKES) {
-                if (make.startsWith(m)) return true;
-            }
+
+        // Sensordaten direkt in IFD0 (CFA / LinearRaw): kein Foto-TIFF, ImageIO kann das nicht
+        if (photometric == PHOTO_CFA || photometric == PHOTO_LINEAR_RAW) return true;
+        // Herstellerspezifische Kompression (Sony ARW, Nikon NEF, Samsung, Pentax, Kodak ...)
+        if (isRawCompression(compression)) return true;
+
+        if (make == null || !matchesRawMake(make)) return false;
+
+        // Make passt, aber sieht IFD0 nach exportiertem Foto-TIFF aus?
+        // (Lightroom/Photoshop behalten Make/Model der Kamera.)
+        boolean standardPhotometric = photometric == 0 || photometric == 1 || photometric == 2
+                || photometric == 3 || photometric == 5 || photometric == 6 || photometric == 8;
+        boolean looksExported = standardPhotometric && !hasSubIfds && newSubfileType != 1;
+        return !looksExported;
+    }
+
+    private static boolean isRawCompression(long c) {
+        return c == 32767      // Sony ARW
+            || c == 32769      // Panasonic/Epson
+            || c == 32770      // Samsung SRW
+            || c == 34713      // Nikon NEF
+            || c == 65000      // Kodak
+            || c == 65535;     // Pentax PEF
+    }
+
+    private static boolean matchesRawMake(String make) {
+        for (String m : RAW_MAKES) {
+            if (make.contains(m)) return true;
         }
         return false;
+    }
+
+    /** Liest einen einzelnen inline gespeicherten Wert (BYTE, SHORT, LONG). */
+    private static long scalar(byte[] h, int e, int type, boolean le) {
+        switch (type) {
+            case 1:  return h[e + 8] & 0xFF;
+            case 3:  return u16(h, e + 8, le);
+            case 4:  return u32(h, e + 8, le);
+            default: return -1;
+        }
+    }
+
+    private static String readAscii(byte[] h, int off, int count) {
+        int len = 0;
+        while (len < count && h[off + len] != 0) len++;       // am ersten NUL abschneiden
+        return new String(h, off, len, StandardCharsets.US_ASCII).trim().toUpperCase();
+    }
+
+    private static byte[] ascii(String s) {
+        return s.getBytes(StandardCharsets.US_ASCII);
     }
 
     private static boolean startsWith(byte[] d, byte[] p) {

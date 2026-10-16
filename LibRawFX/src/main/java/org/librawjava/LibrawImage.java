@@ -72,10 +72,10 @@ public class LibrawImage {
      * into a temp directory
      */
     public static void loadLibs(String tempDir) throws IOException {        
-        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...");
+        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, "Init native libs...");
         operatingSystem = System.getProperty("os.name").toUpperCase();
         String arch = System.getProperty("os.arch").toUpperCase();
-        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "OS was: " + operatingSystem);
+        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, () -> "OS was: " + operatingSystem);
         if (operatingSystem.contains("WIN")) {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/win-x86_64/libraw.dll", "/lib/win-x86_64/libjpeg.dll", "/lib/win-x86_64/zlib.dll");
         } else if (operatingSystem.contains("MAC") && !arch.contains("AARCH64")) {
@@ -86,7 +86,7 @@ public class LibrawImage {
             loadLibraryFromJar = NativeUtils.loadLibraryFromJar(tempDir, "/lib/linux-x86_64/libgomp.so.1", "/lib/linux-x86_64/liblcms2.so.2", "/lib/linux-x86_64/libjpeg.so.62", "/lib/linux-x86_64/libraw.so.24");
         }
 
-        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "loadLibraryFromJar: " + Arrays.toString(loadLibraryFromJar) + " , tempdir: " + tempDir);
+        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, () -> "loadLibraryFromJar: " + Arrays.toString(loadLibraryFromJar) + " , tempdir: " + tempDir);
         for (String part : loadLibraryFromJar) {
             new File(part).deleteOnExit();
         }
@@ -96,7 +96,7 @@ public class LibrawImage {
         }
         MemorySegment iprc = org.libraw.nativ.libraw_h.libraw_init(0);
 
-        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, null, "Init native libs...finished");
+        Logger.getLogger(LibrawImage.class.getName()).log(Level.FINEST, "Init native libs...finished");
 
     }
 
