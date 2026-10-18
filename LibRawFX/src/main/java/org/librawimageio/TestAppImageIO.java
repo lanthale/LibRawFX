@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
@@ -287,7 +286,8 @@ public class TestAppImageIO extends Application {
         args = new String[3];        
         args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample1.nef";
         args[1] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_SIGMA_DP2_MERRILL.X3F";
-        args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";
+        //args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";
+        args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "Classic.tif";
         Logger logger = Logger.getLogger("");
         Handler handler = new ConsoleHandler();
         logger.addHandler(handler);

@@ -43,14 +43,14 @@ public class TestApp extends Application {
         decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
         decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
         decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
-        decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);        
+        decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
         decoderSettings.get("Sigma DP2 Merrill").setAutoWhitebalance(true);
         decoderSettings.put("Fujifilm X-T2", new RawDecoderSettings());
         decoderSettings.get("Fujifilm X-T2").setEnableExposureCorrection(true);
         decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);
 
         Parameters parameters = getParameters();
-        String file = parameters.getRaw().get(0);        
+        String file = parameters.getRaw().get(0);
         String file2 = parameters.getRaw().get(1);
         String file3 = parameters.getRaw().get(2);
 
@@ -79,7 +79,7 @@ public class TestApp extends Application {
         btn.setOnAction((t) -> {
             stack.getChildren().clear();
             stack.getChildren().add(btn);
-            final ProgressBar pg=new ProgressBar();
+            final ProgressBar pg = new ProgressBar();
             stack.getChildren().add(pg);
             Platform.runLater(() -> {
                 try {
@@ -116,10 +116,10 @@ public class TestApp extends Application {
                     try {
                         ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        long start=System.currentTimeMillis();
+                        long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile.getAbsolutePath(), settings).getMetaData();
-                        long end=System.currentTimeMillis();
-                        System.out.println("meta file: "+(end-start)+" ms");
+                        long end = System.currentTimeMillis();
+                        System.out.println("meta file: " + (end - start) + " ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -151,10 +151,10 @@ public class TestApp extends Application {
                     try {
                         ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        long start=System.currentTimeMillis();
+                        long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile2.getAbsolutePath(), settings).getMetaData();
-                        long end=System.currentTimeMillis();
-                        System.out.println("meta file: "+(end-start)+" ms");
+                        long end = System.currentTimeMillis();
+                        System.out.println("meta file: " + (end - start) + " ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -186,10 +186,10 @@ public class TestApp extends Application {
                     try {
                         ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
                         settings.put("Default", new RawDecoderSettings());
-                        long start=System.currentTimeMillis();
+                        long start = System.currentTimeMillis();
                         HashMap<String, String> metaData = new LibrawImage(initialFile3.getAbsolutePath(), settings).getMetaData();
-                        long end=System.currentTimeMillis();
-                        System.out.println("meta file: "+(end-start)+" ms");
+                        long end = System.currentTimeMillis();
+                        System.out.println("meta file: " + (end - start) + " ms");
                         ScrollPane sc = new ScrollPane();
                         TextArea vb = new TextArea();
                         metaData.entrySet().forEach((entry) -> {
@@ -256,11 +256,14 @@ public class TestApp extends Application {
         args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample1.nef";
         args[1] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_SIGMA_DP2_MERRILL.X3F";
         args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";
-        Logger logger = Logger.getLogger("");
-        Handler handler = new ConsoleHandler();
-        logger.addHandler(handler);
-        logger.setLevel(Level.ALL);
-        handler.setFormatter(new SimpleFormatter());
+        Logger root = Logger.getLogger("");
+        root.setLevel(Level.INFO);                       // fremde Bibliotheken ruhig halten
+        for (Handler h : root.getHandlers()) {
+            h.setLevel(Level.ALL);                       // vorhandenen Handler öffnen, keinen zweiten anlegen
+        }
+        for (String name : new String[]{"org.librawfx", "org.librawjava", "org.librawimageio"}) {
+            Logger.getLogger(name).setLevel(Level.FINE); // nur deine Packages auf FINE
+        }
         launch(args);
     }
 

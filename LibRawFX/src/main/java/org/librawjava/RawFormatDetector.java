@@ -1,4 +1,4 @@
-package org.librawfx;
+package org.librawjava;
 
 import java.nio.charset.StandardCharsets;
 

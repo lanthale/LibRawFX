@@ -36,11 +36,17 @@ import org.librawimageio.RAWImageIOReader;
  * result fields (width, height, ...) are written by the decode calls and are
  * volatile, but they describe the LAST call of this instance.
  *
+ * Errors coming from LibRaw are thrown as {@link LibrawException} (a subclass
+ * of IOException) with a readable message and the raw error code.
+ *
  * @author Clemens Lanthaler
  */
 public class LibrawImage {
 
     private static final Logger LOG = Logger.getLogger(LibrawImage.class.getName());
+
+    /** Source label used in messages when the data comes from memory. */
+    private static final String SRC_DATA = "Bilddaten";
 
     /** Receives decode progress (rows done / total rows). */
     @FunctionalInterface
@@ -154,6 +160,69 @@ public class LibrawImage {
     }
 
     // ==========================================================================
+    // Error texts
+    // ==========================================================================
+    /**
+     * Readable text for a LibRaw / libraw_open_file return code. Negative
+     * values are LibRaw errors (libraw_const.h), positive values are operating
+     * system errors from libraw_open_file.
+     *
+     * @param code the return value of the native call
+     * @return text suitable for the user
+     */
+    public static String describeError(int code) {
+        switch (code) {
+            case -1:
+                return "Unbekannter Fehler";
+            case -2:
+                return "Kein unterstütztes RAW-Format";
+            case -3:
+                return "Das angeforderte Bild existiert nicht in der Datei";
+            case -4:
+                return "Interner Fehler (falsche Aufrufreihenfolge)";
+            case -5:
+                return "Kein Vorschaubild vorhanden";
+            case -6:
+                return "Format des Vorschaubilds wird nicht unterstützt";
+            case -7:
+                return "Die Eingabe wurde geschlossen";
+            case -8:
+                return "Funktion nicht implementiert";
+            case -9:
+                return "Das angeforderte Vorschaubild existiert nicht";
+            case -100007:
+                return "Nicht genug Speicher";
+            case -100008:
+                return "Beschädigte oder unvollständige Bilddaten";
+            case -100009:
+                return "Lesefehler (Datei beschädigt oder abgeschnitten)";
+            case -100010:
+                return "Vorgang abgebrochen";
+            case -100011:
+                return "Ungültiger Bildausschnitt";
+            case -100012:
+                return "Das Bild ist zu groß";
+            case -100013:
+                return "Interner Speicherpool-Überlauf";
+            case 2:
+                return "Datei nicht gefunden";
+            case 13:
+                return "Zugriff auf die Datei verweigert";
+            default:
+                return code > 0 ? "Dateisystemfehler (Code " + code + ")" : "Unbekannter LibRaw-Fehler";
+        }
+    }
+
+    private static LibrawException error(String source, int code) {
+        return new LibrawException(source + ": " + describeError(code) + " [LibRaw " + code + "]", code);
+    }
+
+    /** Only the file name, not the full path, for messages shown to users. */
+    private static String fileLabel(String path) {
+        return "Datei '" + new File(path).getName() + "'";
+    }
+
+    // ==========================================================================
     // Settings / progress
     // ==========================================================================
     /**
@@ -206,7 +275,7 @@ public class LibrawImage {
         }
         return decode((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
                 arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
-                sourceFileAsByteArray.length), "file stream");
+                sourceFileAsByteArray.length), SRC_DATA);
     }
 
     /**
@@ -222,7 +291,7 @@ public class LibrawImage {
             throw new IllegalArgumentException("imageFileURL == null!");
         }
         byte[] rgb = decode((iprc, arena) -> libraw_h.libraw_open_file(iprc, arena.allocateFrom(url)),
-                "file '" + url + "'");
+                fileLabel(url));
         return convertToINT(rgb);
     }
 
@@ -238,11 +307,11 @@ public class LibrawImage {
                 progress(0, 1);
                 int k = opener.open(iprc, scope);
                 if (k != 0) {
-                    throw new IOException("Cannot open " + source + ", LibRaw return value was: " + k);
+                    throw error(source, k);
                 }
                 k = libraw_h.libraw_unpack(iprc);
                 if (k < 0) {
-                    throw new IOException("libraw_unpack failed, return value was: " + k);
+                    throw error(source + " (Dekodieren)", k);
                 }
 
                 MemorySegment iParams = libraw_h.libraw_get_iparams(iprc);
@@ -258,7 +327,7 @@ public class LibrawImage {
 
                 k = libraw_h.libraw_dcraw_process(iprc);
                 if (k < 0) {
-                    throw new IOException("libraw_dcraw_process failed, return value was: " + k);
+                    throw error(source + " (Bildverarbeitung)", k);
                 }
 
                 MemorySegment errorCode = scope.allocate(libraw_h.C_INT);
@@ -266,7 +335,7 @@ public class LibrawImage {
                 int memErr = errorCode.get(ValueLayout.JAVA_INT, 0);
                 if (isNull(memImage) || memErr != 0) {
                     memImage = MemorySegment.NULL;         // nothing to free
-                    throw new IOException("libraw_dcraw_make_mem_image failed, error code: " + memErr);
+                    throw error(source + " (Bildausgabe)", memErr != 0 ? memErr : -1);
                 }
 
                 // All values come from the same processed_image_t that holds the pixels
@@ -276,12 +345,13 @@ public class LibrawImage {
                 int colors = libraw_processed_image_t.colors(memImage);
 
                 if (bits != 8 || colors != 3) {
-                    throw new IOException("Unsupported pixel format: bits=" + bits + ", colors=" + colors);
+                    throw new IOException(source + ": Nicht unterstütztes Pixelformat (bits=" + bits
+                            + ", colors=" + colors + ")");
                 }
                 long rowBytes = (long) w * colors * (bits / 8);
                 long total = rowBytes * h;
                 if (w <= 0 || h <= 0 || total > Integer.MAX_VALUE - 8) {
-                    throw new IOException("Invalid image size: " + w + "x" + h);
+                    throw new IOException(source + ": Ungültige Bildgröße " + w + "x" + h);
                 }
 
                 MemorySegment data$slice = libraw_processed_image_t.data(memImage);
@@ -349,7 +419,7 @@ public class LibrawImage {
                         scope.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
                         sourceFileAsByteArray.length);
                 if (k != 0) {
-                    throw new IOException("Cannot open file stream, LibRaw return value was: " + k);
+                    throw error(SRC_DATA, k);
                 }
                 imageWidth = libraw_h.libraw_get_iwidth(iprc);
                 imageHeight = libraw_h.libraw_get_iheight(iprc);
@@ -374,6 +444,9 @@ public class LibrawImage {
     /**
      * Metadata of the file set via the constructor / setImageFileURL.
      * Timestamps are epoch SECONDS.
+     *
+     * @throws LibrawException if LibRaw cannot open the file; check
+     * {@link LibrawException#isUnsupportedFormat()} for non-RAW files
      */
     public HashMap<String, String> getMetaData() throws IOException {
         final String url = imageFileURL;
@@ -382,7 +455,7 @@ public class LibrawImage {
             throw new IllegalArgumentException("imageFileURL == null!");
         }
         return readMeta((iprc, arena) -> libraw_h.libraw_open_file(iprc, arena.allocateFrom(url)),
-                "file '" + url + "'");
+                fileLabel(url));
     }
 
     /**
@@ -395,7 +468,7 @@ public class LibrawImage {
         }
         return readMeta((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
                 arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
-                sourceFileAsByteArray.length), "file stream");
+                sourceFileAsByteArray.length), SRC_DATA);
     }
 
     /** @return "Maker Model" of the file set via constructor / setImageFileURL */
@@ -413,7 +486,7 @@ public class LibrawImage {
             try {
                 int k = libraw_h.libraw_open_file(iprc, scope.allocateFrom(url));
                 if (k != 0) {
-                    throw new IOException("Cannot open file '" + url + "', LibRaw return value was: " + k);
+                    throw error(fileLabel(url), k);
                 }
                 MemorySegment iParams = libraw_h.libraw_get_iparams(iprc);
                 return str(libraw_iparams_t.make(iParams)) + " " + str(libraw_iparams_t.model(iParams));
@@ -434,7 +507,7 @@ public class LibrawImage {
             try {
                 int k = opener.open(iprc, scope);
                 if (k != 0) {
-                    throw new IOException("Cannot open " + source + ", LibRaw return value was: " + k);
+                    throw error(source, k);
                 }
                 fillMeta(iprc, m);
                 return m;

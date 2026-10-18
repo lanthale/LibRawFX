@@ -255,6 +255,8 @@ public class RAWImageIOReader extends ImageReader {
         decodedWith = null;
         final int w = width;
         final int h = height;
+        LOG.log(Level.INFO, "ImageIO read: native={0}x{1}, renderSize={2}",
+                new Object[]{w, h, param == null ? "no param" : param.getSourceRenderSize()});
         LOG.log(Level.FINE, "Raw convert took: {0}s", (System.nanoTime() - start) / 1e9);
 
         // Zero-copy: the byte[] from LibRaw becomes the raster directly
@@ -265,25 +267,14 @@ public class RAWImageIOReader extends ImageReader {
                 Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
         BufferedImage full = new BufferedImage(cm, raster, false, null);
 
-        int dstW = w;
-        int dstH = h;
-        if (param != null) {
-            Dimension rs = param.getSourceRenderSize();
-            if (rs != null) {
-                dstW = Math.max(1, rs.width);
-                dstH = Math.max(1, rs.height);
-                if (param instanceof RAWImageIOImageReadParam rp && rp.isPreserveAspectRatio()) {
-                    double s = Math.min((double) dstW / w, (double) dstH / h);   // Box -> passende Größe
-                    dstW = Math.max(1, (int) Math.round(w * s));
-                    dstH = Math.max(1, (int) Math.round(h * s));
-                }
-            }
-        }
-        if (dstW == w && dstH == h) {
-            processImageComplete();
-            return full;
-        }
-        BufferedImage result = scale(full, dstW, dstH);
+        Dimension target = (param != null) ? param.getSourceRenderSize() : null;
+        final int dstW = target != null ? Math.max(1, target.width) : w;   // exakt, ohne eigene Seitenverhältnis-Logik
+        final int dstH = target != null ? Math.max(1, target.height) : h;
+
+        BufferedImage result = (dstW == w && dstH == h) ? full : scale(full, dstW, dstH);
+
+        LOG.log(Level.INFO, "ImageIO read: native={0}x{1}, target={2}, returned={3}x{4}",
+                new Object[]{w, h, target, result.getWidth(), result.getHeight()});
         processImageComplete();
         return result;
     }

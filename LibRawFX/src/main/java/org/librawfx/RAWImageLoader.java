@@ -1,8 +1,5 @@
 package org.librawfx;
 
-import org.librawjava.LibrawImage;
-import org.librawdecodersettings.RawDecoderSettings;
-import org.librawfx.dimension.DimensionProvider;
 import com.sun.javafx.iio.ImageFrame;
 import com.sun.javafx.iio.ImageMetadata;
 import com.sun.javafx.iio.ImageStorage;
@@ -19,16 +16,28 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Screen;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.MemoryCacheImageInputStream;
+import org.librawdecodersettings.RawDecoderSettings;
+import org.librawfx.dimension.DimensionProvider;
+import org.librawimageio.RAWImageIOReader;
+import org.librawimageio.RAWImageIOReaderSpi;
+import org.librawjava.LibrawImage;
+import org.librawjava.RawFormatDetector;
 
 /**
- * Lädt RAW-Bilder über LibRaw. Dateien, die kein RAW sind (z. B. normale TIFFs),
- * werden über ImageIO geladen. Der RawFormatDetector wählt nur den ersten Versuch,
- * der jeweils andere Decoder dient als Fallback.
+ * Lädt RAW-Bilder über LibRaw. Dateien, die kein RAW sind (z. B. normale
+ * TIFFs), werden über ImageIO geladen. Der RawFormatDetector wählt nur den
+ * ersten Versuch, der jeweils andere Decoder dient als Fallback. Beim
+ * ImageIO-Weg werden die eigenen Reader (RAWImageIOReader) übersprungen, damit
+ * LibRaw nicht doppelt versucht wird.
  *
  * @author Clemens Lanthaler
  */
@@ -37,6 +46,11 @@ public class RAWImageLoader extends ImageLoaderImpl {
     private static final Logger LOG = Logger.getLogger(RAWImageLoader.class.getName());
 
     private static final ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
+
+    /**
+     * Sicherheitsnetz gegen Rekursion über ImageIO.
+     */
+    private static final ThreadLocal<Boolean> IN_IMAGEIO = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     private final InputStream input;
     private final DimensionProvider dimensionProvider;
@@ -92,6 +106,8 @@ public class RAWImageLoader extends ImageLoaderImpl {
         if (imageIndex != 0) {
             return null;
         }
+        LOG.log(Level.INFO, "RAWImageLoader.load: requested={0}x{1}, keepRatio={2}",
+                new Object[]{width, height, preserveAspectRatio});
 
         byte[] fileBytes = readAll(input);
         if (fileBytes.length == 0) {
@@ -136,9 +152,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
         try {
             updateImageProgress(0);
             long start = System.currentTimeMillis();
+            // LibrawImage meldet den Fortschritt (0 % ... 100 %) selbst über den Listener
             imageData = getImageData(libraw, fileBytes);
             LOG.log(Level.FINE, "Raw loading took: {0}s", (System.currentTimeMillis() - start) / 1000.0);
-            updateImageProgress(lastPercentDone + 1);
 
             rawWidth = libraw.getImageWidth();
             rawHeight = libraw.getImageHeight();
@@ -153,7 +169,6 @@ public class RAWImageLoader extends ImageLoaderImpl {
                     (int) width, (int) height, preserveAspectRatio);
             targetW = wh[0];
             targetH = wh[1];
-            updateImageProgress(lastPercentDone + 1);
         } catch (IOException e) {
             throw e;
         } catch (Throwable t) {
@@ -167,7 +182,6 @@ public class RAWImageLoader extends ImageLoaderImpl {
         ImageMetadata md = new ImageMetadata(null, true, null, null, null, null, null,
                 targetW, targetH, null, null, null);
         updateImageMetadata(md);
-        updateImageProgress(lastPercentDone + 1);
 
         int stride;
         if (rawWidth != targetW || rawHeight != targetH) {
@@ -176,7 +190,6 @@ public class RAWImageLoader extends ImageLoaderImpl {
         } else {
             stride = Math.max(rawStride, rawWidth * bands); // Original-Stride, falls größer (Padding)
         }
-        updateImageProgress(lastPercentDone + 1);
 
         ImageFrame frame = new ImageFrame(ImageStorage.ImageType.RGB, imageData, targetW, targetH,
                 stride, imagePixelScale, md);
@@ -188,12 +201,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
             boolean preserveAspectRatio, boolean smooth, float imagePixelScale) throws IOException {
         BufferedImage src;
         try {
-            src = ImageIO.read(new ByteArrayInputStream(data));
+            src = readViaImageIO(data);
         } catch (RuntimeException | OutOfMemoryError e) {
             throw new IOException("ImageIO failed: " + e, e);   // manche TIFF-Varianten werfen Runtime-Fehler
-        }
-        if (src == null) {
-            throw new IOException("Unsupported image format");
         }
 
         int[] wh = ImageTools.computeDimensions(src.getWidth(), src.getHeight(),
@@ -223,7 +233,46 @@ public class RAWImageLoader extends ImageLoaderImpl {
                 w, h, w, imagePixelScale, md);   // Stride in Ints, nicht in Bytes
     }
 
-    /** Native Anbindung. Das Ergebnis ist ein Java-byte[] und damit unabhängig von dispose(). */
+    /**
+     * Liest über ImageIO, überspringt aber die eigenen RAW-Reader. LibRaw wurde
+     * dann entweder schon versucht oder der Detector hat die Datei als
+     * Nicht-RAW eingestuft.
+     */
+    private static BufferedImage readViaImageIO(byte[] data) throws IOException {
+        if (IN_IMAGEIO.get()) {
+            throw new IOException("Recursive ImageIO call detected");
+        }
+        IN_IMAGEIO.set(Boolean.TRUE);
+        // MemoryCache statt ImageIO.createImageInputStream: kein Temp-File auf der Platte
+        try (ImageInputStream iis = new MemoryCacheImageInputStream(new ByteArrayInputStream(data))) {
+            Iterator<ImageReader> it = ImageIO.getImageReaders(iis);
+            while (it.hasNext()) {
+                ImageReader reader = it.next();
+                if (reader instanceof RAWImageIOReader
+                        || reader.getOriginatingProvider() instanceof RAWImageIOReaderSpi) {
+                    continue;                                  // LibRaw wurde schon versucht
+                }
+                try {
+                    reader.setInput(iis, false, true);         // nicht seekForwardOnly: TIFF springt zwischen IFDs
+                    return reader.read(0);
+                } catch (IOException | RuntimeException e) {
+                    LOG.log(Level.FINE, "ImageIO reader {0} failed: {1}",
+                            new Object[]{reader.getClass().getName(), e.toString()});
+                    iis.seek(0);                               // nächsten Reader versuchen
+                } finally {
+                    reader.dispose();
+                }
+            }
+            throw new IOException("No suitable ImageIO reader found");
+        } finally {
+            IN_IMAGEIO.set(Boolean.FALSE);
+        }
+    }
+
+    /**
+     * Native Anbindung. Das Ergebnis ist ein Java-byte[] und damit unabhängig
+     * von dispose().
+     */
     private synchronized ByteBuffer getImageData(LibrawImage libraw, byte[] fileBytes) throws IOException {
         long start = System.currentTimeMillis();
         byte[] raw = libraw.readPixelDataFromStream(fileBytes);
@@ -231,7 +280,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
         return raw == null ? null : ByteBuffer.wrap(raw);
     }
 
-    /** Wird von LibrawImage aufgerufen, um den Fortschritt zu melden. */
+    /**
+     * Wird von LibrawImage (Progress-Listener) aufgerufen, um den Fortschritt
+     * zu melden.
+     */
     public void updateImageProgress(int outLinesDecoded, int outHeight) {
         if (outHeight <= 0) {
             return;
