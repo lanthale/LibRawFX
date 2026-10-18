@@ -1,18 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.librawimageio;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
@@ -20,7 +13,7 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,190 +26,189 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-import org.librawjava.LibrawImage;
 import org.librawdecodersettings.RawDecoderSettings;
+import org.librawjava.LibrawImage;
 
 /**
+ * ImageIO reader for RAW files via LibRaw.
  *
- * @author selfemp
+ * Parallelism: no global lock. Every reader owns its own LibrawImage and every
+ * decode uses its own native libraw handle (libraw_r), so decodes of different
+ * readers run in parallel. A single reader instance must still only be used by
+ * one thread at a time (standard ImageReader contract).
  */
 public class RAWImageIOReader extends ImageReader {
 
-    private final LibrawImage libraw;
-    ImageInputStream stream = null;
-    int width, height;
-    int colorType;
-    private static final Object LIBRAW_LOCK = new Object();
-
-    // Constants enumerating the values of colorType
-    static final int COLOR_TYPE_GRAY = 0;
-    static final int COLOR_TYPE_RGB = 1;
-
-    boolean gotHeader = false;
-    RAWIOFormatMetadata metadata = null; // class defined below
-
+    private static final Logger LOG = Logger.getLogger(RAWImageIOReader.class.getName());
     private static final ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
 
+    private final LibrawImage libraw;
+    private ImageInputStream stream;
+
+    private byte[] fileBytes;                  // the file is read only ONCE
+    private byte[] decoded;                    // decoded RGB, handed over to read()
+    private RawDecoderSettings decodedWith;    // settings used for 'decoded'
+    private int width;
+    private int height;
+    private boolean gotSize;
+    private RAWIOFormatMetadata metadata;
+
     public RAWImageIOReader() {
-        super(new RAWImageIOReaderSpi());
-        initSettings();
-        libraw = new LibrawImage(this, settings);
+        this(new RAWImageIOReaderSpi());
     }
 
     public RAWImageIOReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
         initSettings();
         libraw = new LibrawImage(this, settings);
+        libraw.setProgressListener((done, total) -> {
+            if (total > 0) {
+                processImageProgress(100f * done / total);
+            }
+        });
     }
 
-    @Override
-    public void setInput(Object input) {
-        super.setInput(input);
-        stream = (ImageInputStream) input;
+    public static void initSettings() {
+        settings.computeIfAbsent("Default", k -> new RawDecoderSettings());
     }
 
+    public static ConcurrentHashMap<String, RawDecoderSettings> getSettings() {
+        initSettings();
+        return settings;
+    }
+
+    // ---- input handling -----------------------------------------------------
     @Override
     public void setInput(Object input, boolean seekForwardOnly, boolean ignoreMetadata) {
         super.setInput(input, seekForwardOnly, ignoreMetadata);
         stream = (ImageInputStream) input;
+        reset0();
     }
 
     @Override
-    public int getNumImages(boolean allowSearch) throws IOException {
-        return 1; // format can only encode a single image
+    public void setInput(Object input, boolean seekForwardOnly) {
+        setInput(input, seekForwardOnly, false);
     }
 
-    private void checkIndex(int imageIndex) {
-        if (imageIndex != 0) {
+    @Override
+    public void setInput(Object input) {
+        setInput(input, false, false);
+    }
+
+    @Override
+    public void dispose() {
+        reset0();
+        super.dispose();
+    }
+
+    private void reset0() {
+        fileBytes = null;
+        decoded = null;
+        decodedWith = null;
+        width = 0;
+        height = 0;
+        gotSize = false;
+        metadata = null;
+    }
+
+    private void checkIndex(int i) {
+        if (i != 0) {
             throw new IndexOutOfBoundsException("bad index");
         }
     }
 
-    /*@Override
-    public int getWidth(int imageIndex) throws IOException {
-        if (libraw.getImageWidth() == 0) {
-            getBasicMetaData();
-            width = libraw.getImageWidth();
-        } else {
-            height = libraw.getImageWidth();
+    /**
+     * Reads the stream exactly once and caches the bytes.
+     */
+    private byte[] bytes() throws IOException {
+        if (fileBytes != null) {
+            return fileBytes;
         }
-        return width;
-    }
-
-    @Override
-    public int getHeight(int imageIndex) throws IOException {
-        if (libraw.getImageHeight() == 0) {
-            getBasicMetaData();
-            height = libraw.getImageHeight();
-        } else {
-            height = libraw.getImageHeight();
-        }
-        return height;
-    }*/
-    @Override
-    public int getWidth(int imageIndex) throws IOException {
-        checkIndex(imageIndex);
-        if (width <= 0) {
-            getBasicMetaData();                    // setzt libraw-Felder aus processed_image_t
-            width = libraw.getImageWidth();
-            height = libraw.getImageHeight();
-        }
-        if (width <= 0) {
-            throw new IIOException("Could not determine image width");
-        }
-        return width;
-    }
-// getHeight analog mit height
-
-    @Override
-    public int getHeight(int imageIndex) throws IOException {
-        checkIndex(imageIndex);
-        if (height <= 0) {
-            getBasicMetaData();                    // setzt libraw-Felder aus processed_image_t
-            width = libraw.getImageWidth();
-            height = libraw.getImageHeight();
-        }
-        if (height <= 0) {
-            throw new IIOException("Could not determine image width");
-        }
-        return height;
-    }
-
-    public void readHeader() throws IIOException {
-        if (gotHeader) {
-            return;
-        }
-        gotHeader = true;
-
         if (stream == null) {
             throw new IllegalStateException("No input stream");
         }
-        // Read width, height, color type, newline
-        try {
-            libraw.getMetaData();
-            this.width = libraw.getImageWidth();
-            this.height = libraw.getImageHeight();
-            this.colorType = COLOR_TYPE_RGB;
-        } catch (IOException e) {
-            throw new IIOException("Error reading header", e);
+        stream.seek(0);
+        long len = stream.length();
+        byte[] data;
+        if (len > 0 && len < Integer.MAX_VALUE - 8) {
+            data = new byte[(int) len];
+            stream.readFully(data);
+        } else {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(1 << 20);
+            byte[] buf = new byte[64 * 1024];
+            int n;
+            while ((n = stream.read(buf)) != -1) {
+                bos.write(buf, 0, n);
+            }
+            data = bos.toByteArray();
         }
+        fileBytes = data;
+        return data;
+    }
+
+    // ---- decoding (no lock) -------------------------------------------------
+    private static RawDecoderSettings customSettings(ImageReadParam param) {
+        return (param instanceof RAWImageIOImageReadParam rp) ? rp.getSettings() : null;
+    }
+
+    /**
+     * Decodes once and caches the result. Exact size (after flip/half_size) is
+     * only known after a decode, so getWidth/getHeight use the same cache and
+     * read() does not decode a second time.
+     */
+    private void ensureDecoded(ImageReadParam param) throws IOException {
+        RawDecoderSettings custom = customSettings(param);
+        if (decoded != null && decodedWith == custom) {
+            return;                                   // already decoded with the same settings
+        }
+        byte[] data = bytes();
+        libraw.setSettingsOverride(custom);           // null = standard lookup
+        byte[] raw = libraw.readPixelDataFromStream(data);
+        int w = libraw.getImageWidth();
+        int h = libraw.getImageHeight();
+        if (raw == null || w <= 0 || h <= 0 || raw.length != (long) w * h * 3) {
+            throw new IIOException("Unexpected pixel data size for " + w + "x" + h);
+        }
+        decoded = raw;
+        decodedWith = custom;
+        width = w;
+        height = h;
+        gotSize = true;
+    }
+
+    private void ensureSize() throws IOException {
+        if (!gotSize) {
+            ensureDecoded(null);
+        }
+    }
+
+    // ---- ImageReader API ----------------------------------------------------
+    @Override
+    public int getNumImages(boolean allowSearch) {
+        return 1;
+    }
+
+    @Override
+    public int getWidth(int imageIndex) throws IOException {
+        checkIndex(imageIndex);
+        ensureSize();
+        return width;
+    }
+
+    @Override
+    public int getHeight(int imageIndex) throws IOException {
+        checkIndex(imageIndex);
+        ensureSize();
+        return height;
     }
 
     @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IOException {
         checkIndex(imageIndex);
-        readHeader();
-        colorType = COLOR_TYPE_RGB;
-
-        ImageTypeSpecifier imageType = null;
-        int datatype = DataBuffer.TYPE_BYTE;
-        java.util.List l = new ArrayList();
-        switch (colorType) {
-            case COLOR_TYPE_GRAY:
-                imageType = ImageTypeSpecifier.createGrayscale(8,
-                        datatype,
-                        false);
-                break;
-
-            case COLOR_TYPE_RGB:
-                ColorSpace rgb
-                        = ColorSpace.getInstance(ColorSpace.CS_sRGB);
-                int[] bandOffsets = new int[3];
-                bandOffsets[0] = 0;
-                bandOffsets[1] = 1;
-                bandOffsets[2] = 2;
-                imageType
-                        = ImageTypeSpecifier.createInterleaved(rgb,
-                                bandOffsets,
-                                datatype,
-                                false,
-                                false);
-                break;
-        }
-        l.add(imageType);
-        return l.iterator();
-    }
-
-    private void getBasicMetaData() {
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] datab = new byte[1024];
-            long reading = System.currentTimeMillis();
-            while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
-                buffer.write(datab, 0, nRead);
-            }
-            buffer.flush();
-            byte[] targetArray = buffer.toByteArray();
-            synchronized (LIBRAW_LOCK) {
-                libraw.getBasicMetaInfo(targetArray);
-                //width = libraw.getImageWidth();    // Werte sofort im Lock kopieren
-                //height = libraw.getImageHeight();
-            }
-            stream.seek(0);
-        } catch (IOException ex) {
-            Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ImageTypeSpecifier t = ImageTypeSpecifier.createInterleaved(
+                ColorSpace.getInstance(ColorSpace.CS_sRGB),
+                new int[]{0, 1, 2}, DataBuffer.TYPE_BYTE, false, false);
+        return Collections.singletonList(t).iterator();
     }
 
     @Override
@@ -225,170 +217,107 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     @Override
-    public IIOMetadata getStreamMetadata() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public IIOMetadata getStreamMetadata() {
+        return null;
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IOException {
-        if (imageIndex != 0) {
-            throw new IndexOutOfBoundsException("imageIndex != 0!");
+        checkIndex(imageIndex);
+        if (ignoreMetadata) {
+            return null;
         }
-        //readMetadata();
+        if (metadata == null) {
+            readMetadata();
+        }
         return metadata;
     }
 
-    @Override
-    public BufferedImage read(int imageIndex) throws IOException {
-        return super.read(imageIndex);
-    }
-
-    public void readMetadata() throws IIOException {
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] datab = new byte[1024];
-            long reading = System.currentTimeMillis();
-            while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
-                buffer.write(datab, 0, nRead);
-            }
-            buffer.flush();
-            byte[] targetArray = buffer.toByteArray();
-            HashMap<String, String> metaData = libraw.getMetaData(targetArray);
-            width = libraw.getImageWidth();
-            height = libraw.getImageHeight();
-            stream.seek(0);
-            this.metadata = new RAWIOFormatMetadata();
-            metaData.entrySet().forEach((var entry) -> {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                metadata.keywords.add(key);
-                metadata.values.add(value);
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public static void initSettings() {
-        if (settings.isEmpty()) {
-            settings.put("Default", new RawDecoderSettings());
-        }
-    }
-
-    public static ConcurrentHashMap<String, RawDecoderSettings> getSettings() {
-        initSettings();
-        return settings;
+    private void readMetadata() throws IOException {
+        HashMap<String, String> map = libraw.getMetaData(bytes());
+        RAWIOFormatMetadata md = new RAWIOFormatMetadata();
+        map.forEach((k, v) -> {
+            md.keywords.add(k);
+            md.values.add(v);
+        });
+        metadata = md;
     }
 
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int nRead;
-        byte[] datab = new byte[1024];
-        long reading = System.currentTimeMillis();
-        if (width == 0) {
-            getWidth(0);
-        }
-        if (height == 0) {
-            getHeight(0);
-        }
-        stream.seek(0);
+        checkIndex(imageIndex);
+        processImageStarted(0);
+        long start = System.nanoTime();
 
-        while ((nRead = stream.read(datab, 0, datab.length)) != -1) {
-            buffer.write(datab, 0, nRead);
-        }
-        buffer.flush();
-        byte[] targetArray = buffer.toByteArray();
-        byte[] raw = libraw.readPixelDataFromStream(targetArray);
-        final int w = libraw.getImageWidth();    // processed_image_t, nach flip
-        final int h = libraw.getImageHeight();
-        // optional zur Kontrolle:
-        if (raw.length != (long) w * h * 3) {
-            throw new IIOException("Unexpected pixel data size: " + raw.length + " for " + w + "x" + h);
-        }
-        long sum = 0;
-        int max = 0;
-        for (int i = 0; i < raw.length; i += 997) {      // Stichprobe
-            int v = raw[i] & 0xFF;
-            sum += v;
-            max = Math.max(max, v);
-        }
-        double diff = (System.currentTimeMillis() - reading) / 1000;
-        Logger.getLogger(RAWImageIOReader.class.getName()).log(Level.FINE, null, "Raw convert took: " + diff + "s");
+        ensureDecoded(param);
+        final byte[] raw = decoded;
+        decoded = null;                 // hand over, do not keep 70+ MB per reader
+        decodedWith = null;
+        final int w = width;
+        final int h = height;
+        LOG.log(Level.FINE, "Raw convert took: {0}s", (System.nanoTime() - start) / 1e9);
 
-        stream.seek(0);
-        readMetadata(); // Stream is positioned at start of image data
-// Compute initial source region, clip against destination later
-        Rectangle sourceRegion = getSourceRegion(param, width, height);
-
-        // Set everything to default values
-        int sourceXSubsampling = 1;
-        int sourceYSubsampling = 1;
-        int[] sourceBands = null;
-        int[] destinationBands = null;
-        Point destinationOffset = new Point(0, 0);
-
-        // Get values from the ImageReadParam, if any
-        if (param != null) {
-            sourceXSubsampling = param.getSourceXSubsampling();
-            sourceYSubsampling = param.getSourceYSubsampling();
-            sourceBands = param.getSourceBands();
-            destinationBands = param.getDestinationBands();
-            destinationOffset = param.getDestinationOffset();
-        }
-        // Get the specified detination image or create a new one
-        /*BufferedImage dst = getDestination(param,
-                getImageTypes(0),
-                width, height);*/
-
-        ColorSpace colorSpace = ColorSpace.getInstance(ColorSpace.CS_sRGB);
-
-        ColorModel model = new ComponentColorModel(
-                colorSpace,
-                false,
-                true,
-                Transparency.OPAQUE,
-                DataBuffer.TYPE_BYTE
-        );
+        // Zero-copy: the byte[] from LibRaw becomes the raster directly
         WritableRaster raster = Raster.createInterleavedRaster(
-                DataBuffer.TYPE_BYTE,
-                width,
-                height,
-                3,
-                null
-        );
+                new DataBufferByte(raw, raw.length), w, h, w * 3, 3, new int[]{0, 1, 2}, null);
+        ComponentColorModel cm = new ComponentColorModel(
+                ColorSpace.getInstance(ColorSpace.CS_sRGB), false, false,
+                Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+        BufferedImage full = new BufferedImage(cm, raster, false, null);
 
-        BufferedImage dst = new BufferedImage(model, raster, true, null);
-        dst.setData(raster);
-        byte[] imagePixels = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
-        System.arraycopy(raw, 0, imagePixels, 0, raw.length);
-        // Enure band settings from param are compatible with images
-
-        int dstW = width;
-        int dstH = height;
+        int dstW = w;
+        int dstH = h;
         if (param != null) {
             Dimension rs = param.getSourceRenderSize();
             if (rs != null) {
                 dstW = Math.max(1, rs.width);
                 dstH = Math.max(1, rs.height);
+                if (param instanceof RAWImageIOImageReadParam rp && rp.isPreserveAspectRatio()) {
+                    double s = Math.min((double) dstW / w, (double) dstH / h);   // Box -> passende Größe
+                    dstW = Math.max(1, (int) Math.round(w * s));
+                    dstH = Math.max(1, (int) Math.round(h * s));
+                }
             }
         }
-
-        if (dstW == dst.getWidth() && dstH == dst.getHeight()) {
-            // kein Resize nötig, aber trotzdem in ein Standardformat konvertieren
+        if (dstW == w && dstH == h) {
+            processImageComplete();
+            return full;
         }
+        BufferedImage result = scale(full, dstW, dstH);
+        processImageComplete();
+        return result;
+    }
 
-        BufferedImage resized = new BufferedImage(dstW, dstH, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = resized.createGraphics();
+    /**
+     * Skaliert schrittweise (max. Faktor 2 pro Schritt), Ergebnis hat exakt
+     * dstW x dstH.
+     */
+    private static BufferedImage scale(BufferedImage src, int dstW, int dstH) {
+        BufferedImage cur = src;
+        int cw = src.getWidth();
+        int ch = src.getHeight();
+        while (cw / 2 >= dstW || ch / 2 >= dstH) {
+            int nw = Math.max(dstW, cw / 2);
+            int nh = Math.max(dstH, ch / 2);
+            cur = drawScaled(cur, nw, nh);
+            cw = nw;
+            ch = nh;
+        }
+        if (cw != dstW || ch != dstH) {
+            cur = drawScaled(cur, dstW, dstH);
+        }
+        return cur;
+    }
+
+    private static BufferedImage drawScaled(BufferedImage src, int w, int h) {
+        BufferedImage out = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+        Graphics2D g = out.createGraphics();
         try {
-            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g.drawImage(dst, 0, 0, dstW, dstH, null);
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.drawImage(src, 0, 0, w, h, null);
         } finally {
             g.dispose();
         }
-        return resized;
+        return out;
     }
-
 }

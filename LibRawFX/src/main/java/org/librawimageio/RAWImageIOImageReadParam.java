@@ -1,31 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.librawimageio;
 
 import java.awt.Dimension;
 import javax.imageio.ImageReadParam;
+import org.librawdecodersettings.RawDecoderSettings;
 
-/**
- *
- * @author selfemp
- */
 public class RAWImageIOImageReadParam extends ImageReadParam {
 
-    public RAWImageIOImageReadParam() {        
+    private RawDecoderSettings settings;   // null = statische Default-Settings
+
+    private boolean preserveAspectRatio;
+
+    public RAWImageIOImageReadParam() {
+        preserveAspectRatio=true;
     }
 
-    @Override
-    public void setSourceRenderSize(Dimension size) throws UnsupportedOperationException {        
-        super.setSourceRenderSize(size); 
+    public RawDecoderSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(RawDecoderSettings settings) {
+        this.settings = settings;
+    }
+
+    public boolean isPreserveAspectRatio() {
+        return preserveAspectRatio;
+    }
+
+    public void setPreserveAspectRatio(boolean b) {
+        this.preserveAspectRatio = b;
     }
 
     @Override
     public boolean canSetSourceRenderSize() {
         return true;
     }
-    
-    
-    
+
+    @Override
+    public void setSourceRenderSize(Dimension size) {
+        super.setSourceRenderSize(size);
+    }
 }
