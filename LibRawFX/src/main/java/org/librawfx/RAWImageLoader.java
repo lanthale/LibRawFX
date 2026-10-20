@@ -33,11 +33,11 @@ import org.librawjava.LibrawImage;
 import org.librawjava.RawFormatDetector;
 
 /**
- * Lädt RAW-Bilder über LibRaw. Dateien, die kein RAW sind (z. B. normale
- * TIFFs), werden über ImageIO geladen. Der RawFormatDetector wählt nur den
- * ersten Versuch, der jeweils andere Decoder dient als Fallback. Beim
- * ImageIO-Weg werden die eigenen Reader (RAWImageIOReader) übersprungen, damit
- * LibRaw nicht doppelt versucht wird.
+ * Lädt RAW-Bilder über LibRaw. Dateien, die kein RAW sind (z. B. normale TIFFs),
+ * werden über ImageIO geladen. Der RawFormatDetector wählt nur den ersten Versuch,
+ * der jeweils andere Decoder dient als Fallback. Beim ImageIO-Weg werden die
+ * eigenen Reader (RAWImageIOReader) übersprungen, damit LibRaw nicht doppelt
+ * versucht wird.
  *
  * @author Clemens Lanthaler
  */
@@ -47,9 +47,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
 
     private static final ConcurrentHashMap<String, RawDecoderSettings> settings = new ConcurrentHashMap<>();
 
-    /**
-     * Sicherheitsnetz gegen Rekursion über ImageIO.
-     */
+    /** Sicherheitsnetz gegen Rekursion über ImageIO. */
     private static final ThreadLocal<Boolean> IN_IMAGEIO = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     private final InputStream input;
@@ -106,8 +104,6 @@ public class RAWImageLoader extends ImageLoaderImpl {
         if (imageIndex != 0) {
             return null;
         }
-        LOG.log(Level.INFO, "RAWImageLoader.load: requested={0}x{1}, keepRatio={2}",
-                new Object[]{width, height, preserveAspectRatio});
 
         byte[] fileBytes = readAll(input);
         if (fileBytes.length == 0) {
@@ -116,6 +112,9 @@ public class RAWImageLoader extends ImageLoaderImpl {
         byte[] head = Arrays.copyOf(fileBytes, Math.min(fileBytes.length, RawFormatDetector.HEADER_SIZE));
         boolean looksRaw = RawFormatDetector.isRaw(head);
         LOG.log(Level.FINE, "Detector says raw: {0}", looksRaw);
+        if (!looksRaw) {
+            LOG.log(Level.FINE, "Image data: Not a RAW format (detector) - Processing further with ImageIO");
+        }
 
         IOException firstFailure;
         try {
@@ -124,7 +123,8 @@ public class RAWImageLoader extends ImageLoaderImpl {
                     : loadViaImageIO(fileBytes, width, height, preserveAspectRatio, smooth, imagePixelScale);
         } catch (IOException e) {
             firstFailure = e;
-            LOG.log(Level.FINE, "First decoder failed, trying fallback: {0}", e.toString());
+            LOG.log(Level.FINE, looksRaw ? "{0} - Processing further with ImageIO" : "{0} - Trying LibRaw",
+                    e.getMessage());
         }
 
         try {
@@ -235,8 +235,8 @@ public class RAWImageLoader extends ImageLoaderImpl {
 
     /**
      * Liest über ImageIO, überspringt aber die eigenen RAW-Reader. LibRaw wurde
-     * dann entweder schon versucht oder der Detector hat die Datei als
-     * Nicht-RAW eingestuft.
+     * dann entweder schon versucht oder der Detector hat die Datei als Nicht-RAW
+     * eingestuft.
      */
     private static BufferedImage readViaImageIO(byte[] data) throws IOException {
         if (IN_IMAGEIO.get()) {
@@ -269,10 +269,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
         }
     }
 
-    /**
-     * Native Anbindung. Das Ergebnis ist ein Java-byte[] und damit unabhängig
-     * von dispose().
-     */
+    /** Native Anbindung. Das Ergebnis ist ein Java-byte[] und damit unabhängig von dispose(). */
     private synchronized ByteBuffer getImageData(LibrawImage libraw, byte[] fileBytes) throws IOException {
         long start = System.currentTimeMillis();
         byte[] raw = libraw.readPixelDataFromStream(fileBytes);
@@ -280,10 +277,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
         return raw == null ? null : ByteBuffer.wrap(raw);
     }
 
-    /**
-     * Wird von LibrawImage (Progress-Listener) aufgerufen, um den Fortschritt
-     * zu melden.
-     */
+    /** Wird von LibrawImage (Progress-Listener) aufgerufen, um den Fortschritt zu melden. */
     public void updateImageProgress(int outLinesDecoded, int outHeight) {
         if (outHeight <= 0) {
             return;

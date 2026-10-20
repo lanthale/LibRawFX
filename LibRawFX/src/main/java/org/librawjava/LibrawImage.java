@@ -46,7 +46,7 @@ public class LibrawImage {
     private static final Logger LOG = Logger.getLogger(LibrawImage.class.getName());
 
     /** Source label used in messages when the data comes from memory. */
-    private static final String SRC_DATA = "Bilddaten";
+    private static final String SRC_DATA = "Image data";
 
     /** Receives decode progress (rows done / total rows). */
     @FunctionalInterface
@@ -173,43 +173,43 @@ public class LibrawImage {
     public static String describeError(int code) {
         switch (code) {
             case -1:
-                return "Unbekannter Fehler";
+                return "Unknown error";
             case -2:
-                return "Kein unterstütztes RAW-Format";
+                return "Not a supported RAW format";
             case -3:
-                return "Das angeforderte Bild existiert nicht in der Datei";
+                return "The requested image does not exist in the file";
             case -4:
-                return "Interner Fehler (falsche Aufrufreihenfolge)";
+                return "Internal error (call out of order)";
             case -5:
-                return "Kein Vorschaubild vorhanden";
+                return "No thumbnail available";
             case -6:
-                return "Format des Vorschaubilds wird nicht unterstützt";
+                return "Thumbnail format is not supported";
             case -7:
-                return "Die Eingabe wurde geschlossen";
+                return "Input stream was closed";
             case -8:
-                return "Funktion nicht implementiert";
+                return "Function not implemented";
             case -9:
-                return "Das angeforderte Vorschaubild existiert nicht";
+                return "The requested thumbnail does not exist";
             case -100007:
-                return "Nicht genug Speicher";
+                return "Not enough memory";
             case -100008:
-                return "Beschädigte oder unvollständige Bilddaten";
+                return "Corrupt or incomplete image data";
             case -100009:
-                return "Lesefehler (Datei beschädigt oder abgeschnitten)";
+                return "Read error (file corrupt or truncated)";
             case -100010:
-                return "Vorgang abgebrochen";
+                return "Operation cancelled";
             case -100011:
-                return "Ungültiger Bildausschnitt";
+                return "Invalid crop area";
             case -100012:
-                return "Das Bild ist zu groß";
+                return "Image is too large";
             case -100013:
-                return "Interner Speicherpool-Überlauf";
+                return "Internal memory pool overflow";
             case 2:
-                return "Datei nicht gefunden";
+                return "File not found";
             case 13:
-                return "Zugriff auf die Datei verweigert";
+                return "Permission denied";
             default:
-                return code > 0 ? "Dateisystemfehler (Code " + code + ")" : "Unbekannter LibRaw-Fehler";
+                return code > 0 ? "File system error (code " + code + ")" : "Unknown LibRaw error";
         }
     }
 
@@ -219,7 +219,7 @@ public class LibrawImage {
 
     /** Only the file name, not the full path, for messages shown to users. */
     private static String fileLabel(String path) {
-        return "Datei '" + new File(path).getName() + "'";
+        return "File '" + new File(path).getName() + "'";
     }
 
     // ==========================================================================
@@ -311,7 +311,7 @@ public class LibrawImage {
                 }
                 k = libraw_h.libraw_unpack(iprc);
                 if (k < 0) {
-                    throw error(source + " (Dekodieren)", k);
+                    throw error(source + " (decoding)", k);
                 }
 
                 MemorySegment iParams = libraw_h.libraw_get_iparams(iprc);
@@ -327,7 +327,7 @@ public class LibrawImage {
 
                 k = libraw_h.libraw_dcraw_process(iprc);
                 if (k < 0) {
-                    throw error(source + " (Bildverarbeitung)", k);
+                    throw error(source + " (processing)", k);
                 }
 
                 MemorySegment errorCode = scope.allocate(libraw_h.C_INT);
@@ -335,7 +335,7 @@ public class LibrawImage {
                 int memErr = errorCode.get(ValueLayout.JAVA_INT, 0);
                 if (isNull(memImage) || memErr != 0) {
                     memImage = MemorySegment.NULL;         // nothing to free
-                    throw error(source + " (Bildausgabe)", memErr != 0 ? memErr : -1);
+                    throw error(source + " (output)", memErr != 0 ? memErr : -1);
                 }
 
                 // All values come from the same processed_image_t that holds the pixels
@@ -345,13 +345,13 @@ public class LibrawImage {
                 int colors = libraw_processed_image_t.colors(memImage);
 
                 if (bits != 8 || colors != 3) {
-                    throw new IOException(source + ": Nicht unterstütztes Pixelformat (bits=" + bits
+                    throw new IOException(source + ": Unsupported pixel format (bits=" + bits
                             + ", colors=" + colors + ")");
                 }
                 long rowBytes = (long) w * colors * (bits / 8);
                 long total = rowBytes * h;
                 if (w <= 0 || h <= 0 || total > Integer.MAX_VALUE - 8) {
-                    throw new IOException(source + ": Ungültige Bildgröße " + w + "x" + h);
+                    throw new IOException(source + ": Invalid image size " + w + "x" + h);
                 }
 
                 MemorySegment data$slice = libraw_processed_image_t.data(memImage);

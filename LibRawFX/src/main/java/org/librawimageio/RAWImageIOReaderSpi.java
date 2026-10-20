@@ -14,9 +14,14 @@ import org.librawjava.RawFormatDetector;
 import org.librawjava.LibrawImage;
 
 /**
- * ImageIO SPI. Die Erkennung läuft ausschließlich über RawFormatDetector,
- * damit JavaFX-Loader und ImageIO identisch entscheiden. Normale TIFFs werden
- * abgelehnt und fallen an den JDK-/TwelveMonkeys-TIFF-Reader durch.
+ * ImageIO SPI. Nicht-TIFF-Formate werden über RawFormatDetector erkannt.
+ *
+ * TIFF-Container werden IMMER übernommen. Grund: JavaFX' J2DImageLoader stürzt
+ * bei Readern, die sourceRenderSize nicht unterstützen (JDK-/TwelveMonkeys-TIFF-
+ * Reader), beim Skalieren mit einer ClassCastException ab. RAWImageIOReader
+ * unterstützt sourceRenderSize, entscheidet selbst (RAW über LibRaw, sonst
+ * Delegation an den normalen TIFF-Reader) und liefert immer die exakte Größe.
+ * Voraussetzung: dieser SPI muss VOR den TIFF-Readern einsortiert sein.
  */
 public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
 
@@ -63,21 +68,15 @@ public class RAWImageIOReaderSpi extends RAWImageReaderSpiBase {
         ByteOrder oldOrder = stream.getByteOrder();
         stream.mark();
         try {
-            long start = stream.getStreamPosition();
-
             // Schneller Pfad: nur 16 Bytes. JPEG, PNG usw. sind damit sofort erledigt.
             byte[] head = readUpTo(stream, QUICK_HEAD);
             if (head.length < QUICK_HEAD) {
                 return false;
             }
-            if (!isTiffHeader(head)) {
-                return RawFormatDetector.isRaw(head);   // RAF, X3F, CRW, CR3, ORF, RW2, MRW, IIQ
+            if (isTiffHeader(head)) {
+                return true;                            // der Reader entscheidet: RAW oder normales TIFF
             }
-
-            // TIFF-Container: ein einziger sequentieller Block-Read statt vieler Seeks
-            stream.seek(start);
-            head = readUpTo(stream, RawFormatDetector.HEADER_SIZE);
-            return RawFormatDetector.isRaw(head);
+            return RawFormatDetector.isRaw(head);       // RAF, X3F, CRW, CR3, ORF, RW2, MRW, IIQ
         } catch (IOException e) {
             return false;
         } finally {
