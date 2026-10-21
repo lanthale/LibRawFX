@@ -34,6 +34,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
+import org.librawimageio.RAWImageIOReaderSpi;
 
 /**
  * JavaFX TestApp

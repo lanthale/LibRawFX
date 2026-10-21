@@ -87,6 +87,9 @@
                     <exclude>**/*.raf</exclude>
                     <exclude>**/*.sh</exclude>
                     <exclude>**/*.conf</exclude>
+                    <exclude>**/*.webp</exclude>
+                    <exclude>**/*.tiff</exclude>
+                    <exclude>**/*.psd</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -107,10 +110,9 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>org.librawimageio.TestAppImageIO</mainClass>  
-                            <options>  
-                                <option>--enable-native-access=org.librawfx,javafx.graphics</option>        
-                                <option>--add-modules java.se</option>                              
-                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                            <options>
+                                <option>--enable-native-access=org.librawfx,javafx.graphics</option>
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
@@ -124,8 +126,7 @@
                             <options> 
                                 <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
                                 <option>--enable-native-access=org.librawfx,javafx.graphics</option>
-                                <option>--add-modules java.se</option>                                                                                           
-                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
@@ -138,8 +139,7 @@
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>        
                                 <option>--enable-native-access=org.librawfx,javafx.graphics</option>
-                                <option>--add-modules java.se</option>                                                                                      
-                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
@@ -149,14 +149,14 @@
                         <id>ide-profile</id>
                         <configuration>
                             <mainClass>org.librawfx.TestApp</mainClass>  
-                            <options>
-                                <option>--enable-native-access=org.librawfx,javafx.graphics</option>
+                            <options>                                
                                 <option>${profiler.jvmargs.arg1}</option>
                                 <option>${profiler.jvmargs.arg2}</option>
                                 <option>${profiler.jvmargs.arg3}</option>
                                 <option>${profiler.jvmargs.arg4}</option>
                                 <option>${profiler.jvmargs.arg5}</option>                                                                
-                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>                                
+                                <option>--enable-native-access=org.librawfx,javafx.graphics</option>
+                                <option>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</option>
                                 <option>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</option>
                             </options>
                         </configuration>
@@ -168,11 +168,20 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.16.0</version>
                 <configuration>
-                    <fork>true</fork>
                     <compilerArgs>
                         <arg>--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx</arg>
-                        <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>                        
+                        <arg>--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx</arg>
                     </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>org/librawfxtest/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
