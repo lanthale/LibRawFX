@@ -152,9 +152,6 @@ metaData.entrySet().forEach((entry) -> {
 });
 ```
 
-- **RAW Settings**
-You can get the default settings for all camera models with the call RAWImageLoaderFactory.getDecoderSettings(). Afterwards use the getters/setters to update the raw settings. There is also a method called getCameraMaker() which extracts the camera model and afterwards you can now build a model based raw setting engine and feed always before loading an image with the right settings for the camera model. 
-
 - **Module name: org.librawfx**
 
 You can have a look into the class TestAPP.java, TestAppSwing.java, TestAppImageIO to see how to use it, but generally just create an Image with the URL/stream and add it to the image view:
