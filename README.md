@@ -9,7 +9,7 @@ Beginning of 1.9.3 the ImageIO function is included. On Javafx side you can choo
 
 **JDK 18 is required for v1.8.0** because of the foreign linker API usage and the big changes for threading happenend in Panama in JDK18
 
-**JDK 25 and JavaFX 25/26/27 is required for v1.9.9** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
+**JDK 25 and JavaFX 25/26/27 is required for v2.0.1** because of the foreign linker API usage, changes in JavaFX 24 and the big changes for threading happenend in Panama in JDK22. Major rewrite without separate Win/Linux code anymore.
 
 ## Status
 Now the lib is in production ready status. That means it is tested on all operating systems (OSX, Linux, Win10) and under different threading scenarious.
@@ -22,6 +22,8 @@ Supported OS:
 I have integrated LibRaw SNAPSHOT version 0.21.4 (https://www.libraw.org/download#stable)
 
 Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
+All formats are now enabled which are support by libraw.
+Some of those are:
 - Adobe DNG
 - Nikon NEF
 - Canon CRW/CR2
@@ -30,7 +32,6 @@ Actually only the following raw formats are enabled (see class `RAWDescriptor.ja
 - Sony
 - Leica
 
-The lib now resized the image in memory before sending it back to the image class (the same as the Javafx is doing for PNG/JPG).
 You can now specify for each camera model different settings for the raw decoder (sample below).
 ImageIO plugin is provided and should be automatically installed.
 
@@ -53,21 +54,76 @@ Point to the maven coordinates:
 <dependency>  
     <groupId>org.librawfx</groupId>    
     <artifactId>LibRawFX</artifactId>  
-    <version>1.9.9</version>  
+    <version>2.0.1</version>  
 </dependency>  
 ```
 
-- Automatic ImageIO mode: Just add the dependency and you can read with ImageIO.read(new File(file)) the data
-- In the Class where the start method is add as one of the first lines the following code to install the file handler:
+## Usage
 
-     ```RAWImageLoaderFactory.install();
-     HashMap<String, RawDecoderSettings> decoderSettings = RAWImageLoaderFactory.getDecoderSettings(); //.setEnableExposureCorrection(false);
-     decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
-     decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
-     decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
-     decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);
-     decoderSettings.get("Sigma DP2 Merrill").setBrightNess(6.0f);
-     //use the setters provided. They settings will take effect on the next call. The camera maker can be found out by method call getCameraMaker() or extract from the Metadata in form "maker model"```
+LibRaw is loaded through the Foreign Function & Memory API. Start your application with
+`--enable-native-access=org.librawfx` (module path) or `--enable-native-access=ALL-UNNAMED` (classpath).
+
+### ImageIO mode
+
+Add the dependency. RAW files are then read like any other image:
+
+```java
+BufferedImage img = ImageIO.read(new File("DSC_0001.NEF"));
+```
+
+In JavaFX, `new Image(file.toURI().toString(), width, height, true, true)` uses the same reader
+through the ImageIO fallback of JavaFX. Non-RAW files (TIFF, PSD, WebP, ...) are handed over to
+the next ImageIO reader (e.g. TwelveMonkeys).
+
+#### Camera settings
+
+The key is `"<maker> <model>"`, exactly as reported by LibRaw (case sensitive). Read it from a real file:
+
+```java
+LibrawImage.loadLibs(null);
+System.out.println(new LibrawImage("DSC_0001.NEF", RAWImageIOReader.getSettings()).getCameraMaker());
+// e.g. "Nikon D850"
+```
+
+Configure the settings once at startup, before the first image is loaded:
+
+```java
+RawDecoderSettings d850 = new RawDecoderSettings();
+// set the values with the setters of RawDecoderSettings
+RAWImageIOReader.getSettings().put("Nikon D850", d850);      // this model only
+// optional, for all other cameras:
+// RAWImageIOReader.getSettings().put("Default", defaultSettings);
+```
+
+Thread safety: fully configure the settings object before you put it into the map and do not change
+it while images are loading. To change values, create a new object and replace the map entry.
+
+For a single call, independent of the camera model, pass the settings through the read parameter:
+`RAWImageIOImageReadParam.setSettings(...)`.
+
+### JavaFX internal mode
+
+Call this once, before the first image is loaded (for example at the start of `start()`):
+
+```java
+RAWImageLoaderFactory.install();
+Map<String, RawDecoderSettings> settings = RAWImageLoaderFactory.getDecoderSettings();
+
+RawDecoderSettings sigma = new RawDecoderSettings();
+sigma.setEnableExposureCorrection(true);
+sigma.setExposureCorrection(1);
+sigma.setExpoCorrectionShift(2.0f);
+sigma.setBrightNess(6.0f);
+settings.put("Sigma DP2 Merrill", sigma);                    // key = "<maker> <model>"
+```
+
+The settings take effect on the next image that is loaded. Find the key with `getCameraMaker()`
+(returns "maker model") or read it from the metadata. This mode also needs
+`--add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx` and
+`--add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx`.
+
+Note: the settings of the ImageIO mode and of the JavaFX internal mode are separate. Settings put
+into one are not used by the other.
       
        
 
@@ -78,7 +134,7 @@ Point to the maven coordinates:
 --add-exports=javafx.graphics/com.sun.javafx.iio.common=org.librawfx
 ```
 
-- and add the following lines to your java config on JDK 24 if you use Javafx otherwise only the "enable-native" line is necessary:
+- and add the following lines to your java config on JDK 25 if you use Javafx otherwise only the "enable-native" line is necessary:
 ```
 --enable-native-access=org.librawfx  
 --add-exports=javafx.graphics/com.sun.javafx.iio=org.librawfx 
