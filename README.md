@@ -21,8 +21,7 @@ Supported OS:
 
 I have integrated LibRaw SNAPSHOT version 0.21.4 (https://www.libraw.org/download#stable)
 
-Actually only the following raw formats are enabled (see class `RAWDescriptor.java`):
-All formats are now enabled which are support by libraw.
+All formats are now enabled which are support by libraw:
 Some of those are:
 - Adobe DNG
 - Nikon NEF
