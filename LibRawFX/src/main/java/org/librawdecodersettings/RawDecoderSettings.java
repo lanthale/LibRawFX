@@ -40,6 +40,14 @@ public class RawDecoderSettings {
      */
     private int RAWQuality = 1;
     private boolean halfSizeOutput = false;
+    /**
+     * Decode with half_size automatically when only a small preview is needed
+     * (requested size at most about half of the image). Full size requests are
+     * not affected. Has no effect if halfSizeOutput is already true. A global
+     * override (LibrawImage.setPreviewHalfSizeOverride or the system property
+     * -Dlibrawfx.halfSizeForPreviews=false) takes precedence over this flag.
+     */
+    private boolean halfSizeForPreviews = true;
     /** four_color_rgb: interpolate RGB as four colors. */
     private boolean RGBInterpolate4Colors = false;
     private boolean greenMatching = false;
@@ -130,6 +138,7 @@ public class RawDecoderSettings {
         c.greyBox = greyBox.clone();
         c.RAWQuality = RAWQuality;
         c.halfSizeOutput = halfSizeOutput;
+        c.halfSizeForPreviews = halfSizeForPreviews;
         c.RGBInterpolate4Colors = RGBInterpolate4Colors;
         c.greenMatching = greenMatching;
         c.medianFilterPasses = medianFilterPasses;
@@ -239,6 +248,14 @@ public class RawDecoderSettings {
 
     public void setHalfSizeOutput(boolean halfSizeOutput) {
         this.halfSizeOutput = halfSizeOutput;
+    }
+
+    public boolean isHalfSizeForPreviews() {
+        return halfSizeForPreviews;
+    }
+
+    public void setHalfSizeForPreviews(boolean halfSizeForPreviews) {
+        this.halfSizeForPreviews = halfSizeForPreviews;
     }
 
     public boolean isRGBInterpolate4Colors() {
@@ -617,6 +634,7 @@ public class RawDecoderSettings {
                 + ", userMul=" + (useUserMultipliers ? Arrays.toString(userMultipliers) : "off")
                 + ", greyBox=" + (useGreyBox ? Arrays.toString(greyBox) : "off")
                 + ", RAWQuality=" + RAWQuality + ", halfSizeOutput=" + halfSizeOutput
+                + ", halfSizeForPreviews=" + halfSizeForPreviews
                 + ", RGBInterpolate4Colors=" + RGBInterpolate4Colors + ", greenMatching=" + greenMatching
                 + ", medianFilterPasses=" + medianFilterPasses + ", noiseReduction=" + noiseReduction
                 + ", NRThreshold=" + NRThreshold + ", dcbIterations=" + dcbIterations

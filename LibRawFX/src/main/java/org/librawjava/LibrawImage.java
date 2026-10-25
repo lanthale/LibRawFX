@@ -18,6 +18,7 @@ import org.libraw.nativ.libraw_colordata_t;
 import org.libraw.nativ.libraw_data_t;
 import org.libraw.nativ.libraw_gps_info_t;
 import org.libraw.nativ.libraw_h;
+import org.libraw.nativ.libraw_image_sizes_t;
 import org.libraw.nativ.libraw_imgother_t;
 import org.libraw.nativ.libraw_iparams_t;
 import org.libraw.nativ.libraw_lensinfo_t;
@@ -46,6 +47,13 @@ public class LibrawImage {
 
     private static final Logger LOG = Logger.getLogger(LibrawImage.class.getName());
 
+    /**
+     * half_size is used for a preview only if the requested size is at most this
+     * fraction of the image (the half size result must still be at least as big
+     * as the request).
+     */
+    private static final double HALF_SIZE_MAX_SCALE = 0.49;
+
     /** Source label used in messages when the data comes from memory. */
     private static final String SRC_DATA = "Image data";
 
@@ -67,6 +75,13 @@ public class LibrawImage {
     private static volatile boolean loaded = false;
     private static volatile String operatingSystem;
 
+    /**
+     * Global override for the automatic half_size of previews. null = use the
+     * flag of the settings, FALSE = never, TRUE = always allowed. Initial value
+     * from the system property librawfx.halfSizeForPreviews (true/false).
+     */
+    private static volatile Boolean previewHalfSizeOverride = readPreviewProperty();
+
     // ---- instance state -----------------------------------------------------
     private final ConcurrentHashMap<String, RawDecoderSettings> rawSettings;
     private final RAWImageLoader loader;
@@ -80,6 +95,7 @@ public class LibrawImage {
     private volatile int imageBits;
     private volatile int imageColors;
     private volatile int stride;
+    private volatile boolean lastDecodeHalfSize;
     private volatile String cameraModel;
     private volatile LocalDateTime shootingDateTime;
 
@@ -238,6 +254,33 @@ public class LibrawImage {
         this.progressListener = listener;
     }
 
+    private static Boolean readPreviewProperty() {
+        String v = System.getProperty("librawfx.halfSizeForPreviews");
+        return v == null || v.isBlank() ? null : Boolean.valueOf(v.trim());
+    }
+
+    /**
+     * Switches the automatic half_size for previews on or off for ALL loaders
+     * (JavaFX install mode and ImageIO) without touching any settings profile.
+     * Takes effect for the next decode.
+     *
+     * @param value FALSE = never use half_size for previews, TRUE = allowed
+     * even if a profile disables it, null = follow the profiles (default)
+     */
+    public static void setPreviewHalfSizeOverride(Boolean value) {
+        previewHalfSizeOverride = value;
+        LOG.log(Level.FINE, "Preview half_size override: {0}", value);
+    }
+
+    public static Boolean getPreviewHalfSizeOverride() {
+        return previewHalfSizeOverride;
+    }
+
+    private static boolean previewHalfAllowed(RawDecoderSettings s) {
+        Boolean o = previewHalfSizeOverride;
+        return o != null ? o : s.isHalfSizeForPreviews();
+    }
+
     private RawDecoderSettings pickSettings(String makeAndModel) {
         RawDecoderSettings s = settingsOverride;
         if (s == null) {
@@ -270,13 +313,28 @@ public class LibrawImage {
      * @throws IOException if the file cannot be opened or decoded
      */
     public byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray) throws IOException {
+        return readPixelDataFromStream(sourceFileAsByteArray, 0, 0);
+    }
+
+    /**
+     * Like {@link #readPixelDataFromStream(byte[])}, but tells LibRaw which size
+     * the caller needs. If that is a preview (small enough, see
+     * {@link RawDecoderSettings#isHalfSizeForPreviews()}), the image is decoded
+     * with half_size, which is much faster. The real size of the result is
+     * available from getImageWidth()/getImageHeight().
+     *
+     * @param targetWidth requested width in pixels, 0 = unspecified
+     * @param targetHeight requested height in pixels, 0 = unspecified (both 0 = full size)
+     */
+    public byte[] readPixelDataFromStream(byte[] sourceFileAsByteArray, int targetWidth, int targetHeight)
+            throws IOException {
         if (sourceFileAsByteArray == null) {
             LOG.log(Level.SEVERE, "sourceFileAsByteArray == null!");
             throw new IllegalArgumentException("sourceFileAsByteArray == null!");
         }
         return decode((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
                 arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
-                sourceFileAsByteArray.length), SRC_DATA);
+                sourceFileAsByteArray.length), SRC_DATA, targetWidth, targetHeight);
     }
 
     /**
@@ -292,15 +350,15 @@ public class LibrawImage {
             throw new IllegalArgumentException("imageFileURL == null!");
         }
         byte[] rgb = decode((iprc, arena) -> libraw_h.libraw_open_file(iprc, arena.allocateFrom(url)),
-                fileLabel(url));
+                fileLabel(url), 0, 0);
         return convertToINT(rgb);
     }
 
-    private byte[] decode(NativeOpen opener, String source) throws IOException {
+    private byte[] decode(NativeOpen opener, String source, int targetW, int targetH) throws IOException {
         long start = System.nanoTime();
         long startWall = System.currentTimeMillis();
         try {
-            return decode0(opener, source);
+            return decode0(opener, source, targetW, targetH);
         } finally {
             LOG.log(Level.FINE, "{0} decode total (incl. arena close) ms: {1}, thread={2}, start={3}, end={4} (ms of the current 1000 s)",
                     new Object[]{source, ms(start, System.nanoTime()), Thread.currentThread().getName(),
@@ -308,7 +366,7 @@ public class LibrawImage {
         }
     }
 
-    private byte[] decode0(NativeOpen opener, String source) throws IOException {
+    private byte[] decode0(NativeOpen opener, String source, int targetW, int targetH) throws IOException {
         ensureLoaded();
         try (Arena scope = Arena.ofConfined()) {          // confined: cheaper to close than shared
             MemorySegment iprc = libraw_h.libraw_init(0);
@@ -330,9 +388,18 @@ public class LibrawImage {
                 MemorySegment iParams = libraw_h.libraw_get_iparams(iprc);
                 String make = str(libraw_iparams_t.make(iParams));
                 String model = str(libraw_iparams_t.model(iParams));
-                RawDecoderToNativeTranslator translator
-                        = new RawDecoderToNativeTranslator(pickSettings(make + " " + model), operatingSystem);
+                RawDecoderSettings chosen = pickSettings(make + " " + model);
+                RawDecoderToNativeTranslator translator = new RawDecoderToNativeTranslator(chosen, operatingSystem);
                 translator.translateDecodeParams(libraw_data_t.rawparams(iprc));
+
+                // preview requested? -> half_size (decided here, the size is known after open)
+                boolean previewHalf = false;
+                if (previewHalfAllowed(chosen) && !chosen.isHalfSizeOutput() && (targetW > 0 || targetH > 0)) {
+                    int[] sz = sizesOf(iprc);
+                    previewHalf = previewFitsHalf(sz[0], sz[1], targetW, targetH);
+                    LOG.log(Level.FINE, "{0} {1}: half_size for preview={2} (image {3}x{4}, requested {5}x{6})",
+                            new Object[]{make, model, previewHalf, sz[0], sz[1], targetW, targetH});
+                }
 
                 k = libraw_h.libraw_unpack(iprc);
                 if (k < 0) {
@@ -341,6 +408,10 @@ public class LibrawImage {
                 long tUnpack = System.nanoTime();
 
                 translator.translate(libraw_data_t.params(iprc), scope);   // scope: arena for file path options
+                if (previewHalf) {
+                    translator.forceHalfSize(libraw_data_t.params(iprc));
+                }
+                lastDecodeHalfSize = previewHalf || chosen.isHalfSizeOutput();
 
                 cameraModel = model;
                 long timestamp = libraw_imgother_t.timestamp(libraw_h.libraw_get_imgother(iprc));
@@ -434,9 +505,10 @@ public class LibrawImage {
     // ==========================================================================
     /**
      * Cheap size query: only opens the file, no demosaicing. The result is the
-     * raw sensor output size (libraw iwidth/iheight) and does NOT account for
-     * rotation (flip) or half_size. For exact sizes decode once and use
-     * getImageWidth()/getImageHeight().
+     * output size LibRaw reports after open, already swapped for the 90 degree
+     * rotation stored in the file. It does not account for the user_flip
+     * setting, for the Fuji SuperCCD rotation or for half_size. For exact sizes
+     * decode once and use getImageWidth()/getImageHeight().
      */
     public void getQuickSize(byte[] sourceFileAsByteArray) throws IOException {
         if (sourceFileAsByteArray == null) {
@@ -455,8 +527,10 @@ public class LibrawImage {
                 if (k != 0) {
                     throw error(SRC_DATA, k);
                 }
-                imageWidth = libraw_h.libraw_get_iwidth(iprc);
-                imageHeight = libraw_h.libraw_get_iheight(iprc);
+                int[] sz = sizesOf(iprc);
+                boolean swap = (sz[2] & 4) != 0;          // flip bit 4 = 90 degree rotation
+                imageWidth = swap ? sz[1] : sz[0];
+                imageHeight = swap ? sz[0] : sz[1];
             } finally {
                 libraw_h.libraw_close(iprc);
             }
@@ -625,6 +699,38 @@ public class LibrawImage {
     // ==========================================================================
     // Helpers
     // ==========================================================================
+    /** {width, height, flip} as known right after open (before processing). */
+    private static int[] sizesOf(MemorySegment iprc) {
+        MemorySegment sizes = libraw_data_t.sizes(iprc);
+        int w = libraw_image_sizes_t.width(sizes) & 0xFFFF;
+        int h = libraw_image_sizes_t.height(sizes) & 0xFFFF;
+        int flip = libraw_image_sizes_t.flip(sizes);
+        if (w <= 0 || h <= 0) {
+            w = libraw_h.libraw_get_iwidth(iprc);
+            h = libraw_h.libraw_get_iheight(iprc);
+        }
+        return new int[]{w, h, flip};
+    }
+
+    /**
+     * True if the request is so small that the half size image is still at
+     * least as big as the request. Conservative: it is checked for both
+     * orientations, because the requested size is given for the rotated image.
+     */
+    static boolean previewFitsHalf(int imageW, int imageH, int reqW, int reqH) {
+        if (imageW <= 0 || imageH <= 0) {
+            return false;
+        }
+        double required = 0;
+        if (reqW > 0) {
+            required = Math.max(required, Math.max((double) reqW / imageW, (double) reqW / imageH));
+        }
+        if (reqH > 0) {
+            required = Math.max(required, Math.max((double) reqH / imageH, (double) reqH / imageW));
+        }
+        return required > 0 && required <= HALF_SIZE_MAX_SCALE;
+    }
+
     private static String ms(long fromNanos, long toNanos) {
         return String.valueOf((toNanos - fromNanos) / 1_000_000);
     }
@@ -659,6 +765,14 @@ public class LibrawImage {
     }
 
     /** @return width of the last decoded image (after flip) */
+    /**
+     * @return true if the last decode ran with half_size (preview or the
+     * halfSizeOutput setting), so the result is smaller than the full image
+     */
+    public boolean isLastDecodeHalfSize() {
+        return lastDecodeHalfSize;
+    }
+
     public int getImageWidth() {
         return imageWidth;
     }

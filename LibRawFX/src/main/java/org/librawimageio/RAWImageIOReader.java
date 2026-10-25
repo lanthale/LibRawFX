@@ -43,12 +43,16 @@ import org.librawjava.RawFormatDetector;
  *
  * Fallback: ImageIO does not try the next reader when the first one fails. If
  * the SPI claimed a file that LibRaw cannot open (e.g. a normal TIFF), this
- * reader therefore delegates to the next suitable (non-RAW) ImageIO reader, so
- * such files are not lost.
+ * reader therefore delegates to the next suitable (non-RAW) ImageIO reader.
  *
  * Size: if the caller sets sourceRenderSize (JavaFX J2DImageLoader does), the
  * returned image has EXACTLY that size. JavaFX scales itself otherwise and
  * crashes with a ClassCastException.
+ *
+ * Previews: getWidth/getHeight only open the file in LibRaw (quick size, no
+ * decode), because JavaFX asks for them before it tells the reader the target
+ * size. The decode happens in read(). If the requested size is small enough,
+ * LibrawImage decodes with half_size (much faster); otherwise at full size.
  */
 public class RAWImageIOReader extends ImageReader {
 
@@ -61,9 +65,12 @@ public class RAWImageIOReader extends ImageReader {
     private byte[] fileBytes;                  // the file is read only ONCE
     private byte[] decoded;                    // decoded RGB, handed over to read()
     private RawDecoderSettings decodedWith;    // settings used for 'decoded'
-    private int width;
-    private int height;
-    private boolean gotSize;
+    private int decodedTargetW;                // requested size used for 'decoded' (0 = none)
+    private int decodedTargetH;
+    private int decW;                          // size of 'decoded' (half size possible)
+    private int decH;
+    private int fullW;                         // full image size (quick size or full decode)
+    private int fullH;
     private RAWIOFormatMetadata metadata;
 
     private Boolean headerRaw;                 // RawFormatDetector verdict on the first bytes
@@ -123,9 +130,12 @@ public class RAWImageIOReader extends ImageReader {
         fileBytes = null;
         decoded = null;
         decodedWith = null;
-        width = 0;
-        height = 0;
-        gotSize = false;
+        decodedTargetW = 0;
+        decodedTargetH = 0;
+        decW = 0;
+        decH = 0;
+        fullW = 0;
+        fullH = 0;
         metadata = null;
         probed = false;
         notRaw = false;
@@ -181,13 +191,11 @@ public class RAWImageIOReader extends ImageReader {
 
     private void markNotRawByDetector() {
         notRaw = true;                          // no full file read, no LibRaw call
-        LOG.log(Level.FINE, "{0}: Not a RAW format (detector) - Processing further with ImageIO",
-                "Image data");
+        LOG.log(Level.FINE, "{0}: Not a RAW format (detector) - Processing further with ImageIO", "Image data");
     }
 
     /**
-     * Decodes (if needed) and tells whether this file is a RAW. Used by the
-     * methods that need the decoded size anyway (getWidth/getHeight/read).
+     * Decodes (if needed) and tells whether this file is a RAW. Used by read().
      */
     private boolean decodeIfRaw(ImageReadParam param) throws IOException {
         if (notRaw) {
@@ -211,8 +219,8 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     /**
-     * Cheap check without decoding (only opens the file in LibRaw). Used by
-     * the methods that do not need pixels (types, metadata, image count).
+     * Cheap check without decoding (only opens the file in LibRaw). Also
+     * remembers the quick size (already including the file's rotation).
      */
     private boolean probeRaw() throws IOException {
         if (notRaw) {
@@ -227,6 +235,8 @@ public class RAWImageIOReader extends ImageReader {
         }
         try {
             libraw.getQuickSize(bytes());
+            fullW = libraw.getImageWidth();
+            fullH = libraw.getImageHeight();
             probed = true;
             return true;
         } catch (LibrawException e) {
@@ -297,18 +307,20 @@ public class RAWImageIOReader extends ImageReader {
     }
 
     /**
-     * Decodes once and caches the result. Exact size (after flip/half_size) is
-     * only known after a decode, so getWidth/getHeight use the same cache and
-     * read() does not decode a second time.
+     * Decodes once and caches the result. The requested size (sourceRenderSize)
+     * is handed to LibrawImage, which decodes with half_size for small previews.
      */
     private void ensureDecoded(ImageReadParam param) throws IOException {
         RawDecoderSettings custom = customSettings(param);
-        if (decoded != null && decodedWith == custom) {
-            return;                                   // already decoded with the same settings
+        Dimension rs = (param != null) ? param.getSourceRenderSize() : null;
+        int tw = rs != null ? rs.width : 0;
+        int th = rs != null ? rs.height : 0;
+        if (decoded != null && decodedWith == custom && decodedTargetW == tw && decodedTargetH == th) {
+            return;                                   // already decoded with the same settings and size
         }
         byte[] data = bytes();
         libraw.setSettingsOverride(custom);           // null = standard lookup
-        byte[] raw = libraw.readPixelDataFromStream(data);
+        byte[] raw = libraw.readPixelDataFromStream(data, tw, th);
         int w = libraw.getImageWidth();
         int h = libraw.getImageHeight();
         if (raw == null || w <= 0 || h <= 0 || raw.length != (long) w * h * 3) {
@@ -316,9 +328,14 @@ public class RAWImageIOReader extends ImageReader {
         }
         decoded = raw;
         decodedWith = custom;
-        width = w;
-        height = h;
-        gotSize = true;
+        decodedTargetW = tw;
+        decodedTargetH = th;
+        decW = w;
+        decH = h;
+        if (!libraw.isLastDecodeHalfSize()) {
+            fullW = w;                                // exact full size known now
+            fullH = h;
+        }
     }
 
     // ---- ImageReader API ----------------------------------------------------
@@ -329,20 +346,30 @@ public class RAWImageIOReader extends ImageReader {
 
     @Override
     public int getWidth(int imageIndex) throws IOException {
-        if (!gotSize && !decodeIfRaw(null)) {
-            return delegate().getWidth(imageIndex);
+        if (fullW <= 0) {
+            if (!probeRaw()) {
+                return delegate().getWidth(imageIndex);
+            }
+            if (fullW <= 0 && !decodeIfRaw(null)) {   // quick size unknown: fall back to a full decode
+                return delegate().getWidth(imageIndex);
+            }
         }
         checkIndex(imageIndex);
-        return width;
+        return fullW > 0 ? fullW : decW;
     }
 
     @Override
     public int getHeight(int imageIndex) throws IOException {
-        if (!gotSize && !decodeIfRaw(null)) {
-            return delegate().getHeight(imageIndex);
+        if (fullH <= 0) {
+            if (!probeRaw()) {
+                return delegate().getHeight(imageIndex);
+            }
+            if (fullH <= 0 && !decodeIfRaw(null)) {
+                return delegate().getHeight(imageIndex);
+            }
         }
         checkIndex(imageIndex);
-        return height;
+        return fullH > 0 ? fullH : decH;
     }
 
     @Override
@@ -405,8 +432,10 @@ public class RAWImageIOReader extends ImageReader {
         final byte[] raw = decoded;
         decoded = null;                 // hand over, do not keep 70+ MB per reader
         decodedWith = null;
-        final int w = width;
-        final int h = height;
+        decodedTargetW = 0;
+        decodedTargetH = 0;
+        final int w = decW;             // may be the half size of the image
+        final int h = decH;
 
         // Zero-copy: the byte[] from LibRaw becomes the raster directly
         WritableRaster raster = Raster.createInterleavedRaster(
@@ -422,8 +451,8 @@ public class RAWImageIOReader extends ImageReader {
         int dstH = target != null ? Math.max(1, target.height) : h;
 
         BufferedImage result = (dstW == w && dstH == h) ? full : scale(full, dstW, dstH);
-        LOG.log(Level.FINE, "ImageIO read: native={0}x{1}, target={2}, returned={3}x{4}",
-                new Object[]{w, h, target, result.getWidth(), result.getHeight()});
+        LOG.log(Level.FINE, "ImageIO read: image={0}x{1}, decoded={2}x{3}, target={4}, returned={5}x{6}",
+                new Object[]{fullW, fullH, w, h, target, result.getWidth(), result.getHeight()});
         processImageComplete();
         return result;
     }

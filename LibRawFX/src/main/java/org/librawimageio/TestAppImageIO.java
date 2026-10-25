@@ -52,22 +52,12 @@ public class TestAppImageIO extends Application {
 
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException {
-        /*RAWImageLoaderFactory.install();
-        HashMap<String, RawDecoderSettings> decoderSettings = RAWImageLoaderFactory.getDecoderSettings(); //.setEnableExposureCorrection(false);
-        decoderSettings.put("Sigma DP2 Merrill", new RawDecoderSettings());
-        decoderSettings.get("Sigma DP2 Merrill").setEnableExposureCorrection(true);
-        decoderSettings.get("Sigma DP2 Merrill").setExposureCorrection(1);
-        decoderSettings.get("Sigma DP2 Merrill").setExpoCorrectionShift(2.0f);        
-        decoderSettings.get("Sigma DP2 Merrill").setAutoWhitebalance(true);
-        decoderSettings.put("Fujifilm X-T2", new RawDecoderSettings());
-        decoderSettings.get("Fujifilm X-T2").setEnableExposureCorrection(true);
-        decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);*/
-
+        
         RawDecoderSettings sigma = new RawDecoderSettings();
         // set the values with the setters of RawDecoderSettings
         RAWImageIOReader.getSettings().put("Sigma DP2 Merrill", sigma);      // this model only        
         sigma.setUseUserMultipliers(true);
-        sigma.setUserMultipliers(3.39f, 1.58f, 1.0f, 1.58f);
+        sigma.setUserMultipliers(3.191f, 1.571f, 1.0f, 1.58f);
 
         Parameters parameters = getParameters();
         String file = parameters.getRaw().get(0);

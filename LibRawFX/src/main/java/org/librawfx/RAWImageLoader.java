@@ -153,7 +153,7 @@ public class RAWImageLoader extends ImageLoaderImpl {
             updateImageProgress(0);
             long start = System.currentTimeMillis();
             // LibrawImage meldet den Fortschritt (0 % ... 100 %) selbst über den Listener
-            imageData = getImageData(libraw, fileBytes);
+            imageData = getImageData(libraw, fileBytes, (int) width, (int) height);   // requested size: previews use half_size
             LOG.log(Level.FINE, "Raw loading took: {0}s", (System.currentTimeMillis() - start) / 1000.0);
 
             rawWidth = libraw.getImageWidth();
@@ -270,9 +270,10 @@ public class RAWImageLoader extends ImageLoaderImpl {
     }
 
     /** Native Anbindung. Das Ergebnis ist ein Java-byte[] und damit unabhängig von dispose(). */
-    private synchronized ByteBuffer getImageData(LibrawImage libraw, byte[] fileBytes) throws IOException {
+    private synchronized ByteBuffer getImageData(LibrawImage libraw, byte[] fileBytes, int targetW, int targetH)
+            throws IOException {
         long start = System.currentTimeMillis();
-        byte[] raw = libraw.readPixelDataFromStream(fileBytes);
+        byte[] raw = libraw.readPixelDataFromStream(fileBytes, targetW, targetH);
         LOG.log(Level.FINE, "Raw convert took: {0}s", (System.currentTimeMillis() - start) / 1000.0);
         return raw == null ? null : ByteBuffer.wrap(raw);
     }

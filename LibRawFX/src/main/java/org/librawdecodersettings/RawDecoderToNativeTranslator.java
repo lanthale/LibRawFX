@@ -141,6 +141,13 @@ public class RawDecoderToNativeTranslator {
     }
 
     /**
+     * Forces half_size, used for previews. Call after {@link #translate}.
+     */
+    public void forceHalfSize(MemorySegment p) {
+        libraw_output_params_t.half_size(p, 1);
+    }
+
+    /**
      * Decode-time options. Since LibRaw 0.20 they live in imgdata.rawparams
      * (libraw_raw_unpack_params_t) and no longer in the output params. Call
      * this after libraw_open_*() and BEFORE libraw_unpack().
