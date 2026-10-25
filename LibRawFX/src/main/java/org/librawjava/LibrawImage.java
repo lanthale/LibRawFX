@@ -14,6 +14,7 @@ import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.libraw.nativ.libraw_colordata_t;
 import org.libraw.nativ.libraw_data_t;
 import org.libraw.nativ.libraw_gps_info_t;
 import org.libraw.nativ.libraw_h;
@@ -296,6 +297,18 @@ public class LibrawImage {
     }
 
     private byte[] decode(NativeOpen opener, String source) throws IOException {
+        long start = System.nanoTime();
+        long startWall = System.currentTimeMillis();
+        try {
+            return decode0(opener, source);
+        } finally {
+            LOG.log(Level.FINE, "{0} decode total (incl. arena close) ms: {1}, thread={2}, start={3}, end={4} (ms of the current 1000 s)",
+                    new Object[]{source, ms(start, System.nanoTime()), Thread.currentThread().getName(),
+                        String.valueOf(startWall % 1_000_000), String.valueOf(System.currentTimeMillis() % 1_000_000)});
+        }
+    }
+
+    private byte[] decode0(NativeOpen opener, String source) throws IOException {
         ensureLoaded();
         try (Arena scope = Arena.ofConfined()) {          // confined: cheaper to close than shared
             MemorySegment iprc = libraw_h.libraw_init(0);
@@ -305,20 +318,29 @@ public class LibrawImage {
             MemorySegment memImage = MemorySegment.NULL;
             try {
                 progress(0, 1);
-                int k = opener.open(iprc, scope);
+                long t0 = System.nanoTime();
+                int k = opener.open(iprc, scope);          // includes the native copy of the file
                 if (k != 0) {
                     throw error(source, k);
                 }
+                long tOpen = System.nanoTime();
+
+                // make and model are known after open: pick the settings, then apply the
+                // decode-time options (rawparams) BEFORE unpack
+                MemorySegment iParams = libraw_h.libraw_get_iparams(iprc);
+                String make = str(libraw_iparams_t.make(iParams));
+                String model = str(libraw_iparams_t.model(iParams));
+                RawDecoderToNativeTranslator translator
+                        = new RawDecoderToNativeTranslator(pickSettings(make + " " + model), operatingSystem);
+                translator.translateDecodeParams(libraw_data_t.rawparams(iprc));
+
                 k = libraw_h.libraw_unpack(iprc);
                 if (k < 0) {
                     throw error(source + " (decoding)", k);
                 }
+                long tUnpack = System.nanoTime();
 
-                MemorySegment iParams = libraw_h.libraw_get_iparams(iprc);
-                String make = str(libraw_iparams_t.make(iParams));
-                String model = str(libraw_iparams_t.model(iParams));
-                new RawDecoderToNativeTranslator(pickSettings(make + " " + model), operatingSystem)
-                        .translate(libraw_data_t.params(iprc));
+                translator.translate(libraw_data_t.params(iprc), scope);   // scope: arena for file path options
 
                 cameraModel = model;
                 long timestamp = libraw_imgother_t.timestamp(libraw_h.libraw_get_imgother(iprc));
@@ -329,6 +351,13 @@ public class LibrawImage {
                 if (k < 0) {
                     throw error(source + " (processing)", k);
                 }
+                long tProcess = System.nanoTime();
+                if (LOG.isLoggable(Level.FINE)) {
+                    MemorySegment color = libraw_data_t.color(iprc);
+                    LOG.log(Level.FINE, "{0} {1}: WB cam_mul={2}, pre_mul (used)={3}",
+                            new Object[]{make, model, floats4(libraw_colordata_t.cam_mul(color)),
+                                floats4(libraw_colordata_t.pre_mul(color))});
+                }
 
                 MemorySegment errorCode = scope.allocate(libraw_h.C_INT);
                 memImage = libraw_h.libraw_dcraw_make_mem_image(iprc, errorCode);
@@ -337,6 +366,7 @@ public class LibrawImage {
                     memImage = MemorySegment.NULL;         // nothing to free
                     throw error(source + " (output)", memErr != 0 ? memErr : -1);
                 }
+                long tMem = System.nanoTime();
 
                 // All values come from the same processed_image_t that holds the pixels
                 int w = libraw_processed_image_t.width(memImage);
@@ -359,6 +389,7 @@ public class LibrawImage {
 
                 byte[] data = new byte[(int) total];
                 MemorySegment.copy(pixels, ValueLayout.JAVA_BYTE, 0, data, 0, (int) total);   // one bulk copy
+                long tCopy = System.nanoTime();
 
                 // publish results only after everything was validated
                 imageWidth = w;
@@ -367,6 +398,9 @@ public class LibrawImage {
                 imageColors = colors;
                 stride = (int) rowBytes;
                 progress(h, h);
+                LOG.log(Level.FINE, "{0} phases ms: open+native copy={1}, unpack={2}, process={3}, make_mem_image={4}, copy to byte[]={5}",
+                        new Object[]{source, ms(t0, tOpen), ms(tOpen, tUnpack), ms(tUnpack, tProcess),
+                            ms(tProcess, tMem), ms(tMem, tCopy)});
                 return data;
             } finally {
                 if (!isNull(memImage)) {
@@ -591,6 +625,19 @@ public class LibrawImage {
     // ==========================================================================
     // Helpers
     // ==========================================================================
+    private static String ms(long fromNanos, long toNanos) {
+        return String.valueOf((toNanos - fromNanos) / 1_000_000);
+    }
+
+    /** Four floats of a float[4] field as text (for diagnostics). */
+    private static String floats4(MemorySegment s) {
+        if (s.byteSize() < 16) {
+            return "n/a";
+        }
+        return s.getAtIndex(ValueLayout.JAVA_FLOAT, 0) + ", " + s.getAtIndex(ValueLayout.JAVA_FLOAT, 1) + ", "
+                + s.getAtIndex(ValueLayout.JAVA_FLOAT, 2) + ", " + s.getAtIndex(ValueLayout.JAVA_FLOAT, 3);
+    }
+
     private static boolean isNull(MemorySegment s) {
         return s == null || s.address() == 0L;
     }

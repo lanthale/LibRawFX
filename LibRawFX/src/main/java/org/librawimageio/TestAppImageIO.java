@@ -34,22 +34,21 @@ import javax.imageio.ImageIO;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-import org.librawimageio.RAWImageIOReaderSpi;
 
 /**
  * JavaFX TestApp
  */
 public class TestAppImageIO extends Application {
-    
+
     private static void printReaders(String label, File f) {
-    try (ImageInputStream in = ImageIO.createImageInputStream(f)) {
-        System.out.println("--- Reader " + label + " für " + f.getName());
-        ImageIO.getImageReaders(in).forEachRemaining(r ->
-            System.out.println("   " + r.getClass().getName()));
-    } catch (IOException e) {
-        e.printStackTrace();
+        try (ImageInputStream in = ImageIO.createImageInputStream(f)) {
+            System.out.println("--- Reader " + label + " für " + f.getName());
+            ImageIO.getImageReaders(in).forEachRemaining(r
+                    -> System.out.println("   " + r.getClass().getName()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
 
     @Override
     public void start(Stage stage) throws FileNotFoundException, IOException {
@@ -64,11 +63,17 @@ public class TestAppImageIO extends Application {
         decoderSettings.get("Fujifilm X-T2").setEnableExposureCorrection(true);
         decoderSettings.get("Fujifilm X-T2").setExposureCorrection(1);*/
 
+        RawDecoderSettings sigma = new RawDecoderSettings();
+        // set the values with the setters of RawDecoderSettings
+        RAWImageIOReader.getSettings().put("Sigma DP2 Merrill", sigma);      // this model only        
+        sigma.setUseUserMultipliers(true);
+        sigma.setUserMultipliers(3.39f, 1.58f, 1.0f, 1.58f);
+
         Parameters parameters = getParameters();
         String file = parameters.getRaw().get(0);
         String file2 = parameters.getRaw().get(1);
         String file3 = parameters.getRaw().get(2);
-        
+
         IIORegistry registry = IIORegistry.getDefaultInstance();
         ImageReaderSpi mine = new RAWImageIOReaderSpi();
         registry.registerServiceProvider(mine);
@@ -84,8 +89,6 @@ public class TestAppImageIO extends Application {
         }
 
         printReaders("nachher", new File(file));*/
-        
-
         VBox stack = new VBox();
         stack.setPadding(new Insets(10));
         stack.setSpacing(5);
@@ -284,15 +287,16 @@ public class TestAppImageIO extends Application {
     }
 
     public static void main(String[] args) {
-        args = new String[3];        
+        args = new String[3];
         args[2] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample1.nef";
         args[1] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_SIGMA_DP2_MERRILL.X3F";
-        //args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";
-        args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample.webp";
+        args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "RAW_fujifilm_x_t2-Sample.raf";
+        //args[0] = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "ressources" + File.separator + "sample.webp";
         Logger logger = Logger.getLogger("");
         Handler handler = new ConsoleHandler();
         logger.addHandler(handler);
-        logger.setLevel(Level.ALL);
+        logger.setLevel(Level.FINE);
+        handler.setLevel(Level.FINE);
         handler.setFormatter(new SimpleFormatter());
         launch(args);
     }

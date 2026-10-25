@@ -104,7 +104,7 @@ public class NativeUtils {
             // Prepare temporary file
             if (temporaryDir == null) {                
                 temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
-                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, () -> "Tempdir was '" + temporaryDir.toString() + ".");
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.FINE, () -> "Tempdir was '" + temporaryDir.toString() + ".");
                 //temporaryDir.deleteOnExit();
             }
         } else {
@@ -112,7 +112,7 @@ public class NativeUtils {
             if (temporaryDir.exists() == false) {
                 temporaryDir.mkdirs();
                 System.out.println("tempdir:"+temporaryDir.toString());
-                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, () -> "Tempdir was '" + temporaryDir.toString() + ".");
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.FINE, () -> "Tempdir was '" + temporaryDir.toString() + ".");
                 //temporaryDir.deleteOnExit();
             }
         }
@@ -126,16 +126,16 @@ public class NativeUtils {
                 Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 nativeLibs[i] = temp.toString();
             } catch (IOException e) {
-                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, () -> "Cannot accesss lib " + part + "!");
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.FINE, () -> "Cannot accesss lib " + part + "!");
                 temp.delete();
                 throw e;
             } catch (NullPointerException e) {
-                Logger.getLogger(NativeUtils.class.getName()).log(Level.SEVERE, () -> "Cannot find lib " + part + "!");
+                Logger.getLogger(NativeUtils.class.getName()).log(Level.FINE, () -> "Cannot find lib " + part + "!");
                 temp.delete();
                 throw new FileNotFoundException("File " + path + " was not found inside JAR.");
             }
         }
-        Logger.getLogger(NativeUtils.class.getName()).log(Level.FINEST, () -> "Extracting native lib to " + tempDir + "...finished");
+        Logger.getLogger(NativeUtils.class.getName()).log(Level.FINE, () -> "Extracting native lib to " + tempDir + "...finished");
         return nativeLibs;
     }
 

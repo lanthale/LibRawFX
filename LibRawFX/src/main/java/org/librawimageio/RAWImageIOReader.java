@@ -401,14 +401,12 @@ public class RAWImageIOReader extends ImageReader {
             return img;
         }
         checkIndex(imageIndex);
-        long start = System.nanoTime();
 
         final byte[] raw = decoded;
         decoded = null;                 // hand over, do not keep 70+ MB per reader
         decodedWith = null;
         final int w = width;
         final int h = height;
-        LOG.log(Level.FINE, "Raw convert took: {0}s", (System.nanoTime() - start) / 1e9);
 
         // Zero-copy: the byte[] from LibRaw becomes the raster directly
         WritableRaster raster = Raster.createInterleavedRaster(
