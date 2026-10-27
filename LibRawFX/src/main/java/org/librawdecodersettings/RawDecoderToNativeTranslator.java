@@ -128,7 +128,7 @@ public class RawDecoderToNativeTranslator {
         }
 
         // ---- output format -------------------------------------------------------
-        // NOTE: LibrawImage currently requires 8 bit RGB. 16 bit makes decode() throw.
+        // The effective depth is forced afterwards by LibrawImage (forceOutputBps).
         libraw_output_params_t.output_bps(p, settings.isSixteenBitsImage() ? 16 : 8);
         libraw_output_params_t.output_tiff(p, settings.isOutput_tiff() ? 1 : 0);   // only used by dcraw_ppm_tiff_writer, no effect on make_mem_image
 
@@ -138,6 +138,30 @@ public class RawDecoderToNativeTranslator {
         setPath(p, arena, settings.getCameraProfilePath(), 1);
         setPath(p, arena, settings.getBadPixelsPath(), 2);
         setPath(p, arena, settings.getDarkFramePath(), 3);
+    }
+
+    /**
+     * Forces the output bit depth (8 or 16). The depth set in the profile is
+     * ignored: LibrawImage decides per API (8 bit for images, 16 bit for editing).
+     */
+    public void forceOutputBps(MemorySegment p, int bps) {
+        libraw_output_params_t.output_bps(p, bps);
+    }
+
+    /**
+     * Linear output for editing: gamma 1.0, no auto brightness, brightness 1.0,
+     * sRGB primaries (output_color 1, no output ICC profile). The editing
+     * pipeline assumes sRGB primaries, so the colour space settings of the
+     * profile are ignored here. Call after {@link #translate}.
+     */
+    public void forceLinear(MemorySegment p) {
+        MemorySegment gamm = libraw_output_params_t.gamm(p);
+        gamm.setAtIndex(ValueLayout.JAVA_DOUBLE, 0, 1.0);
+        gamm.setAtIndex(ValueLayout.JAVA_DOUBLE, 1, 1.0);
+        libraw_output_params_t.no_auto_bright(p, 1);
+        libraw_output_params_t.bright(p, 1.0f);
+        libraw_output_params_t.output_color(p, 1);
+        libraw_output_params_t.output_profile(p, MemorySegment.NULL);
     }
 
     /**

@@ -109,7 +109,7 @@ public class RawDecoderSettings {
     private int shotSelect = 0;
 
     // ---- output / misc -----------------------------------------------------------
-    /** NOTE: LibrawImage currently requires 8 bit, 16 bit makes the decode fail. */
+    /** Ignored: LibrawImage forces 8 bit for images and 16 bit for readPixelData16(...). */
     private boolean sixteenBitsImage = false;
     /** No effect on the in-memory decode (only used when writing a TIFF file). */
     private boolean output_tiff = false;

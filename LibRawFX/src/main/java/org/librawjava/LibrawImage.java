@@ -71,6 +71,11 @@ public class LibrawImage {
         int open(MemorySegment iprc, Arena arena);
     }
 
+    /** Result of a decode: 8 bit bytes or 16 bit samples (exactly one is set). */
+    private record Decoded(byte[] data8, short[] data16, int width, int height) {
+
+    }
+
     // ---- static state -------------------------------------------------------
     private static volatile boolean loaded = false;
     private static volatile String operatingSystem;
@@ -334,7 +339,28 @@ public class LibrawImage {
         }
         return decode((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
                 arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
-                sourceFileAsByteArray.length), SRC_DATA, targetWidth, targetHeight);
+                sourceFileAsByteArray.length), SRC_DATA, targetWidth, targetHeight, 8, false).data8();
+    }
+
+    /**
+     * Decodes to 16 bit RGB for editing (full size unless the profile enables
+     * halfSizeOutput). The result is independent of the sixteenBitsImage flag.
+     *
+     * @param sourceFileAsByteArray the complete file
+     * @param linear true = linear light (gamma 1.0, no auto brightness, bright
+     * 1.0, always sRGB primaries): the right input for exposure and white
+     * balance. false = gamma encoded as configured in the profile.
+     * @return interleaved RGB, unsigned 16 bit in a short[] (use {@code & 0xFFFF})
+     * @throws IOException if the file cannot be opened or decoded
+     */
+    public RawPixels16 readPixelData16(byte[] sourceFileAsByteArray, boolean linear) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
+        Decoded d = decode((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
+                arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
+                sourceFileAsByteArray.length), SRC_DATA, 0, 0, 16, linear);
+        return new RawPixels16(d.width(), d.height(), 3, d.data16(), linear);
     }
 
     /**
@@ -350,15 +376,16 @@ public class LibrawImage {
             throw new IllegalArgumentException("imageFileURL == null!");
         }
         byte[] rgb = decode((iprc, arena) -> libraw_h.libraw_open_file(iprc, arena.allocateFrom(url)),
-                fileLabel(url), 0, 0);
+                fileLabel(url), 0, 0, 8, false).data8();
         return convertToINT(rgb);
     }
 
-    private byte[] decode(NativeOpen opener, String source, int targetW, int targetH) throws IOException {
+    private Decoded decode(NativeOpen opener, String source, int targetW, int targetH, int bps, boolean linear)
+            throws IOException {
         long start = System.nanoTime();
         long startWall = System.currentTimeMillis();
         try {
-            return decode0(opener, source, targetW, targetH);
+            return decode0(opener, source, targetW, targetH, bps, linear);
         } finally {
             LOG.log(Level.FINE, "{0} decode total (incl. arena close) ms: {1}, thread={2}, start={3}, end={4} (ms of the current 1000 s)",
                     new Object[]{source, ms(start, System.nanoTime()), Thread.currentThread().getName(),
@@ -366,7 +393,8 @@ public class LibrawImage {
         }
     }
 
-    private byte[] decode0(NativeOpen opener, String source, int targetW, int targetH) throws IOException {
+    private Decoded decode0(NativeOpen opener, String source, int targetW, int targetH, int bps, boolean linear)
+            throws IOException {
         ensureLoaded();
         try (Arena scope = Arena.ofConfined()) {          // confined: cheaper to close than shared
             MemorySegment iprc = libraw_h.libraw_init(0);
@@ -412,6 +440,10 @@ public class LibrawImage {
                     translator.forceHalfSize(libraw_data_t.params(iprc));
                 }
                 lastDecodeHalfSize = previewHalf || chosen.isHalfSizeOutput();
+                translator.forceOutputBps(libraw_data_t.params(iprc), bps);   // 8 bit for images, 16 bit for editing
+                if (linear) {
+                    translator.forceLinear(libraw_data_t.params(iprc));
+                }
 
                 cameraModel = model;
                 long timestamp = libraw_imgother_t.timestamp(libraw_h.libraw_get_imgother(iprc));
@@ -445,21 +477,29 @@ public class LibrawImage {
                 int bits = libraw_processed_image_t.bits(memImage);
                 int colors = libraw_processed_image_t.colors(memImage);
 
-                if (bits != 8 || colors != 3) {
+                if (bits != bps || colors != 3) {
                     throw new IOException(source + ": Unsupported pixel format (bits=" + bits
                             + ", colors=" + colors + ")");
                 }
                 long rowBytes = (long) w * colors * (bits / 8);
                 long total = rowBytes * h;
-                if (w <= 0 || h <= 0 || total > Integer.MAX_VALUE - 8) {
+                long samples = (long) w * h * colors;
+                if (w <= 0 || h <= 0 || total > Integer.MAX_VALUE - 8 || samples > Integer.MAX_VALUE - 8) {
                     throw new IOException(source + ": Invalid image size " + w + "x" + h);
                 }
 
                 MemorySegment data$slice = libraw_processed_image_t.data(memImage);
                 MemorySegment pixels = MemorySegment.ofAddress(data$slice.address()).reinterpret(total);
 
-                byte[] data = new byte[(int) total];
-                MemorySegment.copy(pixels, ValueLayout.JAVA_BYTE, 0, data, 0, (int) total);   // one bulk copy
+                byte[] data8 = null;
+                short[] data16 = null;
+                if (bits == 8) {
+                    data8 = new byte[(int) total];
+                    MemorySegment.copy(pixels, ValueLayout.JAVA_BYTE, 0, data8, 0, (int) total);   // one bulk copy
+                } else {
+                    data16 = new short[(int) samples];     // LibRaw stores 16 bit in host byte order
+                    MemorySegment.copy(pixels, ValueLayout.JAVA_SHORT_UNALIGNED, 0, data16, 0, (int) samples);
+                }
                 long tCopy = System.nanoTime();
 
                 // publish results only after everything was validated
@@ -472,7 +512,7 @@ public class LibrawImage {
                 LOG.log(Level.FINE, "{0} phases ms: open+native copy={1}, unpack={2}, process={3}, make_mem_image={4}, copy to byte[]={5}",
                         new Object[]{source, ms(t0, tOpen), ms(tOpen, tUnpack), ms(tUnpack, tProcess),
                             ms(tProcess, tMem), ms(tMem, tCopy)});
-                return data;
+                return new Decoded(data8, data16, w, h);
             } finally {
                 if (!isNull(memImage)) {
                     libraw_h.libraw_dcraw_clear_mem(memImage);
