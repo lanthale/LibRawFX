@@ -57,7 +57,18 @@ public class LibrawImage {
     /** Source label used in messages when the data comes from memory. */
     private static final String SRC_DATA = "Image data";
 
-    /** Receives decode progress (rows done / total rows). */
+    /**
+     * Progress steps reported during a decode (of PROGRESS_TOTAL). LibRaw has
+     * no fine grained progress, so the phases are weighted by their typical
+     * share of the decode time; demosaicing (process) is the longest one.
+     */
+    private static final int PROGRESS_TOTAL = 100;
+    private static final int PROGRESS_OPENED = 5;
+    private static final int PROGRESS_UNPACKED = 25;
+    private static final int PROGRESS_PROCESSED = 85;
+    private static final int PROGRESS_OUTPUT = 95;
+
+    /** Receives decode progress (done of total, see PROGRESS_TOTAL). */
     @FunctionalInterface
     public interface ProgressListener {
 
@@ -410,6 +421,7 @@ public class LibrawImage {
                     throw error(source, k);
                 }
                 long tOpen = System.nanoTime();
+                progress(PROGRESS_OPENED, PROGRESS_TOTAL);
 
                 // make and model are known after open: pick the settings, then apply the
                 // decode-time options (rawparams) BEFORE unpack
@@ -434,6 +446,7 @@ public class LibrawImage {
                     throw error(source + " (decoding)", k);
                 }
                 long tUnpack = System.nanoTime();
+                progress(PROGRESS_UNPACKED, PROGRESS_TOTAL);
 
                 translator.translate(libraw_data_t.params(iprc), scope);   // scope: arena for file path options
                 if (previewHalf) {
@@ -455,6 +468,7 @@ public class LibrawImage {
                     throw error(source + " (processing)", k);
                 }
                 long tProcess = System.nanoTime();
+                progress(PROGRESS_PROCESSED, PROGRESS_TOTAL);
                 if (LOG.isLoggable(Level.FINE)) {
                     MemorySegment color = libraw_data_t.color(iprc);
                     LOG.log(Level.FINE, "{0} {1}: WB cam_mul={2}, pre_mul (used)={3}",
@@ -470,6 +484,7 @@ public class LibrawImage {
                     throw error(source + " (output)", memErr != 0 ? memErr : -1);
                 }
                 long tMem = System.nanoTime();
+                progress(PROGRESS_OUTPUT, PROGRESS_TOTAL);
 
                 // All values come from the same processed_image_t that holds the pixels
                 int w = libraw_processed_image_t.width(memImage);
