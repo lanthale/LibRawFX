@@ -150,17 +150,18 @@ public class RawDecoderToNativeTranslator {
 
     /**
      * Linear output for editing: gamma 1.0, no auto brightness, brightness 1.0,
-     * sRGB primaries (output_color 1, no output ICC profile). The editing
-     * pipeline assumes sRGB primaries, so the colour space settings of the
-     * profile are ignored here. Call after {@link #translate}.
+     * fixed primaries (no output ICC profile). The colour space settings of
+     * the profile are ignored here. Call after {@link #translate}.
+     *
+     * @param outputColor LibRaw output_color, e.g. 1 = sRGB, 4 = ProPhoto
      */
-    public void forceLinear(MemorySegment p) {
+    public void forceLinear(MemorySegment p, int outputColor) {
         MemorySegment gamm = libraw_output_params_t.gamm(p);
         gamm.setAtIndex(ValueLayout.JAVA_DOUBLE, 0, 1.0);
         gamm.setAtIndex(ValueLayout.JAVA_DOUBLE, 1, 1.0);
         libraw_output_params_t.no_auto_bright(p, 1);
         libraw_output_params_t.bright(p, 1.0f);
-        libraw_output_params_t.output_color(p, 1);
+        libraw_output_params_t.output_color(p, outputColor);
         libraw_output_params_t.output_profile(p, MemorySegment.NULL);
     }
 

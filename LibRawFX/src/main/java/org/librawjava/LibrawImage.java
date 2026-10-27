@@ -350,27 +350,44 @@ public class LibrawImage {
         }
         return decode((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
                 arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
-                sourceFileAsByteArray.length), SRC_DATA, targetWidth, targetHeight, 8, false).data8();
+                sourceFileAsByteArray.length), SRC_DATA, targetWidth, targetHeight, 8, null).data8();
     }
 
     /**
      * Decodes to 16 bit RGB for editing (full size unless the profile enables
      * halfSizeOutput). The result is independent of the sixteenBitsImage flag.
+     * Linear output uses sRGB primaries; see
+     * {@link #readPixelData16(byte[], boolean, OutputColor)} for ProPhoto.
      *
      * @param sourceFileAsByteArray the complete file
      * @param linear true = linear light (gamma 1.0, no auto brightness, bright
-     * 1.0, always sRGB primaries): the right input for exposure and white
-     * balance. false = gamma encoded as configured in the profile.
+     * 1.0, sRGB primaries): the right input for exposure and white balance.
+     * false = gamma encoded as configured in the profile.
      * @return interleaved RGB, unsigned 16 bit in a short[] (use {@code & 0xFFFF})
      * @throws IOException if the file cannot be opened or decoded
      */
     public RawPixels16 readPixelData16(byte[] sourceFileAsByteArray, boolean linear) throws IOException {
+        return readPixelData16(sourceFileAsByteArray, linear, OutputColor.SRGB);
+    }
+
+    /**
+     * Like {@link #readPixelData16(byte[], boolean)}, with the primaries of
+     * the linear output. The colour space of the profile (outputColorSpace,
+     * output ICC profile) is ignored for linear output.
+     *
+     * @param color primaries of linear output; ignored if linear is false
+     */
+    public RawPixels16 readPixelData16(byte[] sourceFileAsByteArray, boolean linear, OutputColor color)
+            throws IOException {
         if (sourceFileAsByteArray == null) {
             throw new IllegalArgumentException("sourceFileAsByteArray == null!");
         }
+        if (linear && color == null) {
+            throw new IllegalArgumentException("color == null!");
+        }
         Decoded d = decode((iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
                 arena.allocateFrom(ValueLayout.JAVA_BYTE, sourceFileAsByteArray),
-                sourceFileAsByteArray.length), SRC_DATA, 0, 0, 16, linear);
+                sourceFileAsByteArray.length), SRC_DATA, 0, 0, 16, linear ? color : null);
         return new RawPixels16(d.width(), d.height(), 3, d.data16(), linear);
     }
 
@@ -387,11 +404,11 @@ public class LibrawImage {
             throw new IllegalArgumentException("imageFileURL == null!");
         }
         byte[] rgb = decode((iprc, arena) -> libraw_h.libraw_open_file(iprc, arena.allocateFrom(url)),
-                fileLabel(url), 0, 0, 8, false).data8();
+                fileLabel(url), 0, 0, 8, null).data8();
         return convertToINT(rgb);
     }
 
-    private Decoded decode(NativeOpen opener, String source, int targetW, int targetH, int bps, boolean linear)
+    private Decoded decode(NativeOpen opener, String source, int targetW, int targetH, int bps, OutputColor linear)
             throws IOException {
         long start = System.nanoTime();
         long startWall = System.currentTimeMillis();
@@ -404,7 +421,7 @@ public class LibrawImage {
         }
     }
 
-    private Decoded decode0(NativeOpen opener, String source, int targetW, int targetH, int bps, boolean linear)
+    private Decoded decode0(NativeOpen opener, String source, int targetW, int targetH, int bps, OutputColor linear)
             throws IOException {
         ensureLoaded();
         try (Arena scope = Arena.ofConfined()) {          // confined: cheaper to close than shared
@@ -454,8 +471,8 @@ public class LibrawImage {
                 }
                 lastDecodeHalfSize = previewHalf || chosen.isHalfSizeOutput();
                 translator.forceOutputBps(libraw_data_t.params(iprc), bps);   // 8 bit for images, 16 bit for editing
-                if (linear) {
-                    translator.forceLinear(libraw_data_t.params(iprc));
+                if (linear != null) {
+                    translator.forceLinear(libraw_data_t.params(iprc), linear.libRawCode());
                 }
 
                 cameraModel = model;
