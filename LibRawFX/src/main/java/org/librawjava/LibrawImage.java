@@ -9,7 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -25,6 +27,9 @@ import org.libraw.nativ.libraw_lensinfo_t;
 import org.libraw.nativ.libraw_makernotes_lens_t;
 import org.libraw.nativ.libraw_processed_image_t;
 import org.libraw.nativ.libraw_shootinginfo_t;
+import org.libraw.nativ.libraw_thumbnail_item_t;
+import org.libraw.nativ.libraw_thumbnail_list_t;
+import org.libraw.nativ.libraw_thumbnail_t;
 import org.librawdecodersettings.RawDecoderSettings;
 import org.librawdecodersettings.RawDecoderToNativeTranslator;
 import org.librawfx.RAWImageLoader;
@@ -97,6 +102,9 @@ public class LibrawImage {
      * from the system property librawfx.halfSizeForPreviews (true/false).
      */
     private static volatile Boolean previewHalfSizeOverride = readPreviewProperty();
+
+    /** null = not checked yet; see thumbExAvailable(). */
+    private static volatile Boolean thumbExAvailable;
 
     // ---- instance state -----------------------------------------------------
     private final ConcurrentHashMap<String, RawDecoderSettings> rawSettings;
@@ -766,6 +774,313 @@ public class LibrawImage {
         m.put("Focal length", focalLen + " mm");
         m.put("ISO speed", "" + isoSpeed);
         m.put("Shutter", shutter > 0 ? "" + (1 / shutter) : "0");   // no Infinity for shutter == 0
+    }
+
+    // ==========================================================================
+    // Thumbnails (embedded previews, no RAW decoding)
+    // ==========================================================================
+    /** Chooses a thumbnail index from the list; -1 = LibRaw's default (the largest). */
+    @FunctionalInterface
+    private interface ThumbSelector {
+
+        int select(List<ThumbnailInfo> list);
+    }
+
+    /**
+     * Lists the thumbnails / previews embedded in the given file bytes. Cheap:
+     * only the file header is parsed, no image data is loaded.
+     *
+     * @return all thumbnails, possibly empty. Empty as well if the native
+     * library is too old for thumbnail lists (LibRaw before 0.21)
+     * @throws LibrawException if LibRaw cannot open the data
+     */
+    public List<ThumbnailInfo> listThumbnails(byte[] sourceFileAsByteArray) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
+        return withOpened(bufferOpener(sourceFileAsByteArray), SRC_DATA, LibrawImage::thumbList);
+    }
+
+    /** Like {@link #listThumbnails(byte[])} for the file set via constructor / setImageFileURL. */
+    public List<ThumbnailInfo> listThumbnails() throws IOException {
+        String url = requireUrl();
+        return withOpened(fileOpener(url), fileLabel(url), LibrawImage::thumbList);
+    }
+
+    /**
+     * Extracts the largest embedded thumbnail / preview of the given file
+     * bytes. Much faster than decoding the RAW data, ideal for image browsers.
+     *
+     * @throws LibrawException with code -5 if the file has no thumbnail, -6 if
+     * its format is not supported (e.g. HEIF preview of CR3 files)
+     */
+    public RawThumbnail readThumbnail(byte[] sourceFileAsByteArray) throws IOException {
+        return readThumbnail(sourceFileAsByteArray, -1);
+    }
+
+    /**
+     * Extracts the thumbnail with the given index of {@link #listThumbnails(byte[])}.
+     *
+     * @param index index in the list, -1 = the largest
+     * @throws LibrawException with code -9 if the index does not exist
+     */
+    public RawThumbnail readThumbnail(byte[] sourceFileAsByteArray, int index) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
+        return readThumb(bufferOpener(sourceFileAsByteArray), SRC_DATA, list -> index);
+    }
+
+    /**
+     * Extracts the smallest supported thumbnail that is at least as big as the
+     * requested size (checked in both orientations), or the largest one if
+     * none is big enough. Use this for lists / grids of previews.
+     *
+     * @param minWidth requested width, 0 = unspecified
+     * @param minHeight requested height, 0 = unspecified
+     */
+    public RawThumbnail readThumbnail(byte[] sourceFileAsByteArray, int minWidth, int minHeight) throws IOException {
+        if (sourceFileAsByteArray == null) {
+            throw new IllegalArgumentException("sourceFileAsByteArray == null!");
+        }
+        return readThumb(bufferOpener(sourceFileAsByteArray), SRC_DATA, list -> pickThumb(list, minWidth, minHeight));
+    }
+
+    /**
+     * Extracts the largest thumbnail of the file set via constructor /
+     * setImageFileURL. LibRaw reads only the needed parts of the file, so this
+     * is the fastest way for large RAW files.
+     */
+    public RawThumbnail readThumbnail() throws IOException {
+        String url = requireUrl();
+        return readThumb(fileOpener(url), fileLabel(url), list -> -1);
+    }
+
+    /** Like {@link #readThumbnail(byte[], int)} for the file set via constructor / setImageFileURL. */
+    public RawThumbnail readThumbnail(int index) throws IOException {
+        String url = requireUrl();
+        return readThumb(fileOpener(url), fileLabel(url), list -> index);
+    }
+
+    /** Like {@link #readThumbnail(byte[], int, int)} for the file set via constructor / setImageFileURL. */
+    public RawThumbnail readThumbnail(int minWidth, int minHeight) throws IOException {
+        String url = requireUrl();
+        return readThumb(fileOpener(url), fileLabel(url), list -> pickThumb(list, minWidth, minHeight));
+    }
+
+    /**
+     * Smallest supported thumbnail covering the request, else the largest
+     * supported one; -1 (LibRaw default) if the list is empty or no size is given.
+     */
+    static int pickThumb(List<ThumbnailInfo> list, int reqW, int reqH) {
+        if (list.isEmpty() || (reqW <= 0 && reqH <= 0)) {
+            return -1;
+        }
+        ThumbnailInfo best = null;
+        ThumbnailInfo largest = null;
+        for (ThumbnailInfo t : list) {
+            if (!t.isSupported() || t.width() <= 0 || t.height() <= 0) {
+                continue;
+            }
+            if (largest == null || area(t) > area(largest)) {
+                largest = t;
+            }
+            boolean fits = (Math.max(reqW, 0) <= t.width() && Math.max(reqH, 0) <= t.height())
+                    || (Math.max(reqW, 0) <= t.height() && Math.max(reqH, 0) <= t.width());
+            if (fits && (best == null || area(t) < area(best))) {
+                best = t;
+            }
+        }
+        ThumbnailInfo r = best != null ? best : largest;
+        return r == null ? -1 : r.index();
+    }
+
+    private static long area(ThumbnailInfo t) {
+        return (long) t.width() * t.height();
+    }
+
+    private RawThumbnail readThumb(NativeOpen opener, String source, ThumbSelector selector) throws IOException {
+        return withOpened(opener, source, (iprc, scope) -> {
+            List<ThumbnailInfo> list = thumbList(iprc, scope);
+            int index = selector.select(list);
+            int k;
+            if (index >= 0 && thumbExAvailable()) {
+                k = libraw_h.libraw_unpack_thumb_ex(iprc, index);
+            } else if (index > 0) {
+                throw new LibrawException(source + ": Thumbnail index " + index
+                        + " needs LibRaw 0.21 or newer [LibRaw -8]", -8);
+            } else {
+                k = libraw_h.libraw_unpack_thumb(iprc);
+            }
+            if (k != 0) {
+                throw error(source + " (thumbnail)", k);
+            }
+            // the thumbnail's own orientation if the file has one, else the one of the image
+            int flip = -1;
+            for (ThumbnailInfo t : list) {
+                if (t.index() == index) {
+                    flip = t.flip();
+                }
+            }
+            MemorySegment sizes = libraw_data_t.sizes(iprc);
+            if (flip <= 0) {
+                flip = libraw_image_sizes_t.flip(sizes);
+            }
+            RawThumbnail t = memThumb(iprc, scope, source, flip);
+            int fixed = thumbFlip(t.flip(), libraw_image_sizes_t.width(sizes) & 0xFFFF,
+                    libraw_image_sizes_t.height(sizes) & 0xFFFF, t.width(), t.height());
+            return fixed == t.flip() ? t
+                    : new RawThumbnail(t.type(), t.width(), t.height(), t.colors(), fixed, t.data());
+        });
+    }
+
+    /**
+     * Some cameras (e.g. Nikon) store the preview already rotated while the
+     * RAW data carries a 90 degree flip. If the thumbnail has the aspect of the
+     * rotated image, no further 90 degree rotation is needed.
+     *
+     * @param rawW width of the RAW image before rotation
+     */
+    static int thumbFlip(int flip, int rawW, int rawH, int thumbW, int thumbH) {
+        if ((flip == 5 || flip == 6) && rawW > 0 && rawH > 0 && thumbW > 0 && thumbH > 0
+                && rawW != rawH && thumbW != thumbH && (rawW > rawH) != (thumbW > thumbH)) {
+            return 0;
+        }
+        return flip;
+    }
+
+    private static RawThumbnail memThumb(MemorySegment iprc, Arena scope, String source, int flip) throws IOException {
+        MemorySegment errorCode = scope.allocate(libraw_h.C_INT);
+        MemorySegment mem = libraw_h.libraw_dcraw_make_mem_thumb(iprc, errorCode);
+        int err = errorCode.get(ValueLayout.JAVA_INT, 0);
+        if (isNull(mem) || err != 0) {
+            throw error(source + " (thumbnail)", err != 0 ? err : -1);
+        }
+        try {
+            int type = libraw_processed_image_t.type(mem);
+            int w = libraw_processed_image_t.width(mem) & 0xFFFF;
+            int h = libraw_processed_image_t.height(mem) & 0xFFFF;
+            int colors = libraw_processed_image_t.colors(mem);
+            int bits = libraw_processed_image_t.bits(mem);
+            long size = Integer.toUnsignedLong(libraw_processed_image_t.data_size(mem));
+            if (size <= 0 || size > Integer.MAX_VALUE - 8) {
+                throw new IOException(source + ": Invalid thumbnail size " + size);
+            }
+            MemorySegment data = MemorySegment.ofAddress(libraw_processed_image_t.data(mem).address()).reinterpret(size);
+
+            if (type == libraw_h.LIBRAW_IMAGE_JPEG()) {
+                if (w == 0 || h == 0) {                   // LibRaw leaves the size empty for JPEG
+                    MemorySegment t = libraw_data_t.thumbnail(iprc);
+                    w = libraw_thumbnail_t.twidth(t) & 0xFFFF;
+                    h = libraw_thumbnail_t.theight(t) & 0xFFFF;
+                }
+                return new RawThumbnail(RawThumbnail.Type.JPEG, w, h, 3, flip, data.toArray(ValueLayout.JAVA_BYTE));
+            }
+            if (type != libraw_h.LIBRAW_IMAGE_BITMAP() || (bits != 8 && bits != 16) || colors <= 0) {
+                throw new LibrawException(source + ": " + describeError(-6) + " [LibRaw -6]", -6);
+            }
+            long samples = (long) w * h * colors;
+            if (samples <= 0 || samples * (bits / 8) > size) {
+                throw new IOException(source + ": Invalid thumbnail " + w + "x" + h + "x" + colors);
+            }
+            byte[] px = new byte[(int) samples];
+            if (bits == 8) {
+                MemorySegment.copy(data, ValueLayout.JAVA_BYTE, 0, px, 0, px.length);
+            } else {                                          // 16 bit (host order) -> 8 bit
+                for (int i = 0; i < px.length; i++) {
+                    px[i] = (byte) (data.getAtIndex(ValueLayout.JAVA_SHORT_UNALIGNED, i) >>> 8);
+                }
+            }
+            return new RawThumbnail(RawThumbnail.Type.BITMAP, w, h, colors, flip, px);
+        } finally {
+            libraw_h.libraw_dcraw_clear_mem(mem);
+        }
+    }
+
+    private static List<ThumbnailInfo> thumbList(MemorySegment iprc, Arena scope) {
+        if (!thumbExAvailable()) {
+            return List.of();                              // LibRaw < 0.21: no thumbs_list
+        }
+        MemorySegment tl = libraw_data_t.thumbs_list(iprc);
+        int count = Math.min(libraw_thumbnail_list_t.thumbcount(tl), libraw_h.LIBRAW_THUMBNAIL_MAXCOUNT());
+        // slice manually: the generated indexed accessor thumblist(struct, i) ignores the field offset
+        MemorySegment items = libraw_thumbnail_list_t.thumblist(tl);
+        long itemSize = libraw_thumbnail_item_t.layout().byteSize();
+        List<ThumbnailInfo> list = new ArrayList<>(Math.max(count, 0));
+        for (int i = 0; i < count; i++) {
+            MemorySegment item = items.asSlice(i * itemSize, itemSize);
+            short tflip = libraw_thumbnail_item_t.tflip(item);
+            list.add(new ThumbnailInfo(i,
+                    ThumbnailFormat.ofInternal(libraw_thumbnail_item_t.tformat(item)),
+                    libraw_thumbnail_item_t.twidth(item) & 0xFFFF,
+                    libraw_thumbnail_item_t.theight(item) & 0xFFFF,
+                    tflip == (short) 0xFFFF ? -1 : tflip,
+                    libraw_thumbnail_item_t.tlength(item)));
+        }
+        return List.copyOf(list);
+    }
+
+    /** True if the native library has libraw_unpack_thumb_ex (LibRaw 0.21+). */
+    private static boolean thumbExAvailable() {
+        Boolean b = thumbExAvailable;
+        if (b == null) {
+            try {
+                libraw_h.libraw_unpack_thumb_ex$address();
+                b = Boolean.TRUE;
+            } catch (LinkageError e) {                    // symbol missing in older libs
+                LOG.log(Level.FINE, "libraw_unpack_thumb_ex not available: {0}", e.toString());
+                b = Boolean.FALSE;
+            }
+            thumbExAvailable = b;
+        }
+        return b;
+    }
+
+    // ==========================================================================
+    // Native call scaffolding
+    // ==========================================================================
+    /** Work on an opened libraw handle. */
+    @FunctionalInterface
+    private interface OpenedCall<T> {
+
+        T call(MemorySegment iprc, Arena scope) throws IOException;
+    }
+
+    /** init + open + call + close. */
+    private <T> T withOpened(NativeOpen opener, String source, OpenedCall<T> call) throws IOException {
+        ensureLoaded();
+        try (Arena scope = Arena.ofConfined()) {
+            MemorySegment iprc = libraw_h.libraw_init(0);
+            if (isNull(iprc)) {
+                throw new IOException("libraw_init failed");
+            }
+            try {
+                int k = opener.open(iprc, scope);
+                if (k != 0) {
+                    throw error(source, k);
+                }
+                return call.call(iprc, scope);
+            } finally {
+                libraw_h.libraw_close(iprc);
+            }
+        }
+    }
+
+    private static NativeOpen bufferOpener(byte[] bytes) {
+        return (iprc, arena) -> libraw_h.libraw_open_buffer(iprc,
+                arena.allocateFrom(ValueLayout.JAVA_BYTE, bytes), bytes.length);
+    }
+
+    private static NativeOpen fileOpener(String url) {
+        return (iprc, arena) -> libraw_h.libraw_open_file(iprc, arena.allocateFrom(url));
+    }
+
+    private String requireUrl() {
+        String url = imageFileURL;
+        if (url == null) {
+            throw new IllegalArgumentException("imageFileURL == null!");
+        }
+        return url;
     }
 
     // ==========================================================================
